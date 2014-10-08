@@ -47,6 +47,7 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(const L
 	if (self) {
 		_k = DEFAULT_K;
 		_distanceFunction = [LNKKNNEuclideanDistanceFunction copy];
+		_outputFunction = LNKKNNOutputFunctionMostFrequent;
 	}
 	return self;
 }
