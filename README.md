@@ -17,30 +17,30 @@ Supported Algorithms
 Example
 -------
 
-In this example, we have a design matrix contains 5000 20x20 digits. Each 20x20 digit has been flattened into a row of 400 pixel intensities. We load it as such:
+In this example, we have a matrix that contains 5000 20x20 digits. Each 20x20 digit has been flattened into a row of 400 pixel intensities. We load it as such:
 
 	NSURL *matrixURL = [NSURL fileURLWithPath:matrixPath];
 	NSURL *matrixOutputURL = [NSURL fileURLWithPath:outputVectorPath];
 	
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:matrixURL
-																 matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:matrixOutputURL
-														   outputVectorValueType:LNKValueTypeUInt8
-																	exampleCount:5000
-																	 columnCount:400
-															    addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:matrixURL
+													 matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:matrixOutputURL
+											   outputVectorValueType:LNKValueTypeUInt8
+														exampleCount:5000
+														 columnCount:400
+													addingOnesColumn:YES];
 
 Next, we set up a conjugate gradient optimization algorithm to train the neural network.
 
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
 
-Now we initialize a neural network classifier with our design matrix and optimization algorithm. We also indicate the possible outputs are digits ranging from 1 to 10.
+Now we initialize a neural network classifier with our matrix and optimization algorithm. We also indicate the possible outputs are digits ranging from 1 to 10.
 
-	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithDesignMatrix:matrix 
-																		   implementationType:LNKImplementationTypeAccelerate
-																		optimizationAlgorithm:algorithm
-																					  classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix 
+																	 implementationType:LNKImplementationTypeAccelerate
+																  optimizationAlgorithm:algorithm
+																				classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	classifier.hiddenLayerCount = 1;
 	classifier.hiddenLayerUnitCount = 25;
 
@@ -56,8 +56,8 @@ Future Tasks
 ------------
 
 - Support collaborative filtering
-- Support SVMs
 - Support decision trees
+- Support SVMs
 - Port to Metal and OpenCL
 
 License
@@ -70,6 +70,6 @@ Credit
 
 LearnKit uses:
 
-- `fmincg` by Carl Edward Rasmussen.
+- `fmincg` by Carl Edward Rasmussen
 - `liblbfgs`
-- Data prepared by Andrew Ng for Machine Learning
+- Data prepared by Andrew Ng for [Machine Learning](https://www.coursera.org/course/ml)
