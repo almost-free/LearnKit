@@ -7,7 +7,6 @@
 
 #import "_LNKKNNClassifierAC.h"
 
-#import "LNKAccelerate.h"
 #import "LNKDesignMatrix.h"
 
 typedef struct {
@@ -35,15 +34,14 @@ typedef struct {
 	const LNKSize exampleCount = designMatrix.exampleCount;
 	const LNKFloat *outputVector = designMatrix.outputVector;
 	const LNKSize k = self.k;
+	const LNKKNNDistanceFunction distanceFunction = self.distanceFunction;
 	
 	_LNKDistanceBucket *closestExamples = calloc(sizeof(_LNKDistanceBucket), k);
 	
 	// Find the k closest examples.
 	for (LNKSize example = 0; example < exampleCount; example++) {
 		const LNKFloat *exampleRow = [designMatrix exampleAtIndex:example];
-		
-		LNKFloat distance;
-		LNKVectorDistance(exampleRow, featureVector, &distance, length);
+		const LNKFloat distance = distanceFunction(exampleRow, featureVector, length);
 		
 		if (example < k) {
 			closestExamples[example].distance = distance;

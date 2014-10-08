@@ -8,7 +8,15 @@
 #import "LNKKNNClassifier.h"
 
 #import "_LNKKNNClassifierAC.h"
+#import "LNKAccelerate.h"
 #import "LNKDesignMatrix.h"
+
+const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(const LNKFloat *example1, const LNKFloat *example2, LNKSize n) {
+	LNKFloat result;
+	LNKVectorDistance(example1, example2, &result, n);
+	
+	return result;
+};
 
 @implementation LNKKNNClassifier
 
@@ -38,6 +46,7 @@
 	self = [super initWithDesignMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
 	if (self) {
 		_k = DEFAULT_K;
+		_distanceFunction = [LNKKNNEuclideanDistanceFunction copy];
 	}
 	return self;
 }
@@ -56,6 +65,22 @@
 		_k = k;
 		[self didChangeValueForKey:@"k"];
 	}
+}
+
+- (void)setDistanceFunction:(LNKKNNDistanceFunction)distanceFunction {
+	if (distanceFunction == nil) {
+		@throw [NSException exceptionWithName:NSGenericException reason:@"The distance function must be specified" userInfo:nil];
+	}
+	
+	if (_distanceFunction == distanceFunction)
+		return;
+	
+	[self willChangeValueForKey:@"distanceFunction"];
+	
+	[_distanceFunction release];
+	_distanceFunction = [distanceFunction retain];
+	
+	[self didChangeValueForKey:@"distanceFunction"];
 }
 
 @end
