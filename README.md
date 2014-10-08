@@ -65,8 +65,8 @@ License
 
 LearnKit is available under the MIT license.
 
-Credit
-------
+Credits
+-------
 
 LearnKit uses:
 
