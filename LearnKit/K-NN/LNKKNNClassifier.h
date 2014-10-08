@@ -12,6 +12,7 @@
 @interface LNKKNNClassifier : LNKClassifier
 
 /// The value of `k` must be >= 1 and less than the number of examples in the design matrix.
+/// The default value is 1.
 @property (nonatomic) LNKSize k;
 
 @end
