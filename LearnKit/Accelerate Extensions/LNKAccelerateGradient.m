@@ -1,0 +1,237 @@
+//
+//  LNKAccelerateGradient.m
+//  LearnKit
+//
+//  Copyright (c) 2014 Matt Rajca. All rights reserved.
+//
+
+#import "LNKAccelerateGradient.h"
+
+#import "lbfgs.h"
+#import "LNKAccelerate.h"
+#import "LNKDesignMatrixPrivate.h"
+#import "LNKFastFloatQueue.h"
+
+@interface LBFGSContext : NSObject
+
+@property (nonatomic, assign) LNKDesignMatrix *designMatrix;
+@property (nonatomic) LNKFloat *thetaVector;
+@property (nonatomic, copy) LNKHFunction hFunction;
+@property (nonatomic, copy) LNKCostFunction costFunction;
+@property (nonatomic) LNKFloat *workgroupCC;
+@property (nonatomic) LNKFloat *workgroupCC2;
+@property (nonatomic) LNKFloat *workgroupEC;
+@property (nonatomic) const LNKFloat *transposeMatrix;
+@property (nonatomic) BOOL regularizationEnabled;
+@property (nonatomic) LNKFloat lambda;
+
+@end
+
+@implementation LBFGSContext
+@end
+
+
+// The final result is in workgroupCC.
+void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize exampleCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction) {
+	// h = x . thetaVector
+	// 1 / m * sum((h - y) * x)
+	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, exampleCount, 1, columnCount);
+	
+	if (hFunction)
+		hFunction(workgroupEC, exampleCount);
+	
+	LNK_vsub(outputVector, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, exampleCount);
+	LNK_mmul(transposeMatrix, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount, 1, exampleCount);
+	
+	if (enableRegularization) {
+		// cost += lambda * theta
+		LNKFloatCopy(workgroupCC2, thetaVector, columnCount);
+		LNK_vsmul(workgroupCC2, UNIT_STRIDE, &lambda, workgroupCC2, UNIT_STRIDE, columnCount);
+		
+		// Don't regularize the first parameter.
+		workgroupCC2[0] = 0;
+		LNK_vadd(workgroupCC, UNIT_STRIDE, workgroupCC2, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount);
+	}
+	
+	const LNKFloat factor = 1.0 / exampleCount;
+	LNK_vsmul(workgroupCC, UNIT_STRIDE, &factor, workgroupCC, UNIT_STRIDE, columnCount);
+}
+
+void LNK_learntheta_gd(LNKDesignMatrix *designMatrix, LNKFloat *thetaVector, LNKOptimizationAlgorithmGradientDescent *algorithm, LNKCostFunction costFunction) {
+	assert(designMatrix);
+	assert(thetaVector);
+	assert(algorithm);
+	
+	const LNKSize iterationCount = algorithm.iterationCount;
+	const LNKFloat alpha = algorithm.alpha;
+	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
+	const LNKFloat lambda = algorithm.lambda;
+	
+	const LNKSize exampleCount = designMatrix.exampleCount;
+	const LNKSize columnCount = designMatrix.columnCount;
+	
+	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
+	const LNKFloat *outputVector = designMatrix.outputVector;
+	
+	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
+	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
+	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
+	
+	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
+	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	
+	LNKFloat *randomMatrixBuffer = NULL;
+	
+	if (algorithm.stochastic) {
+		randomMatrixBuffer = LNKFloatAlloc(exampleCount * columnCount);
+		LNKFloatCopy(randomMatrixBuffer, matrixBuffer, exampleCount * columnCount);
+		
+		// Shuffle the matrix rows.
+		if (exampleCount > 2) {
+			for (LNKSize index = 0; index < exampleCount - 1; index++) {
+				const LNKSize otherIndex = index + arc4random_uniform(UINT32_MAX) / (UINT32_MAX / (exampleCount - index) + 1);
+				
+				LNKFloatCopy(workgroupCC, randomMatrixBuffer + otherIndex * columnCount, columnCount); // Temporary space
+				LNKFloatCopy(randomMatrixBuffer + otherIndex * columnCount, randomMatrixBuffer + index * columnCount, columnCount);
+				LNKFloatCopy(randomMatrixBuffer + index * columnCount, workgroupCC, columnCount);
+			}
+		}
+	}
+	
+	void (^gradientIteration)() = ^{
+		if (algorithm.stochastic) {
+			// Stochastic gradient descent:
+			for (LNKSize example = 0; example < exampleCount; example++) {
+				const LNKFloat *row = randomMatrixBuffer + example * columnCount;
+				
+				// singleGradient = (h - y) * x
+				LNKFloat h;
+				LNK_dotpr(row, UNIT_STRIDE, thetaVector, UNIT_STRIDE, &h, columnCount);
+				
+				// workgroupCC holds the gradient.
+				const LNKFloat delta = h - outputVector[example];
+				LNK_vsmul(row, UNIT_STRIDE, &delta, workgroupCC, UNIT_STRIDE, columnCount);
+				
+				// thetaVector = thetaVector - alpha * gradient
+				LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
+				LNK_vsub(workgroupCC, UNIT_STRIDE, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
+			}
+		}
+		else {
+			// Batch gradient descent:
+			// workgroupCC holds the gradient.
+			_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, exampleCount, columnCount, regularizationEnabled, lambda, NULL);
+			
+			// thetaVector = thetaVector - alpha * gradient
+			LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
+			LNK_vsub(workgroupCC, UNIT_STRIDE, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
+		}
+	};
+	
+	if (iterationCount != NSNotFound) {
+		for (NSUInteger n = 0; n < iterationCount; n++)
+			gradientIteration();
+	}
+	else {
+		if (!costFunction)
+			@throw [NSException exceptionWithName:NSGenericException reason:@"The cost function must be specified when automatically checking for convergence" userInfo:nil];
+		
+		static const LNKSize queueSize = 10;
+		const LNKFloat convergenceThreshold = algorithm.convergenceThreshold;
+		LNKFastFloatQueueRef costQueue = LNKFastFloatQueueCreate(queueSize);
+		
+		while (YES) {
+			gradientIteration();
+			const LNKFloat cost = costFunction(thetaVector);
+			
+			if (LNKFastFloatQueueSize(costQueue) < queueSize)
+				LNKFastFloatQueueEnqueue(costQueue, cost);
+			else {
+				if (LNKFastFloatAreValuesApproximatelyClose(costQueue, convergenceThreshold))
+					break;
+				
+				LNKFastFloatQueueDequeue(costQueue);
+				LNKFastFloatQueueEnqueue(costQueue, cost);
+			}
+		}
+		
+		LNKFastFloatQueueFree(costQueue);
+	}
+	
+	if (randomMatrixBuffer)
+		free(randomMatrixBuffer);
+	
+	free(workgroupEC);
+	free(workgroupCC);
+	free(workgroupCC2);
+	free(transposeMatrix);
+}
+
+static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t *x, lbfgsfloatval_t *g, const int n, const lbfgsfloatval_t step) {
+#pragma unused(step)
+	
+	LBFGSContext *context = (__bridge LBFGSContext *)instance;
+	assert(context);
+	
+	LNKDesignMatrix *designMatrix = context.designMatrix;
+	LNKFloat *workgroupCC = context.workgroupCC;
+	LNKFloat *workgroupCC2 = context.workgroupCC2;
+	const LNKSize columnCount = designMatrix.columnCount;
+	assert(columnCount == (LNKSize)n);
+	
+	_LNKComputeBatchGradient(designMatrix.matrixBuffer, context.transposeMatrix, x, designMatrix.outputVector, context.workgroupEC, workgroupCC, workgroupCC2, designMatrix.exampleCount, columnCount, context.regularizationEnabled, context.lambda, context.hFunction);
+	
+	// Give liblbfgs our gradient and return the cost.
+	LNKFloatCopy(g, workgroupCC, columnCount);
+	return context.costFunction(x);
+}
+
+void LNK_learntheta_lbfgs(LNKDesignMatrix *designMatrix, LNKFloat *thetaVector, BOOL regularizationEnabled, LNKFloat lambda, LNKHFunction hFunction, LNKCostFunction costFunction) {
+	assert(designMatrix);
+	assert(thetaVector);
+	assert(costFunction);
+	
+	assert(sizeof(lbfgsfloatval_t) == sizeof(LNKFloat));
+	
+	const LNKSize exampleCount = designMatrix.exampleCount;
+	const LNKSize columnCount = designMatrix.columnCount;
+	
+	// Minimizing theta
+	lbfgsfloatval_t *theta = calloc(columnCount, sizeof(lbfgsfloatval_t));
+	
+	lbfgs_parameter_t parameters;
+	lbfgs_parameter_init(&parameters);
+	
+	// Lowered from 1e-5 for performance
+	parameters.epsilon = 1e-4;
+	
+	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
+	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
+	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
+	
+	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
+	LNK_mtrans(designMatrix.matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	
+	LBFGSContext *context = [[LBFGSContext alloc] init];
+	context.designMatrix = designMatrix;
+	context.thetaVector = thetaVector;
+	context.hFunction = hFunction;
+	context.costFunction = costFunction;
+	context.workgroupEC = workgroupEC;
+	context.workgroupCC = workgroupCC;
+	context.workgroupCC2 = workgroupCC2;
+	context.transposeMatrix = transposeMatrix;
+	context.regularizationEnabled = regularizationEnabled;
+	context.lambda = lambda;
+	
+	int status = lbfgs((int)columnCount, theta, NULL, _LNK_lbfgs_evaluate, NULL, (__bridge void *)context, &parameters);
+	[context release];
+	assert(status == 0);
+	
+	free(workgroupEC);
+	free(workgroupCC);
+	free(workgroupCC2);
+	free(transposeMatrix);
+	
+	free(theta);
+}
