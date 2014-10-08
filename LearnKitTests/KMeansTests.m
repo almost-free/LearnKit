@@ -23,20 +23,20 @@
 - (void)test1 {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex7data2_X" ofType:@"dat"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																	exampleCount:300
-																	 columnCount:2
-																addingOnesColumn:NO];
+												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+														exampleCount:300
+														 columnCount:2
+													addingOnesColumn:NO];
 	LNKKMeansClassifier *classifier = [[LNKKMeansClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:3]];
 	classifier.iterationCount = 10;
 	
 	LNKFloat clusterCentroids[6];
 	clusterCentroids[0] = 3;
 	clusterCentroids[1] = 3;
-
+	
 	clusterCentroids[2] = 6;
 	clusterCentroids[3] = 2;
-
+	
 	clusterCentroids[4] = 8;
 	clusterCentroids[5] = 5;
 	

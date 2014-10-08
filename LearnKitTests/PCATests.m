@@ -22,10 +22,10 @@
 - (void)test1 {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex7data1_X" ofType:@"dat"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																	exampleCount:50
-																	 columnCount:2
-																addingOnesColumn:NO];
+												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+														exampleCount:50
+														 columnCount:2
+													addingOnesColumn:NO];
 	[matrix normalize];
 	
 	LNKMatrix *reducedMatrix = [[matrix matrixReducedToDimension:1] retain];

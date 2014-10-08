@@ -84,10 +84,10 @@
 	NSString *outputVectorPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex3data1_y" ofType:@"dat"];
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
-																 matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
-														   outputVectorValueType:LNKValueTypeUInt8
-																	exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+													 matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
+											   outputVectorValueType:LNKValueTypeUInt8
+														exampleCount:5000 columnCount:400 addingOnesColumn:YES];
 	
 	XCTAssertEqual(matrix.columnCount, 401ULL, @"The ones column was not added");
 	

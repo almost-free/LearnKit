@@ -222,12 +222,12 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	const LNKSize exampleCount = 12;
 	
 	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-																	outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-																		 exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
+														outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+															 exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
 	
 	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
-															  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-																   exampleCount:21 columnCount:1 addingOnesColumn:YES];
+												  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
+													   exampleCount:21 columnCount:1 addingOnesColumn:YES];
 	
 	LNKFloat trainError[exampleCount];
 	LNKFloat cvError[exampleCount];
@@ -284,14 +284,14 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	const LNKSize exampleCount = 12;
 	
 	LNKMatrix *trainingSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-																	 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-																		  exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
+														 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+															  exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
 	LNKMatrix *trainingSet = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
 	[trainingSet normalize];
 	
 	LNKMatrix *cvSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-																	exampleCount:21 columnCount:1 addingOnesColumn:YES];
+												   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
+														exampleCount:21 columnCount:1 addingOnesColumn:YES];
 	LNKMatrix *cvSet = [[cvSet_ polynomialMatrixOfDegree:8] retain];
 	[cvSet normalizeWithMeanVector:[trainingSet normalizationMeanVector] standardDeviationVector:[trainingSet normalizationStandardDeviationVector]];
 	

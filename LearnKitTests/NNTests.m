@@ -31,10 +31,10 @@
 	NSString *theta2Path = [bundle pathForResource:@"ex3data1_theta2" ofType:@"dat"];
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
-																 matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
-														   outputVectorValueType:LNKValueTypeUInt8
-																	exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+													 matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
+											   outputVectorValueType:LNKValueTypeUInt8
+														exampleCount:5000 columnCount:400 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
@@ -83,10 +83,10 @@
 	NSString *outputVectorPath = [bundle pathForResource:@"ex3data1_y" ofType:@"dat"];
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
-																 matrixValueType:LNKValueTypeDouble
-															   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
-														   outputVectorValueType:LNKValueTypeUInt8
-																	exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+													 matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
+											   outputVectorValueType:LNKValueTypeUInt8
+														exampleCount:5000 columnCount:400 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
