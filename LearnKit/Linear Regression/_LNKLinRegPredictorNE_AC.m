@@ -8,8 +8,8 @@
 #import "_LNKLinRegPredictorNE_AC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKMatrix.h"
 #import "LNKLinRegPredictorPrivate.h"
+#import "LNKMatrix.h"
 #import "LNKPredictorPrivate.h"
 #import "LNKUtilities.h"
 

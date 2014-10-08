@@ -8,9 +8,9 @@
 #import "_LNKKMeansClassifierAC.h"
 
 #import "LNKAccelerate.h"
+#import "LNKKMeansClassifierPrivate.h"
 #import "LNKMatrix.h"
 #import "LNKMatrixPrivate.h"
-#import "LNKKMeansClassifierPrivate.h"
 
 @implementation _LNKKMeansClassifierAC {
 	BOOL _isUsingCustomCentroids;
