@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKMatrixTestExtras.h"
 #import "LNKLogRegClassifier.h"
 #import "LNKLogRegClassifierPrivate.h"
+#import "LNKMatrixTestExtras.h"
 #import "LNKOneVsAllLogRegClassifier.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"

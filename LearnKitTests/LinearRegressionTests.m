@@ -10,10 +10,10 @@
 
 #import "LNKAccelerate.h"
 #import "LNKAccelerateGradient.h"
-#import "LNKMatrix.h"
-#import "LNKMatrixTestExtras.h"
 #import "LNKLinRegPredictor.h"
 #import "LNKLinRegPredictorPrivate.h"
+#import "LNKMatrix.h"
+#import "LNKMatrixTestExtras.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 

@@ -8,8 +8,8 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKMatrix.h"
 #import "LNKKNNClassifier.h"
+#import "LNKMatrix.h"
 
 @interface KNNTests : XCTestCase
 

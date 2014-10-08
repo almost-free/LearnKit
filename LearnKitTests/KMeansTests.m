@@ -8,9 +8,9 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKMatrix.h"
 #import "LNKKMeansClassifier.h"
 #import "LNKKMeansClassifierPrivate.h"
+#import "LNKMatrix.h"
 
 @interface KMeansTests : XCTestCase
 
