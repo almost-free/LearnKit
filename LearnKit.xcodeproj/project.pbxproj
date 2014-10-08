@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C90ACF4E19E3581E002DB7C0 /* Flu.csv in Resources */ = {isa = PBXBuildFile; fileRef = C90ACF4D19E3581E002DB7C0 /* Flu.csv */; };
 		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
-		C93E7B0919D79D3E0014C67B /* ex7data1_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C93E7B0819D79CE80014C67B /* ex7data1_X.dat */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
 		C94FE76A19BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
@@ -23,22 +21,10 @@
 		C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
 		C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
 		C9943ABC19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */; };
-		C9943ABE19A5D47B00F91C25 /* ex2data2.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9943ABD19A5D47B00F91C25 /* ex2data2.txt */; };
-		C997C48819CE0BEB005317A2 /* ex5_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48619CE0BEB005317A2 /* ex5_X.dat */; };
-		C997C48919CE0BEB005317A2 /* ex5_y.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48719CE0BEB005317A2 /* ex5_y.dat */; };
-		C997C48C19CE2E1E005317A2 /* ex5_Xcv.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48A19CE2E1E005317A2 /* ex5_Xcv.dat */; };
-		C997C48D19CE2E1E005317A2 /* ex5_ycv.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48B19CE2E1E005317A2 /* ex5_ycv.dat */; };
 		C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */; };
 		C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */; };
 		C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */; };
-		C9AC0DF419A04CD10061DEFB /* ex1data1.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9AC0DF019A04CD10061DEFB /* ex1data1.txt */; };
-		C9AC0DF519A04CD10061DEFB /* ex1data2.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9AC0DF119A04CD10061DEFB /* ex1data2.txt */; };
-		C9AC0DF619A04CD10061DEFB /* ex2data1.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9AC0DF219A04CD10061DEFB /* ex2data1.csv */; };
-		C9AE9EF219AC2CD800A47178 /* ex3data1_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9AE9EF119AC2CD800A47178 /* ex3data1_X.dat */; };
 		C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE9EF319AC2D2100A47178 /* NNTests.m */; };
-		C9AE9EF619AC32CE00A47178 /* ex3data1_y.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9AE9EF519AC32CE00A47178 /* ex3data1_y.dat */; };
-		C9B0E56619B22AED00565FA6 /* ex3data1_theta1.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9B0E56419B22AED00565FA6 /* ex3data1_theta1.dat */; };
-		C9B0E56719B22AED00565FA6 /* ex3data1_theta2.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9B0E56519B22AED00565FA6 /* ex3data1_theta2.dat */; };
 		C9CBD24619E5D3F500AE71D5 /* LNKAccelerate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */; };
 		C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */; };
 		C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */; };
@@ -137,10 +123,24 @@
 		C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2D319E5D52900AE71D5 /* LNKUtilities.h */; };
 		C9CBD2F419E5D52900AE71D5 /* LNKUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */; };
 		C9CBD2F519E5D52900AE71D5 /* LNKUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */; };
-		C9DC903C19D6251F00774B29 /* ex7data2_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9DC903B19D6251F00774B29 /* ex7data2_X.dat */; };
+		C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2F719E5D69000AE71D5 /* CASP.csv */; };
+		C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2F819E5D69000AE71D5 /* ex1data1.txt */; };
+		C9CBD30919E5D69000AE71D5 /* ex1data2.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2F919E5D69000AE71D5 /* ex1data2.txt */; };
+		C9CBD30A19E5D69000AE71D5 /* ex2data1.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2FA19E5D69000AE71D5 /* ex2data1.csv */; };
+		C9CBD30B19E5D69000AE71D5 /* ex2data2.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2FB19E5D69000AE71D5 /* ex2data2.txt */; };
+		C9CBD30C19E5D69000AE71D5 /* ex3data1_theta1.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2FC19E5D69000AE71D5 /* ex3data1_theta1.dat */; };
+		C9CBD30D19E5D69000AE71D5 /* ex3data1_theta2.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2FD19E5D69000AE71D5 /* ex3data1_theta2.dat */; };
+		C9CBD30E19E5D69000AE71D5 /* ex3data1_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2FE19E5D69000AE71D5 /* ex3data1_X.dat */; };
+		C9CBD30F19E5D69000AE71D5 /* ex3data1_y.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD2FF19E5D69000AE71D5 /* ex3data1_y.dat */; };
+		C9CBD31019E5D69000AE71D5 /* ex5_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30019E5D69000AE71D5 /* ex5_X.dat */; };
+		C9CBD31119E5D69000AE71D5 /* ex5_Xcv.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30119E5D69000AE71D5 /* ex5_Xcv.dat */; };
+		C9CBD31219E5D69000AE71D5 /* ex5_y.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30219E5D69000AE71D5 /* ex5_y.dat */; };
+		C9CBD31319E5D69000AE71D5 /* ex5_ycv.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30319E5D69000AE71D5 /* ex5_ycv.dat */; };
+		C9CBD31419E5D69000AE71D5 /* ex7data1_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */; };
+		C9CBD31519E5D69000AE71D5 /* ex7data2_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */; };
+		C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30619E5D69000AE71D5 /* Flu.csv */; };
 		C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC903E19D6253900774B29 /* KMeansTests.m */; };
 		C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
-		C9EC1A1419A97C5B00AFF6F5 /* CASP.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9EC1A1319A97C5B00AFF6F5 /* CASP.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,11 +154,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C90ACF4D19E3581E002DB7C0 /* Flu.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Flu.csv; path = LearnKitTests/Flu.csv; sourceTree = SOURCE_ROOT; };
 		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
 		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
-		C93E7B0819D79CE80014C67B /* ex7data1_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex7data1_X.dat; path = LearnKitTests/ex7data1_X.dat; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
 		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
 		C94FE76719BA8A6600251EDF /* fmincg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmincg.m; sourceTree = "<group>"; };
@@ -168,26 +166,14 @@
 		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9943ABA19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LNKDesignMatrixTestExtras.h; path = LearnKitTests/LNKDesignMatrixTestExtras.h; sourceTree = SOURCE_ROOT; };
 		C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LNKDesignMatrixTestExtras.m; path = LearnKitTests/LNKDesignMatrixTestExtras.m; sourceTree = SOURCE_ROOT; };
-		C9943ABD19A5D47B00F91C25 /* ex2data2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex2data2.txt; path = LearnKitTests/ex2data2.txt; sourceTree = SOURCE_ROOT; };
-		C997C48619CE0BEB005317A2 /* ex5_X.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex5_X.dat; path = LearnKitTests/ex5_X.dat; sourceTree = SOURCE_ROOT; };
-		C997C48719CE0BEB005317A2 /* ex5_y.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex5_y.dat; path = LearnKitTests/ex5_y.dat; sourceTree = SOURCE_ROOT; };
-		C997C48A19CE2E1E005317A2 /* ex5_Xcv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex5_Xcv.dat; path = LearnKitTests/ex5_Xcv.dat; sourceTree = SOURCE_ROOT; };
-		C997C48B19CE2E1E005317A2 /* ex5_ycv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex5_ycv.dat; path = LearnKitTests/ex5_ycv.dat; sourceTree = SOURCE_ROOT; };
 		C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelerateTests.m; path = LearnKitTests/AccelerateTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinearRegressionTests.m; path = LearnKitTests/LinearRegressionTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogisticRegressionTests.m; path = LearnKitTests/LogisticRegressionTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DE019A04CC00061DEFB /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = LearnKit/Prefix.pch; sourceTree = SOURCE_ROOT; };
-		C9AC0DF019A04CD10061DEFB /* ex1data1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex1data1.txt; path = LearnKitTests/ex1data1.txt; sourceTree = SOURCE_ROOT; };
-		C9AC0DF119A04CD10061DEFB /* ex1data2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex1data2.txt; path = LearnKitTests/ex1data2.txt; sourceTree = SOURCE_ROOT; };
-		C9AC0DF219A04CD10061DEFB /* ex2data1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex2data1.csv; path = LearnKitTests/ex2data1.csv; sourceTree = SOURCE_ROOT; };
 		C9AC0DF319A04CD10061DEFB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKitTests/Info.plist; sourceTree = SOURCE_ROOT; };
 		C9AC1F8C199AFD57006D7122 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9AC1F94199AFDCC006D7122 /* LearnKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9AE9EF119AC2CD800A47178 /* ex3data1_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_X.dat; path = LearnKitTests/ex3data1_X.dat; sourceTree = SOURCE_ROOT; };
 		C9AE9EF319AC2D2100A47178 /* NNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NNTests.m; path = LearnKitTests/NNTests.m; sourceTree = SOURCE_ROOT; };
-		C9AE9EF519AC32CE00A47178 /* ex3data1_y.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_y.dat; path = LearnKitTests/ex3data1_y.dat; sourceTree = SOURCE_ROOT; };
-		C9B0E56419B22AED00565FA6 /* ex3data1_theta1.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_theta1.dat; path = LearnKitTests/ex3data1_theta1.dat; sourceTree = SOURCE_ROOT; };
-		C9B0E56519B22AED00565FA6 /* ex3data1_theta2.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_theta2.dat; path = LearnKitTests/ex3data1_theta2.dat; sourceTree = SOURCE_ROOT; };
 		C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAccelerate.h; sourceTree = "<group>"; };
 		C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKAccelerate.m; sourceTree = "<group>"; };
 		C9CBD24419E5D3F500AE71D5 /* LNKAccelerateGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAccelerateGradient.h; sourceTree = "<group>"; };
@@ -256,12 +242,26 @@
 		C9CBD2D219E5D52900AE71D5 /* LNKTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKTypes.m; sourceTree = "<group>"; };
 		C9CBD2D319E5D52900AE71D5 /* LNKUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKUtilities.h; sourceTree = "<group>"; };
 		C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKUtilities.m; sourceTree = "<group>"; };
-		C9DC903B19D6251F00774B29 /* ex7data2_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex7data2_X.dat; path = LearnKitTests/ex7data2_X.dat; sourceTree = SOURCE_ROOT; };
+		C9CBD2F719E5D69000AE71D5 /* CASP.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CASP.csv; sourceTree = "<group>"; };
+		C9CBD2F819E5D69000AE71D5 /* ex1data1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ex1data1.txt; sourceTree = "<group>"; };
+		C9CBD2F919E5D69000AE71D5 /* ex1data2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ex1data2.txt; sourceTree = "<group>"; };
+		C9CBD2FA19E5D69000AE71D5 /* ex2data1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ex2data1.csv; sourceTree = "<group>"; };
+		C9CBD2FB19E5D69000AE71D5 /* ex2data2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ex2data2.txt; sourceTree = "<group>"; };
+		C9CBD2FC19E5D69000AE71D5 /* ex3data1_theta1.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex3data1_theta1.dat; sourceTree = "<group>"; };
+		C9CBD2FD19E5D69000AE71D5 /* ex3data1_theta2.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex3data1_theta2.dat; sourceTree = "<group>"; };
+		C9CBD2FE19E5D69000AE71D5 /* ex3data1_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex3data1_X.dat; sourceTree = "<group>"; };
+		C9CBD2FF19E5D69000AE71D5 /* ex3data1_y.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex3data1_y.dat; sourceTree = "<group>"; };
+		C9CBD30019E5D69000AE71D5 /* ex5_X.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ex5_X.dat; sourceTree = "<group>"; };
+		C9CBD30119E5D69000AE71D5 /* ex5_Xcv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex5_Xcv.dat; sourceTree = "<group>"; };
+		C9CBD30219E5D69000AE71D5 /* ex5_y.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex5_y.dat; sourceTree = "<group>"; };
+		C9CBD30319E5D69000AE71D5 /* ex5_ycv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex5_ycv.dat; sourceTree = "<group>"; };
+		C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex7data1_X.dat; sourceTree = "<group>"; };
+		C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ex7data2_X.dat; sourceTree = "<group>"; };
+		C9CBD30619E5D69000AE71D5 /* Flu.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Flu.csv; sourceTree = "<group>"; };
 		C9DC903E19D6253900774B29 /* KMeansTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMeansTests.m; path = LearnKitTests/KMeansTests.m; sourceTree = SOURCE_ROOT; };
 		C9DCD6D319A03DF200AF3AEC /* arithmetic_ansi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arithmetic_ansi.h; path = liblbfgs/lib/arithmetic_ansi.h; sourceTree = SOURCE_ROOT; };
 		C9DCD6D419A03DF200AF3AEC /* lbfgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lbfgs.m; path = liblbfgs/lib/lbfgs.m; sourceTree = SOURCE_ROOT; };
 		C9DCD6D719A03E1700AF3AEC /* lbfgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lbfgs.h; path = liblbfgs/include/lbfgs.h; sourceTree = SOURCE_ROOT; };
-		C9EC1A1319A97C5B00AFF6F5 /* CASP.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CASP.csv; path = LearnKitTests/CASP.csv; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +359,7 @@
 				C971B4EE19DA6ECB0066C78B /* StructureTests.m */,
 				C9943ABA19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.h */,
 				C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */,
+				C9CBD2F619E5D69000AE71D5 /* Data */,
 				C9AC1F96199AFDCC006D7122 /* Supporting Files */,
 			);
 			name = "LearnKit Tests";
@@ -368,22 +369,6 @@
 		C9AC1F96199AFDCC006D7122 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C9EC1A1319A97C5B00AFF6F5 /* CASP.csv */,
-				C90ACF4D19E3581E002DB7C0 /* Flu.csv */,
-				C9AC0DF019A04CD10061DEFB /* ex1data1.txt */,
-				C9AC0DF119A04CD10061DEFB /* ex1data2.txt */,
-				C9AC0DF219A04CD10061DEFB /* ex2data1.csv */,
-				C9943ABD19A5D47B00F91C25 /* ex2data2.txt */,
-				C9AE9EF119AC2CD800A47178 /* ex3data1_X.dat */,
-				C9AE9EF519AC32CE00A47178 /* ex3data1_y.dat */,
-				C9B0E56419B22AED00565FA6 /* ex3data1_theta1.dat */,
-				C9B0E56519B22AED00565FA6 /* ex3data1_theta2.dat */,
-				C997C48619CE0BEB005317A2 /* ex5_X.dat */,
-				C997C48719CE0BEB005317A2 /* ex5_y.dat */,
-				C997C48A19CE2E1E005317A2 /* ex5_Xcv.dat */,
-				C997C48B19CE2E1E005317A2 /* ex5_ycv.dat */,
-				C93E7B0819D79CE80014C67B /* ex7data1_X.dat */,
-				C9DC903B19D6251F00774B29 /* ex7data2_X.dat */,
 				C9AC0DF319A04CD10061DEFB /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -527,6 +512,30 @@
 			);
 			name = Core;
 			path = LearnKit/Core;
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD2F619E5D69000AE71D5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD2F719E5D69000AE71D5 /* CASP.csv */,
+				C9CBD2F819E5D69000AE71D5 /* ex1data1.txt */,
+				C9CBD2F919E5D69000AE71D5 /* ex1data2.txt */,
+				C9CBD2FA19E5D69000AE71D5 /* ex2data1.csv */,
+				C9CBD2FB19E5D69000AE71D5 /* ex2data2.txt */,
+				C9CBD2FC19E5D69000AE71D5 /* ex3data1_theta1.dat */,
+				C9CBD2FD19E5D69000AE71D5 /* ex3data1_theta2.dat */,
+				C9CBD2FE19E5D69000AE71D5 /* ex3data1_X.dat */,
+				C9CBD2FF19E5D69000AE71D5 /* ex3data1_y.dat */,
+				C9CBD30019E5D69000AE71D5 /* ex5_X.dat */,
+				C9CBD30119E5D69000AE71D5 /* ex5_Xcv.dat */,
+				C9CBD30219E5D69000AE71D5 /* ex5_y.dat */,
+				C9CBD30319E5D69000AE71D5 /* ex5_ycv.dat */,
+				C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */,
+				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
+				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
+			);
+			name = Data;
+			path = LearnKitTests/Data;
 			sourceTree = SOURCE_ROOT;
 		};
 		C9DCD6D219A03DDB00AF3AEC /* liblbfgs */ = {
@@ -676,22 +685,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C93E7B0919D79D3E0014C67B /* ex7data1_X.dat in Resources */,
-				C9EC1A1419A97C5B00AFF6F5 /* CASP.csv in Resources */,
-				C9AC0DF419A04CD10061DEFB /* ex1data1.txt in Resources */,
-				C997C48D19CE2E1E005317A2 /* ex5_ycv.dat in Resources */,
-				C9AC0DF519A04CD10061DEFB /* ex1data2.txt in Resources */,
-				C9B0E56619B22AED00565FA6 /* ex3data1_theta1.dat in Resources */,
-				C9AC0DF619A04CD10061DEFB /* ex2data1.csv in Resources */,
-				C9B0E56719B22AED00565FA6 /* ex3data1_theta2.dat in Resources */,
-				C90ACF4E19E3581E002DB7C0 /* Flu.csv in Resources */,
-				C9943ABE19A5D47B00F91C25 /* ex2data2.txt in Resources */,
-				C9AE9EF219AC2CD800A47178 /* ex3data1_X.dat in Resources */,
-				C997C48C19CE2E1E005317A2 /* ex5_Xcv.dat in Resources */,
-				C9DC903C19D6251F00774B29 /* ex7data2_X.dat in Resources */,
-				C9AE9EF619AC32CE00A47178 /* ex3data1_y.dat in Resources */,
-				C997C48919CE0BEB005317A2 /* ex5_y.dat in Resources */,
-				C997C48819CE0BEB005317A2 /* ex5_X.dat in Resources */,
+				C9CBD30A19E5D69000AE71D5 /* ex2data1.csv in Resources */,
+				C9CBD31519E5D69000AE71D5 /* ex7data2_X.dat in Resources */,
+				C9CBD30D19E5D69000AE71D5 /* ex3data1_theta2.dat in Resources */,
+				C9CBD31319E5D69000AE71D5 /* ex5_ycv.dat in Resources */,
+				C9CBD31419E5D69000AE71D5 /* ex7data1_X.dat in Resources */,
+				C9CBD30F19E5D69000AE71D5 /* ex3data1_y.dat in Resources */,
+				C9CBD30919E5D69000AE71D5 /* ex1data2.txt in Resources */,
+				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
+				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
+				C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */,
+				C9CBD30B19E5D69000AE71D5 /* ex2data2.txt in Resources */,
+				C9CBD30C19E5D69000AE71D5 /* ex3data1_theta1.dat in Resources */,
+				C9CBD31119E5D69000AE71D5 /* ex5_Xcv.dat in Resources */,
+				C9CBD30E19E5D69000AE71D5 /* ex3data1_X.dat in Resources */,
+				C9CBD31219E5D69000AE71D5 /* ex5_y.dat in Resources */,
+				C9CBD31019E5D69000AE71D5 /* ex5_X.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
