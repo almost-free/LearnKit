@@ -46,11 +46,11 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	NSString *stringContents = [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
 	
 	if (!stringContents) {
-		NSLog(@"Error while loading design matrix: could not load the file at the given URL: %@", error);
+		NSLog(@"Error while loading matrix: could not load the file at the given URL: %@", error);
 		return nil;
 	}
 	
-	if (![self _parseDesignMatrixCSVString:stringContents addingOnesColumn:addOnesColumn]) {
+	if (![self _parseMatrixCSVString:stringContents addingOnesColumn:addOnesColumn]) {
 		[stringContents release];
 		return nil;
 	}
@@ -84,7 +84,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	NSData *matrixData = [NSData dataWithContentsOfURL:matrixURL options:0 error:&error];
 	
 	if (!matrixData) {
-		NSLog(@"Error while loading design matrix: could not load the matrix file at the given URL: %@", error);
+		NSLog(@"Error while loading matrix: could not load the matrix file at the given URL: %@", error);
 		return nil;
 	}
 	
@@ -117,17 +117,17 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		NSData *outputVectorData = [NSData dataWithContentsOfURL:outputVectorURL options:0 error:&error];
 		
 		if (!outputVectorData) {
-			NSLog(@"Error while loading design matrix: could not load the output vector file at the given URL: %@", error);
+			NSLog(@"Error while loading matrix: could not load the output vector file at the given URL: %@", error);
 			return nil;
 		}
 		
 		if (matrixData.length != expectedMatrixSize) {
-			NSLog(@"Error while loading design matrix: invalid matrix file size");
+			NSLog(@"Error while loading matrix: invalid matrix file size");
 			return nil;
 		}
 		
 		if (outputVectorData.length != expectedOutputVectorSize) {
-			NSLog(@"Error while loading design matrix: invalid output vector file size");
+			NSLog(@"Error while loading matrix: invalid output vector file size");
 			return nil;
 		}
 		
@@ -237,7 +237,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	_exampleCount = exampleCount;
 }
 
-- (BOOL)_parseDesignMatrixCSVString:(NSString *)stringContents addingOnesColumn:(BOOL)addOnesColumn {
+- (BOOL)_parseMatrixCSVString:(NSString *)stringContents addingOnesColumn:(BOOL)addOnesColumn {
 	LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate(sizeof(LNKFastArrayRef));
 	const char *rawString = stringContents.UTF8String;
@@ -285,13 +285,13 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 					fileColumnCount = LNKFastArrayElementCount(currentLine);
 					
 					if (fileColumnCount < 2) {
-						NSLog(@"Error while loading design matrix: the matrix must have at least two columns");
+						NSLog(@"Error while loading matrix: the matrix must have at least two columns");
 						cleanupLines();
 						return NO;
 					}
 				}
 				else if (fileColumnCount != LNKFastArrayElementCount(currentLine)) {
-					NSLog(@"Error while loading design matrix: lines have varying numbers of columns");
+					NSLog(@"Error while loading matrix: lines have varying numbers of columns");
 					cleanupLines();
 					return NO;
 				}
@@ -305,20 +305,20 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	}
 	
 	if (!LNKFastArrayElementCount(lines)) {
-		NSLog(@"Error while loading design matrix: the matrix does not contain any examples");
+		NSLog(@"Error while loading matrix: the matrix does not contain any examples");
 		cleanupLines();
 		return NO;
 	}
 	
 	if (fileColumnCount == LNKSizeMax) {
-		NSLog(@"Error while loading design matrix: the matrix does not contain any columns");
+		NSLog(@"Error while loading matrix: the matrix does not contain any columns");
 		cleanupLines();
 		return NO;
 	}
 	
 	_exampleCount = LNKFastArrayElementCount(lines);
 	
-	// The design matrix's column count does not include the output vector, but should include the optional ones column.
+	// The matrix's column count does not include the output vector, but should include the optional ones column.
 	_columnCount = fileColumnCount - 1 + (addOnesColumn ? 1 : 0);
 	_hasBiasColumn = addOnesColumn;
 	
@@ -434,7 +434,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 - (void)_ensureNormalization {
 	if (!_normalized)
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The design matrix must be normalized prior." userInfo:nil];
+		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The matrix must be normalized prior." userInfo:nil];
 }
 
 - (const LNKFloat *)normalizationMeanVector {
@@ -449,7 +449,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 - (void)normalizeVector:(LNKFloat *)input {
 	NSParameterAssert(input);
-	NSAssert(_normalized, @"The design matrix needs to be normalized first");
+	NSAssert(_normalized, @"The matrix needs to be normalized first");
 	
 	// (input - mean) / standardDeviation
 	// Since mu has been negated initially, we add instead of subtracting.
@@ -462,7 +462,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (void)printMatrix {
-	LNKPrintMatrix("Design matrix", _matrix, _exampleCount, _columnCount);
+	LNKPrintMatrix("Matrix", _matrix, _exampleCount, _columnCount);
 }
 
 @end

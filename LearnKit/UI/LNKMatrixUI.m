@@ -1,15 +1,15 @@
 //
-//  LNKDesignMatrixUI.m
+//  LNKMatrixUI.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKDesignMatrixUI.h"
+#import "LNKMatrixUI.h"
 
 #import <AppKit/AppKit.h>
 
-@implementation LNKDesignMatrix (UI)
+@implementation LNKMatrix (UI)
 
 #if TARGET_OS_MAC
 - (NSImage *)imageForExampleAtIndex:(LNKSize)index width:(NSUInteger)width height:(NSUInteger)height {

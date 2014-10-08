@@ -16,7 +16,7 @@
 
 - (void)train {
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmGradientDescent class]], @"Unexpected algorithm");
-	LNK_learntheta_gd(self.designMatrix, [self _thetaVector], self.algorithm, ^(const LNKFloat *thetaVector) {
+	LNK_learntheta_gd(self.matrix, [self _thetaVector], self.algorithm, ^(const LNKFloat *thetaVector) {
 #pragma unused(thetaVector)
 		return [self _evaluateCostFunction];
 	});

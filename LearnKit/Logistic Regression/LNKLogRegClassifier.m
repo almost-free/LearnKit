@@ -8,7 +8,7 @@
 #import "LNKLogRegClassifier.h"
 
 #import "_LNKLogRegClassifierLBFGS_AC.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
@@ -16,8 +16,8 @@
 	LNKFloat *_thetaVector;
 }
 
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	self = [super initWithDesignMatrix:matrix optimizationAlgorithm:algorithm];
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
+	self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm];
 	if (self) {
 		// The Theta vector is initially zero.
 		_thetaVector = LNKFloatCalloc(matrix.columnCount);
@@ -52,7 +52,7 @@
 
 - (void)_setThetaVector:(const LNKFloat *)thetaVector {
 	NSParameterAssert(thetaVector);
-	LNKFloatCopy(_thetaVector, thetaVector, self.designMatrix.columnCount);
+	LNKFloatCopy(_thetaVector, thetaVector, self.matrix.columnCount);
 }
 
 @end

@@ -8,7 +8,7 @@
 #import "LNKNaiveBayesClassifier.h"
 
 #import "_LNKNaiveBayesClassifierAC.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 
 @implementation LNKNaiveBayesClassifier {
 	NSPointerArray *_columnsToValues;
@@ -28,11 +28,11 @@
 
 - (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex {
 	NSParameterAssert(values);
-	NSParameterAssert(columnIndex < self.designMatrix.columnCount);
+	NSParameterAssert(columnIndex < self.matrix.columnCount);
 	
 	if (!_columnsToValues) {
 		_columnsToValues = [[NSPointerArray alloc] initWithOptions:NSPointerFunctionsStrongMemory];
-		_columnsToValues.count = self.designMatrix.columnCount;
+		_columnsToValues.count = self.matrix.columnCount;
 	}
 	
 	[_columnsToValues insertPointer:values atIndex:columnIndex];

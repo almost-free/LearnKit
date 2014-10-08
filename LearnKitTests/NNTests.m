@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKNeuralNetClassifier.h"
 #import "LNKNeuralNetClassifierPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
@@ -30,7 +30,7 @@
 	NSString *theta1Path = [bundle pathForResource:@"ex3data1_theta1" ofType:@"dat"];
 	NSString *theta2Path = [bundle pathForResource:@"ex3data1_theta2" ofType:@"dat"];
 	
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
 																 matrixValueType:LNKValueTypeDouble
 															   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 														   outputVectorValueType:LNKValueTypeUInt8
@@ -43,7 +43,7 @@
 		algorithm.lambda = 1;
 	}
 	
-	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithDesignMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	[matrix release];
 	[algorithm release];
@@ -82,7 +82,7 @@
 	NSString *matrixPath = [bundle pathForResource:@"ex3data1_X" ofType:@"dat"];
 	NSString *outputVectorPath = [bundle pathForResource:@"ex3data1_y" ofType:@"dat"];
 	
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
 																 matrixValueType:LNKValueTypeDouble
 															   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 														   outputVectorValueType:LNKValueTypeUInt8
@@ -91,7 +91,7 @@
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
 	
-	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithDesignMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	classifier.hiddenLayerCount = 1;
 	classifier.hiddenLayerUnitCount = 25;
 	

@@ -8,8 +8,8 @@
 #import "_LNKKMeansClassifierAC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKDesignMatrix.h"
-#import "LNKDesignMatrixPrivate.h"
+#import "LNKMatrix.h"
+#import "LNKMatrixPrivate.h"
 #import "LNKKMeansClassifierPrivate.h"
 
 @implementation _LNKKMeansClassifierAC {
@@ -21,11 +21,11 @@
 - (void)_setRandomClusters:(LNKFloat *)clusterCentroids {
 	NSParameterAssert(clusterCentroids);
 	
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	
 	NSMutableIndexSet *usedIndices = [[NSMutableIndexSet alloc] init];
 	
@@ -47,7 +47,7 @@
 - (LNKSize)_closestClusterToExample:(const LNKFloat *)example {
 	NSParameterAssert(example);
 	
-	const LNKSize columnCount = self.designMatrix.columnCount;
+	const LNKSize columnCount = self.matrix.columnCount;
 	const LNKSize clusterCount = self.classes.count;
 	const LNKFloat *clusterCentroids = [self _clusterCentroids];
 	
@@ -70,11 +70,11 @@
 }
 
 - (void)train {
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize iterationCount = self.iterationCount;
 	LNKFloat *clusterCentroids = [self _clusterCentroids];
 	
@@ -118,7 +118,7 @@
 
 - (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
 	NSParameterAssert(featureVector);
-	NSParameterAssert(length == self.designMatrix.columnCount);
+	NSParameterAssert(length == self.matrix.columnCount);
 	
 	return [NSNumber numberWithLNKSize:[self _closestClusterToExample:featureVector]];
 }

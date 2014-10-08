@@ -9,7 +9,7 @@
 
 @interface LNKPredictor (Private)
 
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm;
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm;
 
 /* For subclasses to override: */
 

@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, LNKKNNOutputFunction) {
 /// Predicted values depend on the output function used.
 @interface LNKKNNClassifier : LNKClassifier
 
-/// The value of `k` must be >= 1 and less than the number of examples in the design matrix.
+/// The value of `k` must be >= 1 and less than the number of examples in the matrix.
 /// The default value is 1.
 @property (nonatomic) LNKSize k;
 

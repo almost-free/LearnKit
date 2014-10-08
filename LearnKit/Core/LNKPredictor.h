@@ -5,7 +5,7 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-@class LNKDesignMatrix;
+@class LNKMatrix;
 @protocol LNKOptimizationAlgorithm;
 
 /// Abstract
@@ -15,9 +15,9 @@
 
 /// Not all optimization algorithms are supported for all predictors.
 /// Check each predictor's documentation for more information.
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm;
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm;
 
-@property (nonatomic, readonly) LNKDesignMatrix *designMatrix;
+@property (nonatomic, readonly) LNKMatrix *matrix;
 @property (nonatomic, readonly) id <LNKOptimizationAlgorithm> algorithm;
 
 - (void)train;

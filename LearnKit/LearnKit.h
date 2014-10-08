@@ -7,7 +7,7 @@
 
 #import <LearnKit/LNKTypes.h>
 
-#import <LearnKit/LNKDesignMatrix.h>
+#import <LearnKit/LNKMatrix.h>
 #import <LearnKit/LNKLinRegPredictor.h>
 #import <LearnKit/LNKLogRegClassifier.h>
 #import <LearnKit/LNKNeuralNetClassifier.h>

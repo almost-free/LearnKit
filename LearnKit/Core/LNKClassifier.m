@@ -8,8 +8,8 @@
 #import "LNKClassifier.h"
 
 #import "LNKClassifierPrivate.h"
-#import "LNKDesignMatrix.h"
-#import "LNKDesignMatrixPrivate.h"
+#import "LNKMatrix.h"
+#import "LNKMatrixPrivate.h"
 
 @implementation LNKClass
 
@@ -109,10 +109,10 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	NSMapTable *_classesToProbabilities;
 }
 
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 	NSParameterAssert(classes);
 	
-	if (!(self = [super initWithDesignMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm]))
+	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm]))
 		return nil;
 	
 	_classes = [classes retain];
@@ -158,11 +158,11 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 }
 
 - (LNKFloat)computeClassificationAccuracy {
-	LNKDesignMatrix *designMatrix = self.designMatrix;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKSize hits = 0;
 	

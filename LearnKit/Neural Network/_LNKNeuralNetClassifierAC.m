@@ -10,8 +10,8 @@
 #import "fmincg.h"
 #import "LNKAccelerate.h"
 #import "LNKClassifierPrivate.h"
-#import "LNKDesignMatrix.h"
-#import "LNKDesignMatrixPrivate.h"
+#import "LNKMatrix.h"
+#import "LNKMatrixPrivate.h"
 #import "LNKMemoryBufferManager.h"
 #import "LNKNeuralNetClassifierPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
@@ -50,12 +50,12 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	LNKClasses *classes = self.classes;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	const LNKFloat *outputVector = matrix.outputVector;
 	const LNKSize inputLayerOffset = 1, layerPrior = 1;
 	
 	LNKSize *unitsInThetaVector = malloc(thetaVectorCount * sizeof(LNKSize)); // Cache
@@ -143,8 +143,8 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
-	LNKDesignMatrix *designMatrix = self.designMatrix;
-	const LNKSize exampleCount = designMatrix.exampleCount;
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	
 	LNKSize *unitsInThetaVector = malloc(thetaVectorCount * sizeof(LNKSize)); // Cache
@@ -224,7 +224,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	LNKSize rowCount[thetaVectorCount];
 	
 	// input layer -> first hidden layer
-	columnCount[0] = self.designMatrix.columnCount /* already includes the ones column */;
+	columnCount[0] = self.matrix.columnCount /* already includes the ones column */;
 	rowCount[0] = hiddenLayerUnitCount;
 	
 	// last hidden layer -> output layer
@@ -272,7 +272,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	const LNKFloat *currentInputLayer = featureVector;
-	LNKSize currentInputLayerLength = self.designMatrix.columnCount;
+	LNKSize currentInputLayerLength = self.matrix.columnCount;
 	
 	for (LNKSize layer = 0; layer < thetaVectorCount; layer++) {
 		LNKSize rows, columns;
@@ -323,7 +323,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	NSParameterAssert(featureVector);
 	NSParameterAssert(length);
 	
-	NSAssert(length == self.designMatrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the design matrix");
+	NSAssert(length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't do matrix multiplication.
 	
 	LNKFloat *outputLayer;
@@ -340,11 +340,12 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 - (LNKFloat)_evaluateCostFunctionForExamplesInRange:(NSRange)range {
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	LNKClasses *classes = self.classes;
 	const LNKSize classesCount = self.classes.count;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *classOutputVector = matrix.outputVector;
 	const int classesCountInt = (int)classesCount;
 	const LNKFloat one = 1;
 	
@@ -363,7 +364,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		LNK_vlog(logVector, outputLayer, &classesCountInt);
 		
 		LNK_vclr(outputVector, UNIT_STRIDE, classesCount);
-		const LNKSize index = [classes indexForClass:[LNKClass classWithUnsignedInteger:designMatrix.outputVector[m]]];
+		const LNKSize index = [classes indexForClass:[LNKClass classWithUnsignedInteger:classOutputVector[m]]];
 		
 		// The output vector y will only hold a 1 for the example corresponding to the true class.
 		outputVector[index] = -1; // Note -y log(h)...
@@ -393,7 +394,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 }
 
 - (LNKFloat)_evaluateCostFunction {
-	const LNKSize exampleCount = self.designMatrix.exampleCount;
+	const LNKSize exampleCount = self.matrix.exampleCount;
 	const NSUInteger processorCount = _parallelProcessorCount();
 	LNKFloat *results = LNKFloatAlloc(processorCount);
 	

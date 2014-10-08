@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKKNNClassifier.h"
 
 @interface KNNTests : XCTestCase
@@ -19,9 +19,9 @@
 
 - (void)test1 {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex2data1" ofType:@"csv"];
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
 	
-	LNKKNNClassifier *classifier = [[LNKKNNClassifier alloc] initWithDesignMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
+	LNKKNNClassifier *classifier = [[LNKKNNClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
 	[matrix release];
 	
 	for (LNKSize k = 1; k <= 10; k++) {

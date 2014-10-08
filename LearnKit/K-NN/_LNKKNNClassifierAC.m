@@ -7,7 +7,7 @@
 
 #import "_LNKKNNClassifierAC.h"
 
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 
 typedef struct {
 	LNKFloat distance;
@@ -23,7 +23,7 @@ typedef struct {
 - (LNKClass *)_predictMostFrequentClassWithClosestExamples:(_LNKDistanceBucket *)closestExamples k:(LNKSize)k {
 	NSParameterAssert(closestExamples);
 	
-	const LNKFloat *outputVector = self.designMatrix.outputVector;
+	const LNKFloat *outputVector = self.matrix.outputVector;
 	
 	// Vote for the item with the most-frequent class.
 	NSCountedSet *frequencies = [[NSCountedSet alloc] initWithCapacity:k];
@@ -58,7 +58,7 @@ typedef struct {
 - (NSNumber *)_predictAverageOutputWithClosestExamples:(_LNKDistanceBucket *)closestExamples k:(LNKSize)k {
 	NSParameterAssert(closestExamples);
 	
-	const LNKFloat *outputVector = self.designMatrix.outputVector;
+	const LNKFloat *outputVector = self.matrix.outputVector;
 	
 	LNKFloat sum = 0;
 	
@@ -75,13 +75,13 @@ typedef struct {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The feature vector must not be NULL" userInfo:nil];
 	}
 	
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	
-	if (length != designMatrix.columnCount) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"The length of the feature vector is incompatible with the design matrix" userInfo:nil];
+	if (length != matrix.columnCount) {
+		@throw [NSException exceptionWithName:NSGenericException reason:@"The length of the feature vector is incompatible with the matrix" userInfo:nil];
 	}
 	
-	const LNKSize exampleCount = designMatrix.exampleCount;
+	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize k = self.k;
 	const LNKKNNDistanceFunction distanceFunction = self.distanceFunction;
 	
@@ -89,7 +89,7 @@ typedef struct {
 	
 	// Find the k closest examples.
 	for (LNKSize example = 0; example < exampleCount; example++) {
-		const LNKFloat *exampleRow = [designMatrix exampleAtIndex:example];
+		const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
 		const LNKFloat distance = distanceFunction(exampleRow, featureVector, length);
 		
 		if (example < k) {

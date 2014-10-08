@@ -40,7 +40,7 @@ typedef NSUInteger(^LNKClassMapper)(LNKClass *aClass);
 @interface LNKClassifier : LNKPredictor
 
 /// The desired output classes must be non-`nil`.
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes;
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes;
 
 @property (nonatomic, retain, readonly) LNKClasses *classes;
 

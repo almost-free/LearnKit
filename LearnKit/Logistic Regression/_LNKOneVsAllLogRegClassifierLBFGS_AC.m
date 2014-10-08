@@ -9,7 +9,7 @@
 
 #import "_LNKLogRegClassifierLBFGS_AC.h"
 #import "LNKClassifierPrivate.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKPredictorPrivate.h"
 
 @implementation _LNKOneVsAllLogRegClassifierLBFGS_AC {
@@ -23,15 +23,15 @@
 		_classesToClassifiers = [[NSMapTable strongToStrongObjectsMapTable] retain];
 	
 	for (LNKClass *class in self.classes) {
-		LNKDesignMatrix *designMatrixCopy = [self.designMatrix copy];
-		[designMatrixCopy modifyOutputVector:^(LNKFloat *outputVector, LNKSize m) {
+		LNKMatrix *matrixCopy = [self.matrix copy];
+		[matrixCopy modifyOutputVector:^(LNKFloat *outputVector, LNKSize m) {
 			for (LNKSize i = 0; i < m; i++) {
 				outputVector[i] = (outputVector[i] == class.unsignedIntegerValue) ? 1 : 0;
 			}
 		}];
 		
-		_LNKLogRegClassifierLBFGS_AC *classifier = [[_LNKLogRegClassifierLBFGS_AC alloc] initWithDesignMatrix:designMatrixCopy implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:self.algorithm];
-		[designMatrixCopy release];
+		_LNKLogRegClassifierLBFGS_AC *classifier = [[_LNKLogRegClassifierLBFGS_AC alloc] initWithMatrix:matrixCopy implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:self.algorithm];
+		[matrixCopy release];
 		[classifier train];
 		
 		[_classesToClassifiers setObject:classifier forKey:class];

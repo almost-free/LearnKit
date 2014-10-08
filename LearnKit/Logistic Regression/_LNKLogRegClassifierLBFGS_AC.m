@@ -17,10 +17,10 @@
 - (void)train {
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unsupported algorithm class");
 	LNKOptimizationAlgorithmLBFGS *algorithm = self.algorithm;
-	const LNKSize columnCount = self.designMatrix.columnCount;
+	const LNKSize columnCount = self.matrix.columnCount;
 	LNKFloat *thetaVector = [self _thetaVector];
 	
-	LNK_learntheta_lbfgs(self.designMatrix, thetaVector, algorithm.regularizationEnabled, algorithm.lambda, ^(LNKFloat *h, LNKSize m) {
+	LNK_learntheta_lbfgs(self.matrix, thetaVector, algorithm.regularizationEnabled, algorithm.lambda, ^(LNKFloat *h, LNKSize m) {
 		LNK_vsigmoid(h, m);
 	}, ^(const LNKFloat *theta) {
 		LNKFloatCopy(thetaVector, theta, columnCount);
@@ -32,12 +32,12 @@
 	NSParameterAssert(featureVector);
 	NSParameterAssert(length);
 	
-	NSAssert(length == self.designMatrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the design matrix");
+	NSAssert(length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't compute the dot product.
 	
 	// sigmoid(theta . input)
 	LNKFloat result;
-	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featureVector, UNIT_STRIDE, &result, self.designMatrix.columnCount);
+	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featureVector, UNIT_STRIDE, &result, self.matrix.columnCount);
 	LNK_vsigmoid(&result, 1);
 	
 	return [NSNumber numberWithLNKFloat:result];
@@ -45,15 +45,15 @@
 
 - (LNKFloat)_evaluateCostFunction {
 	LNKFloat *thetaVector = [self _thetaVector];
-	LNKDesignMatrix *designMatrix = self.designMatrix;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *matrix = designMatrix.matrixBuffer;
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	// 1 / m * sum(-y log(h) - (1 - y) log(1 - h))
 	LNKFloat *workgroup = LNKFloatAlloc(exampleCount);
-	LNK_mmul(matrix, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
+	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
 	
 	// At this point, `workgroup` contains 'h'.
 	LNK_vsigmoid(workgroup, exampleCount);
@@ -111,14 +111,14 @@
 
 - (LNKFloat)computeClassificationAccuracy {
 	LNKFloat *thetaVector = [self _thetaVector];
-	LNKDesignMatrix *designMatrix = self.designMatrix;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *matrix = designMatrix.matrixBuffer;
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKFloat *workgroup = LNKFloatAlloc(exampleCount);
-	LNK_mmul(matrix, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
+	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
 	
 	LNKSize hits = 0;
 	

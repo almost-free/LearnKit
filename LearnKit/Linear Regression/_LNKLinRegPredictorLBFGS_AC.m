@@ -18,11 +18,11 @@
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unexpected algorithm");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = self.algorithm;
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	LNKFloat *thetaVector = [self _thetaVector];
-	const LNKSize columnCount = designMatrix.columnCount;
+	const LNKSize columnCount = matrix.columnCount;
 	
-	LNK_learntheta_lbfgs(designMatrix, thetaVector, algorithm.regularizationEnabled, algorithm.lambda, NULL, ^LNKFloat(const LNKFloat *theta) {
+	LNK_learntheta_lbfgs(matrix, thetaVector, algorithm.regularizationEnabled, algorithm.lambda, NULL, ^LNKFloat(const LNKFloat *theta) {
 		LNKFloatCopy(thetaVector, theta, columnCount);
 		return [self _evaluateCostFunction];
 	});

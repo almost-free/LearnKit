@@ -8,7 +8,7 @@
 #import "_LNKLinRegPredictorAC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKLinRegPredictorPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
@@ -19,20 +19,20 @@
 	NSParameterAssert(featureVector);
 	NSParameterAssert(length);
 	
-	NSAssert(length == self.designMatrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the design matrix");
+	NSAssert(length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't compute the dot product.
 	
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	LNKFloat *thetaVector = [self _thetaVector];
-	const LNKSize columnCount = designMatrix.columnCount;
+	const LNKSize columnCount = matrix.columnCount;
 	LNKFloat *featureVectorNormalizedIfNeeded = (LNKFloat *)featureVector;
 	
-	if (designMatrix.normalized) {
+	if (matrix.normalized) {
 		// We need to copy the input vector since -normalizeVector: works in-place.
 		featureVectorNormalizedIfNeeded = LNKFloatAlloc(columnCount);
 		LNKFloatCopy(featureVectorNormalizedIfNeeded, featureVector, columnCount);
 		
-		[designMatrix normalizeVector:featureVectorNormalizedIfNeeded];
+		[matrix normalizeVector:featureVectorNormalizedIfNeeded];
 	}
 	
 	LNKFloat result;
@@ -46,16 +46,16 @@
 
 - (LNKFloat)_evaluateCostFunction {
 	LNKFloat *thetaVector = [self _thetaVector];
-	LNKDesignMatrix *designMatrix = self.designMatrix;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
 	
 	// 1 / (2 m) * sum(pow(h - y, 2))
 	const LNKFloat factor = 0.5 / exampleCount;
 	LNKFloat *workgroup = LNKFloatAlloc(exampleCount);
 	
-	LNK_mmul(designMatrix.matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
-	LNK_vsub(workgroup, UNIT_STRIDE, designMatrix.outputVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount);
+	LNK_mmul(matrix.matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
+	LNK_vsub(workgroup, UNIT_STRIDE, matrix.outputVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount);
 	LNKFloat sum;
 	LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sum, exampleCount);
 	free(workgroup);

@@ -8,7 +8,7 @@
 #import "_LNKLinRegPredictorNE_AC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKLinRegPredictorPrivate.h"
 #import "LNKPredictorPrivate.h"
 #import "LNKUtilities.h"
@@ -16,10 +16,10 @@
 @implementation _LNKLinRegPredictorNE_AC
 
 - (void)train {
-	LNKDesignMatrix *designMatrix = self.designMatrix;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	
 	LNKFloat *transpose = LNKFloatAlloc(exampleCount * columnCount);
 	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transpose, UNIT_STRIDE, columnCount, exampleCount);
@@ -31,7 +31,7 @@
 	
 	LNKFloat *workspace = LNKFloatAlloc(exampleCount * columnCount);
 	LNK_mmul(square, UNIT_STRIDE, transpose, UNIT_STRIDE, workspace, UNIT_STRIDE, columnCount, exampleCount, columnCount);
-	LNK_mmul(workspace, UNIT_STRIDE, designMatrix.outputVector, UNIT_STRIDE, [self _thetaVector], UNIT_STRIDE, columnCount, 1, exampleCount);
+	LNK_mmul(workspace, UNIT_STRIDE, matrix.outputVector, UNIT_STRIDE, [self _thetaVector], UNIT_STRIDE, columnCount, 1, exampleCount);
 	
 	free(transpose);
 	free(square);

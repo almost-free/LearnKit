@@ -9,12 +9,12 @@
 
 #import "lbfgs.h"
 #import "LNKAccelerate.h"
-#import "LNKDesignMatrixPrivate.h"
 #import "LNKFastFloatQueue.h"
+#import "LNKMatrixPrivate.h"
 
 @interface LBFGSContext : NSObject
 
-@property (nonatomic, assign) LNKDesignMatrix *designMatrix;
+@property (nonatomic, assign) LNKMatrix *matrix;
 @property (nonatomic) LNKFloat *thetaVector;
 @property (nonatomic, copy) LNKHFunction hFunction;
 @property (nonatomic, copy) LNKCostFunction costFunction;
@@ -57,8 +57,8 @@ void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *tran
 	LNK_vsmul(workgroupCC, UNIT_STRIDE, &factor, workgroupCC, UNIT_STRIDE, columnCount);
 }
 
-void LNK_learntheta_gd(LNKDesignMatrix *designMatrix, LNKFloat *thetaVector, LNKOptimizationAlgorithmGradientDescent *algorithm, LNKCostFunction costFunction) {
-	assert(designMatrix);
+void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimizationAlgorithmGradientDescent *algorithm, LNKCostFunction costFunction) {
+	assert(matrix);
 	assert(thetaVector);
 	assert(algorithm);
 	
@@ -67,11 +67,11 @@ void LNK_learntheta_gd(LNKDesignMatrix *designMatrix, LNKFloat *thetaVector, LNK
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
 	
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
@@ -173,28 +173,28 @@ static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t
 	LBFGSContext *context = (__bridge LBFGSContext *)instance;
 	assert(context);
 	
-	LNKDesignMatrix *designMatrix = context.designMatrix;
+	LNKMatrix *matrix = context.matrix;
 	LNKFloat *workgroupCC = context.workgroupCC;
 	LNKFloat *workgroupCC2 = context.workgroupCC2;
-	const LNKSize columnCount = designMatrix.columnCount;
+	const LNKSize columnCount = matrix.columnCount;
 	assert(columnCount == (LNKSize)n);
 	
-	_LNKComputeBatchGradient(designMatrix.matrixBuffer, context.transposeMatrix, x, designMatrix.outputVector, context.workgroupEC, workgroupCC, workgroupCC2, designMatrix.exampleCount, columnCount, context.regularizationEnabled, context.lambda, context.hFunction);
+	_LNKComputeBatchGradient(matrix.matrixBuffer, context.transposeMatrix, x, matrix.outputVector, context.workgroupEC, workgroupCC, workgroupCC2, matrix.exampleCount, columnCount, context.regularizationEnabled, context.lambda, context.hFunction);
 	
 	// Give liblbfgs our gradient and return the cost.
 	LNKFloatCopy(g, workgroupCC, columnCount);
 	return context.costFunction(x);
 }
 
-void LNK_learntheta_lbfgs(LNKDesignMatrix *designMatrix, LNKFloat *thetaVector, BOOL regularizationEnabled, LNKFloat lambda, LNKHFunction hFunction, LNKCostFunction costFunction) {
-	assert(designMatrix);
+void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regularizationEnabled, LNKFloat lambda, LNKHFunction hFunction, LNKCostFunction costFunction) {
+	assert(matrix);
 	assert(thetaVector);
 	assert(costFunction);
 	
 	assert(sizeof(lbfgsfloatval_t) == sizeof(LNKFloat));
 	
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
 	
 	// Minimizing theta
 	lbfgsfloatval_t *theta = calloc(columnCount, sizeof(lbfgsfloatval_t));
@@ -210,10 +210,10 @@ void LNK_learntheta_lbfgs(LNKDesignMatrix *designMatrix, LNKFloat *thetaVector, 
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
 	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(designMatrix.matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	LNK_mtrans(matrix.matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
 	
 	LBFGSContext *context = [[LBFGSContext alloc] init];
-	context.designMatrix = designMatrix;
+	context.matrix = matrix;
 	context.thetaVector = thetaVector;
 	context.hFunction = hFunction;
 	context.costFunction = costFunction;

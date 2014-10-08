@@ -8,7 +8,7 @@
 #import "_LNKNaiveBayesClassifierAC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKNaiveBayesClassifierPrivate.h"
 
 @implementation _LNKNaiveBayesClassifierAC {
@@ -18,21 +18,21 @@
 
 - (void)train {
 	LNKClasses *classes = self.classes;
-	LNKDesignMatrix *designMatrix = self.designMatrix;
+	LNKMatrix *matrix = self.matrix;
 	
 	if (classes.count < 2) {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"There should be at least two classes" userInfo:nil];
 	}
 	
-	if (designMatrix.hasBiasColumn) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"Design matrices used with a Naive Bayes classifier should not have a bias column" userInfo:nil];
+	if (matrix.hasBiasColumn) {
+		@throw [NSException exceptionWithName:NSGenericException reason:@"Matrices used with a Naive Bayes classifier should not have a bias column" userInfo:nil];
 	}
 	
 	NSPointerArray *columnsToValues = [self _columnsToValues];
 	const LNKSize classCount = classes.count;
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	if (_priorProbabilities)
 		free(_priorProbabilities);
@@ -67,7 +67,7 @@
 			for (NSNumber *value in values) {
 				for (LNKSize example = 0; example < exampleCount; example++) {
 					if (outputVector[example] == outputValue) {
-						const LNKFloat *exampleRow = [designMatrix exampleAtIndex:example];
+						const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
 						
 						if (exampleRow[column] == value.unsignedIntegerValue) {
 							valuesVector[valueIndex]++;
@@ -89,7 +89,7 @@
 	NSParameterAssert(length);
 	
 	LNKClasses *classes = self.classes;
-	const LNKSize columnCount = self.designMatrix.columnCount;
+	const LNKSize columnCount = self.matrix.columnCount;
 	LNKSize classIndex = 0;
 	
 	LNKClass *bestClass = nil;

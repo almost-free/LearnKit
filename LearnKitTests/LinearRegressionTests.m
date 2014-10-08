@@ -10,8 +10,8 @@
 
 #import "LNKAccelerate.h"
 #import "LNKAccelerateGradient.h"
-#import "LNKDesignMatrix.h"
-#import "LNKDesignMatrixTestExtras.h"
+#import "LNKMatrix.h"
+#import "LNKMatrixTestExtras.h"
 #import "LNKLinRegPredictor.h"
 #import "LNKLinRegPredictorPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
@@ -29,12 +29,12 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (LNKLinRegPredictor *)_ex1PredictorGD {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:0.01 stochastic:NO iterationCount:1500];
 	
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:matrix
-																  implementationType:LNKImplementationTypeAccelerate
-															   optimizationAlgorithm:algorithm];
+	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+															implementationType:LNKImplementationTypeAccelerate
+														 optimizationAlgorithm:algorithm];
 	[matrix release];
 	
 	return [predictor autorelease];
@@ -42,12 +42,12 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (LNKLinRegPredictor *)_ex1PredictorNE {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:matrix
-																  implementationType:LNKImplementationTypeAccelerate
-															   optimizationAlgorithm:algorithm];
+	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+															implementationType:LNKImplementationTypeAccelerate
+														 optimizationAlgorithm:algorithm];
 	[algorithm release];
 	[matrix release];
 	
@@ -57,8 +57,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)test1Loading {
 	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
 	XCTAssertNotNil(predictor, @"We should have a predictor");
-	XCTAssertEqual(predictor.designMatrix.exampleCount, 97UL, @"There should be 97 examples");
-	XCTAssertEqual(predictor.designMatrix.columnCount, 2UL, @"There should be 2 columns: one feature column and the predicted value column");
+	XCTAssertEqual(predictor.matrix.exampleCount, 97UL, @"There should be 97 examples");
+	XCTAssertEqual(predictor.matrix.columnCount, 2UL, @"There should be 2 columns: one feature column and the predicted value column");
 }
 
 - (void)test2InitialCost {
@@ -83,14 +83,14 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)test5Normalization {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data2" ofType:@"txt"];
 	
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	[matrix normalize];
 	
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:0.01 stochastic:NO iterationCount:400];
 	
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:matrix
-																  implementationType:LNKImplementationTypeAccelerate
-															   optimizationAlgorithm:algorithm];
+	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+															implementationType:LNKImplementationTypeAccelerate
+														 optimizationAlgorithm:algorithm];
 	[matrix release];
 	[predictor train];
 	
@@ -107,10 +107,10 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)_testExample1Data2WithAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data2" ofType:@"txt"];
 	
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:matrix
-																  implementationType:LNKImplementationTypeAccelerate
-															   optimizationAlgorithm:algorithm];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+															implementationType:LNKImplementationTypeAccelerate
+														 optimizationAlgorithm:algorithm];
 	[matrix release];
 	[predictor train];
 	
@@ -140,12 +140,12 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	[self measureBlock:^{
 		NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"CASP" ofType:@"csv"];
 		
-		LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+		LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 		LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
 		
-		LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:matrix
-																	  implementationType:LNKImplementationTypeAccelerate
-																   optimizationAlgorithm:algorithm];
+		LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+																implementationType:LNKImplementationTypeAccelerate
+															 optimizationAlgorithm:algorithm];
 		[matrix release];
 		[algorithm release];
 		
@@ -162,16 +162,16 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSString *xPath = [bundle pathForResource:@"ex5_X" ofType:@"dat"];
 	NSString *yPath = [bundle pathForResource:@"ex5_y" ofType:@"dat"];
 	
-	LNKDesignMatrix *designMatrix = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-																	 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-																		  exampleCount:12 columnCount:1 addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+														exampleCount:12 columnCount:1 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 1;
 	
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:designMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
-	[designMatrix release];
+	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	[matrix release];
 	[algorithm release];
 	
 	const LNKFloat thetaVector[2] = { 1, 1 };
@@ -182,11 +182,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize exampleCount = designMatrix.exampleCount;
-	const LNKSize columnCount = designMatrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
 	
-	const LNKFloat *matrixBuffer = designMatrix.matrixBuffer;
-	const LNKFloat *outputVector = designMatrix.outputVector;
+	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
@@ -221,11 +221,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	const LNKSize exampleCount = 12;
 	
-	LNKDesignMatrix *trainingSet = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 																	outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
 																		 exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
 	
-	LNKDesignMatrix *cvSet = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 															  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
 																   exampleCount:21 columnCount:1 addingOnesColumn:YES];
 	
@@ -240,7 +240,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.regularizationEnabled = NO;
 		
-		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
@@ -248,7 +248,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
-		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
+		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
 		[cvPredictor _setThetaVector:[trainPredictor _thetaVector]];
 		cvError[i-1] = [cvPredictor _evaluateCostFunction];
 		
@@ -283,16 +283,16 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	const LNKSize exampleCount = 12;
 	
-	LNKDesignMatrix *trainingSet_ = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *trainingSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 																	 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
 																		  exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
-	LNKDesignMatrix *trainingSet = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
+	LNKMatrix *trainingSet = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
 	[trainingSet normalize];
 	
-	LNKDesignMatrix *cvSet_ = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *cvSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 															   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
 																	exampleCount:21 columnCount:1 addingOnesColumn:YES];
-	LNKDesignMatrix *cvSet = [[cvSet_ polynomialMatrixOfDegree:8] retain];
+	LNKMatrix *cvSet = [[cvSet_ polynomialMatrixOfDegree:8] retain];
 	[cvSet normalizeWithMeanVector:[trainingSet normalizationMeanVector] standardDeviationVector:[trainingSet normalizationStandardDeviationVector]];
 	
 	LNKFloat trainError[exampleCount];
@@ -306,7 +306,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.regularizationEnabled = NO;
 		
-		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
@@ -314,7 +314,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
-		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithDesignMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
+		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
 		[cvPredictor _setThetaVector:[trainPredictor _thetaVector]];
 		cvError[i-1] = [cvPredictor _evaluateCostFunction];
 		

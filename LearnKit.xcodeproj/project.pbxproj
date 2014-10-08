@@ -20,7 +20,7 @@
 		C975913819A04B44003D3A48 /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
 		C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
 		C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
-		C9943ABC19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */; };
+		C9943ABC19A5AECF00F91C25 /* LNKMatrixTestExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C9943ABB19A5AECF00F91C25 /* LNKMatrixTestExtras.m */; };
 		C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */; };
 		C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */; };
 		C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */; };
@@ -74,9 +74,9 @@
 		C9CBD29719E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */; };
 		C9CBD29819E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */; };
 		C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD29219E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h */; };
-		C9CBD2A319E5D4D400AE71D5 /* LNKDesignMatrixUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2A119E5D4D400AE71D5 /* LNKDesignMatrixUI.h */; };
-		C9CBD2A419E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */; };
-		C9CBD2A519E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */; };
+		C9CBD2A319E5D4D400AE71D5 /* LNKMatrixUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2A119E5D4D400AE71D5 /* LNKMatrixUI.h */; };
+		C9CBD2A419E5D4D400AE71D5 /* LNKMatrixUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A219E5D4D400AE71D5 /* LNKMatrixUI.m */; };
+		C9CBD2A519E5D4D400AE71D5 /* LNKMatrixUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A219E5D4D400AE71D5 /* LNKMatrixUI.m */; };
 		C9CBD2B019E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2A719E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h */; };
 		C9CBD2B119E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */; };
 		C9CBD2B219E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */; };
@@ -164,8 +164,8 @@
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
 		C971B4EE19DA6ECB0066C78B /* StructureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StructureTests.m; path = LearnKitTests/StructureTests.m; sourceTree = SOURCE_ROOT; };
 		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9943ABA19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LNKDesignMatrixTestExtras.h; path = LearnKitTests/LNKDesignMatrixTestExtras.h; sourceTree = SOURCE_ROOT; };
-		C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LNKDesignMatrixTestExtras.m; path = LearnKitTests/LNKDesignMatrixTestExtras.m; sourceTree = SOURCE_ROOT; };
+		C9943ABA19A5AECF00F91C25 /* LNKMatrixTestExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LNKMatrixTestExtras.h; path = LearnKitTests/LNKMatrixTestExtras.h; sourceTree = SOURCE_ROOT; };
+		C9943ABB19A5AECF00F91C25 /* LNKMatrixTestExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LNKMatrixTestExtras.m; path = LearnKitTests/LNKMatrixTestExtras.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelerateTests.m; path = LearnKitTests/AccelerateTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinearRegressionTests.m; path = LearnKitTests/LinearRegressionTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogisticRegressionTests.m; path = LearnKitTests/LogisticRegressionTests.m; sourceTree = SOURCE_ROOT; };
@@ -208,8 +208,8 @@
 		C9CBD29019E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNeuralNetClassifier.h; sourceTree = "<group>"; };
 		C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKNeuralNetClassifier.m; sourceTree = "<group>"; };
 		C9CBD29219E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNeuralNetClassifierPrivate.h; sourceTree = "<group>"; };
-		C9CBD2A119E5D4D400AE71D5 /* LNKDesignMatrixUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrixUI.h; sourceTree = "<group>"; };
-		C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDesignMatrixUI.m; sourceTree = "<group>"; };
+		C9CBD2A119E5D4D400AE71D5 /* LNKMatrixUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixUI.h; sourceTree = "<group>"; };
+		C9CBD2A219E5D4D400AE71D5 /* LNKMatrixUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixUI.m; sourceTree = "<group>"; };
 		C9CBD2A719E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKLogRegClassifierLBFGS_AC.h; sourceTree = "<group>"; };
 		C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKLogRegClassifierLBFGS_AC.m; sourceTree = "<group>"; };
 		C9CBD2A919E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKOneVsAllLogRegClassifierLBFGS_AC.h; sourceTree = "<group>"; };
@@ -357,8 +357,8 @@
 				C9AE9EF319AC2D2100A47178 /* NNTests.m */,
 				C93E7B0619D79C140014C67B /* PCATests.m */,
 				C971B4EE19DA6ECB0066C78B /* StructureTests.m */,
-				C9943ABA19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.h */,
-				C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */,
+				C9943ABA19A5AECF00F91C25 /* LNKMatrixTestExtras.h */,
+				C9943ABB19A5AECF00F91C25 /* LNKMatrixTestExtras.m */,
 				C9CBD2F619E5D69000AE71D5 /* Data */,
 				C9AC1F96199AFDCC006D7122 /* Supporting Files */,
 			);
@@ -459,8 +459,8 @@
 		C9CBD2A019E5D4D400AE71D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				C9CBD2A119E5D4D400AE71D5 /* LNKDesignMatrixUI.h */,
-				C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */,
+				C9CBD2A119E5D4D400AE71D5 /* LNKMatrixUI.h */,
+				C9CBD2A219E5D4D400AE71D5 /* LNKMatrixUI.m */,
 			);
 			name = UI;
 			path = LearnKit/UI;
@@ -576,7 +576,7 @@
 				C9CBD28C19E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h in Headers */,
 				C9CBD27C19E5D46900AE71D5 /* LNKLinRegPredictor.h in Headers */,
 				C9CBD2D919E5D52900AE71D5 /* LNKMatrix.h in Headers */,
-				C9CBD2A319E5D4D400AE71D5 /* LNKDesignMatrixUI.h in Headers */,
+				C9CBD2A319E5D4D400AE71D5 /* LNKMatrixUI.h in Headers */,
 				C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */,
 				C9CBD26119E5D44400AE71D5 /* LNKKNNClassifier.h in Headers */,
 				C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */,
@@ -711,7 +711,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9CBD2A419E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */,
+				C9CBD2A419E5D4D400AE71D5 /* LNKMatrixUI.m in Sources */,
 				C9CBD27D19E5D46900AE71D5 /* LNKLinRegPredictor.m in Sources */,
 				C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
 				C9CBD27A19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */,
@@ -751,7 +751,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9CBD26319E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
-				C9943ABC19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m in Sources */,
+				C9943ABC19A5AECF00F91C25 /* LNKMatrixTestExtras.m in Sources */,
 				C9CBD2E819E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,
 				C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */,
 				C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */,
@@ -773,7 +773,7 @@
 				C9CBD2EE19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
 				C9CBD2B219E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */,
 				C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */,
-				C9CBD2A519E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */,
+				C9CBD2A519E5D4D400AE71D5 /* LNKMatrixUI.m in Sources */,
 				C9CBD2DE19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */,
 				C9CBD2BC19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
 				C9CBD2D719E5D52900AE71D5 /* LNKClassifier.m in Sources */,

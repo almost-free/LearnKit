@@ -1,17 +1,17 @@
 //
-//  LNKDesignMatrixTestExtras.m
+//  LNKMatrixTestExtras.m
 //  LearnKit Tests
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKDesignMatrixTestExtras.h"
+#import "LNKMatrixTestExtras.h"
 
 #import "LNKAccelerate.h"
 
-@implementation LNKDesignMatrix (TestExtras)
+@implementation LNKMatrix (TestExtras)
 
-- (LNKDesignMatrix *)polynomialMatrixOfDegree:(LNKSize)maxDegree {
+- (LNKMatrix *)polynomialMatrixOfDegree:(LNKSize)maxDegree {
 	NSParameterAssert(maxDegree);
 	NSParameterAssert(self.columnCount == 2);
 	
@@ -23,7 +23,7 @@
 	const LNKSize hasOnesColumn = 1;
 	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
 	
-	return [[[LNKDesignMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, exampleCount);
 		
 		for (LNKSize row = 0; row < exampleCount; row++) {
@@ -52,7 +52,7 @@ static inline LNKSize _columnsInPairwisePolynomialMatrixOfDegree(LNKSize maxDegr
 	return columns;
 }
 
-- (LNKDesignMatrix *)pairwisePolynomialMatrixOfDegree:(LNKSize)maxDegree {
+- (LNKMatrix *)pairwisePolynomialMatrixOfDegree:(LNKSize)maxDegree {
 	NSParameterAssert(maxDegree);
 	
 	const LNKFloat *currentBuffer = self.matrixBuffer;
@@ -63,7 +63,7 @@ static inline LNKSize _columnsInPairwisePolynomialMatrixOfDegree(LNKSize maxDegr
 	const LNKSize hasOnesColumn = 1;
 	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
 	
-	return [[[LNKDesignMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, exampleCount);
 		
 		// Start after the ones column.

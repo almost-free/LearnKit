@@ -8,7 +8,7 @@
 #import "LNKKMeansClassifier.h"
 
 #import "_LNKKMeansClassifierAC.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKPredictorPrivate.h"
 
 @implementation LNKKMeansClassifier {
@@ -29,20 +29,20 @@
 	return Nil;
 }
 
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 	if (classes.count < 2) {
 		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"At least two clusters should be used when running k-means" userInfo:nil];
 	}
 	
 	if (matrix.hasBiasColumn) {
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The design matrix used with k-means should not have a bias column" userInfo:nil];
+		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The matrix used with k-means should not have a bias column" userInfo:nil];
 	}
 	
 	if (classes.count >= matrix.exampleCount) {
 		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The number of clusters should be less than the number of examples" userInfo:nil];
 	}
 	
-	self = [super initWithDesignMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
+	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
 	if (self) {
 		_iterationCount = DEFAULT_ITERATION_COUNT;
 		_clusterCentroids = LNKFloatAlloc(classes.count * matrix.columnCount);
@@ -74,12 +74,12 @@
 
 - (void)_setClusterCentroids:(const LNKFloat *)clusterCentroids {
 	NSParameterAssert(clusterCentroids);
-	LNKFloatCopy(_clusterCentroids, clusterCentroids, self.classes.count * self.designMatrix.columnCount);
+	LNKFloatCopy(_clusterCentroids, clusterCentroids, self.classes.count * self.matrix.columnCount);
 }
 
 - (const LNKFloat *)centroidForClusterAtIndex:(LNKSize)clusterIndex {
 	NSParameterAssert(clusterIndex < self.classes.count);
-	return _clusterCentroids + clusterIndex * self.designMatrix.columnCount;
+	return _clusterCentroids + clusterIndex * self.matrix.columnCount;
 }
 
 @end

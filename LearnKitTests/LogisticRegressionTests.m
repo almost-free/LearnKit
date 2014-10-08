@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKDesignMatrixTestExtras.h"
+#import "LNKMatrixTestExtras.h"
 #import "LNKLogRegClassifier.h"
 #import "LNKLogRegClassifierPrivate.h"
 #import "LNKOneVsAllLogRegClassifier.h"
@@ -25,9 +25,9 @@
 
 - (void)test1 {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex2data1" ofType:@"csv"];
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithDesignMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
 	
 	[matrix release];
@@ -51,15 +51,15 @@
 
 - (void)_testRegularizationWithLambda:(LNKFloat)lambda cost:(LNKFloat)cost {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex2data2" ofType:@"txt"];
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
-	LNKDesignMatrix *polynomialMatrix = [matrix pairwisePolynomialMatrixOfDegree:6];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *polynomialMatrix = [matrix pairwisePolynomialMatrixOfDegree:6];
 	XCTAssertEqual(polynomialMatrix.columnCount, 28UL, @"We should have 28 columns");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = lambda;
 	
-	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithDesignMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
 	
 	[matrix release];
@@ -83,7 +83,7 @@
 	NSString *matrixPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex3data1_X" ofType:@"dat"];
 	NSString *outputVectorPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex3data1_y" ofType:@"dat"];
 	
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
 																 matrixValueType:LNKValueTypeDouble
 															   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 														   outputVectorValueType:LNKValueTypeUInt8
@@ -95,7 +95,7 @@
 	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 0.1;
 	
-	LNKOneVsAllLogRegClassifier *classifier = [[LNKOneVsAllLogRegClassifier alloc] initWithDesignMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKOneVsAllLogRegClassifier *classifier = [[LNKOneVsAllLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	[classifier train];
 	
 	[algorithm release];

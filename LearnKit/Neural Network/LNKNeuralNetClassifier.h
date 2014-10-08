@@ -13,9 +13,9 @@
 
 #warning TODO: assert correct values
 #warning TODO: better way of specifying classes
-// Each neural network has an input layer whose size is equal to the design matrix's feature count,
+// Each neural network has an input layer whose size is equal to the matrix's feature count,
 // an output layer whose size is equal to the number of classes, and at least 1 hidden layer.
-// Design matrices used with neural network classifiers should have a bias column.
+// Matrices used with neural network classifiers should have a bias column.
 
 /// The default number of hidden layers is 1.
 @property (nonatomic) LNKSize hiddenLayerCount;

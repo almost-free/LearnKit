@@ -9,7 +9,7 @@
 
 #import "_LNKNeuralNetClassifierAC.h"
 #import "LNKAccelerate.h"
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKNeuralNetClassifierPrivate.h"
 #import "LNKPredictorPrivate.h"
@@ -26,10 +26,10 @@ typedef struct {
 
 #define EPS 0.12
 
-- (instancetype)initWithDesignMatrix:(LNKDesignMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	NSAssert(matrix.hasBiasColumn, @"The design matrix should have a bias column");
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
+	NSAssert(matrix.hasBiasColumn, @"The matrix should have a bias column");
 	
-	if (!(self = [super initWithDesignMatrix:matrix optimizationAlgorithm:algorithm]))
+	if (!(self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm]))
 		return nil;
 	
 	_hiddenLayerCount = 1;

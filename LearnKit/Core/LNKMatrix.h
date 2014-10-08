@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (void)normalize;
 - (void)normalizeWithMeanVector:(const LNKFloat *)meanVector standardDeviationVector:(const LNKFloat *)sdVector;
 
-/// An exception will be thrown if these methods are called prior to normalizing the design matrix.
+/// An exception will be thrown if these methods are called prior to normalizing the matrix.
 - (const LNKFloat *)normalizationMeanVector NS_RETURNS_INNER_POINTER;
 - (const LNKFloat *)normalizationStandardDeviationVector NS_RETURNS_INNER_POINTER;
 
