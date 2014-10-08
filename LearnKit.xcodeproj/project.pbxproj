@@ -1,0 +1,998 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C90ACF4E19E3581E002DB7C0 /* Flu.csv in Resources */ = {isa = PBXBuildFile; fileRef = C90ACF4D19E3581E002DB7C0 /* Flu.csv */; };
+		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
+		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
+		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
+		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
+		C93E7B0919D79D3E0014C67B /* ex7data1_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C93E7B0819D79CE80014C67B /* ex7data1_X.dat */; };
+		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
+		C94FE76A19BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
+		C94FE76B19BA8A6600251EDF /* fmincg.h in Headers */ = {isa = PBXBuildFile; fileRef = C94FE76819BA8A6600251EDF /* fmincg.h */; };
+		C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D950C19DFBCE300BE8768 /* KNNTests.m */; };
+		C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C971B4EE19DA6ECB0066C78B /* StructureTests.m */; };
+		C975913819A04B44003D3A48 /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
+		C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
+		C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
+		C9943ABC19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */; };
+		C9943ABE19A5D47B00F91C25 /* ex2data2.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9943ABD19A5D47B00F91C25 /* ex2data2.txt */; };
+		C997C48819CE0BEB005317A2 /* ex5_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48619CE0BEB005317A2 /* ex5_X.dat */; };
+		C997C48919CE0BEB005317A2 /* ex5_y.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48719CE0BEB005317A2 /* ex5_y.dat */; };
+		C997C48C19CE2E1E005317A2 /* ex5_Xcv.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48A19CE2E1E005317A2 /* ex5_Xcv.dat */; };
+		C997C48D19CE2E1E005317A2 /* ex5_ycv.dat in Resources */ = {isa = PBXBuildFile; fileRef = C997C48B19CE2E1E005317A2 /* ex5_ycv.dat */; };
+		C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */; };
+		C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */; };
+		C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */; };
+		C9AC0DF419A04CD10061DEFB /* ex1data1.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9AC0DF019A04CD10061DEFB /* ex1data1.txt */; };
+		C9AC0DF519A04CD10061DEFB /* ex1data2.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9AC0DF119A04CD10061DEFB /* ex1data2.txt */; };
+		C9AC0DF619A04CD10061DEFB /* ex2data1.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9AC0DF219A04CD10061DEFB /* ex2data1.csv */; };
+		C9AE9EF219AC2CD800A47178 /* ex3data1_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9AE9EF119AC2CD800A47178 /* ex3data1_X.dat */; };
+		C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE9EF319AC2D2100A47178 /* NNTests.m */; };
+		C9AE9EF619AC32CE00A47178 /* ex3data1_y.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9AE9EF519AC32CE00A47178 /* ex3data1_y.dat */; };
+		C9B0E56619B22AED00565FA6 /* ex3data1_theta1.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9B0E56419B22AED00565FA6 /* ex3data1_theta1.dat */; };
+		C9B0E56719B22AED00565FA6 /* ex3data1_theta2.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9B0E56519B22AED00565FA6 /* ex3data1_theta2.dat */; };
+		C9CBD24619E5D3F500AE71D5 /* LNKAccelerate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */; };
+		C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */; };
+		C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */; };
+		C9CBD24919E5D3F500AE71D5 /* LNKAccelerateGradient.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD24419E5D3F500AE71D5 /* LNKAccelerateGradient.h */; };
+		C9CBD24A19E5D3F500AE71D5 /* LNKAccelerateGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24519E5D3F500AE71D5 /* LNKAccelerateGradient.m */; };
+		C9CBD24B19E5D3F500AE71D5 /* LNKAccelerateGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24519E5D3F500AE71D5 /* LNKAccelerateGradient.m */; };
+		C9CBD25219E5D41D00AE71D5 /* _LNKKMeansClassifierAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD24D19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.h */; };
+		C9CBD25319E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24E19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m */; };
+		C9CBD25419E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24E19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m */; };
+		C9CBD25519E5D41D00AE71D5 /* LNKKMeansClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD24F19E5D41D00AE71D5 /* LNKKMeansClassifier.h */; };
+		C9CBD25619E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD25019E5D41D00AE71D5 /* LNKKMeansClassifier.m */; };
+		C9CBD25719E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD25019E5D41D00AE71D5 /* LNKKMeansClassifier.m */; };
+		C9CBD25819E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD25119E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h */; };
+		C9CBD25E19E5D44400AE71D5 /* _LNKKNNClassifierAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD25A19E5D44400AE71D5 /* _LNKKNNClassifierAC.h */; };
+		C9CBD25F19E5D44400AE71D5 /* _LNKKNNClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD25B19E5D44400AE71D5 /* _LNKKNNClassifierAC.m */; };
+		C9CBD26019E5D44400AE71D5 /* _LNKKNNClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD25B19E5D44400AE71D5 /* _LNKKNNClassifierAC.m */; };
+		C9CBD26119E5D44400AE71D5 /* LNKKNNClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD25C19E5D44400AE71D5 /* LNKKNNClassifier.h */; };
+		C9CBD26219E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD25D19E5D44400AE71D5 /* LNKKNNClassifier.m */; };
+		C9CBD26319E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD25D19E5D44400AE71D5 /* LNKKNNClassifier.m */; };
+		C9CBD27019E5D46900AE71D5 /* _LNKLinRegPredictorAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD26519E5D46900AE71D5 /* _LNKLinRegPredictorAC.h */; };
+		C9CBD27119E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26619E5D46900AE71D5 /* _LNKLinRegPredictorAC.m */; };
+		C9CBD27219E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26619E5D46900AE71D5 /* _LNKLinRegPredictorAC.m */; };
+		C9CBD27319E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD26719E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h */; };
+		C9CBD27419E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26819E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m */; };
+		C9CBD27519E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26819E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m */; };
+		C9CBD27619E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD26919E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.h */; };
+		C9CBD27719E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26A19E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m */; };
+		C9CBD27819E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26A19E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m */; };
+		C9CBD27919E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD26B19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h */; };
+		C9CBD27A19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26C19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m */; };
+		C9CBD27B19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26C19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m */; };
+		C9CBD27C19E5D46900AE71D5 /* LNKLinRegPredictor.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD26D19E5D46900AE71D5 /* LNKLinRegPredictor.h */; };
+		C9CBD27D19E5D46900AE71D5 /* LNKLinRegPredictor.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26E19E5D46900AE71D5 /* LNKLinRegPredictor.m */; };
+		C9CBD27E19E5D46900AE71D5 /* LNKLinRegPredictor.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD26E19E5D46900AE71D5 /* LNKLinRegPredictor.m */; };
+		C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD26F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h */; };
+		C9CBD28619E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD28119E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h */; };
+		C9CBD28719E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD28219E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m */; };
+		C9CBD28819E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD28219E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m */; };
+		C9CBD28919E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD28319E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h */; };
+		C9CBD28A19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD28419E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m */; };
+		C9CBD28B19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD28419E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m */; };
+		C9CBD28C19E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD28519E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h */; };
+		C9CBD29319E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD28E19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h */; };
+		C9CBD29419E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD28F19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m */; };
+		C9CBD29519E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD28F19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m */; };
+		C9CBD29619E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD29019E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h */; };
+		C9CBD29719E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */; };
+		C9CBD29819E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */; };
+		C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD29219E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h */; };
+		C9CBD2A319E5D4D400AE71D5 /* LNKDesignMatrixUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2A119E5D4D400AE71D5 /* LNKDesignMatrixUI.h */; };
+		C9CBD2A419E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */; };
+		C9CBD2A519E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */; };
+		C9CBD2B019E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2A719E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h */; };
+		C9CBD2B119E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */; };
+		C9CBD2B219E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */; };
+		C9CBD2B319E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2A919E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h */; };
+		C9CBD2B419E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2AA19E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m */; };
+		C9CBD2B519E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2AA19E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m */; };
+		C9CBD2B619E5D4FD00AE71D5 /* LNKLogRegClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2AB19E5D4FD00AE71D5 /* LNKLogRegClassifier.h */; };
+		C9CBD2B719E5D4FD00AE71D5 /* LNKLogRegClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2AC19E5D4FD00AE71D5 /* LNKLogRegClassifier.m */; };
+		C9CBD2B819E5D4FD00AE71D5 /* LNKLogRegClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2AC19E5D4FD00AE71D5 /* LNKLogRegClassifier.m */; };
+		C9CBD2B919E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2AD19E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h */; };
+		C9CBD2BA19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2AE19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.h */; };
+		C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2AF19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m */; };
+		C9CBD2BC19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2AF19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m */; };
+		C9CBD2D519E5D52900AE71D5 /* LNKClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2BE19E5D52900AE71D5 /* LNKClassifier.h */; };
+		C9CBD2D619E5D52900AE71D5 /* LNKClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */; };
+		C9CBD2D719E5D52900AE71D5 /* LNKClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */; };
+		C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */; };
+		C9CBD2D919E5D52900AE71D5 /* LNKDesignMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C119E5D52900AE71D5 /* LNKDesignMatrix.h */; };
+		C9CBD2DA19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */; };
+		C9CBD2DB19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */; };
+		C9CBD2DC19E5D52900AE71D5 /* LNKDesignMatrixPCA.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C319E5D52900AE71D5 /* LNKDesignMatrixPCA.h */; };
+		C9CBD2DD19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */; };
+		C9CBD2DE19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */; };
+		C9CBD2DF19E5D52900AE71D5 /* LNKDesignMatrixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C519E5D52900AE71D5 /* LNKDesignMatrixPrivate.h */; };
+		C9CBD2E019E5D52900AE71D5 /* LNKFastArray.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */; };
+		C9CBD2E119E5D52900AE71D5 /* LNKFastArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */; };
+		C9CBD2E219E5D52900AE71D5 /* LNKFastArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */; };
+		C9CBD2E319E5D52900AE71D5 /* LNKFastFloatQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */; };
+		C9CBD2E419E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C919E5D52900AE71D5 /* LNKFastFloatQueue.m */; };
+		C9CBD2E519E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C919E5D52900AE71D5 /* LNKFastFloatQueue.m */; };
+		C9CBD2E619E5D52900AE71D5 /* LNKMemoryBufferManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2CA19E5D52900AE71D5 /* LNKMemoryBufferManager.h */; };
+		C9CBD2E719E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2CB19E5D52900AE71D5 /* LNKMemoryBufferManager.m */; };
+		C9CBD2E819E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2CB19E5D52900AE71D5 /* LNKMemoryBufferManager.m */; };
+		C9CBD2E919E5D52900AE71D5 /* LNKOptimizationAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2CC19E5D52900AE71D5 /* LNKOptimizationAlgorithm.h */; };
+		C9CBD2EA19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2CD19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m */; };
+		C9CBD2EB19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2CD19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m */; };
+		C9CBD2EC19E5D52900AE71D5 /* LNKPredictor.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2CE19E5D52900AE71D5 /* LNKPredictor.h */; };
+		C9CBD2ED19E5D52900AE71D5 /* LNKPredictor.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2CF19E5D52900AE71D5 /* LNKPredictor.m */; };
+		C9CBD2EE19E5D52900AE71D5 /* LNKPredictor.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2CF19E5D52900AE71D5 /* LNKPredictor.m */; };
+		C9CBD2EF19E5D52900AE71D5 /* LNKPredictorPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2D019E5D52900AE71D5 /* LNKPredictorPrivate.h */; };
+		C9CBD2F019E5D52900AE71D5 /* LNKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2D119E5D52900AE71D5 /* LNKTypes.h */; };
+		C9CBD2F119E5D52900AE71D5 /* LNKTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2D219E5D52900AE71D5 /* LNKTypes.m */; };
+		C9CBD2F219E5D52900AE71D5 /* LNKTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2D219E5D52900AE71D5 /* LNKTypes.m */; };
+		C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2D319E5D52900AE71D5 /* LNKUtilities.h */; };
+		C9CBD2F419E5D52900AE71D5 /* LNKUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */; };
+		C9CBD2F519E5D52900AE71D5 /* LNKUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */; };
+		C9DC903C19D6251F00774B29 /* ex7data2_X.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9DC903B19D6251F00774B29 /* ex7data2_X.dat */; };
+		C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC903E19D6253900774B29 /* KMeansTests.m */; };
+		C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
+		C9EC1A1419A97C5B00AFF6F5 /* CASP.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9EC1A1319A97C5B00AFF6F5 /* CASP.csv */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C94F194E19A6EFA400BD967C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9AC1F74199AFC1F006D7122 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C975911E19A04AF9003D3A48;
+			remoteInfo = LearnKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C90ACF4D19E3581E002DB7C0 /* Flu.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Flu.csv; path = LearnKitTests/Flu.csv; sourceTree = SOURCE_ROOT; };
+		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
+		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
+		C93E7B0819D79CE80014C67B /* ex7data1_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex7data1_X.dat; path = LearnKitTests/ex7data1_X.dat; sourceTree = SOURCE_ROOT; };
+		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
+		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
+		C94FE76719BA8A6600251EDF /* fmincg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmincg.m; sourceTree = "<group>"; };
+		C94FE76819BA8A6600251EDF /* fmincg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fmincg.h; sourceTree = "<group>"; };
+		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
+		C971B4EE19DA6ECB0066C78B /* StructureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StructureTests.m; path = LearnKitTests/StructureTests.m; sourceTree = SOURCE_ROOT; };
+		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9943ABA19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LNKDesignMatrixTestExtras.h; path = LearnKitTests/LNKDesignMatrixTestExtras.h; sourceTree = SOURCE_ROOT; };
+		C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LNKDesignMatrixTestExtras.m; path = LearnKitTests/LNKDesignMatrixTestExtras.m; sourceTree = SOURCE_ROOT; };
+		C9943ABD19A5D47B00F91C25 /* ex2data2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex2data2.txt; path = LearnKitTests/ex2data2.txt; sourceTree = SOURCE_ROOT; };
+		C997C48619CE0BEB005317A2 /* ex5_X.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex5_X.dat; path = LearnKitTests/ex5_X.dat; sourceTree = SOURCE_ROOT; };
+		C997C48719CE0BEB005317A2 /* ex5_y.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex5_y.dat; path = LearnKitTests/ex5_y.dat; sourceTree = SOURCE_ROOT; };
+		C997C48A19CE2E1E005317A2 /* ex5_Xcv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex5_Xcv.dat; path = LearnKitTests/ex5_Xcv.dat; sourceTree = SOURCE_ROOT; };
+		C997C48B19CE2E1E005317A2 /* ex5_ycv.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex5_ycv.dat; path = LearnKitTests/ex5_ycv.dat; sourceTree = SOURCE_ROOT; };
+		C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelerateTests.m; path = LearnKitTests/AccelerateTests.m; sourceTree = SOURCE_ROOT; };
+		C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinearRegressionTests.m; path = LearnKitTests/LinearRegressionTests.m; sourceTree = SOURCE_ROOT; };
+		C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogisticRegressionTests.m; path = LearnKitTests/LogisticRegressionTests.m; sourceTree = SOURCE_ROOT; };
+		C9AC0DE019A04CC00061DEFB /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = LearnKit/Prefix.pch; sourceTree = SOURCE_ROOT; };
+		C9AC0DF019A04CD10061DEFB /* ex1data1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex1data1.txt; path = LearnKitTests/ex1data1.txt; sourceTree = SOURCE_ROOT; };
+		C9AC0DF119A04CD10061DEFB /* ex1data2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex1data2.txt; path = LearnKitTests/ex1data2.txt; sourceTree = SOURCE_ROOT; };
+		C9AC0DF219A04CD10061DEFB /* ex2data1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ex2data1.csv; path = LearnKitTests/ex2data1.csv; sourceTree = SOURCE_ROOT; };
+		C9AC0DF319A04CD10061DEFB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKitTests/Info.plist; sourceTree = SOURCE_ROOT; };
+		C9AC1F8C199AFD57006D7122 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		C9AC1F94199AFDCC006D7122 /* LearnKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9AE9EF119AC2CD800A47178 /* ex3data1_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_X.dat; path = LearnKitTests/ex3data1_X.dat; sourceTree = SOURCE_ROOT; };
+		C9AE9EF319AC2D2100A47178 /* NNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NNTests.m; path = LearnKitTests/NNTests.m; sourceTree = SOURCE_ROOT; };
+		C9AE9EF519AC32CE00A47178 /* ex3data1_y.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_y.dat; path = LearnKitTests/ex3data1_y.dat; sourceTree = SOURCE_ROOT; };
+		C9B0E56419B22AED00565FA6 /* ex3data1_theta1.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_theta1.dat; path = LearnKitTests/ex3data1_theta1.dat; sourceTree = SOURCE_ROOT; };
+		C9B0E56519B22AED00565FA6 /* ex3data1_theta2.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex3data1_theta2.dat; path = LearnKitTests/ex3data1_theta2.dat; sourceTree = SOURCE_ROOT; };
+		C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAccelerate.h; sourceTree = "<group>"; };
+		C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKAccelerate.m; sourceTree = "<group>"; };
+		C9CBD24419E5D3F500AE71D5 /* LNKAccelerateGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAccelerateGradient.h; sourceTree = "<group>"; };
+		C9CBD24519E5D3F500AE71D5 /* LNKAccelerateGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKAccelerateGradient.m; sourceTree = "<group>"; };
+		C9CBD24D19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKKMeansClassifierAC.h; sourceTree = "<group>"; };
+		C9CBD24E19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKKMeansClassifierAC.m; sourceTree = "<group>"; };
+		C9CBD24F19E5D41D00AE71D5 /* LNKKMeansClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKKMeansClassifier.h; sourceTree = "<group>"; };
+		C9CBD25019E5D41D00AE71D5 /* LNKKMeansClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKKMeansClassifier.m; sourceTree = "<group>"; };
+		C9CBD25119E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKKMeansClassifierPrivate.h; sourceTree = "<group>"; };
+		C9CBD25A19E5D44400AE71D5 /* _LNKKNNClassifierAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKKNNClassifierAC.h; sourceTree = "<group>"; };
+		C9CBD25B19E5D44400AE71D5 /* _LNKKNNClassifierAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKKNNClassifierAC.m; sourceTree = "<group>"; };
+		C9CBD25C19E5D44400AE71D5 /* LNKKNNClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKKNNClassifier.h; sourceTree = "<group>"; };
+		C9CBD25D19E5D44400AE71D5 /* LNKKNNClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKKNNClassifier.m; sourceTree = "<group>"; };
+		C9CBD26519E5D46900AE71D5 /* _LNKLinRegPredictorAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKLinRegPredictorAC.h; sourceTree = "<group>"; };
+		C9CBD26619E5D46900AE71D5 /* _LNKLinRegPredictorAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKLinRegPredictorAC.m; sourceTree = "<group>"; };
+		C9CBD26719E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKLinRegPredictorGD_AC.h; sourceTree = "<group>"; };
+		C9CBD26819E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKLinRegPredictorGD_AC.m; sourceTree = "<group>"; };
+		C9CBD26919E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKLinRegPredictorLBFGS_AC.h; sourceTree = "<group>"; };
+		C9CBD26A19E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKLinRegPredictorLBFGS_AC.m; sourceTree = "<group>"; };
+		C9CBD26B19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKLinRegPredictorNE_AC.h; sourceTree = "<group>"; };
+		C9CBD26C19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKLinRegPredictorNE_AC.m; sourceTree = "<group>"; };
+		C9CBD26D19E5D46900AE71D5 /* LNKLinRegPredictor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKLinRegPredictor.h; sourceTree = "<group>"; };
+		C9CBD26E19E5D46900AE71D5 /* LNKLinRegPredictor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKLinRegPredictor.m; sourceTree = "<group>"; };
+		C9CBD26F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKLinRegPredictorPrivate.h; sourceTree = "<group>"; };
+		C9CBD28119E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKNaiveBayesClassifierAC.h; sourceTree = "<group>"; };
+		C9CBD28219E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKNaiveBayesClassifierAC.m; sourceTree = "<group>"; };
+		C9CBD28319E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNaiveBayesClassifier.h; sourceTree = "<group>"; };
+		C9CBD28419E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKNaiveBayesClassifier.m; sourceTree = "<group>"; };
+		C9CBD28519E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNaiveBayesClassifierPrivate.h; sourceTree = "<group>"; };
+		C9CBD28E19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKNeuralNetClassifierAC.h; sourceTree = "<group>"; };
+		C9CBD28F19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKNeuralNetClassifierAC.m; sourceTree = "<group>"; };
+		C9CBD29019E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNeuralNetClassifier.h; sourceTree = "<group>"; };
+		C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKNeuralNetClassifier.m; sourceTree = "<group>"; };
+		C9CBD29219E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNeuralNetClassifierPrivate.h; sourceTree = "<group>"; };
+		C9CBD2A119E5D4D400AE71D5 /* LNKDesignMatrixUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrixUI.h; sourceTree = "<group>"; };
+		C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDesignMatrixUI.m; sourceTree = "<group>"; };
+		C9CBD2A719E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKLogRegClassifierLBFGS_AC.h; sourceTree = "<group>"; };
+		C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKLogRegClassifierLBFGS_AC.m; sourceTree = "<group>"; };
+		C9CBD2A919E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKOneVsAllLogRegClassifierLBFGS_AC.h; sourceTree = "<group>"; };
+		C9CBD2AA19E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKOneVsAllLogRegClassifierLBFGS_AC.m; sourceTree = "<group>"; };
+		C9CBD2AB19E5D4FD00AE71D5 /* LNKLogRegClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKLogRegClassifier.h; sourceTree = "<group>"; };
+		C9CBD2AC19E5D4FD00AE71D5 /* LNKLogRegClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKLogRegClassifier.m; sourceTree = "<group>"; };
+		C9CBD2AD19E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKLogRegClassifierPrivate.h; sourceTree = "<group>"; };
+		C9CBD2AE19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKOneVsAllLogRegClassifier.h; sourceTree = "<group>"; };
+		C9CBD2AF19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKOneVsAllLogRegClassifier.m; sourceTree = "<group>"; };
+		C9CBD2BE19E5D52900AE71D5 /* LNKClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKClassifier.h; sourceTree = "<group>"; };
+		C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKClassifier.m; sourceTree = "<group>"; };
+		C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKClassifierPrivate.h; sourceTree = "<group>"; };
+		C9CBD2C119E5D52900AE71D5 /* LNKDesignMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrix.h; sourceTree = "<group>"; };
+		C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDesignMatrix.m; sourceTree = "<group>"; };
+		C9CBD2C319E5D52900AE71D5 /* LNKDesignMatrixPCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrixPCA.h; sourceTree = "<group>"; };
+		C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDesignMatrixPCA.m; sourceTree = "<group>"; };
+		C9CBD2C519E5D52900AE71D5 /* LNKDesignMatrixPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrixPrivate.h; sourceTree = "<group>"; };
+		C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKFastArray.h; sourceTree = "<group>"; };
+		C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKFastArray.m; sourceTree = "<group>"; };
+		C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKFastFloatQueue.h; sourceTree = "<group>"; };
+		C9CBD2C919E5D52900AE71D5 /* LNKFastFloatQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKFastFloatQueue.m; sourceTree = "<group>"; };
+		C9CBD2CA19E5D52900AE71D5 /* LNKMemoryBufferManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMemoryBufferManager.h; sourceTree = "<group>"; };
+		C9CBD2CB19E5D52900AE71D5 /* LNKMemoryBufferManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMemoryBufferManager.m; sourceTree = "<group>"; };
+		C9CBD2CC19E5D52900AE71D5 /* LNKOptimizationAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKOptimizationAlgorithm.h; sourceTree = "<group>"; };
+		C9CBD2CD19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKOptimizationAlgorithm.m; sourceTree = "<group>"; };
+		C9CBD2CE19E5D52900AE71D5 /* LNKPredictor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKPredictor.h; sourceTree = "<group>"; };
+		C9CBD2CF19E5D52900AE71D5 /* LNKPredictor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKPredictor.m; sourceTree = "<group>"; };
+		C9CBD2D019E5D52900AE71D5 /* LNKPredictorPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKPredictorPrivate.h; sourceTree = "<group>"; };
+		C9CBD2D119E5D52900AE71D5 /* LNKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKTypes.h; sourceTree = "<group>"; };
+		C9CBD2D219E5D52900AE71D5 /* LNKTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKTypes.m; sourceTree = "<group>"; };
+		C9CBD2D319E5D52900AE71D5 /* LNKUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKUtilities.h; sourceTree = "<group>"; };
+		C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKUtilities.m; sourceTree = "<group>"; };
+		C9DC903B19D6251F00774B29 /* ex7data2_X.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ex7data2_X.dat; path = LearnKitTests/ex7data2_X.dat; sourceTree = SOURCE_ROOT; };
+		C9DC903E19D6253900774B29 /* KMeansTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMeansTests.m; path = LearnKitTests/KMeansTests.m; sourceTree = SOURCE_ROOT; };
+		C9DCD6D319A03DF200AF3AEC /* arithmetic_ansi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arithmetic_ansi.h; path = liblbfgs/lib/arithmetic_ansi.h; sourceTree = SOURCE_ROOT; };
+		C9DCD6D419A03DF200AF3AEC /* lbfgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lbfgs.m; path = liblbfgs/lib/lbfgs.m; sourceTree = SOURCE_ROOT; };
+		C9DCD6D719A03E1700AF3AEC /* lbfgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lbfgs.h; path = liblbfgs/include/lbfgs.h; sourceTree = SOURCE_ROOT; };
+		C9EC1A1319A97C5B00AFF6F5 /* CASP.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CASP.csv; path = LearnKitTests/CASP.csv; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C975911B19A04AF9003D3A48 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */,
+				C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9AC1F91199AFDCC006D7122 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */,
+				C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C94FE76619BA8A6600251EDF /* fmincg */ = {
+			isa = PBXGroup;
+			children = (
+				C94FE76719BA8A6600251EDF /* fmincg.m */,
+				C94FE76819BA8A6600251EDF /* fmincg.h */,
+			);
+			path = fmincg;
+			sourceTree = SOURCE_ROOT;
+		};
+		C9AC1F73199AFC1F006D7122 = {
+			isa = PBXGroup;
+			children = (
+				C94FE76619BA8A6600251EDF /* fmincg */,
+				C9DCD6D219A03DDB00AF3AEC /* liblbfgs */,
+				C9AC1F7E199AFC1F006D7122 /* LearnKit */,
+				C9AC1F95199AFDCC006D7122 /* LearnKit Tests */,
+				C9AC1F8E199AFD61006D7122 /* Frameworks */,
+				C9AC1F7D199AFC1F006D7122 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9AC1F7D199AFC1F006D7122 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9AC1F94199AFDCC006D7122 /* LearnKitTests.xctest */,
+				C975911F19A04AF9003D3A48 /* LearnKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9AC1F7E199AFC1F006D7122 /* LearnKit */ = {
+			isa = PBXGroup;
+			children = (
+				C94F195019A6F0FF00BD967C /* Info.plist */,
+				C94F195119A6F0FF00BD967C /* LearnKit.h */,
+				C9AC0DE019A04CC00061DEFB /* Prefix.pch */,
+				C9CBD24119E5D3F500AE71D5 /* Accelerate Extensions */,
+				C9CBD2BD19E5D52900AE71D5 /* Core */,
+				C9CBD24C19E5D41D00AE71D5 /* K-Means */,
+				C9CBD25919E5D44400AE71D5 /* K-NN */,
+				C9CBD26419E5D46900AE71D5 /* Linear Regression */,
+				C9CBD2A619E5D4FD00AE71D5 /* Logistic Regression */,
+				C9CBD28019E5D48D00AE71D5 /* Naive Bayes */,
+				C9CBD28D19E5D4AD00AE71D5 /* Neural Network */,
+				C9CBD2A019E5D4D400AE71D5 /* UI */,
+			);
+			name = LearnKit;
+			path = LinearRegression;
+			sourceTree = "<group>";
+		};
+		C9AC1F8E199AFD61006D7122 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C90DDBC719CF1F80003220C7 /* Cocoa.framework */,
+				C9AC1F8C199AFD57006D7122 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9AC1F95199AFDCC006D7122 /* LearnKit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */,
+				C9DC903E19D6253900774B29 /* KMeansTests.m */,
+				C95D950C19DFBCE300BE8768 /* KNNTests.m */,
+				C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */,
+				C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */,
+				C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */,
+				C9AE9EF319AC2D2100A47178 /* NNTests.m */,
+				C93E7B0619D79C140014C67B /* PCATests.m */,
+				C971B4EE19DA6ECB0066C78B /* StructureTests.m */,
+				C9943ABA19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.h */,
+				C9943ABB19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m */,
+				C9AC1F96199AFDCC006D7122 /* Supporting Files */,
+			);
+			name = "LearnKit Tests";
+			path = LinearRegressionTests;
+			sourceTree = "<group>";
+		};
+		C9AC1F96199AFDCC006D7122 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9EC1A1319A97C5B00AFF6F5 /* CASP.csv */,
+				C90ACF4D19E3581E002DB7C0 /* Flu.csv */,
+				C9AC0DF019A04CD10061DEFB /* ex1data1.txt */,
+				C9AC0DF119A04CD10061DEFB /* ex1data2.txt */,
+				C9AC0DF219A04CD10061DEFB /* ex2data1.csv */,
+				C9943ABD19A5D47B00F91C25 /* ex2data2.txt */,
+				C9AE9EF119AC2CD800A47178 /* ex3data1_X.dat */,
+				C9AE9EF519AC32CE00A47178 /* ex3data1_y.dat */,
+				C9B0E56419B22AED00565FA6 /* ex3data1_theta1.dat */,
+				C9B0E56519B22AED00565FA6 /* ex3data1_theta2.dat */,
+				C997C48619CE0BEB005317A2 /* ex5_X.dat */,
+				C997C48719CE0BEB005317A2 /* ex5_y.dat */,
+				C997C48A19CE2E1E005317A2 /* ex5_Xcv.dat */,
+				C997C48B19CE2E1E005317A2 /* ex5_ycv.dat */,
+				C93E7B0819D79CE80014C67B /* ex7data1_X.dat */,
+				C9DC903B19D6251F00774B29 /* ex7data2_X.dat */,
+				C9AC0DF319A04CD10061DEFB /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C9CBD24119E5D3F500AE71D5 /* Accelerate Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */,
+				C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */,
+				C9CBD24419E5D3F500AE71D5 /* LNKAccelerateGradient.h */,
+				C9CBD24519E5D3F500AE71D5 /* LNKAccelerateGradient.m */,
+			);
+			name = "Accelerate Extensions";
+			path = "LearnKit/Accelerate Extensions";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD24C19E5D41D00AE71D5 /* K-Means */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD24D19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.h */,
+				C9CBD24E19E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m */,
+				C9CBD24F19E5D41D00AE71D5 /* LNKKMeansClassifier.h */,
+				C9CBD25019E5D41D00AE71D5 /* LNKKMeansClassifier.m */,
+				C9CBD25119E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h */,
+			);
+			name = "K-Means";
+			path = "LearnKit/K-Means";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD25919E5D44400AE71D5 /* K-NN */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD25A19E5D44400AE71D5 /* _LNKKNNClassifierAC.h */,
+				C9CBD25B19E5D44400AE71D5 /* _LNKKNNClassifierAC.m */,
+				C9CBD25C19E5D44400AE71D5 /* LNKKNNClassifier.h */,
+				C9CBD25D19E5D44400AE71D5 /* LNKKNNClassifier.m */,
+			);
+			name = "K-NN";
+			path = "LearnKit/K-NN";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD26419E5D46900AE71D5 /* Linear Regression */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD26519E5D46900AE71D5 /* _LNKLinRegPredictorAC.h */,
+				C9CBD26619E5D46900AE71D5 /* _LNKLinRegPredictorAC.m */,
+				C9CBD26719E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h */,
+				C9CBD26819E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m */,
+				C9CBD26919E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.h */,
+				C9CBD26A19E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m */,
+				C9CBD26B19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h */,
+				C9CBD26C19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m */,
+				C9CBD26D19E5D46900AE71D5 /* LNKLinRegPredictor.h */,
+				C9CBD26E19E5D46900AE71D5 /* LNKLinRegPredictor.m */,
+				C9CBD26F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h */,
+			);
+			name = "Linear Regression";
+			path = "LearnKit/Linear Regression";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD28019E5D48D00AE71D5 /* Naive Bayes */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD28119E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h */,
+				C9CBD28219E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m */,
+				C9CBD28319E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h */,
+				C9CBD28419E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m */,
+				C9CBD28519E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h */,
+			);
+			name = "Naive Bayes";
+			path = "LearnKit/Naive Bayes";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD28D19E5D4AD00AE71D5 /* Neural Network */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD28E19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h */,
+				C9CBD28F19E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m */,
+				C9CBD29019E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h */,
+				C9CBD29119E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m */,
+				C9CBD29219E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h */,
+			);
+			name = "Neural Network";
+			path = "LearnKit/Neural Network";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD2A019E5D4D400AE71D5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD2A119E5D4D400AE71D5 /* LNKDesignMatrixUI.h */,
+				C9CBD2A219E5D4D400AE71D5 /* LNKDesignMatrixUI.m */,
+			);
+			name = UI;
+			path = LearnKit/UI;
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD2A619E5D4FD00AE71D5 /* Logistic Regression */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD2A719E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h */,
+				C9CBD2A819E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m */,
+				C9CBD2A919E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h */,
+				C9CBD2AA19E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m */,
+				C9CBD2AB19E5D4FD00AE71D5 /* LNKLogRegClassifier.h */,
+				C9CBD2AC19E5D4FD00AE71D5 /* LNKLogRegClassifier.m */,
+				C9CBD2AD19E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h */,
+				C9CBD2AE19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.h */,
+				C9CBD2AF19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m */,
+			);
+			name = "Logistic Regression";
+			path = "LearnKit/Logistic Regression";
+			sourceTree = SOURCE_ROOT;
+		};
+		C9CBD2BD19E5D52900AE71D5 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C9CBD2BE19E5D52900AE71D5 /* LNKClassifier.h */,
+				C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */,
+				C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */,
+				C9CBD2C119E5D52900AE71D5 /* LNKDesignMatrix.h */,
+				C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */,
+				C9CBD2C319E5D52900AE71D5 /* LNKDesignMatrixPCA.h */,
+				C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */,
+				C9CBD2C519E5D52900AE71D5 /* LNKDesignMatrixPrivate.h */,
+				C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */,
+				C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */,
+				C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */,
+				C9CBD2C919E5D52900AE71D5 /* LNKFastFloatQueue.m */,
+				C9CBD2CA19E5D52900AE71D5 /* LNKMemoryBufferManager.h */,
+				C9CBD2CB19E5D52900AE71D5 /* LNKMemoryBufferManager.m */,
+				C9CBD2CC19E5D52900AE71D5 /* LNKOptimizationAlgorithm.h */,
+				C9CBD2CD19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m */,
+				C9CBD2CE19E5D52900AE71D5 /* LNKPredictor.h */,
+				C9CBD2CF19E5D52900AE71D5 /* LNKPredictor.m */,
+				C9CBD2D019E5D52900AE71D5 /* LNKPredictorPrivate.h */,
+				C9CBD2D119E5D52900AE71D5 /* LNKTypes.h */,
+				C9CBD2D219E5D52900AE71D5 /* LNKTypes.m */,
+				C9CBD2D319E5D52900AE71D5 /* LNKUtilities.h */,
+				C9CBD2D419E5D52900AE71D5 /* LNKUtilities.m */,
+			);
+			name = Core;
+			path = LearnKit/Core;
+			sourceTree = SOURCE_ROOT;
+		};
+		C9DCD6D219A03DDB00AF3AEC /* liblbfgs */ = {
+			isa = PBXGroup;
+			children = (
+				C9DCD6D319A03DF200AF3AEC /* arithmetic_ansi.h */,
+				C9DCD6D719A03E1700AF3AEC /* lbfgs.h */,
+				C9DCD6D419A03DF200AF3AEC /* lbfgs.m */,
+			);
+			name = liblbfgs;
+			path = LinearRegression;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C975911C19A04AF9003D3A48 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CBD28919E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h in Headers */,
+				C9CBD29619E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h in Headers */,
+				C9CBD24619E5D3F500AE71D5 /* LNKAccelerate.h in Headers */,
+				C9CBD24919E5D3F500AE71D5 /* LNKAccelerateGradient.h in Headers */,
+				C9CBD25219E5D41D00AE71D5 /* _LNKKMeansClassifierAC.h in Headers */,
+				C9CBD2B319E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h in Headers */,
+				C9CBD2B619E5D4FD00AE71D5 /* LNKLogRegClassifier.h in Headers */,
+				C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */,
+				C9CBD2B919E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h in Headers */,
+				C94FE76B19BA8A6600251EDF /* fmincg.h in Headers */,
+				C9CBD27919E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h in Headers */,
+				C9CBD2D519E5D52900AE71D5 /* LNKClassifier.h in Headers */,
+				C9CBD2F019E5D52900AE71D5 /* LNKTypes.h in Headers */,
+				C9CBD27319E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h in Headers */,
+				C9CBD2E319E5D52900AE71D5 /* LNKFastFloatQueue.h in Headers */,
+				C9CBD2BA19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.h in Headers */,
+				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
+				C9CBD28C19E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h in Headers */,
+				C9CBD27C19E5D46900AE71D5 /* LNKLinRegPredictor.h in Headers */,
+				C9CBD2D919E5D52900AE71D5 /* LNKDesignMatrix.h in Headers */,
+				C9CBD2A319E5D4D400AE71D5 /* LNKDesignMatrixUI.h in Headers */,
+				C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */,
+				C9CBD26119E5D44400AE71D5 /* LNKKNNClassifier.h in Headers */,
+				C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */,
+				C9CBD27019E5D46900AE71D5 /* _LNKLinRegPredictorAC.h in Headers */,
+				C9CBD2B019E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h in Headers */,
+				C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */,
+				C9CBD25E19E5D44400AE71D5 /* _LNKKNNClassifierAC.h in Headers */,
+				C9CBD27619E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.h in Headers */,
+				C9CBD2DC19E5D52900AE71D5 /* LNKDesignMatrixPCA.h in Headers */,
+				C9CBD25819E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h in Headers */,
+				C9CBD2EF19E5D52900AE71D5 /* LNKPredictorPrivate.h in Headers */,
+				C9CBD2E619E5D52900AE71D5 /* LNKMemoryBufferManager.h in Headers */,
+				C9CBD28619E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h in Headers */,
+				C9CBD2E919E5D52900AE71D5 /* LNKOptimizationAlgorithm.h in Headers */,
+				C9CBD2DF19E5D52900AE71D5 /* LNKDesignMatrixPrivate.h in Headers */,
+				C9CBD29319E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h in Headers */,
+				C9CBD25519E5D41D00AE71D5 /* LNKKMeansClassifier.h in Headers */,
+				C9CBD2E019E5D52900AE71D5 /* LNKFastArray.h in Headers */,
+				C9CBD2EC19E5D52900AE71D5 /* LNKPredictor.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C975911E19A04AF9003D3A48 /* LearnKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C975913219A04AF9003D3A48 /* Build configuration list for PBXNativeTarget "LearnKit" */;
+			buildPhases = (
+				C975911A19A04AF9003D3A48 /* Sources */,
+				C975911B19A04AF9003D3A48 /* Frameworks */,
+				C975911C19A04AF9003D3A48 /* Headers */,
+				C975911D19A04AF9003D3A48 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LearnKit;
+			productName = LearnKit;
+			productReference = C975911F19A04AF9003D3A48 /* LearnKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C9AC1F93199AFDCC006D7122 /* LearnKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9AC1F9A199AFDCC006D7122 /* Build configuration list for PBXNativeTarget "LearnKitTests" */;
+			buildPhases = (
+				C9AC1F90199AFDCC006D7122 /* Sources */,
+				C9AC1F91199AFDCC006D7122 /* Frameworks */,
+				C9AC1F92199AFDCC006D7122 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C94F194F19A6EFA400BD967C /* PBXTargetDependency */,
+			);
+			name = LearnKitTests;
+			productName = LinearRegressionTests;
+			productReference = C9AC1F94199AFDCC006D7122 /* LearnKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9AC1F74199AFC1F006D7122 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = "Matt Rajca";
+				TargetAttributes = {
+					C975911E19A04AF9003D3A48 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					C9AC1F93199AFDCC006D7122 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+				};
+			};
+			buildConfigurationList = C9AC1F77199AFC1F006D7122 /* Build configuration list for PBXProject "LearnKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C9AC1F73199AFC1F006D7122;
+			productRefGroup = C9AC1F7D199AFC1F006D7122 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C975911E19A04AF9003D3A48 /* LearnKit */,
+				C9AC1F93199AFDCC006D7122 /* LearnKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C975911D19A04AF9003D3A48 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9AC1F92199AFDCC006D7122 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C93E7B0919D79D3E0014C67B /* ex7data1_X.dat in Resources */,
+				C9EC1A1419A97C5B00AFF6F5 /* CASP.csv in Resources */,
+				C9AC0DF419A04CD10061DEFB /* ex1data1.txt in Resources */,
+				C997C48D19CE2E1E005317A2 /* ex5_ycv.dat in Resources */,
+				C9AC0DF519A04CD10061DEFB /* ex1data2.txt in Resources */,
+				C9B0E56619B22AED00565FA6 /* ex3data1_theta1.dat in Resources */,
+				C9AC0DF619A04CD10061DEFB /* ex2data1.csv in Resources */,
+				C9B0E56719B22AED00565FA6 /* ex3data1_theta2.dat in Resources */,
+				C90ACF4E19E3581E002DB7C0 /* Flu.csv in Resources */,
+				C9943ABE19A5D47B00F91C25 /* ex2data2.txt in Resources */,
+				C9AE9EF219AC2CD800A47178 /* ex3data1_X.dat in Resources */,
+				C997C48C19CE2E1E005317A2 /* ex5_Xcv.dat in Resources */,
+				C9DC903C19D6251F00774B29 /* ex7data2_X.dat in Resources */,
+				C9AE9EF619AC32CE00A47178 /* ex3data1_y.dat in Resources */,
+				C997C48919CE0BEB005317A2 /* ex5_y.dat in Resources */,
+				C997C48819CE0BEB005317A2 /* ex5_X.dat in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C975911A19A04AF9003D3A48 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CBD2A419E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */,
+				C9CBD27D19E5D46900AE71D5 /* LNKLinRegPredictor.m in Sources */,
+				C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
+				C9CBD27A19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */,
+				C9CBD28719E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */,
+				C9CBD28A19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
+				C9CBD2E419E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
+				C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
+				C975913819A04B44003D3A48 /* lbfgs.m in Sources */,
+				C9CBD2DA19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */,
+				C9CBD2F419E5D52900AE71D5 /* LNKUtilities.m in Sources */,
+				C9CBD2B419E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */,
+				C9CBD27419E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */,
+				C9CBD24A19E5D3F500AE71D5 /* LNKAccelerateGradient.m in Sources */,
+				C9CBD29719E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */,
+				C9CBD2B719E5D4FD00AE71D5 /* LNKLogRegClassifier.m in Sources */,
+				C9CBD2EA19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m in Sources */,
+				C9CBD2B119E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */,
+				C9CBD2D619E5D52900AE71D5 /* LNKClassifier.m in Sources */,
+				C9CBD25F19E5D44400AE71D5 /* _LNKKNNClassifierAC.m in Sources */,
+				C9CBD2E719E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,
+				C9CBD2E119E5D52900AE71D5 /* LNKFastArray.m in Sources */,
+				C9CBD27719E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */,
+				C9CBD29419E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */,
+				C9CBD2F119E5D52900AE71D5 /* LNKTypes.m in Sources */,
+				C9CBD25319E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */,
+				C9CBD25619E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */,
+				C9CBD27119E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,
+				C94FE76919BA8A6600251EDF /* fmincg.m in Sources */,
+				C9CBD2DD19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */,
+				C9CBD2ED19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
+				C9CBD26219E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9AC1F90199AFDCC006D7122 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CBD26319E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
+				C9943ABC19A5AECF00F91C25 /* LNKDesignMatrixTestExtras.m in Sources */,
+				C9CBD2E819E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,
+				C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */,
+				C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */,
+				C9CBD2EB19E5D52900AE71D5 /* LNKOptimizationAlgorithm.m in Sources */,
+				C9CBD27E19E5D46900AE71D5 /* LNKLinRegPredictor.m in Sources */,
+				C9CBD27B19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */,
+				C9CBD2B519E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */,
+				C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */,
+				C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */,
+				C9CBD2F219E5D52900AE71D5 /* LNKTypes.m in Sources */,
+				C9CBD25419E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */,
+				C9CBD24B19E5D3F500AE71D5 /* LNKAccelerateGradient.m in Sources */,
+				C9CBD27819E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */,
+				C9CBD28819E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */,
+				C93E7B0719D79C140014C67B /* PCATests.m in Sources */,
+				C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */,
+				C9CBD2F519E5D52900AE71D5 /* LNKUtilities.m in Sources */,
+				C9CBD2E219E5D52900AE71D5 /* LNKFastArray.m in Sources */,
+				C9CBD2EE19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
+				C9CBD2B219E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */,
+				C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */,
+				C9CBD2A519E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */,
+				C9CBD2DE19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */,
+				C9CBD2BC19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
+				C9CBD2D719E5D52900AE71D5 /* LNKClassifier.m in Sources */,
+				C9CBD2DB19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */,
+				C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */,
+				C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */,
+				C9CBD27219E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,
+				C9CBD2B819E5D4FD00AE71D5 /* LNKLogRegClassifier.m in Sources */,
+				C9CBD26019E5D44400AE71D5 /* _LNKKNNClassifierAC.m in Sources */,
+				C9CBD29519E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */,
+				C94FE76A19BA8A6600251EDF /* fmincg.m in Sources */,
+				C9CBD25719E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */,
+				C9CBD27519E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */,
+				C9CBD29819E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */,
+				C9CBD28B19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
+				C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */,
+				C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
+				C9CBD2E519E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C94F194F19A6EFA400BD967C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C975911E19A04AF9003D3A48 /* LearnKit */;
+			targetProxy = C94F194E19A6EFA400BD967C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C975913319A04AF9003D3A48 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/LearnKit/Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LearnKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C975913419A04AF9003D3A48 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/LearnKit/Prefix.pch";
+				INFOPLIST_FILE = LearnKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C9AC1F81199AFC1F006D7122 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C9AC1F82199AFC1F006D7122 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C9AC1F9B199AFDCC006D7122 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${SRCROOT}/LearnKit/Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LearnKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C9AC1F9C199AFDCC006D7122 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${SRCROOT}/LearnKit/Prefix.pch";
+				INFOPLIST_FILE = LearnKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C975913219A04AF9003D3A48 /* Build configuration list for PBXNativeTarget "LearnKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C975913319A04AF9003D3A48 /* Debug */,
+				C975913419A04AF9003D3A48 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9AC1F77199AFC1F006D7122 /* Build configuration list for PBXProject "LearnKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9AC1F81199AFC1F006D7122 /* Debug */,
+				C9AC1F82199AFC1F006D7122 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9AC1F9A199AFDCC006D7122 /* Build configuration list for PBXNativeTarget "LearnKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9AC1F9B199AFDCC006D7122 /* Debug */,
+				C9AC1F9C199AFDCC006D7122 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9AC1F74199AFC1F006D7122 /* Project object */;
+}

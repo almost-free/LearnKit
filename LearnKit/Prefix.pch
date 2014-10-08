@@ -1,0 +1,26 @@
+//
+//  Prefix.pch
+//  LearnKit
+//
+//  Copyright (c) 2014 Matt Rajca. All rights reserved.
+//
+
+#ifndef LinearRegression_Prefix_pch
+#define LinearRegression_Prefix_pch
+
+// CONFIG
+#define USE_DOUBLE_PRECISION 1
+// End of CONFIG
+
+#if USE_DOUBLE_PRECISION
+#define LBFGS_FLOAT 64
+#else
+#define LBFGS_FLOAT 32
+#endif
+
+#import <Foundation/Foundation.h>
+#import "LNKTypes.h"
+
+#define NSAssertNotReachable(message, format...) NSAssert(0, message, format)
+
+#endif
