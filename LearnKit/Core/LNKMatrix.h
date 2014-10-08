@@ -1,5 +1,5 @@
 //
-//  LNKDesignMatrix.h
+//  LNKMatrix.h
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
@@ -12,16 +12,16 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 	LNKValueTypeNone = NSUIntegerMax
 };
 
-@interface LNKDesignMatrix : NSObject <NSCopying>
+@interface LNKMatrix : NSObject <NSCopying>
 
 - (instancetype)init NS_UNAVAILABLE;
 
-/// Initializes a design matrix by loading a CSV file. The file should not contain headings.
+/// Initializes a matrix by loading a CSV file. The file should not contain headings.
 /// Optionally, a ones column may be added to the beginning of the matrix. The last column will be mapped to the output vector.
 /// This initializer may return `nil`.
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url addingOnesColumn:(BOOL)addOnesColumn;
 
-/// Initializes a design matrix by loading a binary matrix of values and a corresponding output vector.
+/// Initializes a matrix by loading a binary matrix of values and a corresponding output vector.
 /// Values are parsed in column order. The column count should not include the ones column.
 /// If there is no output vector, pass `nil` for the output vector URL and `LNKValueTypeNone` for the output vector value type.
 /// This initializer may return `nil`.
@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 						outputVectorAtURL:(NSURL *)outputVectorURL outputVectorValueType:(LNKValueType)outputVectorValueType
 							 exampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn;
 
-/// Initializes a design matrix by filling the given buffers.
+/// Initializes a matrix by filling the given buffers.
 /// The column count should not include the ones column.
 - (instancetype)initWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn prepareBuffers:(BOOL (^)(LNKFloat *matrix, LNKFloat *outputVector))preparationBlock;
 

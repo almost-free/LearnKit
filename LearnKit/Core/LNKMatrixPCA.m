@@ -1,17 +1,17 @@
 //
-//  LNKDesignMatrixPCA.m
+//  LNKMatrixPCA.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKDesignMatrixPCA.h"
+#import "LNKMatrixPCA.h"
 
 #import "LNKAccelerate.h"
 
-@implementation LNKDesignMatrix (PCA)
+@implementation LNKMatrix (PCA)
 
-- (LNKDesignMatrix *)matrixReducedToDimension:(LNKSize)dimension {
+- (LNKMatrix *)matrixReducedToDimension:(LNKSize)dimension {
 	if (dimension < 1) {
 		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The dimension must be >= 1" userInfo:nil];
 	}
@@ -70,7 +70,7 @@
 	LNK_mmul(matrixBuffer, UNIT_STRIDE, relevantU, UNIT_STRIDE, z, UNIT_STRIDE, exampleCount, dimension, columnCountCLPK);
 	free(relevantU);
 	
-	return [[[LNKDesignMatrix alloc] initWithExampleCount:exampleCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(matrix, z, exampleCount * dimension);
 		LNKFloatCopy(outputVector, self.outputVector, exampleCount);
 		return YES;

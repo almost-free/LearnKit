@@ -94,13 +94,13 @@
 		C9CBD2D619E5D52900AE71D5 /* LNKClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */; };
 		C9CBD2D719E5D52900AE71D5 /* LNKClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */; };
 		C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */; };
-		C9CBD2D919E5D52900AE71D5 /* LNKDesignMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C119E5D52900AE71D5 /* LNKDesignMatrix.h */; };
-		C9CBD2DA19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */; };
-		C9CBD2DB19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */; };
-		C9CBD2DC19E5D52900AE71D5 /* LNKDesignMatrixPCA.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C319E5D52900AE71D5 /* LNKDesignMatrixPCA.h */; };
-		C9CBD2DD19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */; };
-		C9CBD2DE19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */; };
-		C9CBD2DF19E5D52900AE71D5 /* LNKDesignMatrixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C519E5D52900AE71D5 /* LNKDesignMatrixPrivate.h */; };
+		C9CBD2D919E5D52900AE71D5 /* LNKMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C119E5D52900AE71D5 /* LNKMatrix.h */; };
+		C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C219E5D52900AE71D5 /* LNKMatrix.m */; };
+		C9CBD2DB19E5D52900AE71D5 /* LNKMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C219E5D52900AE71D5 /* LNKMatrix.m */; };
+		C9CBD2DC19E5D52900AE71D5 /* LNKMatrixPCA.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C319E5D52900AE71D5 /* LNKMatrixPCA.h */; };
+		C9CBD2DD19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C419E5D52900AE71D5 /* LNKMatrixPCA.m */; };
+		C9CBD2DE19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C419E5D52900AE71D5 /* LNKMatrixPCA.m */; };
+		C9CBD2DF19E5D52900AE71D5 /* LNKMatrixPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C519E5D52900AE71D5 /* LNKMatrixPrivate.h */; };
 		C9CBD2E019E5D52900AE71D5 /* LNKFastArray.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */; };
 		C9CBD2E119E5D52900AE71D5 /* LNKFastArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */; };
 		C9CBD2E219E5D52900AE71D5 /* LNKFastArray.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */; };
@@ -222,11 +222,11 @@
 		C9CBD2BE19E5D52900AE71D5 /* LNKClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKClassifier.h; sourceTree = "<group>"; };
 		C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKClassifier.m; sourceTree = "<group>"; };
 		C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKClassifierPrivate.h; sourceTree = "<group>"; };
-		C9CBD2C119E5D52900AE71D5 /* LNKDesignMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrix.h; sourceTree = "<group>"; };
-		C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDesignMatrix.m; sourceTree = "<group>"; };
-		C9CBD2C319E5D52900AE71D5 /* LNKDesignMatrixPCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrixPCA.h; sourceTree = "<group>"; };
-		C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDesignMatrixPCA.m; sourceTree = "<group>"; };
-		C9CBD2C519E5D52900AE71D5 /* LNKDesignMatrixPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDesignMatrixPrivate.h; sourceTree = "<group>"; };
+		C9CBD2C119E5D52900AE71D5 /* LNKMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrix.h; sourceTree = "<group>"; };
+		C9CBD2C219E5D52900AE71D5 /* LNKMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrix.m; sourceTree = "<group>"; };
+		C9CBD2C319E5D52900AE71D5 /* LNKMatrixPCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixPCA.h; sourceTree = "<group>"; };
+		C9CBD2C419E5D52900AE71D5 /* LNKMatrixPCA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixPCA.m; sourceTree = "<group>"; };
+		C9CBD2C519E5D52900AE71D5 /* LNKMatrixPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixPrivate.h; sourceTree = "<group>"; };
 		C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKFastArray.h; sourceTree = "<group>"; };
 		C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKFastArray.m; sourceTree = "<group>"; };
 		C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKFastFloatQueue.h; sourceTree = "<group>"; };
@@ -489,11 +489,11 @@
 				C9CBD2BE19E5D52900AE71D5 /* LNKClassifier.h */,
 				C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */,
 				C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */,
-				C9CBD2C119E5D52900AE71D5 /* LNKDesignMatrix.h */,
-				C9CBD2C219E5D52900AE71D5 /* LNKDesignMatrix.m */,
-				C9CBD2C319E5D52900AE71D5 /* LNKDesignMatrixPCA.h */,
-				C9CBD2C419E5D52900AE71D5 /* LNKDesignMatrixPCA.m */,
-				C9CBD2C519E5D52900AE71D5 /* LNKDesignMatrixPrivate.h */,
+				C9CBD2C119E5D52900AE71D5 /* LNKMatrix.h */,
+				C9CBD2C219E5D52900AE71D5 /* LNKMatrix.m */,
+				C9CBD2C319E5D52900AE71D5 /* LNKMatrixPCA.h */,
+				C9CBD2C419E5D52900AE71D5 /* LNKMatrixPCA.m */,
+				C9CBD2C519E5D52900AE71D5 /* LNKMatrixPrivate.h */,
 				C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */,
 				C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */,
 				C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */,
@@ -575,7 +575,7 @@
 				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
 				C9CBD28C19E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h in Headers */,
 				C9CBD27C19E5D46900AE71D5 /* LNKLinRegPredictor.h in Headers */,
-				C9CBD2D919E5D52900AE71D5 /* LNKDesignMatrix.h in Headers */,
+				C9CBD2D919E5D52900AE71D5 /* LNKMatrix.h in Headers */,
 				C9CBD2A319E5D4D400AE71D5 /* LNKDesignMatrixUI.h in Headers */,
 				C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */,
 				C9CBD26119E5D44400AE71D5 /* LNKKNNClassifier.h in Headers */,
@@ -585,13 +585,13 @@
 				C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */,
 				C9CBD25E19E5D44400AE71D5 /* _LNKKNNClassifierAC.h in Headers */,
 				C9CBD27619E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.h in Headers */,
-				C9CBD2DC19E5D52900AE71D5 /* LNKDesignMatrixPCA.h in Headers */,
+				C9CBD2DC19E5D52900AE71D5 /* LNKMatrixPCA.h in Headers */,
 				C9CBD25819E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h in Headers */,
 				C9CBD2EF19E5D52900AE71D5 /* LNKPredictorPrivate.h in Headers */,
 				C9CBD2E619E5D52900AE71D5 /* LNKMemoryBufferManager.h in Headers */,
 				C9CBD28619E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h in Headers */,
 				C9CBD2E919E5D52900AE71D5 /* LNKOptimizationAlgorithm.h in Headers */,
-				C9CBD2DF19E5D52900AE71D5 /* LNKDesignMatrixPrivate.h in Headers */,
+				C9CBD2DF19E5D52900AE71D5 /* LNKMatrixPrivate.h in Headers */,
 				C9CBD29319E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h in Headers */,
 				C9CBD25519E5D41D00AE71D5 /* LNKKMeansClassifier.h in Headers */,
 				C9CBD2E019E5D52900AE71D5 /* LNKFastArray.h in Headers */,
@@ -720,7 +720,7 @@
 				C9CBD2E419E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
 				C975913819A04B44003D3A48 /* lbfgs.m in Sources */,
-				C9CBD2DA19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */,
+				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
 				C9CBD2F419E5D52900AE71D5 /* LNKUtilities.m in Sources */,
 				C9CBD2B419E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */,
 				C9CBD27419E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */,
@@ -740,7 +740,7 @@
 				C9CBD25619E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */,
 				C9CBD27119E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,
 				C94FE76919BA8A6600251EDF /* fmincg.m in Sources */,
-				C9CBD2DD19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */,
+				C9CBD2DD19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */,
 				C9CBD2ED19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
 				C9CBD26219E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
 			);
@@ -774,10 +774,10 @@
 				C9CBD2B219E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */,
 				C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */,
 				C9CBD2A519E5D4D400AE71D5 /* LNKDesignMatrixUI.m in Sources */,
-				C9CBD2DE19E5D52900AE71D5 /* LNKDesignMatrixPCA.m in Sources */,
+				C9CBD2DE19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */,
 				C9CBD2BC19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
 				C9CBD2D719E5D52900AE71D5 /* LNKClassifier.m in Sources */,
-				C9CBD2DB19E5D52900AE71D5 /* LNKDesignMatrix.m in Sources */,
+				C9CBD2DB19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
 				C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */,
 				C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */,
 				C9CBD27219E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,

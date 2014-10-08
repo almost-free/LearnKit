@@ -1,17 +1,17 @@
 //
-//  LNKDesignMatrix.m
+//  LNKMatrix.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKDesignMatrix.h"
+#import "LNKMatrix.h"
 
 #import "LNKAccelerate.h"
 #import "LNKFastArray.h"
 #import "LNKUtilities.h"
 
-@implementation LNKDesignMatrix {
+@implementation LNKMatrix {
 	LNKFloat *_matrix, *_outputVector;
 	LNKFloat *_columnToMu, *_columnToSD;
 	BOOL _weakMatrixReference;
@@ -203,7 +203,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 #pragma unused(zone)
 	
 	// Even if we already have a ones column, we set addingOnesColumn to NO because we don't want one to be added again.
-	LNKDesignMatrix *matrix = [[LNKDesignMatrix alloc] _initWithExampleCount:_exampleCount columnCount:_columnCount addingOnesColumn:NO matrix:_matrix prepareOutputBuffer:^BOOL(LNKFloat *outputVector) {
+	LNKMatrix *matrix = [[LNKMatrix alloc] _initWithExampleCount:_exampleCount columnCount:_columnCount addingOnesColumn:NO matrix:_matrix prepareOutputBuffer:^BOOL(LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, _outputVector, _exampleCount);
 		return YES;
 	}];
