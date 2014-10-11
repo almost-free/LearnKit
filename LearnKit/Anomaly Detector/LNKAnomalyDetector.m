@@ -44,6 +44,10 @@
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The matrix used for anomaly detection should not have a bias column" userInfo:nil];
 	}
 	
+	if (matrix.exampleCount < matrix.columnCount) {
+		@throw [NSException exceptionWithName:NSGenericException reason:@"The matrix used for anomaly detection must have more example rows than columns" userInfo:nil];
+	}
+	
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:[LNKClasses withCount:2]];
 	if (self) {
 		_threshold = DEFAULT_THRESHOLD;
