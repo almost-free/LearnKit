@@ -84,4 +84,9 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(const L
 	[self didChangeValueForKey:@"distanceFunction"];
 }
 
+- (void)dealloc {
+	[_distanceFunction release];
+	[super dealloc];
+}
+
 @end
