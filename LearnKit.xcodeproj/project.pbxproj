@@ -10,6 +10,7 @@
 		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
+		C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915806A19E8B12F00879FD5 /* ServerStatistics.mat */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
@@ -156,6 +157,7 @@
 /* Begin PBXFileReference section */
 		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
 		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C915806A19E8B12F00879FD5 /* ServerStatistics.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatistics.mat; sourceTree = "<group>"; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
 		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
@@ -533,6 +535,7 @@
 				C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */,
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
+				C915806A19E8B12F00879FD5 /* ServerStatistics.mat */,
 			);
 			name = Data;
 			path = LearnKitTests/Data;
@@ -701,6 +704,7 @@
 				C9CBD30E19E5D69000AE71D5 /* ex3data1_X.dat in Resources */,
 				C9CBD31219E5D69000AE71D5 /* ex5_y.dat in Resources */,
 				C9CBD31019E5D69000AE71D5 /* ex5_X.dat in Resources */,
+				C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
