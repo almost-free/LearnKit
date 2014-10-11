@@ -34,6 +34,7 @@
 
 #define LNK_sqrt		sqrt
 #define LNK_pow			pow
+#define LNK_exp			exp
 #define LNK_strtoflt(str,len)	strtod((str), (char **)((str) + (len)))
 
 /// Computes the euclidean distance between the two vectors.
@@ -64,6 +65,7 @@
 
 #define LNK_sqrt		sqrtf
 #define LNK_pow			powf
+#define LNK_exp			expf
 #define LNK_strtoflt(str,len)	strtof((str), (char **)((str) + (len)))
 
 /// Computes the euclidean distance between the two vectors.
