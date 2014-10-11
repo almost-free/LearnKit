@@ -81,3 +81,6 @@ extern void LNK_vsigmoid(LNKFloat *vector, LNKSize n);
 
 /// Applies the gradient of the sigmoid function to every element of the sigmoid vector.
 extern void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n);
+
+/// Computes the standard deviation of the elements in the vector.
+extern LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample);

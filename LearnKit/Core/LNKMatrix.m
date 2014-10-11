@@ -392,15 +392,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNKFloat mean;
 		LNK_vmean(columnPointer, _columnCount, &mean, _exampleCount);
 		
-		LNKFloat minusMean = -mean;
-		LNK_vsadd(columnPointer, _columnCount, &minusMean, workgroup, UNIT_STRIDE, _exampleCount);
-		
-		LNKFloat sd;
-		LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sd, _exampleCount);
-		sd = LNK_sqrt(1.0 / (_exampleCount - 1) * sd);
-		
-		_columnToSD[n] = sd;
-		_columnToMu[n] = minusMean;
+		_columnToMu[n] = -mean;
+		_columnToSD[n] = LNK_vsd(columnPointer, _exampleCount, _columnCount, workgroup, mean, YES);
 	}
 	
 	[self normalizeWithMeanVector:_columnToMu standardDeviationVector:_columnToSD];

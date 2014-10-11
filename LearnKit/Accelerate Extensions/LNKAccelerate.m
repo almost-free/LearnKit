@@ -54,3 +54,19 @@ void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n) {
 	LNK_vsub(vectorSquared, UNIT_STRIDE, vector, UNIT_STRIDE, outVector, UNIT_STRIDE, n);
 	free(vectorSquared);
 }
+
+LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample) {
+	assert(vector);
+	assert(workgroup);
+	assert(n);
+	
+	const LNKFloat minusMean = -mean;
+	LNK_vsadd(vector, stride, &minusMean, workgroup, UNIT_STRIDE, n);
+
+	LNKFloat sd;
+	LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sd, n);
+	
+	const LNKSize adjustedN = inSample ? n - 1 : n;
+	
+	return LNK_sqrt(1.0 / adjustedN * sd);
+}
