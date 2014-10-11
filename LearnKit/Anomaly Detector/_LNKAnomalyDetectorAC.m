@@ -73,7 +73,7 @@
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize columnCount = matrix.columnCount;
 	
-	// (2pi)^(-k/2) * det(sigma2)^(-0.5) ...
+	// (2pi)^(-n/2) * det(sigma2)^(-0.5) ...
 	const LNKFloat det = LNK_mdet(_sigma2, columnCount);
 	
 	if (det == 0)
