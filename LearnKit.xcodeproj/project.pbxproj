@@ -11,6 +11,13 @@
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915806A19E8B12F00879FD5 /* ServerStatistics.mat */; };
+		C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = C915807319E8B1C000879FD5 /* LNKAnomalyDetector.h */; };
+		C915807619E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807419E8B1C000879FD5 /* LNKAnomalyDetector.m */; };
+		C915807719E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807419E8B1C000879FD5 /* LNKAnomalyDetector.m */; };
+		C915807A19E8B26200879FD5 /* _LNKAnomalyDetectorAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C915807819E8B26200879FD5 /* _LNKAnomalyDetectorAC.h */; };
+		C915807B19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */; };
+		C915807C19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */; };
+		C915807E19E8B66200879FD5 /* AnomalyDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
@@ -158,6 +165,11 @@
 		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
 		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C915806A19E8B12F00879FD5 /* ServerStatistics.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatistics.mat; sourceTree = "<group>"; };
+		C915807319E8B1C000879FD5 /* LNKAnomalyDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAnomalyDetector.h; sourceTree = "<group>"; };
+		C915807419E8B1C000879FD5 /* LNKAnomalyDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKAnomalyDetector.m; sourceTree = "<group>"; };
+		C915807819E8B26200879FD5 /* _LNKAnomalyDetectorAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKAnomalyDetectorAC.h; sourceTree = "<group>"; };
+		C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKAnomalyDetectorAC.m; sourceTree = "<group>"; };
+		C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnomalyDetectorTests.m; path = LearnKitTests/AnomalyDetectorTests.m; sourceTree = SOURCE_ROOT; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
 		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
@@ -288,6 +300,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C915807219E8B1C000879FD5 /* Anomaly Detector */ = {
+			isa = PBXGroup;
+			children = (
+				C915807819E8B26200879FD5 /* _LNKAnomalyDetectorAC.h */,
+				C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */,
+				C915807319E8B1C000879FD5 /* LNKAnomalyDetector.h */,
+				C915807419E8B1C000879FD5 /* LNKAnomalyDetector.m */,
+			);
+			name = "Anomaly Detector";
+			path = "LearnKit/Anomaly Detector";
+			sourceTree = SOURCE_ROOT;
+		};
 		C94FE76619BA8A6600251EDF /* fmincg */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +349,7 @@
 				C94F195119A6F0FF00BD967C /* LearnKit.h */,
 				C9AC0DE019A04CC00061DEFB /* Prefix.pch */,
 				C9CBD24119E5D3F500AE71D5 /* Accelerate Extensions */,
+				C915807219E8B1C000879FD5 /* Anomaly Detector */,
 				C9CBD2BD19E5D52900AE71D5 /* Core */,
 				C9CBD24C19E5D41D00AE71D5 /* K-Means */,
 				C9CBD25919E5D44400AE71D5 /* K-NN */,
@@ -351,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */,
+				C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */,
 				C9DC903E19D6253900774B29 /* KMeansTests.m */,
 				C95D950C19DFBCE300BE8768 /* KNNTests.m */,
 				C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */,
@@ -583,6 +609,7 @@
 				C9CBD2B919E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h in Headers */,
 				C94FE76B19BA8A6600251EDF /* fmincg.h in Headers */,
 				C9CBD27919E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h in Headers */,
+				C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */,
 				C9CBD27319E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h in Headers */,
 				C9CBD2E319E5D52900AE71D5 /* LNKFastFloatQueue.h in Headers */,
 				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
@@ -598,6 +625,7 @@
 				C9CBD28619E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h in Headers */,
 				C9CBD2DF19E5D52900AE71D5 /* LNKMatrixPrivate.h in Headers */,
 				C9CBD29319E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.h in Headers */,
+				C915807A19E8B26200879FD5 /* _LNKAnomalyDetectorAC.h in Headers */,
 				C9CBD2E019E5D52900AE71D5 /* LNKFastArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -720,11 +748,13 @@
 				C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
 				C9CBD27A19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */,
 				C9CBD28719E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */,
+				C915807619E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */,
 				C9CBD28A19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
 				C9CBD2E419E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
 				C975913819A04B44003D3A48 /* lbfgs.m in Sources */,
 				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
+				C915807B19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */,
 				C9CBD2F419E5D52900AE71D5 /* LNKUtilities.m in Sources */,
 				C9CBD2B419E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */,
 				C9CBD27419E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */,
@@ -766,6 +796,7 @@
 				C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */,
 				C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */,
 				C9CBD2F219E5D52900AE71D5 /* LNKTypes.m in Sources */,
+				C915807E19E8B66200879FD5 /* AnomalyDetectorTests.m in Sources */,
 				C9CBD25419E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */,
 				C9CBD24B19E5D3F500AE71D5 /* LNKAccelerateGradient.m in Sources */,
 				C9CBD27819E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */,
@@ -784,8 +815,10 @@
 				C9CBD2DB19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
 				C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */,
 				C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */,
+				C915807719E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */,
 				C9CBD27219E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,
 				C9CBD2B819E5D4FD00AE71D5 /* LNKLogRegClassifier.m in Sources */,
+				C915807C19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */,
 				C9CBD26019E5D44400AE71D5 /* _LNKKNNClassifierAC.m in Sources */,
 				C9CBD29519E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */,
 				C94FE76A19BA8A6600251EDF /* fmincg.m in Sources */,
