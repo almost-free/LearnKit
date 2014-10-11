@@ -70,3 +70,43 @@ LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *wo
 	
 	return LNK_sqrt(1.0 / adjustedN * sd);
 }
+
+LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n) {
+	assert(matrix);
+	assert(n);
+	
+	__CLPK_integer np = (__CLPK_integer)n;
+	__CLPK_integer error = 0;
+	__CLPK_integer *pivot = malloc(n * sizeof(__CLPK_integer));
+	
+	LNKFloat *matrixCopy = LNKFloatAlloc(n * n);
+	LNKFloatCopy(matrixCopy, matrix, n * n);
+	
+#if USE_DOUBLE_PRECISION
+	dgetrf_(&np, &np, matrixCopy, &np, pivot, &error);
+#else
+	sgetrf_(&np, &np, matrixCopy, &np, pivot, &error);
+#endif
+	
+	if (error > 0) {
+		fprintf(stderr, "LNK_mdet: we have a singular matrix\n");
+		free(matrixCopy);
+		free(pivot);
+		return 0;
+	}
+	
+	LNKFloat determinant = 1;
+	
+	// Multiply the diagonal elements.
+	for (__CLPK_integer index = 0; index < np; index++) {
+		determinant *= matrixCopy[index * n + index];
+		
+		if (pivot[index] != (index+1))
+			determinant *= -1;
+	}
+	
+	free(matrixCopy);
+	free(pivot);
+	
+	return determinant;
+}
