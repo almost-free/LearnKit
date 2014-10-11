@@ -20,6 +20,9 @@
 		C915807E19E8B66200879FD5 /* AnomalyDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */; };
 		C915808119E8E4FB00879FD5 /* ServerStatisticsVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */; };
 		C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */; };
+		C915808619E8EC9600879FD5 /* AnomalyPerformance.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */; };
+		C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */; };
+		C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
@@ -174,6 +177,9 @@
 		C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnomalyDetectorTests.m; path = LearnKitTests/AnomalyDetectorTests.m; sourceTree = SOURCE_ROOT; };
 		C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatisticsVal.mat; sourceTree = "<group>"; };
 		C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatisticsValY.mat; sourceTree = "<group>"; };
+		C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformance.mat; sourceTree = "<group>"; };
+		C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceVal.mat; sourceTree = "<group>"; };
+		C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceValY.mat; sourceTree = "<group>"; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
 		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
@@ -549,6 +555,9 @@
 		C9CBD2F619E5D69000AE71D5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */,
+				C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */,
+				C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */,
 				C9CBD2F719E5D69000AE71D5 /* CASP.csv */,
 				C9CBD2F819E5D69000AE71D5 /* ex1data1.txt */,
 				C9CBD2F919E5D69000AE71D5 /* ex1data2.txt */,
@@ -730,6 +739,7 @@
 				C9CBD30F19E5D69000AE71D5 /* ex3data1_y.dat in Resources */,
 				C915808119E8E4FB00879FD5 /* ServerStatisticsVal.mat in Resources */,
 				C9CBD30919E5D69000AE71D5 /* ex1data2.txt in Resources */,
+				C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */,
 				C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */,
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
@@ -739,6 +749,8 @@
 				C9CBD31119E5D69000AE71D5 /* ex5_Xcv.dat in Resources */,
 				C9CBD30E19E5D69000AE71D5 /* ex3data1_X.dat in Resources */,
 				C9CBD31219E5D69000AE71D5 /* ex5_y.dat in Resources */,
+				C915808619E8EC9600879FD5 /* AnomalyPerformance.mat in Resources */,
+				C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */,
 				C9CBD31019E5D69000AE71D5 /* ex5_X.dat in Resources */,
 				C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */,
 			);
