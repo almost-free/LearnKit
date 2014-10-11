@@ -39,4 +39,28 @@
 	[detector release];
 }
 
+- (void)test2 {
+	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ServerStatistics" ofType:@"mat"];
+	NSString *pathVal = [[NSBundle bundleForClass:[self class]] pathForResource:@"ServerStatisticsVal" ofType:@"mat"];
+	NSString *pathValY = [[NSBundle bundleForClass:[self class]] pathForResource:@"ServerStatisticsValY" ofType:@"mat"];
+	
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+														exampleCount:307
+														 columnCount:2
+													addingOnesColumn:NO];
+	
+	LNKMatrix *cvMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathVal] matrixValueType:LNKValueTypeDouble
+													 outputVectorAtURL:[NSURL fileURLWithPath:pathValY] outputVectorValueType:LNKValueTypeDouble
+														  exampleCount:307
+														   columnCount:2
+													  addingOnesColumn:NO];
+	
+	LNKFloat threshold = LNKFindAnomalyThreshold(matrix, cvMatrix);
+	XCTAssertEqualWithAccuracy(threshold, 8.99e-05, 0.01, @"Incorrect threshold");
+	
+	[matrix release];
+	[cvMatrix release];
+}
+
 @end

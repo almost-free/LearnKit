@@ -8,6 +8,7 @@
 #import "LNKAnomalyDetector.h"
 
 #import "_LNKAnomalyDetectorAC.h"
+#import "LNKAccelerate.h"
 #import "LNKMatrix.h"
 
 @interface LNKAnomalyDetector (Private)
@@ -95,10 +96,49 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 		pValues[example] = [cvDetector _probabilityWithFeatureVector:[cvMatrix exampleAtIndex:example] length:cvColumnCount];
 	}
 	
+	LNKFloat max, min;
+	LNK_maxv(pValues, UNIT_STRIDE, &max, cvExampleCount);
+	LNK_minv(pValues, UNIT_STRIDE, &min, cvExampleCount);
+	
+	const LNKFloat stepSize = (max - min) / 1000;
+	const LNKFloat *outputVector = cvMatrix.outputVector;
+	
+	LNKFloat bestEpsilon = 0;
+	LNKFloat bestF1 = 0;
+	
+	for (LNKFloat epsilon = min; epsilon < max; epsilon += stepSize) {
+		LNKSize truePositives = 0;
+		LNKSize falsePositives = 0;
+		LNKSize falseNegatives = 0;
+		
+		for (LNKSize example = 0; example < cvExampleCount; example++) {
+			BOOL anomaly = pValues[example] < epsilon;
+			
+			if (anomaly) {
+				if (outputVector[example])
+					truePositives++;
+				else
+					falsePositives++;
+			}
+			else if (outputVector[example])
+				falseNegatives++;
+		}
+		
+		const LNKFloat precision = (LNKFloat)truePositives / (truePositives + falsePositives);
+		const LNKFloat recall = (LNKFloat)truePositives / (truePositives + falseNegatives);
+		
+		const LNKFloat f1 = (2 * precision * recall) / (precision * recall);
+		
+		if (f1 > bestF1) {
+			bestF1 = f1;
+			bestEpsilon = epsilon;
+		}
+	}
+	
 	free(pValues);
 	
 	[detector release];
 	[cvDetector release];
 	
-	return 0;
+	return bestEpsilon;
 }

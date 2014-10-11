@@ -29,6 +29,8 @@
 #define LNK_svdiv		vDSP_svdivD
 #define LNK_vsum		vDSP_sveD
 #define LNK_vsq			vDSP_vsqD
+#define LNK_minv		vDSP_minvD
+#define LNK_maxv		vDSP_maxvD
 #define LNK_vlog		vvlog
 #define LNK_vexp		vvexp
 
@@ -60,6 +62,8 @@
 #define LNK_svdiv		vDSP_svdiv
 #define LNK_vsum		vDSP_sve
 #define LNK_vsq			vDSP_vsq
+#define LNK_minv		vDSP_minv
+#define LNK_maxv		vDSP_maxv
 #define LNK_vlog		vvlogf
 #define LNK_vexp		vvexpf
 
