@@ -7,6 +7,7 @@
 
 #import <LearnKit/LNKTypes.h>
 
+#import <LearnKit/LNKAnomalyDetector.h>
 #import <LearnKit/LNKClassifier.h>
 #import <LearnKit/LNKKMeansClassifier.h>
 #import <LearnKit/LNKKNNClassifier.h>

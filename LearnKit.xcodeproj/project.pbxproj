@@ -11,7 +11,7 @@
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915806A19E8B12F00879FD5 /* ServerStatistics.mat */; };
-		C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = C915807319E8B1C000879FD5 /* LNKAnomalyDetector.h */; };
+		C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = C915807319E8B1C000879FD5 /* LNKAnomalyDetector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C915807619E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807419E8B1C000879FD5 /* LNKAnomalyDetector.m */; };
 		C915807719E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807419E8B1C000879FD5 /* LNKAnomalyDetector.m */; };
 		C915807A19E8B26200879FD5 /* _LNKAnomalyDetectorAC.h in Headers */ = {isa = PBXBuildFile; fileRef = C915807819E8B26200879FD5 /* _LNKAnomalyDetectorAC.h */; };
@@ -601,6 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */,
+				C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */,
 				C9CBD2D519E5D52900AE71D5 /* LNKClassifier.h in Headers */,
 				C9CBD24619E5D3F500AE71D5 /* LNKAccelerate.h in Headers */,
 				C9CBD25519E5D41D00AE71D5 /* LNKKMeansClassifier.h in Headers */,
@@ -624,7 +625,6 @@
 				C9CBD2B919E5D4FD00AE71D5 /* LNKLogRegClassifierPrivate.h in Headers */,
 				C94FE76B19BA8A6600251EDF /* fmincg.h in Headers */,
 				C9CBD27919E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.h in Headers */,
-				C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */,
 				C9CBD27319E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h in Headers */,
 				C9CBD2E319E5D52900AE71D5 /* LNKFastFloatQueue.h in Headers */,
 				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
