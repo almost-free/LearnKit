@@ -27,9 +27,14 @@
 														 columnCount:2
 													addingOnesColumn:NO];
 	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:nil];
+	detector.threshold = 8.99e-05;
+	
 	[matrix release];
 	
 	[detector train];
+	
+	LNKClass *class = [detector predictValueForFeatureVector:[matrix exampleAtIndex:0] length:matrix.columnCount];
+	XCTAssertEqual(class.unsignedIntegerValue, 0ULL, @"Not an anomaly!");
 	
 	[detector release];
 }
