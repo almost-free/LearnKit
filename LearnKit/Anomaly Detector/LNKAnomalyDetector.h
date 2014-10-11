@@ -12,4 +12,7 @@
 /// Predicted values are either 0 or 1, with 1 indicating an anomaly. They are represented with `LNKClass`.
 @interface LNKAnomalyDetector : LNKClassifier
 
+/// The default value is 0.01.
+@property (nonatomic) LNKFloat threshold;
+
 @end

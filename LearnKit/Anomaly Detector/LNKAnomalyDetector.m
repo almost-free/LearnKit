@@ -12,6 +12,8 @@
 
 @implementation LNKAnomalyDetector
 
+#define DEFAULT_THRESHOLD 0.01
+
 - (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 #pragma unused(algorithm)
 	
@@ -33,7 +35,7 @@
 	
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:[LNKClasses withCount:2]];
 	if (self) {
-		
+		_threshold = DEFAULT_THRESHOLD;
 	}
 	return self;
 }
