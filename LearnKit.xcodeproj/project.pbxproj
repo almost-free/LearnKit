@@ -18,6 +18,8 @@
 		C915807B19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */; };
 		C915807C19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */; };
 		C915807E19E8B66200879FD5 /* AnomalyDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */; };
+		C915808119E8E4FB00879FD5 /* ServerStatisticsVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */; };
+		C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
@@ -170,6 +172,8 @@
 		C915807819E8B26200879FD5 /* _LNKAnomalyDetectorAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _LNKAnomalyDetectorAC.h; sourceTree = "<group>"; };
 		C915807919E8B26200879FD5 /* _LNKAnomalyDetectorAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _LNKAnomalyDetectorAC.m; sourceTree = "<group>"; };
 		C915807D19E8B66200879FD5 /* AnomalyDetectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnomalyDetectorTests.m; path = LearnKitTests/AnomalyDetectorTests.m; sourceTree = SOURCE_ROOT; };
+		C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatisticsVal.mat; sourceTree = "<group>"; };
+		C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatisticsValY.mat; sourceTree = "<group>"; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
 		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
@@ -562,6 +566,8 @@
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
 				C915806A19E8B12F00879FD5 /* ServerStatistics.mat */,
+				C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */,
+				C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */,
 			);
 			name = Data;
 			path = LearnKitTests/Data;
@@ -722,7 +728,9 @@
 				C9CBD31319E5D69000AE71D5 /* ex5_ycv.dat in Resources */,
 				C9CBD31419E5D69000AE71D5 /* ex7data1_X.dat in Resources */,
 				C9CBD30F19E5D69000AE71D5 /* ex3data1_y.dat in Resources */,
+				C915808119E8E4FB00879FD5 /* ServerStatisticsVal.mat in Resources */,
 				C9CBD30919E5D69000AE71D5 /* ex1data2.txt in Resources */,
+				C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */,
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
 				C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */,
