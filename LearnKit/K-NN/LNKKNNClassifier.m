@@ -79,7 +79,7 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(const L
 	[self willChangeValueForKey:@"distanceFunction"];
 	
 	[_distanceFunction release];
-	_distanceFunction = [distanceFunction retain];
+	_distanceFunction = [distanceFunction copy];
 	
 	[self didChangeValueForKey:@"distanceFunction"];
 }
