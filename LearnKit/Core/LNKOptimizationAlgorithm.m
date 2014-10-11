@@ -32,7 +32,7 @@
 
 + (instancetype)algorithmWithAlpha:(LNKFloat)alpha stochastic:(BOOL)stochastic convergenceThreshold:(LNKFloat)convergenceThreshold {
 	NSParameterAssert(convergenceThreshold > 0);
-	return [[self alloc] _initWithAlpha:alpha stochastic:stochastic iterationCount:NSNotFound convergenceThreshold:convergenceThreshold];
+	return [[[self alloc] _initWithAlpha:alpha stochastic:stochastic iterationCount:NSNotFound convergenceThreshold:convergenceThreshold] autorelease];
 }
 
 - (instancetype)init {
