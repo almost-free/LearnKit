@@ -10,6 +10,16 @@
 #import "_LNKAnomalyDetectorAC.h"
 #import "LNKMatrix.h"
 
+@interface LNKAnomalyDetector (Private)
+
+@property (nonatomic) LNKFloat *_muVector;
+@property (nonatomic) LNKFloat *_sigmaMatrix;
+
+- (LNKFloat)_probabilityWithFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length;
+
+@end
+
+
 @implementation LNKAnomalyDetector
 
 #define DEFAULT_THRESHOLD 0.01
@@ -40,4 +50,55 @@
 	return self;
 }
 
+- (LNKFloat *)_muVector {
+	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+	return NULL;
+}
+
+- (LNKFloat *)_sigmaMatrix {
+	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+	return NULL;
+}
+
+- (void)_setMuVector:(LNKFloat *)vector {
+#pragma unused(vector)
+	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+}
+
+- (void)_setSigmaMatrix:(LNKFloat *)matrix {
+#pragma unused(matrix)
+	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+}
+
 @end
+
+
+LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
+	const LNKSize cvColumnCount = cvMatrix.columnCount;
+	
+	if (matrix.columnCount != cvColumnCount) {
+		@throw [NSException exceptionWithName:NSGenericException reason:@"The cross validation matrix must have the same number of columns as the matrix" userInfo:nil];
+	}
+	
+	const LNKSize cvExampleCount = cvMatrix.exampleCount;
+	
+	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:nil];
+	[detector train];
+	
+	LNKAnomalyDetector *cvDetector = [[LNKAnomalyDetector alloc] initWithMatrix:cvMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:nil];
+	[cvDetector _setMuVector:[detector _muVector]];
+	[cvDetector _setSigmaMatrix:[detector _sigmaMatrix]];
+	
+	LNKFloat *pValues = LNKFloatAlloc(cvExampleCount);
+	
+	for (LNKSize example = 0; example < cvExampleCount; example++) {
+		pValues[example] = [cvDetector _probabilityWithFeatureVector:[cvMatrix exampleAtIndex:example] length:cvColumnCount];
+	}
+	
+	free(pValues);
+	
+	[detector release];
+	[cvDetector release];
+	
+	return 0;
+}

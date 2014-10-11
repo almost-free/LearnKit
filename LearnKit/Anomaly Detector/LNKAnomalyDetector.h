@@ -16,3 +16,10 @@
 @property (nonatomic) LNKFloat threshold;
 
 @end
+
+
+/* Analysis */
+
+/// Given an unlabeled data matrix and labeled cross-validation matrix, we try to find a sensible anomaly threshold.
+/// Note that the two matrices must have the same number of columns.
+extern LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix);

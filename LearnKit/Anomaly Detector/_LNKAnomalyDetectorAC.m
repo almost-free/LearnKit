@@ -42,7 +42,31 @@
 	free(workgroup);
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
+- (LNKFloat *)_muVector {
+	return _mu;
+}
+
+- (LNKFloat *)_sigmaMatrix {
+	return _sigma2;
+}
+
+- (void)_setMuVector:(LNKFloat *)vector {
+	NSParameterAssert(vector);
+	
+	const LNKSize columnCount = self.matrix.columnCount;
+	_mu = LNKFloatAlloc(columnCount);
+	LNKFloatCopy(_mu, vector, columnCount);
+}
+
+- (void)_setSigmaMatrix:(LNKFloat *)matrix {
+	NSParameterAssert(matrix);
+	
+	const LNKSize columnCount = self.matrix.columnCount;
+	_sigma2 = LNKFloatAlloc(columnCount * columnCount);
+	LNKFloatCopy(_sigma2, matrix, columnCount * columnCount);
+}
+
+- (LNKFloat)_probabilityWithFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
 	NSParameterAssert(featureVector);
 	NSParameterAssert(length);
 	
@@ -53,7 +77,7 @@
 	const LNKFloat det = LNK_mdet(_sigma2, columnCount);
 	
 	if (det == 0)
-		return nil;
+		return 0;
 	
 	const LNKFloat c = LNK_pow(2 * M_PI, -(LNKFloat)columnCount/2) * LNK_pow(det, -0.5);
 	
@@ -77,7 +101,11 @@
 	LNK_vsum(results, UNIT_STRIDE, &sum, columnCount);
 	free(results);
 	
-	const LNKFloat p = c * LNK_exp(-0.5 * sum);
+	return c * LNK_exp(-0.5 * sum);
+}
+
+- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
+	const LNKFloat p = [self _probabilityWithFeatureVector:featureVector length:length];
 	
 	if (p < self.threshold) {
 		// It's an anomaly.
