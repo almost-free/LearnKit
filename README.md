@@ -6,6 +6,7 @@ LearnKit is a Cocoa framework for Machine Learning. It currently runs on top of 
 Supported Algorithms
 --------------------
 
+- Anomaly Detection
 - k-Means
 - k-Nearest Neighbors
 - Linear Regression
