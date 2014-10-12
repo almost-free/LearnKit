@@ -16,6 +16,22 @@
 	LNKFloat *_thetaVector;
 }
 
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return @[ [LNKOptimizationAlgorithmLBFGS class] ];
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
+#pragma unused(algorithm)
+	
+	return [_LNKLogRegClassifierLBFGS_AC class];
+}
+
+
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm];
 	if (self) {
@@ -28,22 +44,6 @@
 - (void)dealloc {
 	free(_thetaVector);
 	[super dealloc];
-}
-
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	if (![algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]]) {
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException
-									   reason:@"For logistic regression classifiers, the only supported algorithm is L-BFGS."
-									 userInfo:nil];
-	}
-	
-	if (implementation == LNKImplementationTypeAccelerate) {
-		return [_LNKLogRegClassifierLBFGS_AC class];
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type / algorithm", nil);
-	
-	return Nil;
 }
 
 - (LNKFloat *)_thetaVector {

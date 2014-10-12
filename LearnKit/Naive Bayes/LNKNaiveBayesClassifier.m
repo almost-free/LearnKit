@@ -14,17 +14,21 @@
 	NSPointerArray *_columnsToValues;
 }
 
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return nil;
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
 #pragma unused(algorithm)
 	
-	if (implementation == LNKImplementationTypeAccelerate) {
-		return [_LNKNaiveBayesClassifierAC class];
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type", nil);
-	
-	return Nil;
+	return [_LNKNaiveBayesClassifierAC class];
 }
+
 
 - (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex {
 	NSParameterAssert(values);

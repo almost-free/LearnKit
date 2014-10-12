@@ -17,17 +17,21 @@
 
 #define DEFAULT_ITERATION_COUNT 100
 
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return nil;
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
 #pragma unused(algorithm)
 	
-	if (implementation == LNKImplementationTypeAccelerate) {
-		return [_LNKKMeansClassifierAC class];
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type", nil);
-	
-	return Nil;
+	return [_LNKKMeansClassifierAC class];
 }
+
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 	if (classes.count < 2) {

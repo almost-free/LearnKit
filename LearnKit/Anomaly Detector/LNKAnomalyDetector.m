@@ -25,17 +25,21 @@
 
 #define DEFAULT_THRESHOLD 0.01
 
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return nil;
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
 #pragma unused(algorithm)
 	
-	if (implementation == LNKImplementationTypeAccelerate) {
-		return [_LNKAnomalyDetectorAC class];
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type", nil);
-	
-	return Nil;
+	return [_LNKAnomalyDetectorAC class];
 }
+
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 #pragma unused(classes)

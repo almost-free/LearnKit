@@ -18,6 +18,28 @@
 	LNKFloat *_thetaVector;
 }
 
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return @[ [LNKOptimizationAlgorithmGradientDescent class], [LNKOptimizationAlgorithmNormalEquations class], [LNKOptimizationAlgorithmLBFGS class] ];
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
+	
+	if (algorithm == [LNKOptimizationAlgorithmGradientDescent class]) {
+		return [_LNKLinRegPredictorGD_AC class];
+	}
+	else if (algorithm == [LNKOptimizationAlgorithmNormalEquations class]) {
+		return [_LNKLinRegPredictorNE_AC class];
+	}
+	
+	return [_LNKLinRegPredictorLBFGS_AC class];
+}
+
+
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm];
 	if (self) {
@@ -30,24 +52,6 @@
 - (void)dealloc {
 	free(_thetaVector);
 	[super dealloc];
-}
-
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	if (implementation == LNKImplementationTypeAccelerate) {
-		if ([algorithm isKindOfClass:[LNKOptimizationAlgorithmGradientDescent class]]) {
-			return [_LNKLinRegPredictorGD_AC class];
-		}
-		else if ([algorithm isKindOfClass:[LNKOptimizationAlgorithmNormalEquations class]]) {
-			return [_LNKLinRegPredictorNE_AC class];
-		}
-		else if ([algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]]) {
-			return [_LNKLinRegPredictorLBFGS_AC class];
-		}
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type / algorithm", nil);
-	
-	return Nil;
 }
 
 - (LNKFloat *)_thetaVector {

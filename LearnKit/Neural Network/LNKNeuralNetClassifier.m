@@ -26,6 +26,22 @@ typedef struct {
 
 #define EPS 0.12
 
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return @[ [LNKOptimizationAlgorithmCG class] ];
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
+#pragma unused(algorithm)
+	
+	return [_LNKNeuralNetClassifierAC class];
+}
+
+
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	NSAssert(matrix.hasBiasColumn, @"The matrix should have a bias column");
 	
@@ -35,22 +51,6 @@ typedef struct {
 	_hiddenLayerCount = 1;
 	
 	return self;
-}
-
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	if (![algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]]) {
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException
-									   reason:@"For neural network classifiers, the only supported algorithm is CG."
-									 userInfo:nil];
-	}
-	
-	if (implementation == LNKImplementationTypeAccelerate) {
-		return [_LNKNeuralNetClassifierAC class];
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type / algorithm", nil);
-	
-	return Nil;
 }
 
 - (LNKSize)_totalUnitCount {

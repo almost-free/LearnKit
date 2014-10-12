@@ -22,17 +22,21 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(const L
 
 #define DEFAULT_K 1
 
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return nil;
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
 #pragma unused(algorithm)
 	
-	if (implementation == LNKImplementationTypeAccelerate) {
-		return [_LNKKNNClassifierAC class];
-	}
-	
-	NSAssertNotReachable(@"Unsupported implementation type", nil);
-	
-	return Nil;
+	return [_LNKKNNClassifierAC class];
 }
+
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 	if (classes.count < 2) {

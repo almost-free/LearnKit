@@ -12,19 +12,19 @@
 
 @implementation LNKOneVsAllLogRegClassifier
 
-- (Class)_classForImplementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	if (![algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]]) {
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException
-									   reason:@"For logistic regression classifiers, the only supported algorithm is L-BFGS."
-									 userInfo:nil];
-	}
++ (NSArray *)supportedImplementationTypes {
+	return @[ @(LNKImplementationTypeAccelerate) ];
+}
+
++ (NSArray *)supportedAlgorithms {
+	return @[ [LNKOptimizationAlgorithmLBFGS class] ];
+}
+
++ (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
+#pragma unused(algorithm)
 	
-	if (implementation == LNKImplementationTypeAccelerate)
-		return [_LNKOneVsAllLogRegClassifierLBFGS_AC class];
-	
-	NSAssertNotReachable(@"Unsupported implementation type / algorithm", nil);
-	
-	return Nil;
+	return [_LNKOneVsAllLogRegClassifierLBFGS_AC class];
 }
 
 @end
