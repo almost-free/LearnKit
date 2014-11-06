@@ -70,14 +70,14 @@ typedef struct {
 	return [NSNumber numberWithLNKFloat:sum / k];
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	if (!featureVector) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"The feature vector must not be NULL" userInfo:nil];
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	if (!featureVector.data) {
+		@throw [NSException exceptionWithName:NSGenericException reason:@"The feature vector data must not be NULL" userInfo:nil];
 	}
 	
 	LNKMatrix *matrix = self.matrix;
 	
-	if (length != matrix.columnCount) {
+	if (featureVector.length != matrix.columnCount) {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The length of the feature vector is incompatible with the matrix" userInfo:nil];
 	}
 	
@@ -90,7 +90,7 @@ typedef struct {
 	// Find the k closest examples.
 	for (LNKSize example = 0; example < exampleCount; example++) {
 		const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
-		const LNKFloat distance = distanceFunction(exampleRow, featureVector, length);
+		const LNKFloat distance = distanceFunction(exampleRow, featureVector.data, featureVector.length);
 		
 		if (example < k) {
 			closestExamples[example].distance = distance;

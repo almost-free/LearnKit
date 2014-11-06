@@ -16,6 +16,6 @@
 
 - (LNKFloat)_evaluateCostFunction;
 - (void)train;
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length;
+- (id)predictValueForFeatureVector:(LNKVector)featureVector;
 
 @end

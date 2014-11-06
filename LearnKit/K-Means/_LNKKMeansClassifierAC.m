@@ -116,11 +116,11 @@
 	[super _setClusterCentroids:clusterCentroids];
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length == self.matrix.columnCount);
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length == self.matrix.columnCount);
 	
-	return [NSNumber numberWithLNKSize:[self _closestClusterToExample:featureVector]];
+	return [NSNumber numberWithLNKSize:[self _closestClusterToExample:featureVector.data]];
 }
 
 @end

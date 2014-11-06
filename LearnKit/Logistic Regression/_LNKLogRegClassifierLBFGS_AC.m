@@ -28,16 +28,16 @@
 	});
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length);
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length);
 	
-	NSAssert(length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
+	NSAssert(featureVector.length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't compute the dot product.
 	
 	// sigmoid(theta . input)
 	LNKFloat result;
-	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featureVector, UNIT_STRIDE, &result, self.matrix.columnCount);
+	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featureVector.data, UNIT_STRIDE, &result, self.matrix.columnCount);
 	LNK_vsigmoid(&result, 1);
 	
 	return [NSNumber numberWithLNKFloat:result];

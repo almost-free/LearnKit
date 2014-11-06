@@ -78,9 +78,8 @@
 	NSAssertNotReachable(@"%s should be implemented by subclasses", __PRETTY_FUNCTION__);
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
 #pragma unused(featureVector)
-#pragma unused(length)
 	
 	NSAssertNotReachable(@"%s should be implemented by subclasses", __PRETTY_FUNCTION__);
 	return nil;

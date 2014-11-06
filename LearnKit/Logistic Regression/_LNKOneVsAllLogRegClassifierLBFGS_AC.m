@@ -45,7 +45,7 @@
 	
 	for (LNKClass *class in _classesToClassifiers) {
 		LNKLogRegClassifier *classifier = [_classesToClassifiers objectForKey:class];
-		LNKFloat probability = [[classifier predictValueForFeatureVector:featureVector length:length] LNKFloatValue];
+		LNKFloat probability = [[classifier predictValueForFeatureVector:LNKVectorMake(featureVector, length)] LNKFloatValue];
 		
 		[self _didPredictProbability:probability forClass:class];
 	}

@@ -136,11 +136,11 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	NSAssertNotReachable(@"%s should be implemented by subclasses", __PRETTY_FUNCTION__);
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length);
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length);
 	
-	[self _predictValueForFeatureVector:featureVector length:length];
+	[self _predictValueForFeatureVector:featureVector.data length:featureVector.length];
 	
 	LNKFloat bestProbability = -1;
 	LNKClass *bestClass = nil;
@@ -167,7 +167,7 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	LNKSize hits = 0;
 	
 	for (LNKSize m = 0; m < exampleCount; m++) {
-		id predictedValue = [self predictValueForFeatureVector:_EXAMPLE_IN_MATRIX_BUFFER(m) length:columnCount];
+		id predictedValue = [self predictValueForFeatureVector:LNKVectorMake(_EXAMPLE_IN_MATRIX_BUFFER(m), columnCount)];
 		
 		if ([predictedValue isEqual:[LNKClass classWithUnsignedInteger:outputVector[m]]])
 			hits++;

@@ -27,6 +27,6 @@
 
 /// The predictor should be trained prior to calling this method.
 /// The type of object returned varies by predictor.
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length;
+- (id)predictValueForFeatureVector:(LNKVector)featureVector;
 
 @end

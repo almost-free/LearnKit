@@ -104,8 +104,8 @@
 	return c * LNK_exp(-0.5 * sum);
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	const LNKFloat p = [self _probabilityWithFeatureVector:featureVector length:length];
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	const LNKFloat p = [self _probabilityWithFeatureVector:featureVector.data length:featureVector.length];
 	
 	if (p < self.threshold) {
 		// It's an anomaly.

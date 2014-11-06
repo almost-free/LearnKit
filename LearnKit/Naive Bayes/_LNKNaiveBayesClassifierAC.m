@@ -84,9 +84,9 @@
 	}
 }
 
-- (id)predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length);
+- (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length);
 	
 	LNKClasses *classes = self.classes;
 	const LNKSize columnCount = self.matrix.columnCount;
@@ -99,7 +99,7 @@
 		LNKFloat expectation = _priorProbabilities[classIndex];
 		
 		for (LNKSize column = 0; column < columnCount; column++) {
-			const LNKSize featureIndex = featureVector[column];
+			const LNKSize featureIndex = featureVector.data[column];
 			
 			expectation *= _featureProbabilities[classIndex * columnCount + column][featureIndex];
 		}
