@@ -10,6 +10,7 @@
 #import "LNKAccelerate.h"
 #import "LNKCollaborativeFilteringPredictorPrivate.h"
 #import "LNKMatrix.h"
+#import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
 @implementation LNKCollaborativeFilteringPredictor {
@@ -20,7 +21,7 @@
 }
 
 + (NSArray *)supportedAlgorithms {
-	return nil;
+	return @[ [LNKOptimizationAlgorithmCG class] ];
 }
 
 + (NSArray *)supportedImplementationTypes {
@@ -29,13 +30,12 @@
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm userCount:(NSUInteger)userCount {
 #pragma unused(implementationType)
-#pragma unused(algorithm)
 	
 	if (userCount == 0) {
 		[NSException raise:NSGenericException format:@"The user count must be greater than 0"];
 	}
 	
-	self = [self initWithMatrix:matrix optimizationAlgorithm:nil];
+	self = [self initWithMatrix:matrix optimizationAlgorithm:algorithm];
 	if (self) {
 		_userCount = userCount;
 	}
@@ -64,7 +64,16 @@
 	LNK_vsum(result, UNIT_STRIDE, &sum, resultSize);
 	free(result);
 	
-	return 0.5 * sum;
+	LNKFloat regularizationTerm = 0;
+	
+	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
+	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
+	
+	if (algorithm.regularizationEnabled) {
+		
+	}
+	
+	return 0.5 * sum + regularizationTerm;
 }
 
 - (void)_copyThetaVector:(const LNKFloat *)vector shouldTranspose:(BOOL)shouldTranspose {

@@ -10,6 +10,7 @@
 
 #import "LNKCollaborativeFilteringPredictorPrivate.h"
 #import "LNKMatrix.h"
+#import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 #import "LNKUtilities.h"
 
@@ -39,7 +40,12 @@
 														exampleCount:movieCount columnCount:exampleCount
 													addingOnesColumn:NO];
 	
-	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil userCount:userCount];
+	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
+	
+	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm userCount:userCount];
+	[matrix release];
+	[algorithm release];
+	
 	[predictor _copyThetaVector:(const LNKFloat *)thetaVectorData.bytes shouldTranspose:YES];
 	
 #warning TODO: these should take a LNKMatrix
@@ -47,6 +53,7 @@
 	[predictor copyOutputMatrix:(const LNKFloat *)yMatrixData.bytes shouldTranspose:YES];
 	
 	XCTAssertEqualWithAccuracy([predictor _evaluateCostFunction], 27918, 1);
+	[predictor release];
 }
 
 @end
