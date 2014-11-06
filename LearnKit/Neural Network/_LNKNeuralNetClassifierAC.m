@@ -281,7 +281,8 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		LNKSize rows, columns;
 		const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layer rows:&rows columns:&columns];
 		
-		NSAssert(currentInputLayerLength == columns, @"Incompatible input length");
+		if (currentInputLayerLength != columns)
+			[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible theta matrix sizes", layer];
 		
 		LNKFloat *transposedThetaVector = LNKMemoryBufferManagerAllocBlock(memoryManager, rows * columns);
 		LNK_mtrans(thetaVector, UNIT_STRIDE, transposedThetaVector, UNIT_STRIDE, columns, rows);
@@ -318,7 +319,9 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		currentInputLayerLength = actualOutputVectorLength;
 	}
 	
-	NSAssert(currentInputLayerLength == self.classes.count, @"Every class must be given an output");
+	if (currentInputLayerLength != self.classes.count)
+		[NSException raise:NSGenericException format:@"Every class must be given an output"];
+	
 	*outOutputVector = (LNKFloat *)currentInputLayer;
 }
 
