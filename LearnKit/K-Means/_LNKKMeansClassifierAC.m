@@ -117,8 +117,11 @@
 }
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
-	NSParameterAssert(featureVector.data);
-	NSParameterAssert(featureVector.length == self.matrix.columnCount);
+	if (!featureVector.data)
+		[NSException raise:NSGenericException format:@"The feature vector must contain data"];
+		
+	if (featureVector.length != self.matrix.columnCount)
+		[NSException raise:NSGenericException format:@"The length of the feature vector must match the number of columns in the matrix"];
 	
 	return [NSNumber numberWithLNKSize:[self _closestClusterToExample:featureVector.data]];
 }

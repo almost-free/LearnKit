@@ -82,7 +82,9 @@
 }
 
 - (const LNKFloat *)centroidForClusterAtIndex:(LNKSize)clusterIndex {
-	NSParameterAssert(clusterIndex < self.classes.count);
+	if (clusterIndex >= self.classes.count)
+		[NSException raise:NSGenericException format:@"The cluster index is out-of-bounds"];
+		
 	return _clusterCentroids + clusterIndex * self.matrix.columnCount;
 }
 
