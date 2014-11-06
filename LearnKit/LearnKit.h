@@ -9,6 +9,7 @@
 
 #import <LearnKit/LNKAnomalyDetector.h>
 #import <LearnKit/LNKClassifier.h>
+#import <LearnKit/LNKCollaborativeFilteringPredictor.h>
 #import <LearnKit/LNKKMeansClassifier.h>
 #import <LearnKit/LNKKNNClassifier.h>
 #import <LearnKit/LNKLinRegPredictor.h>
