@@ -33,6 +33,10 @@
 		C975913819A04B44003D3A48 /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
 		C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
 		C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
+		C9860BE41A0B4F04009FADAE /* Movies_R.mat in Resources */ = {isa = PBXBuildFile; fileRef = C9860BE01A0B4F04009FADAE /* Movies_R.mat */; };
+		C9860BE51A0B4F04009FADAE /* Movies_Theta.mat in Resources */ = {isa = PBXBuildFile; fileRef = C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */; };
+		C9860BE61A0B4F04009FADAE /* Movies_X.mat in Resources */ = {isa = PBXBuildFile; fileRef = C9860BE21A0B4F04009FADAE /* Movies_X.mat */; };
+		C9860BE71A0B4F04009FADAE /* Movies_Y.mat in Resources */ = {isa = PBXBuildFile; fileRef = C9860BE31A0B4F04009FADAE /* Movies_Y.mat */; };
 		C9943ABC19A5AECF00F91C25 /* LNKMatrixTestExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C9943ABB19A5AECF00F91C25 /* LNKMatrixTestExtras.m */; };
 		C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */; };
 		C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */; };
@@ -188,6 +192,10 @@
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
 		C971B4EE19DA6ECB0066C78B /* StructureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StructureTests.m; path = LearnKitTests/StructureTests.m; sourceTree = SOURCE_ROOT; };
 		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9860BE01A0B4F04009FADAE /* Movies_R.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movies_R.mat; sourceTree = "<group>"; };
+		C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movies_Theta.mat; sourceTree = "<group>"; };
+		C9860BE21A0B4F04009FADAE /* Movies_X.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movies_X.mat; sourceTree = "<group>"; };
+		C9860BE31A0B4F04009FADAE /* Movies_Y.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movies_Y.mat; sourceTree = "<group>"; };
 		C9943ABA19A5AECF00F91C25 /* LNKMatrixTestExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LNKMatrixTestExtras.h; path = LearnKitTests/LNKMatrixTestExtras.h; sourceTree = SOURCE_ROOT; };
 		C9943ABB19A5AECF00F91C25 /* LNKMatrixTestExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LNKMatrixTestExtras.m; path = LearnKitTests/LNKMatrixTestExtras.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelerateTests.m; path = LearnKitTests/AccelerateTests.m; sourceTree = SOURCE_ROOT; };
@@ -574,6 +582,10 @@
 				C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */,
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
+				C9860BE01A0B4F04009FADAE /* Movies_R.mat */,
+				C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */,
+				C9860BE21A0B4F04009FADAE /* Movies_X.mat */,
+				C9860BE31A0B4F04009FADAE /* Movies_Y.mat */,
 				C915806A19E8B12F00879FD5 /* ServerStatistics.mat */,
 				C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */,
 				C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */,
@@ -738,11 +750,15 @@
 				C9CBD31419E5D69000AE71D5 /* ex7data1_X.dat in Resources */,
 				C9CBD30F19E5D69000AE71D5 /* ex3data1_y.dat in Resources */,
 				C915808119E8E4FB00879FD5 /* ServerStatisticsVal.mat in Resources */,
+				C9860BE71A0B4F04009FADAE /* Movies_Y.mat in Resources */,
 				C9CBD30919E5D69000AE71D5 /* ex1data2.txt in Resources */,
+				C9860BE51A0B4F04009FADAE /* Movies_Theta.mat in Resources */,
 				C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */,
 				C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */,
+				C9860BE41A0B4F04009FADAE /* Movies_R.mat in Resources */,
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
+				C9860BE61A0B4F04009FADAE /* Movies_X.mat in Resources */,
 				C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */,
 				C9CBD30B19E5D69000AE71D5 /* ex2data2.txt in Resources */,
 				C9CBD30C19E5D69000AE71D5 /* ex3data1_theta1.dat in Resources */,
