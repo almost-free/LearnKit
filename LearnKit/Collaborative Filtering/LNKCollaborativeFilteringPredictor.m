@@ -54,7 +54,6 @@
 	const LNKSize resultSize = exampleCount * _userCount;
 	LNKFloat *result = LNKFloatAlloc(resultSize);
 	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, _userCount, featureCount);
-	free(thetaTranspose);
 	
 	LNK_vsub(_outputMatrix, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	LNK_vmul(result, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
@@ -70,8 +69,21 @@
 	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
 	
 	if (algorithm.regularizationEnabled) {
+		// Re-use the theta transpose matrix to compute the theta square.
+		LNK_vmul(thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, _userCount * featureCount);
 		
+		LNKFloat *dataSquare = LNKFloatAlloc(exampleCount * featureCount);
+		LNK_vmul(dataMatrix, UNIT_STRIDE, dataMatrix, UNIT_STRIDE, dataSquare, UNIT_STRIDE, exampleCount * featureCount);
+		
+		LNKFloat thetaSum, dataSum;
+		LNK_vsum(thetaTranspose, UNIT_STRIDE, &thetaSum, _userCount * featureCount);
+		LNK_vsum(dataSquare, UNIT_STRIDE, &dataSum, exampleCount * featureCount);
+		free(dataSquare);
+		
+		regularizationTerm = algorithm.lambda / 2 * (thetaSum + dataSum);
 	}
+	
+	free(thetaTranspose);
 	
 	return 0.5 * sum + regularizationTerm;
 }

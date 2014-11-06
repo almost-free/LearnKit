@@ -20,7 +20,7 @@
 
 @implementation CollaborativeFilteringTests
 
-- (void)testCostFunction {
+- (LNKFloat)_costWithAlgorithm:(LNKOptimizationAlgorithmCG *)algorithm {
 	const LNKSize movieCount = 1682;
 	const LNKSize userCount = 943;
 	const LNKSize exampleCount = 10;
@@ -40,11 +40,8 @@
 														exampleCount:movieCount columnCount:exampleCount
 													addingOnesColumn:NO];
 	
-	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
-	
 	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm userCount:userCount];
 	[matrix release];
-	[algorithm release];
 	
 	[predictor _copyThetaVector:(const LNKFloat *)thetaVectorData.bytes shouldTranspose:YES];
 	
@@ -52,8 +49,25 @@
 	[predictor copyIndicatorMatrix:(const LNKFloat *)rMatrixData.bytes shouldTranspose:YES];
 	[predictor copyOutputMatrix:(const LNKFloat *)yMatrixData.bytes shouldTranspose:YES];
 	
-	XCTAssertEqualWithAccuracy([predictor _evaluateCostFunction], 27918, 1);
+	LNKFloat cost = [predictor _evaluateCostFunction];
 	[predictor release];
+	
+	return cost;
+}
+
+- (void)testCostFunction {
+	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
+	
+	LNKFloat cost = [self _costWithAlgorithm:algorithm];
+	XCTAssertEqualWithAccuracy(cost, 27918, 1);
+	
+	algorithm.regularizationEnabled = YES;
+	algorithm.lambda = 1;
+	
+	cost = [self _costWithAlgorithm:algorithm];
+	XCTAssertEqualWithAccuracy(cost, 32520, 1);
+	
+	[algorithm release];
 }
 
 @end
