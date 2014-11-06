@@ -43,7 +43,8 @@ typedef struct {
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	NSAssert(matrix.hasBiasColumn, @"The matrix should have a bias column");
+	if (!matrix.hasBiasColumn)
+		[NSException raise:NSGenericException format:@"The matrix should have a bias column"];
 	
 	if (!(self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm]))
 		return nil;
@@ -157,7 +158,9 @@ typedef struct {
 }
 
 - (void)setHiddenLayerCount:(LNKSize)hiddenLayerCount {
-	NSAssert(hiddenLayerCount >= 1, @"There should be at least one hidden layer");
+	if (hiddenLayerCount == 0)
+		[NSException raise:NSGenericException format:@"Neural networks must have at least 1 hidden layer"];
+	
 	_hiddenLayerCount = hiddenLayerCount;
 }
 
