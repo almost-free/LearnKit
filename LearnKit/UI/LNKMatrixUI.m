@@ -13,9 +13,11 @@
 
 #if TARGET_OS_MAC
 - (NSImage *)imageForExampleAtIndex:(LNKSize)index width:(NSUInteger)width height:(NSUInteger)height {
-	NSParameterAssert(width);
-	NSParameterAssert(height);
-	NSParameterAssert(index < self.exampleCount);
+	if (!width || !height)
+		[NSException raise:NSGenericException format:@"The width and height must be greater than 0"];
+	
+	if (index >= self.exampleCount)
+		[NSException raise:NSGenericException format:@"The given index (%lld) is out-of-bounds (%lld)", index, self.exampleCount];
 	
 	const LNKFloat *pixels = self.matrixBuffer + (index * self.columnCount);
 	
