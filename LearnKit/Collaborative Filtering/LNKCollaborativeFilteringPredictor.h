@@ -7,6 +7,8 @@
 
 #import "LNKPredictor.h"
 
+/// A collaborative filtering predictor for recommendation engines.
+/// Only the Conjugate Gradient optimization algorithm is supported.
 @interface LNKCollaborativeFilteringPredictor : LNKPredictor
 
 /// The `userCount` must be greater than 0.
