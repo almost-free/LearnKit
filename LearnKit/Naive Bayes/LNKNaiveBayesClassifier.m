@@ -31,12 +31,17 @@
 
 
 - (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex {
-	NSParameterAssert(values);
-	NSParameterAssert(columnIndex < self.matrix.columnCount);
+	if (!values)
+		[NSException raise:NSGenericException format:@"The array of values must not be nil"];
+	
+	const LNKSize columnCount = self.matrix.columnCount;
+	
+	if (columnIndex >= columnCount)
+		[NSException raise:NSGenericException format:@"The given index (%lld) is out-of-bounds (%lld)", columnIndex, columnCount];
 	
 	if (!_columnsToValues) {
 		_columnsToValues = [[NSPointerArray alloc] initWithOptions:NSPointerFunctionsStrongMemory];
-		_columnsToValues.count = self.matrix.columnCount;
+		_columnsToValues.count = columnCount;
 	}
 	
 	[_columnsToValues insertPointer:values atIndex:columnIndex];
