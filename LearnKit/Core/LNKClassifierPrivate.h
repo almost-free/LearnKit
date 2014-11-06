@@ -9,8 +9,8 @@
 
 @interface LNKClassifier (Private)
 
-/// Instead of overriding -predictValueForFeatureVector:length:, classifiers should override the following method and provide probabilities for all classes.
-- (void)_predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length;
+/// Instead of overriding -predictValueForFeatureVector:, classifiers should override the following method and provide probabilities for all classes.
+- (void)_predictValueForFeatureVector:(LNKVector)featureVector;
 
 - (void)_didPredictProbability:(LNKFloat)probability forClass:(LNKClass *)class;
 

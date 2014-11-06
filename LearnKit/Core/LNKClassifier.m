@@ -129,9 +129,8 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	[_classesToProbabilities setObject:[NSNumber numberWithLNKFloat:probability] forKey:class];
 }
 
-- (void)_predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
+- (void)_predictValueForFeatureVector:(LNKVector)featureVector {
 #pragma unused(featureVector)
-#pragma unused(length)
 	
 	NSAssertNotReachable(@"%s should be implemented by subclasses", __PRETTY_FUNCTION__);
 }
@@ -140,7 +139,7 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
 	
-	[self _predictValueForFeatureVector:featureVector.data length:featureVector.length];
+	[self _predictValueForFeatureVector:featureVector];
 	
 	LNKFloat bestProbability = -1;
 	LNKClass *bestClass = nil;

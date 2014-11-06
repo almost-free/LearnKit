@@ -319,15 +319,15 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	*outOutputVector = (LNKFloat *)currentInputLayer;
 }
 
-- (void)_predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length);
+- (void)_predictValueForFeatureVector:(LNKVector)featureVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length);
 	
-	NSAssert(length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
+	NSAssert(featureVector.length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't do matrix multiplication.
 	
 	LNKFloat *outputLayer;
-	[self _feedForwardFeatureVector:featureVector length:length hiddenLayerActivations:NULL outputVector:&outputLayer];
+	[self _feedForwardFeatureVector:featureVector.data length:featureVector.length hiddenLayerActivations:NULL outputVector:&outputLayer];
 	
 	LNKSize index = 0;
 	for (LNKClass *class in self.classes) {

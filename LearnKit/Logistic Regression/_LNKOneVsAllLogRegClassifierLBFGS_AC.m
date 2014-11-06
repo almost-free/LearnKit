@@ -39,13 +39,13 @@
 	}
 }
 
-- (void)_predictValueForFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length);
+- (void)_predictValueForFeatureVector:(LNKVector)featureVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length);
 	
 	for (LNKClass *class in _classesToClassifiers) {
 		LNKLogRegClassifier *classifier = [_classesToClassifiers objectForKey:class];
-		LNKFloat probability = [[classifier predictValueForFeatureVector:LNKVectorMake(featureVector, length)] LNKFloatValue];
+		LNKFloat probability = [[classifier predictValueForFeatureVector:featureVector] LNKFloatValue];
 		
 		[self _didPredictProbability:probability forClass:class];
 	}
