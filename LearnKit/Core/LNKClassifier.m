@@ -139,6 +139,9 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
 	
+	if (featureVector.length != self.matrix.columnCount)
+		[NSException raise:NSGenericException format:@"The length of the feature vector must be equal to the number of columns in the matrix"]; // otherwise, we can't do matrix multiplication
+	
 	[self _predictValueForFeatureVector:featureVector];
 	
 	LNKFloat bestProbability = -1;

@@ -114,7 +114,9 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 				
 				LNKSize previousRows, previousColumns;
 				[self _getDimensionsOfLayerAtIndex:layer - layerPrior rows:&previousRows columns:&previousColumns];
-				NSAssert(previousRows == columnsIgnoringBias, @"Incorrect transition");
+				
+				if (previousRows != columnsIgnoringBias)
+					[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible matrix sizes", layer];
 				
 				LNK_mmul(errorVectorIgnoringBias, UNIT_STRIDE, featureVector, UNIT_STRIDE, tempBuffers[layer - layerPrior], UNIT_STRIDE, columnsIgnoringBias, previousColumns, 1);
 			}
@@ -237,7 +239,8 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 }
 
 - (void)train {
-	NSAssert(self.classes.count > 2, @"There should be at least three output classes");
+	if (self.classes.count < 3)
+		[NSException raise:NSGenericException format:@"Neural networks should be trained with at least three output classes"];
 	
 	[self _initializeRandomThetaVectors];
 	
@@ -322,9 +325,6 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 - (void)_predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
-	
-	NSAssert(featureVector.length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
-	// Otherwise, we can't do matrix multiplication.
 	
 	LNKFloat *outputLayer;
 	[self _feedForwardFeatureVector:featureVector.data length:featureVector.length hiddenLayerActivations:NULL outputVector:&outputLayer];
