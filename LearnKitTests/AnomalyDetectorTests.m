@@ -33,7 +33,7 @@
 	
 	[detector train];
 	
-	LNKClass *class = [detector predictValueForFeatureVector:[matrix exampleAtIndex:0] length:matrix.columnCount];
+	LNKClass *class = [detector predictValueForFeatureVector:LNKVectorMake([matrix exampleAtIndex:0], matrix.columnCount)];
 	XCTAssertEqual(class.unsignedIntegerValue, 0ULL, @"Not an anomaly!");
 	
 	[detector release];

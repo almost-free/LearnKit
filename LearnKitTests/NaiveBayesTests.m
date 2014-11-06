@@ -33,7 +33,7 @@
 	[classifier train];
 	
 	const LNKFloat inputVector[] = {1,0,1,0};
-	LNKClass *outputClass = [classifier predictValueForFeatureVector:inputVector length:4];
+	LNKClass *outputClass = [classifier predictValueForFeatureVector:LNKVectorMake(inputVector, 4)];
 	
 	XCTAssertEqual(outputClass.unsignedIntegerValue, 0ULL, @"We should not have the flu");
 	

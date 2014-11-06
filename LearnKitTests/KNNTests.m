@@ -28,10 +28,10 @@
 		classifier.k = k;
 		
 		LNKFloat inputVector[2] = { 96, 69 };
-		XCTAssertEqualObjects([classifier predictValueForFeatureVector:inputVector length:2], [LNKClass classWithUnsignedInteger:1], @"Incorrect class");
+		XCTAssertEqualObjects([classifier predictValueForFeatureVector:LNKVectorMake(inputVector, 2)], [LNKClass classWithUnsignedInteger:1], @"Incorrect class");
 		
 		LNKFloat inputVector2[2] = { 49, 50 };
-		XCTAssertEqualObjects([classifier predictValueForFeatureVector:inputVector2 length:2], [LNKClass classWithUnsignedInteger:0], @"Incorrect class");
+		XCTAssertEqualObjects([classifier predictValueForFeatureVector:LNKVectorMake(inputVector2, 2)], [LNKClass classWithUnsignedInteger:0], @"Incorrect class");
 	}
 	
 	[classifier release];

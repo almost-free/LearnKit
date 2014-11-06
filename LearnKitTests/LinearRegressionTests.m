@@ -77,7 +77,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
 	[predictor train];
 	LNKFloat input[] = { 1, 3.5 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:input length:2] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMake(input, 2)] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
 }
 
 - (void)test5Normalization {
@@ -100,7 +100,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[2],   3673.548451, DACCURACY, @"The Theta vector is incorrect");
 	
 	LNKFloat house[] = { 1, 1650, 3 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:house length:3] LNKFloatValue], 289314.618925, DACCURACY, @"The prediction was inaccurate");
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMake(house, 3)] LNKFloatValue], 289314.618925, DACCURACY, @"The prediction was inaccurate");
 	[predictor release];
 }
 
@@ -120,7 +120,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[2], -8738.019112, DACCURACY, @"The Theta vector is incorrect");
 	
 	LNKFloat house[] = { 1, 1650, 3 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:house length:3] LNKFloatValue], 293081.464335, DACCURACY, @"The prediction was inaccurate");
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMake(house, 3)] LNKFloatValue], 293081.464335, DACCURACY, @"The prediction was inaccurate");
 	[predictor release];
 }
 
@@ -152,7 +152,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		[predictor train];
 		
 		LNKFloat x[] = { 1, 12, 6000, 1600, 0.25, 74, 892000, 90, 3000, 80 };
-		XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:x length:10] LNKFloatValue], 37.9766, DACCURACY, @"The prediction was inaccurate");
+		XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMake(x, 10)] LNKFloatValue], 37.9766, DACCURACY, @"The prediction was inaccurate");
 		[predictor release];
 	}];
 }
