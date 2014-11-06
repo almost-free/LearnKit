@@ -44,13 +44,11 @@
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 #pragma unused(classes)
 	
-	if (matrix.hasBiasColumn) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"The matrix used for anomaly detection should not have a bias column" userInfo:nil];
-	}
+	if (matrix.hasBiasColumn)
+		[NSException raise:NSGenericException format:@"The matrix used for anomaly detection should not have a bias column"];
 	
-	if (matrix.exampleCount < matrix.columnCount) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"The matrix used for anomaly detection must have more example rows than columns" userInfo:nil];
-	}
+	if (matrix.exampleCount < matrix.columnCount)
+		[NSException raise:NSGenericException format:@"The matrix used for anomaly detection must have more example rows than columns"];
 	
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:[LNKClasses withCount:2]];
 	if (self) {
@@ -60,34 +58,39 @@
 }
 
 - (LNKFloat *)_muVector {
-	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+	NSAssertNotReachable(@"Subclasses must override %s", __PRETTY_FUNCTION__);
 	return NULL;
 }
 
 - (LNKFloat *)_sigmaMatrix {
-	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+	NSAssertNotReachable(@"Subclasses must override %s", __PRETTY_FUNCTION__);
 	return NULL;
 }
 
 - (void)_setMuVector:(LNKFloat *)vector {
 #pragma unused(vector)
-	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+	NSAssertNotReachable(@"Subclasses must override %s", __PRETTY_FUNCTION__);
 }
 
 - (void)_setSigmaMatrix:(LNKFloat *)matrix {
 #pragma unused(matrix)
-	NSAssertNotReachable(@"Subclasses should override %s", __PRETTY_FUNCTION__);
+	NSAssertNotReachable(@"Subclasses must override %s", __PRETTY_FUNCTION__);
 }
 
 @end
 
 
 LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
+	if (!matrix)
+		[NSException raise:NSGenericException format:@"The matrix must not be NULL"];
+	
+	if (!cvMatrix)
+		[NSException raise:NSGenericException format:@"The cross-validation matrix must not be NULL"];
+	
 	const LNKSize cvColumnCount = cvMatrix.columnCount;
 	
-	if (matrix.columnCount != cvColumnCount) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"The cross validation matrix must have the same number of columns as the matrix" userInfo:nil];
-	}
+	if (matrix.columnCount != cvColumnCount)
+		[NSException raise:NSGenericException format:@"The cross validation matrix must have the same number of columns as the matrix"];
 	
 	const LNKSize cvExampleCount = cvMatrix.exampleCount;
 	
