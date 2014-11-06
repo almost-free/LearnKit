@@ -78,7 +78,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		LNKFloat *currentErrorVector;
 		
 		// First predict the output, then propagate the error.
-		[self _feedForwardFeatureVector:featureVector length:columnCount hiddenLayerActivations:hiddenLayerActivations outputVector:&currentErrorVector];
+		[self _feedForwardFeatureVector:LNKVectorMake(featureVector, columnCount) hiddenLayerActivations:hiddenLayerActivations outputVector:&currentErrorVector];
 		
 		for (LNKSize layer = thetaVectorCount; layer >= 1; layer--) {
 			if (layer == thetaVectorCount) {
@@ -266,15 +266,15 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 }
 
 /// `outOutputVector` and `outActivations` (and its members) must be freed by the caller.
-- (void)_feedForwardFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length hiddenLayerActivations:(LNKFloat **)activations outputVector:(LNKFloat **)outOutputVector {
-	NSParameterAssert(featureVector);
-	NSParameterAssert(length);
+- (void)_feedForwardFeatureVector:(LNKVector)featureVector hiddenLayerActivations:(LNKFloat **)activations outputVector:(LNKFloat **)outOutputVector {
+	NSParameterAssert(featureVector.data);
+	NSParameterAssert(featureVector.length);
 	NSParameterAssert(outOutputVector);
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
-	const LNKFloat *currentInputLayer = featureVector;
+	const LNKFloat *currentInputLayer = featureVector.data;
 	LNKSize currentInputLayerLength = self.matrix.columnCount;
 	
 	for (LNKSize layer = 0; layer < thetaVectorCount; layer++) {
@@ -301,7 +301,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		if (shouldAddBiasUnit)
 			outputVector[0] = 1;
 		
-		if (currentInputLayer != featureVector) {
+		if (currentInputLayer != featureVector.data) {
 			assert(layer >= 1);
 			free((void *)currentInputLayer);
 		}
@@ -330,7 +330,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	NSParameterAssert(featureVector.length);
 	
 	LNKFloat *outputLayer;
-	[self _feedForwardFeatureVector:featureVector.data length:featureVector.length hiddenLayerActivations:NULL outputVector:&outputLayer];
+	[self _feedForwardFeatureVector:featureVector hiddenLayerActivations:NULL outputVector:&outputLayer];
 	
 	LNKSize index = 0;
 	for (LNKClass *class in self.classes) {
@@ -360,7 +360,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputLayer;
-		[self _feedForwardFeatureVector:featureVector length:columnCount hiddenLayerActivations:NULL outputVector:&outputLayer];
+		[self _feedForwardFeatureVector:LNKVectorMake(featureVector, columnCount) hiddenLayerActivations:NULL outputVector:&outputLayer];
 		
 		// Optimize for true positives and negatives for all classes.
 		// -y log(h) - (1 - y) log(1 - h)
