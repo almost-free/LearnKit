@@ -31,9 +31,8 @@
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm userCount:(NSUInteger)userCount {
 #pragma unused(implementationType)
 	
-	if (userCount == 0) {
+	if (userCount == 0)
 		[NSException raise:NSGenericException format:@"The user count must be greater than 0"];
-	}
 	
 	self = [self initWithMatrix:matrix optimizationAlgorithm:algorithm];
 	if (self) {
@@ -105,7 +104,8 @@
 }
 
 - (void)copyIndicatorMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
-	NSParameterAssert(matrix);
+	if (!matrix)
+		[NSException raise:NSGenericException format:@"The given matrix must not be NULL"];
 	
 	const LNKSize exampleCount = self.matrix.exampleCount;
 	const LNKSize size = exampleCount * _userCount;
@@ -119,7 +119,8 @@
 }
 
 - (void)copyOutputMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
-	NSParameterAssert(matrix);
+	if (!matrix)
+		[NSException raise:NSGenericException format:@"The given matrix must not be NULL"];
 	
 	const LNKSize exampleCount = self.matrix.exampleCount;
 	const LNKSize size = exampleCount * _userCount;
