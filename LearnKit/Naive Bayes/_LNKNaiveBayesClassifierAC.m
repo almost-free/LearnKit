@@ -20,13 +20,11 @@
 	LNKClasses *classes = self.classes;
 	LNKMatrix *matrix = self.matrix;
 	
-	if (classes.count < 2) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"There should be at least two classes" userInfo:nil];
-	}
+	if (classes.count < 2)
+		[NSException raise:NSGenericException format:@"There should be at least two classes"];
 	
-	if (matrix.hasBiasColumn) {
-		@throw [NSException exceptionWithName:NSGenericException reason:@"Matrices used with a Naive Bayes classifier should not have a bias column" userInfo:nil];
-	}
+	if (matrix.hasBiasColumn)
+		[NSException raise:NSGenericException format:@"Matrices used with a Naive Bayes classifier should not have a bias column"];
 	
 	NSPointerArray *columnsToValues = [self _columnsToValues];
 	const LNKSize classCount = classes.count;
@@ -85,8 +83,8 @@
 }
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
-	NSParameterAssert(featureVector.data);
-	NSParameterAssert(featureVector.length);
+	if (!featureVector.data || !featureVector.length)
+		[NSException raise:NSGenericException format:@"The feature vector must have a non-zero length"];
 	
 	LNKClasses *classes = self.classes;
 	const LNKSize columnCount = self.matrix.columnCount;
