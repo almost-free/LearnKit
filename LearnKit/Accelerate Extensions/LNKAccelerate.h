@@ -77,11 +77,6 @@
 
 #endif
 
-typedef struct {
-	LNKFloat *data;
-	LNKSize length;
-} LNKVector;
-
 /* In-place operations */
 
 /// Inverts a matrix of dimensions n * n.

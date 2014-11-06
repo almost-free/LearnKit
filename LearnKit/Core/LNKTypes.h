@@ -33,6 +33,15 @@ typedef uint64_t LNKSize;
 #define LNKFloatCalloc(size) (LNKFloat *)calloc((size), sizeof(LNKFloat))
 #define LNKFloatCopy(dest, src, size) memcpy(dest, src, (size) * sizeof(LNKFloat))
 
+
+typedef struct {
+	const LNKFloat *data;
+	const LNKSize length;
+} LNKVector;
+
+#define LNKVectorMake(data, length) ((LNKVector) { (data), (length) })
+
+
 @interface NSNumber (LNKTypes)
 
 + (NSNumber *)numberWithLNKFloat:(LNKFloat)value;
