@@ -51,6 +51,7 @@
 	LNKFloat *thetaTranspose = LNKFloatAlloc(_userCount * featureCount);
 	LNK_mtrans(_thetaVector, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, featureCount, _userCount);
 	
+	// 1/2 * sum((((X * Theta') - Y) ^ 2) * R)
 	const LNKSize resultSize = exampleCount * _userCount;
 	LNKFloat *result = LNKFloatAlloc(resultSize);
 	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, _userCount, featureCount);
@@ -80,6 +81,7 @@
 		LNK_vsum(dataSquare, UNIT_STRIDE, &dataSum, exampleCount * featureCount);
 		free(dataSquare);
 		
+		// ... + lambda / 2 * (sum(Theta^2) + sum(X^2))
 		regularizationTerm = algorithm.lambda / 2 * (thetaSum + dataSum);
 	}
 	
