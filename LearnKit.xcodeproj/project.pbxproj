@@ -23,6 +23,7 @@
 		C915808619E8EC9600879FD5 /* AnomalyPerformance.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */; };
 		C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */; };
 		C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */; };
+		C92E451A1A15396400B6E33F /* MovieIDs.txt in Resources */ = {isa = PBXBuildFile; fileRef = C92E45191A15396400B6E33F /* MovieIDs.txt */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
 		C9460E291A144AA4000E577B /* MatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9460E281A144AA4000E577B /* MatrixTests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -190,6 +191,7 @@
 		C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformance.mat; sourceTree = "<group>"; };
 		C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceVal.mat; sourceTree = "<group>"; };
 		C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceValY.mat; sourceTree = "<group>"; };
+		C92E45191A15396400B6E33F /* MovieIDs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MovieIDs.txt; sourceTree = "<group>"; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
 		C9460E281A144AA4000E577B /* MatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatrixTests.m; path = LearnKitTests/MatrixTests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -607,6 +609,7 @@
 				C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */,
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
+				C92E45191A15396400B6E33F /* MovieIDs.txt */,
 				C9860BE01A0B4F04009FADAE /* Movies_R.mat */,
 				C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */,
 				C9860BE21A0B4F04009FADAE /* Movies_X.mat */,
@@ -772,6 +775,7 @@
 			files = (
 				C9CBD30A19E5D69000AE71D5 /* ex2data1.csv in Resources */,
 				C9CBD31519E5D69000AE71D5 /* ex7data2_X.dat in Resources */,
+				C92E451A1A15396400B6E33F /* MovieIDs.txt in Resources */,
 				C9CBD30D19E5D69000AE71D5 /* ex3data1_theta2.dat in Resources */,
 				C9CBD31319E5D69000AE71D5 /* ex5_ycv.dat in Resources */,
 				C9CBD31419E5D69000AE71D5 /* ex7data1_X.dat in Resources */,

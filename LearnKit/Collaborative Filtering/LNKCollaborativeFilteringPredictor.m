@@ -249,6 +249,40 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 #endif
 }
 
+- (NSIndexSet *)findTopK:(LNKSize)k predictionsForUser:(LNKSize)userIndex {
+	LNKMatrix *outputMatrix = self.matrix;
+	const LNKSize userCount = outputMatrix.columnCount;
+	const LNKSize exampleCount = outputMatrix.exampleCount;
+	
+	const LNKFloat *dataMatrix = _unrolledGradient;
+	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
+	
+	LNKFloat *predictions = LNKFloatAlloc(userCount * exampleCount);
+	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaMatrix, UNIT_STRIDE, predictions, UNIT_STRIDE, exampleCount, userCount, _featureCount);
+	
+	NSMutableArray *results = [NSMutableArray new];
+	
+	for (LNKSize example = 0; example < exampleCount; example++) {
+		LNKFloat prediction = predictions[example * _featureCount + userIndex];
+		
+		[results addObject:@{ @"prediction": @(prediction), @"index": @(example) }];
+	}
+	
+	free(predictions);
+	[results sortUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"prediction" ascending:NO] ]];
+	
+	NSMutableIndexSet *indices = [NSMutableIndexSet new];
+	
+	for (LNKSize n = 0; n < k; n++) {
+		NSDictionary *result = results[n];
+		[indices addIndex:[result[@"index"] unsignedIntegerValue]];
+	}
+	
+	[results release];
+	
+	return [indices autorelease];
+}
+
 - (void)dealloc {
 	free(_unrolledGradient);
 	

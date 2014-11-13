@@ -24,4 +24,6 @@
 - (void)loadDataMatrix:(LNKMatrix *)dataMatrix;
 - (void)loadThetaMatrix:(LNKMatrix *)thetaMatrix;
 
+- (NSIndexSet *)findTopK:(LNKSize)k predictionsForUser:(LNKSize)userIndex;
+
 @end
