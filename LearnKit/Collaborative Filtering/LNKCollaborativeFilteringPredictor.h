@@ -18,8 +18,8 @@
 
 /// Both the indicator and output matrices must be set prior to training the predictor.
 /// The indicator and output matrices must be of `exampleCount` * `userCount` size.
-/// A copy of the input matrix will be made.
-- (void)copyIndicatorMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose;
+@property (nonatomic, retain) LNKMatrix *indicatorMatrix;
+
 - (void)copyOutputMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose;
 
 @end

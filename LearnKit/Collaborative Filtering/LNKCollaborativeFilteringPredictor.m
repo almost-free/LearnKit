@@ -16,7 +16,6 @@
 @implementation LNKCollaborativeFilteringPredictor {
 	LNKSize _userCount;
 	LNKFloat *_thetaMatrix;
-	LNKFloat *_indicatorMatrix;
 	LNKFloat *_outputMatrix;
 }
 
@@ -41,6 +40,8 @@
 	return self;
 }
 
+#warning TODO: need pre-flight check if indicatorMatrix is nil
+
 - (LNKFloat)_evaluateCostFunction {
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize featureCount = matrix.columnCount;
@@ -57,7 +58,7 @@
 	
 	LNK_vsub(_outputMatrix, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	LNK_vmul(result, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
-	LNK_vmul(result, UNIT_STRIDE, _indicatorMatrix, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
+	LNK_vmul(result, UNIT_STRIDE, _indicatorMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	
 	LNKFloat sum;
 	LNK_vsum(result, UNIT_STRIDE, &sum, resultSize);
@@ -98,21 +99,6 @@
 	_thetaMatrix = LNKFloatAllocAndCopy(matrix.matrixBuffer, matrix.exampleCount * matrix.columnCount);
 }
 
-- (void)copyIndicatorMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
-	if (!matrix)
-		[NSException raise:NSGenericException format:@"The given matrix must not be NULL"];
-	
-	const LNKSize exampleCount = self.matrix.exampleCount;
-	const LNKSize size = exampleCount * _userCount;
-	
-	_indicatorMatrix = LNKFloatAlloc(size);
-	
-	if (shouldTranspose)
-		LNK_mtrans(matrix, UNIT_STRIDE, _indicatorMatrix, UNIT_STRIDE, exampleCount, _userCount);
-	else
-		LNKFloatCopy(_indicatorMatrix, matrix, size);
-}
-
 - (void)copyOutputMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
 	if (!matrix)
 		[NSException raise:NSGenericException format:@"The given matrix must not be NULL"];
@@ -131,7 +117,8 @@
 - (void)dealloc {
 	free(_thetaMatrix);
 	free(_outputMatrix);
-	free(_indicatorMatrix);
+	
+	[_indicatorMatrix release];
 	
 	[super dealloc];
 }
