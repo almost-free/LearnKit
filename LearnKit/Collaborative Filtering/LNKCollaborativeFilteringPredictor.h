@@ -24,6 +24,8 @@
 - (void)loadDataMatrix:(LNKMatrix *)dataMatrix;
 - (void)loadThetaMatrix:(LNKMatrix *)thetaMatrix;
 
+/// Returns the top-k predictions for the given user.
+/// `k` must be greater than 0.
 - (NSIndexSet *)findTopK:(LNKSize)k predictionsForUser:(LNKSize)userIndex;
 
 @end
