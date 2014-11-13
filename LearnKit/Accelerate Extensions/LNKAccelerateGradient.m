@@ -83,8 +83,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	LNKFloat *randomMatrixBuffer = NULL;
 	
 	if (algorithm.stochastic) {
-		randomMatrixBuffer = LNKFloatAlloc(exampleCount * columnCount);
-		LNKFloatCopy(randomMatrixBuffer, matrixBuffer, exampleCount * columnCount);
+		randomMatrixBuffer = LNKFloatAllocAndCopy(matrixBuffer, exampleCount * columnCount);
 		
 		// Shuffle the matrix rows.
 		if (exampleCount > 2) {

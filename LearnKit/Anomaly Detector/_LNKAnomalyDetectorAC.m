@@ -54,16 +54,14 @@
 	NSParameterAssert(vector);
 	
 	const LNKSize columnCount = self.matrix.columnCount;
-	_mu = LNKFloatAlloc(columnCount);
-	LNKFloatCopy(_mu, vector, columnCount);
+	_mu = LNKFloatAllocAndCopy(vector, columnCount);
 }
 
 - (void)_setSigmaMatrix:(LNKFloat *)matrix {
 	NSParameterAssert(matrix);
 	
 	const LNKSize columnCount = self.matrix.columnCount;
-	_sigma2 = LNKFloatAlloc(columnCount * columnCount);
-	LNKFloatCopy(_sigma2, matrix, columnCount * columnCount);
+	_sigma2 = LNKFloatAllocAndCopy(matrix, columnCount * columnCount);
 }
 
 - (LNKFloat)_probabilityWithFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
@@ -82,8 +80,7 @@
 	const LNKFloat c = LNK_pow(2 * M_PI, -(LNKFloat)columnCount/2) * LNK_pow(det, -0.5);
 	
 	// ... * e^(-0.5 * sum((featureVector * pinv(sigma2)) * featureVector))
-	LNKFloat *sigmaInverse = LNKFloatAlloc(columnCount * columnCount);
-	LNKFloatCopy(sigmaInverse, _sigma2, columnCount * columnCount);
+	LNKFloat *sigmaInverse = LNKFloatAllocAndCopy(_sigma2, columnCount * columnCount);
 	LNK_minvert(sigmaInverse, columnCount);
 	
 	// Normalize the feature vector about `mu`.

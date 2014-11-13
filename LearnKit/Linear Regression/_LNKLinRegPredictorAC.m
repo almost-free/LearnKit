@@ -29,9 +29,7 @@
 	
 	if (matrix.normalized) {
 		// We need to copy the input vector since -normalizeVector: works in-place.
-		featureVectorNormalizedIfNeeded = LNKFloatAlloc(columnCount);
-		LNKFloatCopy(featureVectorNormalizedIfNeeded, featureVector.data, columnCount);
-		
+		featureVectorNormalizedIfNeeded = LNKFloatAllocAndCopy(featureVector.data, columnCount);
 		[matrix normalizeVector:featureVectorNormalizedIfNeeded];
 	}
 	

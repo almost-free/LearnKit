@@ -79,8 +79,7 @@ LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n) {
 	__CLPK_integer error = 0;
 	__CLPK_integer *pivot = malloc(n * sizeof(__CLPK_integer));
 	
-	LNKFloat *matrixCopy = LNKFloatAlloc(n * n);
-	LNKFloatCopy(matrixCopy, matrix, n * n);
+	LNKFloat *matrixCopy = LNKFloatAllocAndCopy(matrix, n * n);
 	
 #if USE_DOUBLE_PRECISION
 	dgetrf_(&np, &np, matrixCopy, &np, pivot, &error);
