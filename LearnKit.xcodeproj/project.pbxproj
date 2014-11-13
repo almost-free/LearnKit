@@ -24,6 +24,7 @@
 		C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */; };
 		C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
+		C9460E291A144AA4000E577B /* MatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9460E281A144AA4000E577B /* MatrixTests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94FE76919BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
 		C94FE76A19BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
@@ -190,6 +191,7 @@
 		C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceVal.mat; sourceTree = "<group>"; };
 		C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceValY.mat; sourceTree = "<group>"; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
+		C9460E281A144AA4000E577B /* MatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatrixTests.m; path = LearnKitTests/MatrixTests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
 		C94F195119A6F0FF00BD967C /* LearnKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LearnKit.h; path = LearnKit/LearnKit.h; sourceTree = SOURCE_ROOT; };
 		C94FE76719BA8A6600251EDF /* fmincg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmincg.m; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				C95D950C19DFBCE300BE8768 /* KNNTests.m */,
 				C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */,
 				C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */,
+				C9460E281A144AA4000E577B /* MatrixTests.m */,
 				C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */,
 				C9AE9EF319AC2D2100A47178 /* NNTests.m */,
 				C93E7B0619D79C140014C67B /* PCATests.m */,
@@ -877,6 +880,7 @@
 				C9CBD2D719E5D52900AE71D5 /* LNKClassifier.m in Sources */,
 				C9CBD2DB19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
 				C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */,
+				C9460E291A144AA4000E577B /* MatrixTests.m in Sources */,
 				C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */,
 				C915807719E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */,
 				C9CBD27219E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,

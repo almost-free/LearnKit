@@ -237,6 +237,26 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	_exampleCount = exampleCount;
 }
 
+- (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount {
+	if (exampleCount >= _exampleCount)
+		[NSException raise:NSInvalidArgumentException format:@"The number of examples in the submatrix must be less than the number of examples in the current matrix"];
+	
+	if (columnCount >= _columnCount)
+		[NSException raise:NSInvalidArgumentException format:@"The number of columns in the submatrix must be less than the number of columns in the current matrix"];
+	
+	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+		for (LNKSize example = 0; example < exampleCount; example++) {
+			const LNKFloat *inputExample = [self exampleAtIndex:example];
+			LNKFloatCopy(matrix + example * columnCount, inputExample, columnCount);
+		}
+		
+		return YES;
+	}];
+	
+	return [submatrix autorelease];
+}
+
 - (BOOL)_parseMatrixCSVString:(NSString *)stringContents addingOnesColumn:(BOOL)addOnesColumn {
 	LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate(sizeof(LNKFastArrayRef));

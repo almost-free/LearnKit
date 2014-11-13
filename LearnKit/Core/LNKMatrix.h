@@ -47,6 +47,8 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 - (void)clipExampleCountTo:(LNKSize)exampleCount;
 
+- (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount;
+
 @property (nonatomic, readonly, getter=isNormalized) BOOL normalized;
 
 - (void)normalize;
