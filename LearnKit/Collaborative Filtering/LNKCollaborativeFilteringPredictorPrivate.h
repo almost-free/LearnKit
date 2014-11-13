@@ -9,6 +9,6 @@
 
 @interface LNKCollaborativeFilteringPredictor (Private)
 
-- (void)_copyThetaMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose;
+- (void)_setThetaMatrix:(LNKMatrix *)matrix;
 
 @end

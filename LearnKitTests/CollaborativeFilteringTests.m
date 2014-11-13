@@ -31,7 +31,6 @@
 	NSString *pathR = [bundle pathForResource:@"Movies_R" ofType:@"mat"];
 	NSString *pathTheta = [bundle pathForResource:@"Movies_Theta" ofType:@"mat"];
 	
-	NSData *thetaVectorData = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:pathTheta], userCount * exampleCount * sizeof(double));
 	NSData *rMatrixData = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:pathR], movieCount * userCount * sizeof(double));
 	NSData *yMatrixData = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:pathY], movieCount * userCount * sizeof(double));
 	
@@ -43,8 +42,15 @@
 	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm userCount:userCount];
 	[matrix release];
 	
+	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
+														outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+															 exampleCount:userCount columnCount:exampleCount
+														 addingOnesColumn:NO];
+	
+	[predictor _setThetaMatrix:thetaMatrix];
+	[thetaMatrix release];
+	
 #warning TODO: these should take a LNKMatrix
-	[predictor _copyThetaMatrix:(const LNKFloat *)thetaVectorData.bytes shouldTranspose:YES];
 	[predictor copyIndicatorMatrix:(const LNKFloat *)rMatrixData.bytes shouldTranspose:YES];
 	[predictor copyOutputMatrix:(const LNKFloat *)yMatrixData.bytes shouldTranspose:YES];
 	

@@ -15,7 +15,7 @@
 
 @implementation LNKCollaborativeFilteringPredictor {
 	LNKSize _userCount;
-	LNKFloat *_thetaVector;
+	LNKFloat *_thetaMatrix;
 	LNKFloat *_indicatorMatrix;
 	LNKFloat *_outputMatrix;
 }
@@ -48,7 +48,7 @@
 	const LNKFloat *dataMatrix = matrix.matrixBuffer;
 	
 	LNKFloat *thetaTranspose = LNKFloatAlloc(_userCount * featureCount);
-	LNK_mtrans(_thetaVector, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, featureCount, _userCount);
+	LNK_mtrans(_thetaMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, featureCount, _userCount);
 	
 	// 1/2 * sum((((X * Theta') - Y) ^ 2) * R)
 	const LNKSize resultSize = exampleCount * _userCount;
@@ -89,18 +89,13 @@
 	return 0.5 * sum + regularizationTerm;
 }
 
-- (void)_copyThetaMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
+- (void)_setThetaMatrix:(LNKMatrix *)matrix {
 	NSParameterAssert(matrix);
 	
-	const LNKSize columnCount = self.matrix.columnCount;
-	const LNKSize size = _userCount * columnCount;
+	if (_thetaMatrix)
+		free(_thetaMatrix);
 	
-	_thetaVector = LNKFloatAlloc(size);
-	
-	if (shouldTranspose)
-		LNK_mtrans(matrix, UNIT_STRIDE, _thetaVector, UNIT_STRIDE, _userCount, columnCount);
-	else
-		LNKFloatCopy(_thetaVector, matrix, size);
+	_thetaMatrix = LNKFloatAllocAndCopy(matrix.matrixBuffer, matrix.exampleCount * matrix.columnCount);
 }
 
 - (void)copyIndicatorMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
@@ -134,7 +129,7 @@
 }
 
 - (void)dealloc {
-	free(_thetaVector);
+	free(_thetaMatrix);
 	free(_outputMatrix);
 	free(_indicatorMatrix);
 	
