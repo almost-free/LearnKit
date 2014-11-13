@@ -24,8 +24,6 @@ typedef struct {
 	LNKSize _thetaVectorBucketCount;
 }
 
-#define EPS 0.12
-
 + (NSArray *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
