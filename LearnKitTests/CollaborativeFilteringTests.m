@@ -25,6 +25,10 @@
 	const LNKSize userCount = 943;
 	const LNKSize exampleCount = 10;
 	
+	const LNKSize reducedMovieCount = 5;
+	const LNKSize reducedUserCount = 4;
+	const LNKSize reducedExampleCount = 3;
+	
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *pathX = [bundle pathForResource:@"Movies_X" ofType:@"mat"];
 	NSString *pathY = [bundle pathForResource:@"Movies_Y" ofType:@"mat"];
@@ -36,7 +40,10 @@
 														exampleCount:movieCount columnCount:exampleCount
 													addingOnesColumn:NO];
 	
-	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm userCount:userCount];
+	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[matrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedExampleCount]
+																							implementationType:LNKImplementationTypeAccelerate
+																						 optimizationAlgorithm:algorithm
+																									 userCount:reducedUserCount];
 	[matrix release];
 	
 	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
@@ -44,7 +51,7 @@
 															 exampleCount:userCount columnCount:exampleCount
 														 addingOnesColumn:NO];
 	
-	[predictor _setThetaMatrix:thetaMatrix];
+	[predictor _setThetaMatrix:[thetaMatrix submatrixWithExampleCount:reducedUserCount columnCount:reducedExampleCount]];
 	[thetaMatrix release];
 	
 	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
@@ -52,7 +59,7 @@
 																 exampleCount:movieCount columnCount:userCount
 															 addingOnesColumn:NO];
 	
-	predictor.indicatorMatrix = indicatorMatrix;
+	predictor.indicatorMatrix = [indicatorMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount];
 	[indicatorMatrix release];
 	
 	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
@@ -60,7 +67,7 @@
 															  exampleCount:movieCount columnCount:userCount
 														  addingOnesColumn:NO];
 
-	predictor.outputMatrix = outputMatrix;
+	predictor.outputMatrix = [outputMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount];
 	[outputMatrix release];
 	
 	LNKFloat cost = [predictor _evaluateCostFunction];
@@ -73,13 +80,13 @@
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
 	LNKFloat cost = [self _costWithAlgorithm:algorithm];
-	XCTAssertEqualWithAccuracy(cost, 27918, 1);
+	XCTAssertEqualWithAccuracy(cost, 22.22, 0.1);
 	
 	algorithm.regularizationEnabled = YES;
-	algorithm.lambda = 1;
+	algorithm.lambda = 1.5;
 	
 	cost = [self _costWithAlgorithm:algorithm];
-	XCTAssertEqualWithAccuracy(cost, 32520, 1);
+	XCTAssertEqualWithAccuracy(cost, 31.44, 0.1);
 	
 	[algorithm release];
 }
