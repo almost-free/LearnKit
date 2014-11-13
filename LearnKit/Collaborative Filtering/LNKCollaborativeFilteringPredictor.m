@@ -250,6 +250,9 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 }
 
 - (NSIndexSet *)findTopK:(LNKSize)k predictionsForUser:(LNKSize)userIndex {
+	if (k == 0)
+		[NSException raise:NSInvalidArgumentException format:@"The parameter k must be greater than 0"];
+	
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
 	const LNKSize exampleCount = outputMatrix.exampleCount;
