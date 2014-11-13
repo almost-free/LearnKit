@@ -31,8 +31,6 @@
 	NSString *pathR = [bundle pathForResource:@"Movies_R" ofType:@"mat"];
 	NSString *pathTheta = [bundle pathForResource:@"Movies_Theta" ofType:@"mat"];
 	
-	NSData *yMatrixData = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:pathY], movieCount * userCount * sizeof(double));
-	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathX] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 														exampleCount:movieCount columnCount:exampleCount
@@ -57,8 +55,13 @@
 	predictor.indicatorMatrix = indicatorMatrix;
 	[indicatorMatrix release];
 	
-#warning TODO: these should take a LNKMatrix
-	[predictor copyOutputMatrix:(const LNKFloat *)yMatrixData.bytes shouldTranspose:YES];
+	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
+														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+															  exampleCount:movieCount columnCount:userCount
+														  addingOnesColumn:NO];
+
+	predictor.outputMatrix = outputMatrix;
+	[outputMatrix release];
 	
 	LNKFloat cost = [predictor _evaluateCostFunction];
 	[predictor release];
