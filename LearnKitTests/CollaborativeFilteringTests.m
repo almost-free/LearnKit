@@ -90,7 +90,7 @@
 	
 	[self _runCoFiWithAlgorithm:algorithm test:^(LNKFloat cost, const LNKFloat *gradient) {
 		XCTAssertEqualWithAccuracy(cost, 31.44, 0.1);
-		XCTAssertEqualWithAccuracy(gradient[0], -3.25203, 0.01);
+		XCTAssertEqualWithAccuracy(gradient[0], -0.95596, 0.01);
 	}];
 	
 	[algorithm release];
