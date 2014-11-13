@@ -123,7 +123,7 @@
 				LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, featureCount);
 				
 				// Theta_gradient += inner * X(example,:)
-				LNKFloatCopy(workspace, matrix.matrixBuffer + exampleIndex * featureCount, featureCount);
+				LNKFloatCopy(workspace, example, featureCount);
 				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, featureCount);
 				
 				LNKFloat *thetaGradientLocation = thetaGradient + userIndex * featureCount;
