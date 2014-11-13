@@ -93,4 +93,40 @@
 	[algorithm release];
 }
 
+- (void)testTraining {
+	const LNKSize movieCount = 1682;
+	const LNKSize userCount = 943;
+	const LNKSize featureCount = 10;
+	
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSString *pathY = [bundle pathForResource:@"Movies_Y" ofType:@"mat"];
+	NSString *pathR = [bundle pathForResource:@"Movies_R" ofType:@"mat"];
+	
+	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
+															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+																 exampleCount:movieCount columnCount:userCount
+															 addingOnesColumn:NO];
+	
+	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
+														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+															  exampleCount:movieCount columnCount:userCount
+														  addingOnesColumn:NO];
+	
+	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
+	algorithm.regularizationEnabled = YES;
+	algorithm.lambda = 10;
+	algorithm.iterationCount = 100;
+	
+	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:outputMatrix
+																							   indicatorMatrix:indicatorMatrix
+																							implementationType:LNKImplementationTypeAccelerate
+																						 optimizationAlgorithm:algorithm
+																								  featureCount:featureCount];
+	[indicatorMatrix release];
+	[outputMatrix release];
+	
+	[predictor train];
+	[predictor release];
+}
+
 @end
