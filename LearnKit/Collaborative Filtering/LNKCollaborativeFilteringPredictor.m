@@ -89,6 +89,53 @@
 	return 0.5 * sum + regularizationTerm;
 }
 
+- (const LNKFloat *)_computeGradient {
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize featureCount = matrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize unrolledExampleCount = exampleCount + _userCount;
+	
+	LNKFloat *unrolledGradient = LNKFloatCalloc(unrolledExampleCount * featureCount);
+	
+	LNKFloat *dataGradient = unrolledGradient;
+	LNKFloat *thetaGradient = unrolledGradient + exampleCount * featureCount;
+	
+	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
+		const LNKFloat *example = [matrix exampleAtIndex:exampleIndex];
+		const LNKFloat *output = [_outputMatrix exampleAtIndex:exampleIndex];
+		const LNKFloat *indicator = [_indicatorMatrix exampleAtIndex:exampleIndex];
+		
+		for (LNKSize userIndex = 0; userIndex < _userCount; userIndex++) {
+			if (indicator[userIndex]) {
+				// inner = (X(example,:) . Theta(user,:)) - Y(example,user)
+				const LNKFloat *user = _thetaMatrix + userIndex * featureCount;
+				
+				LNKFloat result;
+				LNK_dotpr(example, UNIT_STRIDE, user, UNIT_STRIDE, &result, featureCount);
+				
+				const LNKFloat inner = result - output[userIndex];
+				
+				// X_gradient += inner * Theta(user,:)
+				LNKFloat *workspace = LNKFloatAllocAndCopy(user, featureCount);
+				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, featureCount);
+				
+				LNKFloat *dataGradientLocation = dataGradient + exampleIndex * featureCount;
+				LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, featureCount);
+				
+				// Theta_gradient += inner * X(example,:)
+				LNKFloatCopy(workspace, matrix.matrixBuffer + exampleIndex * featureCount, featureCount);
+				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, featureCount);
+				
+				LNKFloat *thetaGradientLocation = thetaGradient + userIndex * featureCount;
+				LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, featureCount);
+				free(workspace);
+			}
+		}
+	}
+	
+	return unrolledGradient;
+}
+
 - (void)_setThetaMatrix:(LNKMatrix *)matrix {
 	NSParameterAssert(matrix);
 	
