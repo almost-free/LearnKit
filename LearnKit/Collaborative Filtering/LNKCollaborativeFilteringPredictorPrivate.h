@@ -9,8 +9,6 @@
 
 @interface LNKCollaborativeFilteringPredictor (Private)
 
-- (void)_setThetaMatrix:(LNKMatrix *)matrix;
-
 /// The returned memory buffer must be freed.
 - (const LNKFloat *)_computeGradient;
 

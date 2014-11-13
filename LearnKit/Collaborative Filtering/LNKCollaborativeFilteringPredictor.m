@@ -14,8 +14,9 @@
 #import "LNKPredictorPrivate.h"
 
 @implementation LNKCollaborativeFilteringPredictor {
-	LNKSize _userCount;
-	LNKFloat *_thetaMatrix;
+	LNKMatrix *_indicatorMatrix;
+	LNKSize _featureCount;
+	LNKFloat *_unrolledGradient;
 }
 
 + (NSArray *)supportedAlgorithms {
@@ -26,15 +27,25 @@
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm userCount:(NSUInteger)userCount {
+- (instancetype)initWithMatrix:(LNKMatrix *)outputMatrix indicatorMatrix:(LNKMatrix *)indicatorMatrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm featureCount:(NSUInteger)featureCount {
 #pragma unused(implementationType)
 	
-	if (userCount == 0)
-		[NSException raise:NSGenericException format:@"The user count must be greater than 0"];
+	if (featureCount == 0)
+		[NSException raise:NSInvalidArgumentException format:@"The feature count must be greater than 0"];
 	
-	self = [self initWithMatrix:matrix optimizationAlgorithm:algorithm];
+	if (!indicatorMatrix)
+		[NSException raise:NSInvalidArgumentException format:@"The indicator matrix must not be nil"];
+	
+	self = [self initWithMatrix:outputMatrix optimizationAlgorithm:algorithm];
 	if (self) {
-		_userCount = userCount;
+		_featureCount = featureCount;
+		_indicatorMatrix = [indicatorMatrix retain];
+		
+		const LNKSize userCount = outputMatrix.columnCount;
+		const LNKSize exampleCount = outputMatrix.exampleCount;
+		const LNKSize unrolledExampleCount = exampleCount + userCount;
+		
+		_unrolledGradient = LNKFloatAlloc(unrolledExampleCount * _featureCount);
 	}
 	return self;
 }
@@ -42,20 +53,21 @@
 #warning TODO: need pre-flight check if indicatorMatrix and outputMatrix is nil
 
 - (LNKFloat)_evaluateCostFunction {
-	LNKMatrix *matrix = self.matrix;
-	const LNKSize featureCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
-	const LNKFloat *dataMatrix = matrix.matrixBuffer;
+	LNKMatrix *outputMatrix = self.matrix;
+	const LNKSize userCount = outputMatrix.columnCount;
+	const LNKSize exampleCount = outputMatrix.exampleCount;
+	const LNKFloat *dataMatrix = _unrolledGradient;
+	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
 	
-	LNKFloat *thetaTranspose = LNKFloatAlloc(_userCount * featureCount);
-	LNK_mtrans(_thetaMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, featureCount, _userCount);
+	LNKFloat *thetaTranspose = LNKFloatAlloc(userCount * _featureCount);
+	LNK_mtrans(thetaMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, _featureCount, userCount);
 	
 	// 1/2 * sum((((X * Theta') - Y) ^ 2) * R)
-	const LNKSize resultSize = exampleCount * _userCount;
+	const LNKSize resultSize = exampleCount * userCount;
 	LNKFloat *result = LNKFloatAlloc(resultSize);
-	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, _userCount, featureCount);
+	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, userCount, _featureCount);
 	
-	LNK_vsub(_outputMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
+	LNK_vsub(outputMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	LNK_vmul(result, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	LNK_vmul(result, UNIT_STRIDE, _indicatorMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	
@@ -70,14 +82,14 @@
 	
 	if (algorithm.regularizationEnabled) {
 		// Re-use the theta transpose matrix to compute the theta square.
-		LNK_vmul(thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, _userCount * featureCount);
+		LNK_vmul(thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, userCount * _featureCount);
 		
-		LNKFloat *dataSquare = LNKFloatAlloc(exampleCount * featureCount);
-		LNK_vmul(dataMatrix, UNIT_STRIDE, dataMatrix, UNIT_STRIDE, dataSquare, UNIT_STRIDE, exampleCount * featureCount);
+		LNKFloat *dataSquare = LNKFloatAlloc(exampleCount * _featureCount);
+		LNK_vmul(dataMatrix, UNIT_STRIDE, dataMatrix, UNIT_STRIDE, dataSquare, UNIT_STRIDE, exampleCount * _featureCount);
 		
 		LNKFloat thetaSum, dataSum;
-		LNK_vsum(thetaTranspose, UNIT_STRIDE, &thetaSum, _userCount * featureCount);
-		LNK_vsum(dataSquare, UNIT_STRIDE, &dataSum, exampleCount * featureCount);
+		LNK_vsum(thetaTranspose, UNIT_STRIDE, &thetaSum, userCount * _featureCount);
+		LNK_vsum(dataSquare, UNIT_STRIDE, &dataSum, exampleCount * _featureCount);
 		free(dataSquare);
 		
 		// ... + lambda / 2 * (sum(Theta^2) + sum(X^2))
@@ -90,71 +102,73 @@
 }
 
 - (const LNKFloat *)_computeGradient {
-	LNKMatrix *matrix = self.matrix;
-	const LNKSize featureCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
-	const LNKSize unrolledExampleCount = exampleCount + _userCount;
+	LNKMatrix *outputMatrix = self.matrix;
+	const LNKSize userCount = outputMatrix.columnCount;
+	const LNKSize exampleCount = outputMatrix.exampleCount;
+	const LNKSize unrolledExampleCount = exampleCount + userCount;
+	const LNKFloat *dataMatrix = _unrolledGradient;
+	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
 	
-	LNKFloat *unrolledGradient = LNKFloatCalloc(unrolledExampleCount * featureCount);
+	LNKFloat *unrolledGradient = LNKFloatCalloc(unrolledExampleCount * _featureCount);
 	
 	LNKFloat *dataGradient = unrolledGradient;
-	LNKFloat *thetaGradient = unrolledGradient + exampleCount * featureCount;
+	LNKFloat *thetaGradient = unrolledGradient + exampleCount * _featureCount;
 	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
 	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	LNKFloat *workspace = LNKFloatAlloc(featureCount);
+	LNKFloat *workspace = LNKFloatAlloc(_featureCount);
 	
 	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
-		const LNKFloat *example = [matrix exampleAtIndex:exampleIndex];
-		const LNKFloat *output = [_outputMatrix exampleAtIndex:exampleIndex];
+		const LNKFloat *example = dataMatrix + _featureCount * exampleIndex;
+		const LNKFloat *output = [outputMatrix exampleAtIndex:exampleIndex];
 		const LNKFloat *indicator = [_indicatorMatrix exampleAtIndex:exampleIndex];
 		
-		LNKFloat *dataGradientLocation = dataGradient + exampleIndex * featureCount;
+		LNKFloat *dataGradientLocation = dataGradient + exampleIndex * _featureCount;
 		
-		for (LNKSize userIndex = 0; userIndex < _userCount; userIndex++) {
+		for (LNKSize userIndex = 0; userIndex < userCount; userIndex++) {
 			if (indicator[userIndex]) {
 				// inner = (X(example,:) . Theta(user,:)) - Y(example,user)
-				const LNKFloat *user = _thetaMatrix + userIndex * featureCount;
+				const LNKFloat *user = thetaMatrix + userIndex * _featureCount;
 				
 				LNKFloat result;
-				LNK_dotpr(example, UNIT_STRIDE, user, UNIT_STRIDE, &result, featureCount);
+				LNK_dotpr(example, UNIT_STRIDE, user, UNIT_STRIDE, &result, _featureCount);
 				
 				const LNKFloat inner = result - output[userIndex];
 				
 				// X_gradient += inner * Theta(user,:)
-				LNKFloatCopy(workspace, user, featureCount);
-				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, featureCount);
+				LNKFloatCopy(workspace, user, _featureCount);
+				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, _featureCount);
 				
-				LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, featureCount);
+				LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, _featureCount);
 				
 				// Theta_gradient += inner * X(example,:)
-				LNKFloatCopy(workspace, example, featureCount);
-				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, featureCount);
+				LNKFloatCopy(workspace, example, _featureCount);
+				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, _featureCount);
 				
-				LNKFloat *thetaGradientLocation = thetaGradient + userIndex * featureCount;
-				LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, featureCount);
+				LNKFloat *thetaGradientLocation = thetaGradient + userIndex * _featureCount;
+				LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, _featureCount);
 			}
 		}
 		
 		if (regularizationEnabled) {
 			// X_gradient(example,:) += lambda * X(example,:)
-			LNKFloatCopy(workspace, example, featureCount);
-			LNK_vsmul(workspace, UNIT_STRIDE, &lambda, workspace, UNIT_STRIDE, featureCount);
-			LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, featureCount);
+			LNKFloatCopy(workspace, example, _featureCount);
+			LNK_vsmul(workspace, UNIT_STRIDE, &lambda, workspace, UNIT_STRIDE, _featureCount);
+			LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, _featureCount);
 		}
 	}
 	
 	if (regularizationEnabled) {
-		for (LNKSize userIndex = 0; userIndex < _userCount; userIndex++) {
-			LNKFloat *thetaGradientLocation = thetaGradient + userIndex * featureCount;
+		for (LNKSize userIndex = 0; userIndex < userCount; userIndex++) {
+			LNKFloat *thetaGradientLocation = thetaGradient + userIndex * _featureCount;
 			
 			// Theta_gradient(user,:) += lambda * Theta(user,:)
-			LNKFloatCopy(workspace, _thetaMatrix + userIndex * featureCount, featureCount);
-			LNK_vsmul(workspace, UNIT_STRIDE, &lambda, workspace, UNIT_STRIDE, featureCount);
-			LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, featureCount);
+			LNKFloatCopy(workspace, thetaMatrix + userIndex * _featureCount, _featureCount);
+			LNK_vsmul(workspace, UNIT_STRIDE, &lambda, workspace, UNIT_STRIDE, _featureCount);
+			LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, _featureCount);
 		}
 	}
 	
@@ -163,19 +177,28 @@
 	return unrolledGradient;
 }
 
-- (void)_setThetaMatrix:(LNKMatrix *)matrix {
-	NSParameterAssert(matrix);
+- (void)loadThetaMatrix:(LNKMatrix *)thetaMatrix {
+	NSParameterAssert(thetaMatrix);
+	NSParameterAssert(thetaMatrix.columnCount == _featureCount);
 	
-	if (_thetaMatrix)
-		free(_thetaMatrix);
+	LNKMatrix *outputMatrix = self.matrix;
+	const LNKSize userCount = outputMatrix.columnCount;
+	const LNKSize exampleCount = outputMatrix.exampleCount;
 	
-	_thetaMatrix = LNKFloatAllocAndCopy(matrix.matrixBuffer, _userCount * matrix.columnCount);
+	LNKFloatCopy(_unrolledGradient + _featureCount * exampleCount, thetaMatrix.matrixBuffer, userCount * thetaMatrix.columnCount);
+}
+
+- (void)loadDataMatrix:(LNKMatrix *)dataMatrix {
+	NSParameterAssert(dataMatrix);
+	NSParameterAssert(dataMatrix.columnCount == _featureCount);
+	
+	const LNKSize exampleCount = self.matrix.exampleCount;
+	LNKFloatCopy(_unrolledGradient, dataMatrix.matrixBuffer, exampleCount * _featureCount);
 }
 
 - (void)dealloc {
-	free(_thetaMatrix);
+	free(_unrolledGradient);
 	
-	[_outputMatrix release];
 	[_indicatorMatrix release];
 	
 	[super dealloc];

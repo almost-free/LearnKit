@@ -35,40 +35,37 @@
 	NSString *pathR = [bundle pathForResource:@"Movies_R" ofType:@"mat"];
 	NSString *pathTheta = [bundle pathForResource:@"Movies_Theta" ofType:@"mat"];
 	
+	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
+															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+																 exampleCount:movieCount columnCount:userCount
+															 addingOnesColumn:NO];
+	
+	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
+														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
+															  exampleCount:movieCount columnCount:userCount
+														  addingOnesColumn:NO];
+	
+	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[outputMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount]
+																							   indicatorMatrix:[indicatorMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount]
+																							implementationType:LNKImplementationTypeAccelerate
+																						 optimizationAlgorithm:algorithm
+																								  featureCount:reducedExampleCount];
+	[indicatorMatrix release];
+	[outputMatrix release];
+	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathX] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 														exampleCount:movieCount columnCount:exampleCount
 													addingOnesColumn:NO];
-	
-	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[matrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedExampleCount]
-																							implementationType:LNKImplementationTypeAccelerate
-																						 optimizationAlgorithm:algorithm
-																									 userCount:reducedUserCount];
+	[predictor loadDataMatrix:[matrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedExampleCount]];
 	[matrix release];
 	
 	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 															 exampleCount:userCount columnCount:exampleCount
 														 addingOnesColumn:NO];
-	
-	[predictor _setThetaMatrix:[thetaMatrix submatrixWithExampleCount:reducedUserCount columnCount:reducedExampleCount]];
+	[predictor loadThetaMatrix:[thetaMatrix submatrixWithExampleCount:reducedUserCount columnCount:reducedExampleCount]];
 	[thetaMatrix release];
-	
-	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
-															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																 exampleCount:movieCount columnCount:userCount
-															 addingOnesColumn:NO];
-	
-	predictor.indicatorMatrix = [indicatorMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount];
-	[indicatorMatrix release];
-	
-	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
-														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															  exampleCount:movieCount columnCount:userCount
-														  addingOnesColumn:NO];
-
-	predictor.outputMatrix = [outputMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount];
-	[outputMatrix release];
 	
 	const LNKFloat *gradient = [predictor _computeGradient];
 	testBlock([predictor _evaluateCostFunction], gradient);
