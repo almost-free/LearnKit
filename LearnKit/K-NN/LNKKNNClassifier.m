@@ -11,9 +11,9 @@
 #import "LNKAccelerate.h"
 #import "LNKMatrix.h"
 
-const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(const LNKFloat *example1, const LNKFloat *example2, LNKSize n) {
+const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(LNKVector example1, LNKVector example2) {
 	LNKFloat result;
-	LNKVectorDistance(example1, example2, &result, n);
+	LNKVectorDistance(example1.data, example2.data, &result, example1.length);
 	
 	return result;
 };
