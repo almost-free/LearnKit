@@ -7,7 +7,7 @@
 
 #import "LNKClassifier.h"
 
-typedef LNKFloat(^LNKKNNDistanceFunction)(const LNKFloat *example1, const LNKFloat *example2, LNKSize n);
+typedef LNKFloat(^LNKKNNDistanceFunction)(LNKVector example1, LNKVector example2);
 extern const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction;
 
 typedef NS_ENUM(NSUInteger, LNKKNNOutputFunction) {

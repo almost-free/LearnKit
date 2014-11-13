@@ -76,8 +76,9 @@ typedef struct {
 	}
 	
 	LNKMatrix *matrix = self.matrix;
+	const LNKSize columnCount = matrix.columnCount;
 	
-	if (featureVector.length != matrix.columnCount) {
+	if (featureVector.length != columnCount) {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The length of the feature vector is incompatible with the matrix" userInfo:nil];
 	}
 	
@@ -90,7 +91,7 @@ typedef struct {
 	// Find the k closest examples.
 	for (LNKSize example = 0; example < exampleCount; example++) {
 		const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
-		const LNKFloat distance = distanceFunction(exampleRow, featureVector.data, featureVector.length);
+		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), featureVector);
 		
 		if (example < k) {
 			closestExamples[example].distance = distance;
