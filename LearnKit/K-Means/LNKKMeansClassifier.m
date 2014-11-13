@@ -81,11 +81,12 @@
 	LNKFloatCopy(_clusterCentroids, clusterCentroids, self.classes.count * self.matrix.columnCount);
 }
 
-- (const LNKFloat *)centroidForClusterAtIndex:(LNKSize)clusterIndex {
+- (LNKVector)centroidForClusterAtIndex:(LNKSize)clusterIndex {
 	if (clusterIndex >= self.classes.count)
 		[NSException raise:NSGenericException format:@"The cluster index is out-of-bounds"];
-		
-	return _clusterCentroids + clusterIndex * self.matrix.columnCount;
+	
+	const LNKSize columnCount = self.matrix.columnCount;
+	return LNKVectorAllocAndCopy(_clusterCentroids + clusterIndex * columnCount, columnCount);
 }
 
 @end

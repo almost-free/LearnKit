@@ -169,7 +169,7 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	LNKSize hits = 0;
 	
 	for (LNKSize m = 0; m < exampleCount; m++) {
-		id predictedValue = [self predictValueForFeatureVector:LNKVectorMake(_EXAMPLE_IN_MATRIX_BUFFER(m), columnCount)];
+		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe(_EXAMPLE_IN_MATRIX_BUFFER(m), columnCount)];
 		
 		if ([predictedValue isEqual:[LNKClass classWithUnsignedInteger:outputVector[m]]])
 			hits++;

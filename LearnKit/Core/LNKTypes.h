@@ -33,14 +33,18 @@ typedef uint64_t LNKSize;
 #define LNKFloatCalloc(size) (LNKFloat *)calloc((size), sizeof(LNKFloat))
 #define LNKFloatCopy(dest, src, size) memcpy(dest, src, (size) * sizeof(LNKFloat))
 
+#define LNKFloatAllocAndCopy(data, size) LNKFloatCopy(LNKFloatAlloc(size), data, size)
+
 
 typedef struct {
 	const LNKFloat *data;
 	const LNKSize length;
 } LNKVector;
 
-#define LNKVectorMake(data, length) ((LNKVector) { (data), (length) })
-
+#define LNKVectorAlloc(length) ((LNKVector) { LNKFloatAlloc(length), (length) })
+#define LNKVectorAllocAndCopy(data, length) ((LNKVector) { LNKFloatAllocAndCopy(data, length), (length) })
+#define LNKVectorMakeUnsafe(data, length) ((LNKVector) { (data), (length) })
+#define LNKVectorFree(vector) free((void *)(vector).data)
 
 @interface NSNumber (LNKTypes)
 

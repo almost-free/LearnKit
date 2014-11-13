@@ -45,12 +45,22 @@
 	
 	[classifier train];
 	
-	XCTAssertEqualWithAccuracy([classifier _clusterCentroids][0], 1.9540, DACCURACY);
-	XCTAssertEqualWithAccuracy([classifier _clusterCentroids][1], 5.0256, DACCURACY);
-	XCTAssertEqualWithAccuracy([classifier _clusterCentroids][2], 3.0437, DACCURACY);
-	XCTAssertEqualWithAccuracy([classifier _clusterCentroids][3], 1.0154, DACCURACY);
-	XCTAssertEqualWithAccuracy([classifier _clusterCentroids][4], 6.0337, DACCURACY);
-	XCTAssertEqualWithAccuracy([classifier _clusterCentroids][5], 3.0005, DACCURACY);
+	LNKVector cluster1 = [classifier centroidForClusterAtIndex:0];
+	LNKVector cluster2 = [classifier centroidForClusterAtIndex:1];
+	LNKVector cluster3 = [classifier centroidForClusterAtIndex:2];
+	
+	XCTAssertEqual(cluster1.length, 2UL);
+	
+	XCTAssertEqualWithAccuracy(cluster1.data[0], 1.9540, DACCURACY);
+	XCTAssertEqualWithAccuracy(cluster1.data[1], 5.0256, DACCURACY);
+	XCTAssertEqualWithAccuracy(cluster2.data[0], 3.0437, DACCURACY);
+	XCTAssertEqualWithAccuracy(cluster2.data[1], 1.0154, DACCURACY);
+	XCTAssertEqualWithAccuracy(cluster3.data[0], 6.0337, DACCURACY);
+	XCTAssertEqualWithAccuracy(cluster3.data[1], 3.0005, DACCURACY);
+	
+	LNKVectorFree(cluster1);
+	LNKVectorFree(cluster2);
+	LNKVectorFree(cluster3);
 	
 	[classifier release];
 }

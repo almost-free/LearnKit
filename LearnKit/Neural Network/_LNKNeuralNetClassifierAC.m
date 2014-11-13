@@ -78,7 +78,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		LNKFloat *currentErrorVector;
 		
 		// First predict the output, then propagate the error.
-		[self _feedForwardFeatureVector:LNKVectorMake(featureVector, columnCount) hiddenLayerActivations:hiddenLayerActivations outputVector:&currentErrorVector];
+		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) hiddenLayerActivations:hiddenLayerActivations outputVector:&currentErrorVector];
 		
 		for (LNKSize layer = thetaVectorCount; layer >= 1; layer--) {
 			if (layer == thetaVectorCount) {
@@ -360,7 +360,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputLayer;
-		[self _feedForwardFeatureVector:LNKVectorMake(featureVector, columnCount) hiddenLayerActivations:NULL outputVector:&outputLayer];
+		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) hiddenLayerActivations:NULL outputVector:&outputLayer];
 		
 		// Optimize for true positives and negatives for all classes.
 		// -y log(h) - (1 - y) log(1 - h)

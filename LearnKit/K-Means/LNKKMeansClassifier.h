@@ -16,6 +16,7 @@
 /// The iteration count must be >= 1; the default is 100.
 @property (nonatomic) LNKSize iterationCount;
 
-- (const LNKFloat *)centroidForClusterAtIndex:(LNKSize)clusterIndex;
+/// The returned vector must be freed with `LNKVectorFree`.
+- (LNKVector)centroidForClusterAtIndex:(LNKSize)clusterIndex;
 
 @end
