@@ -89,8 +89,8 @@
 	return 0.5 * sum + regularizationTerm;
 }
 
-- (void)_copyThetaVector:(const LNKFloat *)vector shouldTranspose:(BOOL)shouldTranspose {
-	NSParameterAssert(vector);
+- (void)_copyThetaMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {
+	NSParameterAssert(matrix);
 	
 	const LNKSize columnCount = self.matrix.columnCount;
 	const LNKSize size = _userCount * columnCount;
@@ -98,9 +98,9 @@
 	_thetaVector = LNKFloatAlloc(size);
 	
 	if (shouldTranspose)
-		LNK_mtrans(vector, UNIT_STRIDE, _thetaVector, UNIT_STRIDE, _userCount, columnCount);
+		LNK_mtrans(matrix, UNIT_STRIDE, _thetaVector, UNIT_STRIDE, _userCount, columnCount);
 	else
-		LNKFloatCopy(_thetaVector, vector, size);
+		LNKFloatCopy(_thetaVector, matrix, size);
 }
 
 - (void)copyIndicatorMatrix:(const LNKFloat *)matrix shouldTranspose:(BOOL)shouldTranspose {

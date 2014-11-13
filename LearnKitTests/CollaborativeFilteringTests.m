@@ -43,9 +43,8 @@
 	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm userCount:userCount];
 	[matrix release];
 	
-	[predictor _copyThetaVector:(const LNKFloat *)thetaVectorData.bytes shouldTranspose:YES];
-	
 #warning TODO: these should take a LNKMatrix
+	[predictor _copyThetaMatrix:(const LNKFloat *)thetaVectorData.bytes shouldTranspose:YES];
 	[predictor copyIndicatorMatrix:(const LNKFloat *)rMatrixData.bytes shouldTranspose:YES];
 	[predictor copyOutputMatrix:(const LNKFloat *)yMatrixData.bytes shouldTranspose:YES];
 	
