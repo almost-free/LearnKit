@@ -20,7 +20,7 @@
 
 @implementation CollaborativeFilteringTests
 
-- (LNKFloat)_costWithAlgorithm:(LNKOptimizationAlgorithmCG *)algorithm {
+- (void)_runCoFiWithAlgorithm:(LNKOptimizationAlgorithmCG *)algorithm test:(void(^)(LNKFloat, const LNKFloat *))testBlock {
 	const LNKSize movieCount = 1682;
 	const LNKSize userCount = 943;
 	const LNKSize exampleCount = 10;
@@ -70,23 +70,28 @@
 	predictor.outputMatrix = [outputMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount];
 	[outputMatrix release];
 	
-	LNKFloat cost = [predictor _evaluateCostFunction];
-	[predictor release];
+	const LNKFloat *gradient = [predictor _computeGradient];
+	testBlock([predictor _evaluateCostFunction], gradient);
+	free((void *)gradient);
 	
-	return cost;
+	[predictor release];
 }
 
 - (void)testCostFunction {
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
-	LNKFloat cost = [self _costWithAlgorithm:algorithm];
-	XCTAssertEqualWithAccuracy(cost, 22.22, 0.1);
+	[self _runCoFiWithAlgorithm:algorithm test:^(LNKFloat cost, const LNKFloat *gradient) {
+		XCTAssertEqualWithAccuracy(cost, 22.22, 0.1);
+		XCTAssertEqualWithAccuracy(gradient[0], -2.52899, 0.01);
+	}];
 	
 	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 1.5;
 	
-	cost = [self _costWithAlgorithm:algorithm];
-	XCTAssertEqualWithAccuracy(cost, 31.44, 0.1);
+	[self _runCoFiWithAlgorithm:algorithm test:^(LNKFloat cost, const LNKFloat *gradient) {
+		XCTAssertEqualWithAccuracy(cost, 31.44, 0.1);
+		XCTAssertEqualWithAccuracy(gradient[0], -3.25203, 0.01);
+	}];
 	
 	[algorithm release];
 }
