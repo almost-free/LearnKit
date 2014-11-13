@@ -95,7 +95,7 @@
 	if (_thetaMatrix)
 		free(_thetaMatrix);
 	
-	_thetaMatrix = LNKFloatAllocAndCopy(matrix.matrixBuffer, matrix.exampleCount * matrix.columnCount);
+	_thetaMatrix = LNKFloatAllocAndCopy(matrix.matrixBuffer, _userCount * matrix.columnCount);
 }
 
 - (void)dealloc {
