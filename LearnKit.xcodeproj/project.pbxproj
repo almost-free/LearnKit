@@ -165,6 +165,9 @@
 		C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9CBD30619E5D69000AE71D5 /* Flu.csv */; };
 		C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC903E19D6253900774B29 /* KMeansTests.m */; };
 		C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
+		C9EC9A591A1ADCE0005D7863 /* LNKMatrixExporting.h in Headers */ = {isa = PBXBuildFile; fileRef = C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9EC9A5A1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */; };
+		C9EC9A5B1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -307,6 +310,8 @@
 		C9DCD6D319A03DF200AF3AEC /* arithmetic_ansi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arithmetic_ansi.h; path = liblbfgs/lib/arithmetic_ansi.h; sourceTree = SOURCE_ROOT; };
 		C9DCD6D419A03DF200AF3AEC /* lbfgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lbfgs.m; path = liblbfgs/lib/lbfgs.m; sourceTree = SOURCE_ROOT; };
 		C9DCD6D719A03E1700AF3AEC /* lbfgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lbfgs.h; path = liblbfgs/include/lbfgs.h; sourceTree = SOURCE_ROOT; };
+		C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixExporting.h; sourceTree = "<group>"; };
+		C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixExporting.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -568,6 +573,8 @@
 				C9CBD2C919E5D52900AE71D5 /* LNKFastFloatQueue.m */,
 				C9CBD2C119E5D52900AE71D5 /* LNKMatrix.h */,
 				C9CBD2C219E5D52900AE71D5 /* LNKMatrix.m */,
+				C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */,
+				C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */,
 				C9CBD2C319E5D52900AE71D5 /* LNKMatrixPCA.h */,
 				C9CBD2C419E5D52900AE71D5 /* LNKMatrixPCA.m */,
 				C9CBD2C519E5D52900AE71D5 /* LNKMatrixPrivate.h */,
@@ -651,6 +658,7 @@
 				C9CBD27C19E5D46900AE71D5 /* LNKLinRegPredictor.h in Headers */,
 				C9CBD2B619E5D4FD00AE71D5 /* LNKLogRegClassifier.h in Headers */,
 				C9CBD2D919E5D52900AE71D5 /* LNKMatrix.h in Headers */,
+				C9EC9A591A1ADCE0005D7863 /* LNKMatrixExporting.h in Headers */,
 				C9CBD2DC19E5D52900AE71D5 /* LNKMatrixPCA.h in Headers */,
 				C9CBD2A319E5D4D400AE71D5 /* LNKMatrixUI.h in Headers */,
 				C9CBD28919E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h in Headers */,
@@ -819,6 +827,7 @@
 				C9CBD28A19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
 				C9CBD2E419E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
+				C9EC9A5A1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */,
 				C975913819A04B44003D3A48 /* lbfgs.m in Sources */,
 				C9860BF21A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m in Sources */,
 				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
@@ -896,6 +905,7 @@
 				C9CBD25719E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */,
 				C9CBD27519E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.m in Sources */,
 				C9CBD29819E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */,
+				C9EC9A5B1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */,
 				C9CBD28B19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
 				C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */,
 				C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
