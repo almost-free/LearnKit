@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// Optionally, a ones column may be added to the beginning of the matrix. The last column will be mapped to the output vector.
 /// This initializer may return `nil`.
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url addingOnesColumn:(BOOL)addOnesColumn;
+- (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn;
 
 /// Initializes a matrix by loading a binary matrix of values and a corresponding output vector.
 /// Values are parsed in column order. The column count should not include the ones column.

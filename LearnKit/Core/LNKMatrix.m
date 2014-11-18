@@ -37,6 +37,10 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url addingOnesColumn:(BOOL)addOnesColumn {
+	return [self initWithCSVFileAtURL:url delimiter:',' addingOnesColumn:addOnesColumn];
+}
+
+- (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn {
 	NSParameterAssert(url);
 	
 	if (!(self = [super init]))
@@ -50,7 +54,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		return nil;
 	}
 	
-	if (![self _parseMatrixCSVString:stringContents addingOnesColumn:addOnesColumn]) {
+	if (![self _parseMatrixCSVString:stringContents delimiter:delimiter addingOnesColumn:addOnesColumn]) {
 		[stringContents release];
 		return nil;
 	}
@@ -257,7 +261,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return [submatrix autorelease];
 }
 
-- (BOOL)_parseMatrixCSVString:(NSString *)stringContents addingOnesColumn:(BOOL)addOnesColumn {
+- (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn {
 	LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate(sizeof(LNKFastArrayRef));
 	const char *rawString = stringContents.UTF8String;
@@ -288,7 +292,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		
 		char c = rawString[n];
 		
-		if (startIndex != NSNotFound && (c == ',' || c == '\n' || c == '\r')) {
+		if (startIndex != NSNotFound && (c == delimiter || c == '\n' || c == '\r')) {
 			LNKSize length = n - startIndex;
 			memcpy(buffer, rawString + startIndex, length);
 			buffer[length] = '\0';
