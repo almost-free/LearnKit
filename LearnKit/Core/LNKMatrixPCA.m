@@ -13,13 +13,13 @@
 
 - (LNKMatrix *)matrixReducedToDimension:(LNKSize)dimension {
 	if (dimension < 1) {
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The dimension must be >= 1" userInfo:nil];
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be >= 1" userInfo:nil];
 	}
 	
 	const LNKSize columnCount = self.columnCount;
 	
 	if (dimension >= columnCount) {
-		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The dimension must be less than the column count" userInfo:nil];
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be less than the column count" userInfo:nil];
 	}
 	
 	if (!self.isNormalized) {
