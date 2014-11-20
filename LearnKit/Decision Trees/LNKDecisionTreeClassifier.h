@@ -13,7 +13,10 @@
 /// Output labels must be specified in form of classes.
 @interface LNKDecisionTreeClassifier : LNKClassifier
 
+/// Indicates values at `columnIndex` are boolean values.
 - (void)registerBooleanValueForColumnAtIndex:(LNKSize)columnIndex;
+
+/// Indicates values at `columnIndex` are categorical in range [0, valueCount).
 - (void)registerCategoricalValues:(LNKSize)valueCount forColumnAtIndex:(LNKSize)columnIndex;
 
 @end
