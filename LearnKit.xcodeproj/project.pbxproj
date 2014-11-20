@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C905AD8A1A1E688B004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
 		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
@@ -195,6 +196,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C905AD891A1E688B004812DD /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
 		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C915806A19E8B12F00879FD5 /* ServerStatistics.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatistics.mat; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			files = (
 				C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */,
 				C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */,
+				C905AD8A1A1E688B004812DD /* ScriptingBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +469,7 @@
 			children = (
 				C90DDBC719CF1F80003220C7 /* Cocoa.framework */,
 				C9AC1F8C199AFD57006D7122 /* Accelerate.framework */,
+				C905AD891A1E688B004812DD /* ScriptingBridge.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
