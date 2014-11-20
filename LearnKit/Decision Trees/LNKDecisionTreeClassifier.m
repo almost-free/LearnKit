@@ -201,12 +201,12 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
 - (LNKClass *)_mostFrequentClassAmongExampleIndices:(NSIndexSet *)exampleIndices {
 	NSParameterAssert(exampleIndices);
 	
-	LNKMatrix *matrix = self.matrix;
+	const LNKFloat *outputVector = self.matrix.outputVector;
 	NSCountedSet *classFrequencies = [[NSCountedSet alloc] init];
 	
 	[exampleIndices enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 #pragma unused(stop)
-		[classFrequencies addObject:[LNKClass classWithUnsignedInteger:matrix.outputVector[index]]];
+		[classFrequencies addObject:[LNKClass classWithUnsignedInteger:outputVector[index]]];
 	}];
 	
 	LNKClass *class = [[classFrequencies mostFrequentObject] retain];
