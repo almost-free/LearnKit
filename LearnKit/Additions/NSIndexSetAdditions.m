@@ -22,4 +22,13 @@
 	return [immutableCopy autorelease];
 }
 
+- (void)enumerateAllIndicesUsingBlock:(NSIndexSetSimpleEnumerator)block {
+	NSParameterAssert(block);
+	
+	[self enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+#pragma unused(stop)
+		block(index);
+	}];
+}
+
 @end

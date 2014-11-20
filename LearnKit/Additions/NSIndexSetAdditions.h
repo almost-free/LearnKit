@@ -7,8 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^NSIndexSetSimpleEnumerator)(NSUInteger);
+
 @interface NSIndexSet (Additions)
 
 - (NSIndexSet *)indexSetByRemovingIndex:(NSUInteger)index;
+
+- (void)enumerateAllIndicesUsingBlock:(NSIndexSetSimpleEnumerator)block;
 
 @end
