@@ -46,6 +46,11 @@
 	LNKFloat accuracy = [classifier computeClassificationAccuracy];
 	XCTAssertEqualWithAccuracy(accuracy, 1.0, 0.01);
 	
+	const LNKSize newExampleLength = 10;
+	LNKFloat newExample[newExampleLength] = { 0, 0, 0, 1, 1, 2, 1, 0, 3, 0 };
+	LNKClass *class = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(newExample, newExampleLength)];
+	XCTAssertEqual(class.unsignedIntegerValue, 1UL);
+	
 	[classifier release];
 }
 
