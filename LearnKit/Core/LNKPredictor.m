@@ -74,6 +74,8 @@
 	[super dealloc];
 }
 
+- (void)validate { }
+
 - (void)train {
 	NSAssertNotReachable(@"%s should be implemented by subclasses", __PRETTY_FUNCTION__);
 }

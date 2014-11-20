@@ -23,6 +23,7 @@
 @property (nonatomic, readonly) LNKMatrix *matrix;
 @property (nonatomic, readonly) id <LNKOptimizationAlgorithm> algorithm;
 
+- (void)validate;
 - (void)train;
 
 /// The predictor should be trained prior to calling this method.
