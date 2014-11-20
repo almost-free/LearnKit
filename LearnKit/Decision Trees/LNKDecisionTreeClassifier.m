@@ -25,6 +25,9 @@
 }
 
 + (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {
+#pragma unused(implementationType)
+#pragma unused(algorithm)
+	
 	return [self class];
 }
 
