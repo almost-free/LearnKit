@@ -77,9 +77,7 @@
 	return allSame;
 }
 
-typedef void(^LNKDecisionTreeExampleEnumerator)(LNKSize index);
-
-- (void)_enumerateExampleIndices:(NSIndexSet *)exampleIndices withColumnIndex:(LNKSize)columnIndex value:(LNKSize)value performBlock:(LNKDecisionTreeExampleEnumerator)block {
+- (void)_enumerateExampleIndices:(NSIndexSet *)exampleIndices withColumnIndex:(LNKSize)columnIndex value:(LNKSize)value performBlock:(NSIndexSetSimpleEnumerator)block {
 	NSParameterAssert(exampleIndices);
 	NSParameterAssert(columnIndex != LNKSizeMax);
 	NSParameterAssert(columnIndex < self.matrix.columnCount);
@@ -100,7 +98,7 @@ typedef void(^LNKDecisionTreeExampleEnumerator)(LNKSize index);
 - (NSIndexSet *)_filterExampleIndices:(NSIndexSet *)exampleIndices withColumnIndex:(LNKSize)columnIndex value:(LNKSize)value {
 	NSMutableIndexSet *filteredExampleIndices = [[NSMutableIndexSet alloc] init];
 	
-	[self _enumerateExampleIndices:exampleIndices withColumnIndex:columnIndex value:value performBlock:^(LNKSize index) {
+	[self _enumerateExampleIndices:exampleIndices withColumnIndex:columnIndex value:value performBlock:^(NSUInteger index) {
 		[filteredExampleIndices addIndex:index];
 	}];
 	
@@ -110,7 +108,7 @@ typedef void(^LNKDecisionTreeExampleEnumerator)(LNKSize index);
 - (LNKFloat)_countFractionOfExampleIndices:(NSIndexSet *)exampleIndices withColumnIndex:(LNKSize)columnIndex value:(LNKSize)value {
 	__block LNKSize count = 0;
 	
-	[self _enumerateExampleIndices:exampleIndices withColumnIndex:columnIndex value:value performBlock:^(LNKSize index) {
+	[self _enumerateExampleIndices:exampleIndices withColumnIndex:columnIndex value:value performBlock:^(NSUInteger index) {
 #pragma unused(index)
 		count++;
 	}];
@@ -118,56 +116,50 @@ typedef void(^LNKDecisionTreeExampleEnumerator)(LNKSize index);
 	return (LNKFloat)count / exampleIndices.count;
 }
 
-static LNKFloat _calculateEntropyForClasses(LNKSize positive, LNKSize negative) {
-	const LNKFloat positiveFraction = (LNKFloat)positive / (positive + negative);
-	const LNKFloat negativeFraction = (LNKFloat)negative / (positive + negative);
+static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
+	LNKSize total = 0;
+	
+	for (LNKClass *class in classFrequencies) {
+		total += [classFrequencies countForObject:class];
+	}
 	
 	LNKFloat sum = 0;
 	
-	if (positive)
-		sum += -positiveFraction * LNKLog2(positiveFraction);
-	
-	if (negative)
-		sum += -negativeFraction * LNKLog2(negativeFraction);
+	for (LNKClass *class in classFrequencies) {
+		const NSUInteger frequency = [classFrequencies countForObject:class];
+		
+		if (frequency) {
+			const LNKFloat fraction = (LNKFloat)frequency / total;
+			sum -= fraction * LNKLog2(fraction);
+		}
+	}
 	
 	return sum;
 }
 
-- (LNKFloat)_calculateEntropyOfExampleIndices:(NSIndexSet *)exampleIndices withColumnIndex:(LNKSize)columnIndex value:(LNKSize)value  {
-	LNKMatrix *matrix = self.matrix;
-	
-#warning TODO: support multi-class problems
-	__block LNKSize positive = 0;
-	__block LNKSize negative = 0;
-	
-	[self _enumerateExampleIndices:exampleIndices withColumnIndex:columnIndex value:value performBlock:^(LNKSize index) {
-		if (matrix.outputVector[index] == 1)
-			positive++;
-		else
-			negative++;
-	}];
-	
-	return _calculateEntropyForClasses(positive, negative);
+- (LNKFloat)_calculateEntropyOfExampleIndices:(NSIndexSet *)exampleIndices {
+	return [self _calculateEntropyOfExampleIndices:exampleIndices withColumnIndex:LNKSizeMax value:LNKSizeMax];
 }
 
-- (LNKFloat)_calculateEntropyOfExampleIndices:(NSIndexSet *)exampleIndices {
+- (LNKFloat)_calculateEntropyOfExampleIndices:(NSIndexSet *)exampleIndices withColumnIndex:(LNKSize)columnIndex value:(LNKSize)value  {
 	NSParameterAssert(exampleIndices);
 	
 	LNKMatrix *matrix = self.matrix;
+	NSCountedSet *classFrequencies = [[NSCountedSet alloc] init];
 	
-	__block LNKSize positive = 0;
-	__block LNKSize negative = 0;
+	NSIndexSetSimpleEnumerator enumerator = ^(NSUInteger index) {
+		[classFrequencies addObject:[LNKClass classWithUnsignedInteger:matrix.outputVector[index]]];
+	};
 	
-	[exampleIndices enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-#pragma unused(stop)
-		
-		if (matrix.outputVector[index] == 1)
-			positive++;
-		else
-			negative++;
-	}];
+	if (columnIndex == LNKSizeMax)
+		[exampleIndices enumerateAllIndicesUsingBlock:enumerator];
+	else
+		[self _enumerateExampleIndices:exampleIndices withColumnIndex:columnIndex value:value performBlock:enumerator];
 	
-	return _calculateEntropyForClasses(positive, negative);
+	LNKFloat entropy = _calculateEntropyForClasses(classFrequencies);
+	[classFrequencies release];
+	
+	return entropy;
 }
 
 - (LNKSize)_chooseSplittingColumnFromColumnIndices:(NSIndexSet *)columnIndices exampleIndices:(NSIndexSet *)exampleIndices {
