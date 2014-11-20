@@ -52,8 +52,6 @@
 	return self;
 }
 
-#warning TODO: need pre-flight check if indicatorMatrix and outputMatrix is nil
-
 - (LNKFloat)_evaluateCostFunction {
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
