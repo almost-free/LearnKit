@@ -10,6 +10,7 @@
 #import "LNKAccelerate.h"
 #import "LNKDecisionTree.h"
 #import "LNKMatrix.h"
+#import "NSCountedSetAdditions.h"
 #import "NSIndexSetAdditions.h"
 
 @implementation LNKDecisionTreeClassifier {
@@ -197,6 +198,25 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
 	return bestColumnIndex;
 }
 
+- (LNKClass *)_mostFrequentClassAmongExampleIndices:(NSIndexSet *)exampleIndices {
+	NSParameterAssert(exampleIndices);
+	
+	LNKMatrix *matrix = self.matrix;
+	NSCountedSet *classFrequencies = [[NSCountedSet alloc] init];
+	
+	[exampleIndices enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+#pragma unused(stop)
+		[classFrequencies addObject:[LNKClass classWithUnsignedInteger:matrix.outputVector[index]]];
+	}];
+	
+	LNKClass *class = [[classFrequencies mostFrequentObject] retain];
+	[classFrequencies release];
+	
+	NSAssert(class, @"Invalid class");
+	
+	return [class autorelease];
+}
+
 - (LNKDecisionTreeNode *)_learnTreeWithExampleIndices:(NSIndexSet *)exampleIndices columnIndices:(NSIndexSet *)columnIndices {
 	NSParameterAssert(exampleIndices);
 	NSParameterAssert(columnIndices);
@@ -209,9 +229,7 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
 		return [LNKDecisionTreeClassificationNode withClass:[LNKClass classWithUnsignedInteger:classPrimitive]];
 	}
 	else if (!columnIndices.count) {
-#warning TODO: vote with the most likely class
-		NSAssertNotReachable(@"Not implemented", nil);
-		return nil;
+		return [LNKDecisionTreeClassificationNode withClass:[self _mostFrequentClassAmongExampleIndices:exampleIndices]];
 	}
 	
 	const LNKSize columnIndex = [self _chooseSplittingColumnFromColumnIndices:columnIndices exampleIndices:exampleIndices];
