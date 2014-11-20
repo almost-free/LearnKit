@@ -13,6 +13,8 @@
 
 - (NSImage *)imageForExampleAtIndex:(LNKSize)index width:(NSUInteger)width height:(NSUInteger)height;
 
+- (void)importToNumbersAsTable;
+
 @end
 
 #endif

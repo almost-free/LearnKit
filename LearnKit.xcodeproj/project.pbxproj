@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C905AD8A1A1E688B004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
 		C905AD8C1A1E6907004812DD /* Numbers.h in Headers */ = {isa = PBXBuildFile; fileRef = C905AD8B1A1E6907004812DD /* Numbers.h */; };
+		C905AD8D1A1E6BDB004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
 		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
@@ -359,6 +360,7 @@
 			files = (
 				C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */,
 				C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */,
+				C905AD8D1A1E6BDB004812DD /* ScriptingBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,8 +471,8 @@
 		C9AC1F8E199AFD61006D7122 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C90DDBC719CF1F80003220C7 /* Cocoa.framework */,
 				C9AC1F8C199AFD57006D7122 /* Accelerate.framework */,
+				C90DDBC719CF1F80003220C7 /* Cocoa.framework */,
 				C905AD891A1E688B004812DD /* ScriptingBridge.framework */,
 			);
 			name = Frameworks;

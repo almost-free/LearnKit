@@ -8,8 +8,10 @@
 #if TARGET_OS_MAC
 
 #import "LNKMatrixUI.h"
+#import "Numbers.h"
 
 #import <AppKit/AppKit.h>
+#import <ScriptingBridge/ScriptingBridge.h>
 
 @implementation LNKMatrix (UI)
 
@@ -35,6 +37,41 @@
 		
 		return YES;
 	}];
+}
+
+- (void)importToNumbersAsTable {
+	NumbersApplication *app = [SBApplication applicationWithBundleIdentifier:@"com.apple.iWork.Numbers"];
+	
+	NumbersDocument *document = [[[app classForScriptingClass:@"document"] alloc] init];
+	[app.documents addObject:document];
+	
+	[document.sheets removeAllObjects];
+	
+	NumbersSheet *defaultSheet = [[[app classForScriptingClass:@"sheet"] alloc] init];
+	[document.sheets addObject:defaultSheet];
+	
+	[defaultSheet.tables removeAllObjects];
+	
+	NumbersTable *table = [[[app classForScriptingClass:@"table"] alloc] init];
+	[defaultSheet.tables addObject:table];
+	
+	table.headerColumnCount = 0;
+	table.headerRowCount = 0;
+	table.rowCount = self.exampleCount;
+	table.columnCount = self.columnCount;
+	table.name = @"Matrix";
+	
+	const LNKFloat *buffer = self.matrixBuffer;
+	
+	LNKSize offset = 0;
+	
+	for (NumbersCell *cell in table.cells) {
+		cell.value = @(buffer[offset++]);
+	}
+	
+	[table release];
+	[defaultSheet release];
+	[document release];
 }
 
 @end
