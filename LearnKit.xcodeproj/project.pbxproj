@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C905AD8A1A1E688B004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
+		C905AD8C1A1E6907004812DD /* Numbers.h in Headers */ = {isa = PBXBuildFile; fileRef = C905AD8B1A1E6907004812DD /* Numbers.h */; };
 		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
@@ -197,6 +198,7 @@
 
 /* Begin PBXFileReference section */
 		C905AD891A1E688B004812DD /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		C905AD8B1A1E6907004812DD /* Numbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Numbers.h; sourceTree = "<group>"; };
 		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
 		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C915806A19E8B12F00879FD5 /* ServerStatistics.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatistics.mat; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 			children = (
 				C9CBD2A119E5D4D400AE71D5 /* LNKMatrixUI.h */,
 				C9CBD2A219E5D4D400AE71D5 /* LNKMatrixUI.m */,
+				C905AD8B1A1E6907004812DD /* Numbers.h */,
 			);
 			name = UI;
 			path = LearnKit/UI;
@@ -740,6 +743,7 @@
 				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
 				C9CBD28C19E5D48D00AE71D5 /* LNKNaiveBayesClassifierPrivate.h in Headers */,
 				C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */,
+				C905AD8C1A1E6907004812DD /* Numbers.h in Headers */,
 				C9CBD27019E5D46900AE71D5 /* _LNKLinRegPredictorAC.h in Headers */,
 				C9CBD2B019E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h in Headers */,
 				C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */,
