@@ -7,6 +7,7 @@
 
 #import "LNKDecisionTreeClassifier.h"
 
+#import "LNKAccelerate.h"
 #import "LNKDecisionTree.h"
 #import "LNKMatrix.h"
 #import "NSIndexSetAdditions.h"
@@ -123,12 +124,11 @@ static LNKFloat _calculateEntropyForClasses(LNKSize positive, LNKSize negative) 
 	
 	LNKFloat sum = 0;
 	
-#warning TODO: write LNKLog2
 	if (positive)
-		sum += -positiveFraction * log2(positiveFraction);
+		sum += -positiveFraction * LNKLog2(positiveFraction);
 	
 	if (negative)
-		sum += -negativeFraction * log2(negativeFraction);
+		sum += -negativeFraction * LNKLog2(negativeFraction);
 	
 	return sum;
 }
