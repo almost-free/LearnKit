@@ -7,6 +7,8 @@ Supported Algorithms
 --------------------
 
 - Anomaly Detection
+- Collaborative Filtering
+- Decision Trees
 - k-Means
 - k-Nearest Neighbors
 - Linear Regression
@@ -56,8 +58,6 @@ With the right parameters, classification accuracy rates of over 99% can be atta
 Future Tasks
 ------------
 
-- Support collaborative filtering
-- Support decision trees
 - Support SVMs
 - Port to Metal and OpenCL
 
