@@ -235,8 +235,18 @@ static LNKFloat _calculateEntropyForClasses(LNKSize positive, LNKSize negative) 
 	return [tree autorelease];
 }
 
+- (void)validate {
+	const LNKSize columnCount = self.matrix.columnCount;
+	
+	for (LNKSize column = 0; column < columnCount; column++) {
+		if (!_columnsToPossibleValues[@(column)]) {
+			[NSException raise:NSInternalInconsistencyException
+						format:@"A value type has not been registered for column %lld.", column];
+		}
+	}
+}
+
 - (void)train {
-#warning TODO: ensure values for all columns have been registered
 	LNKMatrix *matrix = self.matrix;
 	NSIndexSet *allColumns = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.columnCount)];
 	NSIndexSet *allExamples = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.exampleCount)];
