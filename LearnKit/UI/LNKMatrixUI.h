@@ -5,12 +5,14 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+#if TARGET_OS_MAC
+
 #import "LNKMatrix.h"
 
 @interface LNKMatrix (UI)
 
-#if TARGET_OS_MAC
 - (NSImage *)imageForExampleAtIndex:(LNKSize)index width:(NSUInteger)width height:(NSUInteger)height;
-#endif
 
 @end
+
+#endif

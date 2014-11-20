@@ -5,13 +5,14 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+#if TARGET_OS_MAC
+
 #import "LNKMatrixUI.h"
 
 #import <AppKit/AppKit.h>
 
 @implementation LNKMatrix (UI)
 
-#if TARGET_OS_MAC
 - (NSImage *)imageForExampleAtIndex:(LNKSize)index width:(NSUInteger)width height:(NSUInteger)height {
 	if (!width || !height)
 		[NSException raise:NSGenericException format:@"The width and height must be greater than 0"];
@@ -35,6 +36,7 @@
 		return YES;
 	}];
 }
-#endif
 
 @end
+
+#endif
