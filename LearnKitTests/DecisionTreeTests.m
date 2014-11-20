@@ -40,6 +40,7 @@
 	[classifier registerCategoricalValues:4 forColumnAtIndex:8];
 	[classifier registerCategoricalValues:4 forColumnAtIndex:9];
 	
+	[classifier validate];
 	[classifier train];
 	
 	LNKFloat accuracy = [classifier computeClassificationAccuracy];
