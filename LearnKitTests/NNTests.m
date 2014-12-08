@@ -61,7 +61,7 @@
 
 - (void)test1FeedForwardPrediction {
 	[self measureBlock:^{
-		XCTAssertGreaterThanOrEqual([[self _preLearnedClassifierWithRegularization:NO] computeClassificationAccuracy], 0.97, @"Unexpectedly low classification rate");
+		XCTAssertGreaterThanOrEqual([[self _preLearnedClassifierWithRegularization:NO] computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Unexpectedly low classification rate");
 	}];
 }
 
@@ -100,7 +100,7 @@
 	
 	[classifier train];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracy], 0.97, @"Poor accuracy");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Poor accuracy");
 	[classifier release];
 }
 

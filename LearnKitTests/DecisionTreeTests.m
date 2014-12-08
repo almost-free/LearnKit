@@ -43,7 +43,7 @@
 	[classifier validate];
 	[classifier train];
 	
-	LNKFloat accuracy = [classifier computeClassificationAccuracy];
+	const LNKFloat accuracy = [classifier computeClassificationAccuracyOnTrainingMatrix];
 	XCTAssertEqualWithAccuracy(accuracy, 1.0, 0.01);
 	
 	const LNKSize newExampleLength = 10;

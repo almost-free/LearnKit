@@ -159,8 +159,14 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	return bestClass;
 }
 
-- (LNKFloat)computeClassificationAccuracy {
-	LNKMatrix *matrix = self.matrix;
+- (LNKFloat)computeClassificationAccuracyOnTrainingMatrix {
+	return [self computeClassificationAccuracyOnMatrix:self.matrix];
+}
+
+- (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
+	if (!matrix)
+		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
+	
 	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
