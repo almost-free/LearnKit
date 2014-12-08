@@ -16,8 +16,10 @@
 
 @end
 
+
 @interface LNKOptimizationAlgorithmNormalEquations : NSObject <LNKOptimizationAlgorithm>
 @end
+
 
 @interface LNKOptimizationAlgorithmGradientDescent : LNKOptimizationAlgorithmRegularizable <LNKOptimizationAlgorithm>
 
@@ -42,6 +44,7 @@
 
 @interface LNKOptimizationAlgorithmLBFGS : LNKOptimizationAlgorithmRegularizable <LNKOptimizationAlgorithm>
 @end
+
 
 @interface LNKOptimizationAlgorithmCG : LNKOptimizationAlgorithmRegularizable <LNKOptimizationAlgorithm>
 
