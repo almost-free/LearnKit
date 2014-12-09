@@ -109,9 +109,9 @@
 	return cost;
 }
 
-- (LNKFloat)computeClassificationAccuracy {
+- (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
 	LNKFloat *thetaVector = [self _thetaVector];
-	LNKMatrix *matrix = self.matrix;
+	
 	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
