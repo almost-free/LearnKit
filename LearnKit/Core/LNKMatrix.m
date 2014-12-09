@@ -172,6 +172,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	if (!preparationBlock(_matrix, _outputVector)) {
 		[self _freeBuffers];
+		[self release];
 		return nil;
 	}
 	
