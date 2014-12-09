@@ -27,6 +27,11 @@
 		C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */; };
 		C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */; };
 		C92E451A1A15396400B6E33F /* MovieIDs.txt in Resources */ = {isa = PBXBuildFile; fileRef = C92E45191A15396400B6E33F /* MovieIDs.txt */; };
+		C93BFDEC1A354798000E5325 /* LNKSVMClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BFDEA1A354798000E5325 /* LNKSVMClassifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C93BFDED1A354798000E5325 /* LNKSVMClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */; };
+		C93BFDEE1A354798000E5325 /* LNKSVMClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */; };
+		C93BFDF01A354948000E5325 /* SVMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93BFDEF1A354948000E5325 /* SVMTests.m */; };
+		C93BFDF21A354982000E5325 /* Cancer.csv in Resources */ = {isa = PBXBuildFile; fileRef = C93BFDF11A354982000E5325 /* Cancer.csv */; };
 		C93E7B0719D79C140014C67B /* PCATests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93E7B0619D79C140014C67B /* PCATests.m */; };
 		C9460E291A144AA4000E577B /* MatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9460E281A144AA4000E577B /* MatrixTests.m */; };
 		C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C94F195119A6F0FF00BD967C /* LearnKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -214,6 +219,10 @@
 		C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceVal.mat; sourceTree = "<group>"; };
 		C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceValY.mat; sourceTree = "<group>"; };
 		C92E45191A15396400B6E33F /* MovieIDs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MovieIDs.txt; sourceTree = "<group>"; };
+		C93BFDEA1A354798000E5325 /* LNKSVMClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKSVMClassifier.h; sourceTree = "<group>"; };
+		C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKSVMClassifier.m; sourceTree = "<group>"; };
+		C93BFDEF1A354948000E5325 /* SVMTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVMTests.m; path = LearnKitTests/SVMTests.m; sourceTree = SOURCE_ROOT; };
+		C93BFDF11A354982000E5325 /* Cancer.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cancer.csv; sourceTree = "<group>"; };
 		C93E7B0619D79C140014C67B /* PCATests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCATests.m; path = LearnKitTests/PCATests.m; sourceTree = SOURCE_ROOT; };
 		C9460E281A144AA4000E577B /* MatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatrixTests.m; path = LearnKitTests/MatrixTests.m; sourceTree = SOURCE_ROOT; };
 		C94F195019A6F0FF00BD967C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LearnKit/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -379,6 +388,16 @@
 			path = "LearnKit/Anomaly Detector";
 			sourceTree = SOURCE_ROOT;
 		};
+		C93BFDE91A35477B000E5325 /* SVM */ = {
+			isa = PBXGroup;
+			children = (
+				C93BFDEA1A354798000E5325 /* LNKSVMClassifier.h */,
+				C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */,
+			);
+			name = SVM;
+			path = LearnKit/SVM;
+			sourceTree = SOURCE_ROOT;
+		};
 		C94FE76619BA8A6600251EDF /* fmincg */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,6 +481,7 @@
 				C9CBD2A619E5D4FD00AE71D5 /* Logistic Regression */,
 				C9CBD28019E5D48D00AE71D5 /* Naive Bayes */,
 				C9CBD28D19E5D4AD00AE71D5 /* Neural Network */,
+				C93BFDE91A35477B000E5325 /* SVM */,
 				C9CBD2A019E5D4D400AE71D5 /* UI */,
 			);
 			name = LearnKit;
@@ -494,6 +514,7 @@
 				C9AE9EF319AC2D2100A47178 /* NNTests.m */,
 				C93E7B0619D79C140014C67B /* PCATests.m */,
 				C971B4EE19DA6ECB0066C78B /* StructureTests.m */,
+				C93BFDEF1A354948000E5325 /* SVMTests.m */,
 				C9943ABA19A5AECF00F91C25 /* LNKMatrixTestExtras.h */,
 				C9943ABB19A5AECF00F91C25 /* LNKMatrixTestExtras.m */,
 				C9CBD2F619E5D69000AE71D5 /* Data */,
@@ -661,6 +682,7 @@
 				C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */,
 				C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */,
 				C9CBD2F719E5D69000AE71D5 /* CASP.csv */,
+				C93BFDF11A354982000E5325 /* Cancer.csv */,
 				C9CBD2F819E5D69000AE71D5 /* ex1data1.txt */,
 				C9CBD2F919E5D69000AE71D5 /* ex1data2.txt */,
 				C9CBD2FA19E5D69000AE71D5 /* ex2data1.csv */,
@@ -729,6 +751,7 @@
 				C9CBD29619E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h in Headers */,
 				C9CBD2BA19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.h in Headers */,
 				C9CBD2E919E5D52900AE71D5 /* LNKOptimizationAlgorithm.h in Headers */,
+				C93BFDEC1A354798000E5325 /* LNKSVMClassifier.h in Headers */,
 				C9CBD2EC19E5D52900AE71D5 /* LNKPredictor.h in Headers */,
 				C9CBD2F019E5D52900AE71D5 /* LNKTypes.h in Headers */,
 				C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */,
@@ -864,6 +887,7 @@
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
 				C9860BE61A0B4F04009FADAE /* Movies_X.mat in Resources */,
+				C93BFDF21A354982000E5325 /* Cancer.csv in Resources */,
 				C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */,
 				C9CBD30B19E5D69000AE71D5 /* ex2data2.txt in Resources */,
 				C9CBD30C19E5D69000AE71D5 /* ex3data1_theta1.dat in Resources */,
@@ -890,6 +914,7 @@
 				C9CBD27D19E5D46900AE71D5 /* LNKLinRegPredictor.m in Sources */,
 				C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
 				C9CBD27A19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m in Sources */,
+				C93BFDED1A354798000E5325 /* LNKSVMClassifier.m in Sources */,
 				C9CBD28719E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */,
 				C915807619E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */,
 				C9CBD28A19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
@@ -948,6 +973,7 @@
 				C9CBD2F219E5D52900AE71D5 /* LNKTypes.m in Sources */,
 				C915807E19E8B66200879FD5 /* AnomalyDetectorTests.m in Sources */,
 				C9CBD25419E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */,
+				C93BFDEE1A354798000E5325 /* LNKSVMClassifier.m in Sources */,
 				C9CBD24B19E5D3F500AE71D5 /* LNKAccelerateGradient.m in Sources */,
 				C9CBD27819E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */,
 				C9860BFA1A0B50E7009FADAE /* CollaborativeFilteringTests.m in Sources */,
@@ -961,6 +987,7 @@
 				C9CBD2EE19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
 				C9CBD2B219E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.m in Sources */,
 				C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */,
+				C93BFDF01A354948000E5325 /* SVMTests.m in Sources */,
 				C9CBD2A519E5D4D400AE71D5 /* LNKMatrixUI.m in Sources */,
 				C9CBD2DE19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */,
 				C9CBD2BC19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,

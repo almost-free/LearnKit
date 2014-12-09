@@ -45,7 +45,7 @@
 	LNKFloat inputVector[3] = {1,45,85};
 	XCTAssertEqualWithAccuracy([[classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 3)] LNKFloatValue], 0.776, DACCURACY, @"Incorrect prediction");
 	
-	XCTAssertEqualWithAccuracy([classifier computeClassificationAccuracy], 0.89, DACCURACY, @"Incorrect classification rate");
+	XCTAssertEqualWithAccuracy([classifier computeClassificationAccuracyOnTrainingMatrix], 0.89, DACCURACY, @"Incorrect classification rate");
 	[classifier release];
 }
 
@@ -56,7 +56,6 @@
 	XCTAssertEqual(polynomialMatrix.columnCount, 28UL, @"We should have 28 columns");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = lambda;
 	
 	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
@@ -92,7 +91,6 @@
 	XCTAssertEqual(matrix.columnCount, 401ULL, @"The ones column was not added");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 0.1;
 	
 	LNKOneVsAllLogRegClassifier *classifier = [[LNKOneVsAllLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
@@ -101,7 +99,7 @@
 	[algorithm release];
 	[matrix release];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracy], 0.95, @"Poor success rate");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.95, @"Poor success rate");
 	[classifier release];
 }
 

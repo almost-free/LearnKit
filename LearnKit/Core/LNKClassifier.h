@@ -44,7 +44,8 @@ typedef NSUInteger(^LNKClassMapper)(LNKClass *aClass);
 
 @property (nonatomic, retain, readonly) LNKClasses *classes;
 
-/// The classifier should be trained prior to calling this method.
-- (LNKFloat)computeClassificationAccuracy;
+/// The classifier should be trained prior to calling these methods.
+- (LNKFloat)computeClassificationAccuracyOnTrainingMatrix;
+- (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix;
 
 @end

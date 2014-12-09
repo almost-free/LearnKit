@@ -38,10 +38,8 @@
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
-	if (regularize) {
-		algorithm.regularizationEnabled = YES;
+	if (regularize)
 		algorithm.lambda = 1;
-	}
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
@@ -61,7 +59,7 @@
 
 - (void)test1FeedForwardPrediction {
 	[self measureBlock:^{
-		XCTAssertGreaterThanOrEqual([[self _preLearnedClassifierWithRegularization:NO] computeClassificationAccuracy], 0.97, @"Unexpectedly low classification rate");
+		XCTAssertGreaterThanOrEqual([[self _preLearnedClassifierWithRegularization:NO] computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Unexpectedly low classification rate");
 	}];
 }
 
@@ -100,7 +98,7 @@
 	
 	[classifier train];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracy], 0.97, @"Poor accuracy");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Poor accuracy");
 	[classifier release];
 }
 
