@@ -80,35 +80,24 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
 	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
 	
-	LNKFloat *randomMatrixBuffer = NULL;
-	
-	if (algorithm.stochastic) {
-		randomMatrixBuffer = LNKFloatAllocAndCopy(matrixBuffer, exampleCount * columnCount);
-		
-		// Shuffle the matrix rows.
-		if (exampleCount > 2) {
-			for (LNKSize index = 0; index < exampleCount - 1; index++) {
-				const LNKSize otherIndex = index + arc4random_uniform(UINT32_MAX) / (UINT32_MAX / (exampleCount - index) + 1);
-				
-				LNKFloatCopy(workgroupCC, randomMatrixBuffer + otherIndex * columnCount, columnCount); // Temporary space
-				LNKFloatCopy(randomMatrixBuffer + otherIndex * columnCount, randomMatrixBuffer + index * columnCount, columnCount);
-				LNKFloatCopy(randomMatrixBuffer + index * columnCount, workgroupCC, columnCount);
-			}
-		}
-	}
+	const BOOL stochastic = [algorithm isKindOfClass:[LNKOptimizationAlgorithmStochasticGradientDescent class]];
 	
 	void (^gradientIteration)() = ^{
-		if (algorithm.stochastic) {
+		if (stochastic) {
+			LNKMatrix *randomMatrix = [matrix shuffledMatrix];
+			const LNKFloat *randomMatrixBuffer = randomMatrix.matrixBuffer;
+			const LNKSize stepCount = ((LNKOptimizationAlgorithmStochasticGradientDescent *)algorithm).stepCount;
+			
 			// Stochastic gradient descent:
-			for (LNKSize example = 0; example < exampleCount; example++) {
-				const LNKFloat *row = randomMatrixBuffer + example * columnCount;
+			for (LNKSize step = 0; step < stepCount; step++) {
+				const LNKFloat *row = randomMatrixBuffer + step * columnCount;
 				
 				// singleGradient = (h - y) * x
 				LNKFloat h;
 				LNK_dotpr(row, UNIT_STRIDE, thetaVector, UNIT_STRIDE, &h, columnCount);
 				
 				// workgroupCC holds the gradient.
-				const LNKFloat delta = h - outputVector[example];
+				const LNKFloat delta = h - outputVector[step];
 				LNK_vsmul(row, UNIT_STRIDE, &delta, workgroupCC, UNIT_STRIDE, columnCount);
 				
 				// thetaVector = thetaVector - alpha * gradient
@@ -156,9 +145,6 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 		
 		LNKFastFloatQueueFree(costQueue);
 	}
-	
-	if (randomMatrixBuffer)
-		free(randomMatrixBuffer);
 	
 	free(workgroupEC);
 	free(workgroupCC);
