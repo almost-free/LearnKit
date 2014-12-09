@@ -5,6 +5,32 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+@protocol LNKAlpha <NSObject>
+@end
+
+@interface LNKFixedAlpha : NSObject <LNKAlpha>
+
+- (instancetype)init NS_UNAVAILABLE;
+
++ (instancetype)withValue:(LNKFloat)value;
+
+@property (nonatomic, readonly) LNKFloat value;
+
+@end
+
+typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
+
+@interface LNKDecayingAlpha : NSObject <LNKAlpha>
+
+- (instancetype)init NS_UNAVAILABLE;
+
++ (instancetype)withFunction:(LNKDecayingAlphaFunction)function;
+
+@property (nonatomic, readonly) LNKDecayingAlphaFunction function;
+
+@end
+
+
 @protocol LNKOptimizationAlgorithm <NSObject>
 @end
 
@@ -29,12 +55,12 @@
 - (instancetype)init NS_UNAVAILABLE;
 
 /// Indicates gradient descent should run for a fixed number of iterations.
-+ (instancetype)algorithmWithAlpha:(LNKFloat)alpha iterationCount:(LNKSize)iterationCount;
++ (instancetype)algorithmWithAlpha:(id <LNKAlpha>)alpha iterationCount:(LNKSize)iterationCount;
 
 /// Indicates gradient descent should run until convergence to a given threshold.
-+ (instancetype)algorithmWithAlpha:(LNKFloat)alpha convergenceThreshold:(LNKFloat)convergenceThreshold;
++ (instancetype)algorithmWithAlpha:(id <LNKAlpha>)alpha convergenceThreshold:(LNKFloat)convergenceThreshold;
 
-@property (nonatomic, readonly) LNKFloat alpha;
+@property (nonatomic, readonly) id <LNKAlpha> alpha;
 
 /// This value is `NSNotFound` when converging automatically.
 @property (nonatomic, readonly) LNKSize iterationCount;

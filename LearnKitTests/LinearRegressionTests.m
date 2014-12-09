@@ -30,7 +30,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (LNKLinRegPredictor *)_ex1PredictorGD {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
-	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:0.01 iterationCount:1500];
+	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
+																						   iterationCount:1500];
 	
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
@@ -86,7 +87,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	[matrix normalize];
 	
-	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:0.01 iterationCount:400];
+	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
+																						   iterationCount:400];
 	
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate

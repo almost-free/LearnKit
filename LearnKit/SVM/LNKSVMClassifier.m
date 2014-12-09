@@ -61,8 +61,13 @@
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
+	id <LNKAlpha> alphaBox = algorithm.alpha;
+	const BOOL alphaIsDecaying = [alphaBox isKindOfClass:[LNKDecayingAlpha class]];
+	LNKFloat alpha = alphaIsDecaying ? 0 : [(LNKFixedAlpha *)alphaBox value];
+	
 	for (LNKSize epoch = 0; epoch < epochCount; epoch++) {
-		const LNKFloat alpha = 1.0/(0.01 * epoch + 50);
+		if (alphaIsDecaying)
+			alpha = [(LNKDecayingAlpha *)alphaBox function](epoch);
 		
 		for (LNKSize step = 0; step < stepCount; step++) {
 			const LNKSize index = arc4random_uniform((uint32_t)matrix.exampleCount);

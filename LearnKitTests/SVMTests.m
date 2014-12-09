@@ -26,7 +26,9 @@
 	LNKMatrix *testMatrix = [matrix shuffledSubmatrixWithExampleCount:100];
 	
 	const LNKSize epochs = 50;
-	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:1 /* actually ignored */ iterationCount:epochs];
+	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
+		return 1.0/(0.01 * iteration + 50);
+	}] iterationCount:epochs];
 	sgd.lambda = 0.01;
 	sgd.stepCount = 100;
 	

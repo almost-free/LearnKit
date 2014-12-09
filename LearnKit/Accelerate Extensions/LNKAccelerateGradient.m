@@ -63,7 +63,6 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	assert(algorithm);
 	
 	const LNKSize iterationCount = algorithm.iterationCount;
-	const LNKFloat alpha = algorithm.alpha;
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
@@ -82,7 +81,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	
 	const BOOL stochastic = [algorithm isKindOfClass:[LNKOptimizationAlgorithmStochasticGradientDescent class]];
 	
-	void (^gradientIteration)() = ^{
+	void (^gradientIteration)(LNKFloat alpha) = ^(LNKFloat alpha) {
 		if (stochastic) {
 			LNKMatrix *randomMatrix = [matrix shuffledMatrix];
 			const LNKFloat *randomMatrixBuffer = randomMatrix.matrixBuffer;
@@ -116,9 +115,17 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 		}
 	};
 	
+	id <LNKAlpha> alphaBox = algorithm.alpha;
+	const BOOL alphaIsDecaying = [alphaBox isKindOfClass:[LNKDecayingAlpha class]];
+	LNKFloat alpha = alphaIsDecaying ? 0 : [(LNKFixedAlpha *)alphaBox value];
+	
 	if (iterationCount != NSNotFound) {
-		for (NSUInteger n = 0; n < iterationCount; n++)
-			gradientIteration();
+		for (LNKSize iteration = 0; iteration < iterationCount; iteration++) {
+			if (alphaIsDecaying)
+				alpha = [(LNKDecayingAlpha *)alphaBox function](iteration);
+			
+			gradientIteration(alpha);
+		}
 	}
 	else {
 		if (!costFunction)
@@ -127,9 +134,13 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 		static const LNKSize queueSize = 10;
 		const LNKFloat convergenceThreshold = algorithm.convergenceThreshold;
 		LNKFastFloatQueueRef costQueue = LNKFastFloatQueueCreate(queueSize);
+		LNKSize iteration = 0;
 		
 		while (YES) {
-			gradientIteration();
+			if (alphaIsDecaying)
+				alpha = [(LNKDecayingAlpha *)alphaBox function](iteration++);
+			
+			gradientIteration(alpha);
 			const LNKFloat cost = costFunction(thetaVector);
 			
 			if (LNKFastFloatQueueSize(costQueue) < queueSize)
