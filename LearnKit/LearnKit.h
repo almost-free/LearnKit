@@ -23,4 +23,5 @@
 #import <LearnKit/LNKOneVsAllLogRegClassifier.h>
 #import <LearnKit/LNKOptimizationAlgorithm.h>
 #import <LearnKit/LNKPredictor.h>
+#import <LearnKit/LNKSVMClassifier.h>
 #import <LearnKit/LNKUtilities.h>
