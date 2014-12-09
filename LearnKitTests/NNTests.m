@@ -38,10 +38,8 @@
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
-	if (regularize) {
-		algorithm.regularizationEnabled = YES;
+	if (regularize)
 		algorithm.lambda = 1;
-	}
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	

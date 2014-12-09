@@ -11,8 +11,11 @@
 /// Abstract
 @interface LNKOptimizationAlgorithmRegularizable : NSObject <LNKOptimizationAlgorithm>
 
-@property (nonatomic) BOOL regularizationEnabled;
+/// The regularization parameter `lambda` must be greater than or equal to 0.
 @property (nonatomic) LNKFloat lambda;
+
+/// A lambda value of 0 indicates regularization is disabled.
+@property (nonatomic, readonly) BOOL regularizationEnabled;
 
 @end
 

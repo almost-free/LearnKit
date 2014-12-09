@@ -82,7 +82,6 @@
 		XCTAssertEqualWithAccuracy(gradient[0], -2.52899, 0.01);
 	}];
 	
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 1.5;
 	
 	[self _runCoFiWithAlgorithm:algorithm test:^(LNKFloat cost, const LNKFloat *gradient) {
@@ -113,7 +112,6 @@
 														  addingOnesColumn:NO];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 10;
 	algorithm.iterationCount = 100;
 	

@@ -27,7 +27,6 @@
 	
 	const LNKSize epochs = 50;
 	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:1 /* actually ignored */ iterationCount:epochs];
-	sgd.regularizationEnabled = YES;
 	sgd.lambda = 0.01;
 	sgd.stepCount = 100;
 	

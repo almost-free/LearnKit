@@ -21,6 +21,19 @@
 	return [super init];
 }
 
+- (void)setLambda:(LNKFloat)lambda {
+	if (lambda < 0)
+		[NSException raise:NSInvalidArgumentException format:@"A negative lambda value is not allowed"];
+	
+	[self willChangeValueForKey:@"lambda"];
+	_lambda = lambda;
+	[self didChangeValueForKey:@"lambda"];
+}
+
+- (BOOL)regularizationEnabled {
+	return _lambda > 0;
+}
+
 @end
 
 @implementation LNKOptimizationAlgorithmGradientDescent

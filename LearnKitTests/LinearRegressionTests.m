@@ -167,7 +167,6 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 														exampleCount:12 columnCount:1 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 1;
 	
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
@@ -238,13 +237,13 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		[trainingSet clipExampleCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-		algorithm.regularizationEnabled = NO;
+		algorithm.lambda = 0;
 		
 		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
-		algorithm.regularizationEnabled = NO;
+		algorithm.lambda = 0;
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
@@ -304,13 +303,13 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		[trainingSet clipExampleCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-		algorithm.regularizationEnabled = NO;
+		algorithm.lambda = 0;
 		
 		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
-		algorithm.regularizationEnabled = NO;
+		algorithm.lambda = 0;
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		

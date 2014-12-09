@@ -56,7 +56,6 @@
 	XCTAssertEqual(polynomialMatrix.columnCount, 28UL, @"We should have 28 columns");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = lambda;
 	
 	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
@@ -92,7 +91,6 @@
 	XCTAssertEqual(matrix.columnCount, 401ULL, @"The ones column was not added");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.regularizationEnabled = YES;
 	algorithm.lambda = 0.1;
 	
 	LNKOneVsAllLogRegClassifier *classifier = [[LNKOneVsAllLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
