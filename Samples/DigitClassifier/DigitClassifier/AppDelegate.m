@@ -25,6 +25,10 @@
 	LNKMatrix *_matrix;
 }
 
+static const LNKSize exampleCount = 5000;
+static const LNKSize columnCount = 400;
+static const LNKSize paddedColumnCount = columnCount + 1;
+
 - (void)awakeFromNib {
 	self.canvasView.delegate = self;
 }
@@ -38,7 +42,16 @@
 										   matrixValueType:LNKValueTypeDouble
 										 outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 									 outputVectorValueType:LNKValueTypeUInt8
-											  exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+											  exampleCount:exampleCount
+											   columnCount:columnCount
+										  addingOnesColumn:YES];
+	
+	LNKFloat *matrixBuffer = (LNKFloat *)_matrix.matrixBuffer;
+	
+	// Pre-process entries to 1-bit.
+	for (NSUInteger n = 0; n < exampleCount * paddedColumnCount; n++) {
+		matrixBuffer[n] = matrixBuffer[n] < 0.4 ? 0 : 1;
+	}
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
@@ -60,11 +73,11 @@
 }
 
 - (void)canvasViewRecognizeFeatureVector:(const LNKFloat *)vector {
-	LNKFloat *paddedVector = LNKFloatAlloc(401);
-	LNKFloatCopy(paddedVector+1, vector, 400);
+	LNKFloat *paddedVector = LNKFloatAlloc(paddedColumnCount);
+	LNKFloatCopy(paddedVector+1, vector, columnCount);
 	paddedVector[0] = 1;
 	
-	LNKClass *class = [_classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(paddedVector, 401)];
+	LNKClass *class = [_classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(paddedVector, paddedColumnCount)];
 	self.labelField.stringValue = [NSString stringWithFormat:@"%ld", class.unsignedIntegerValue];
 }
 
