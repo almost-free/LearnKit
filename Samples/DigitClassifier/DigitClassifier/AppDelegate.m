@@ -28,6 +28,7 @@
 static const LNKSize exampleCount = 5000;
 static const LNKSize columnCount = 400;
 static const LNKSize paddedColumnCount = columnCount + 1;
+static const LNKFloat tolerance = 0.4;
 
 - (void)awakeFromNib {
 	self.canvasView.delegate = self;
@@ -49,8 +50,8 @@ static const LNKSize paddedColumnCount = columnCount + 1;
 	LNKFloat *matrixBuffer = (LNKFloat *)_matrix.matrixBuffer;
 	
 	// Pre-process entries to 1-bit.
-	for (NSUInteger n = 0; n < exampleCount * paddedColumnCount; n++) {
-		matrixBuffer[n] = matrixBuffer[n] < 0.4 ? 0 : 1;
+	for (LNKSize n = 0; n < exampleCount * paddedColumnCount; n++) {
+		matrixBuffer[n] = matrixBuffer[n] < tolerance ? 0 : 1;
 	}
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
