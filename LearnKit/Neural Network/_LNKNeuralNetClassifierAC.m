@@ -82,7 +82,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		
 		for (LNKSize layer = thetaVectorCount; layer >= 1; layer--) {
 			if (layer == thetaVectorCount) {
-				// In this case, the error s_outputLayer = a_outputLayer - y
+				// In this case, the error signal s_outputLayer = a_outputLayer - y
 				const LNKSize classIndex = [classes indexForClass:[LNKClass classWithUnsignedInteger:outputVector[m]]];
 				currentErrorVector[classIndex] -= 1; // This is the row where y = 1
 				
@@ -93,11 +93,12 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 				LNK_mmul(currentErrorVector, UNIT_STRIDE, hiddenLayerActivations[layer - inputLayerOffset - layerPrior], UNIT_STRIDE, tempBuffers[layer - layerPrior], UNIT_STRIDE, rows, columns, 1);
 			}
 			else {
-				// Propagate the error vector going from layer+1 -> layer.
+				// Propagate the error vector going from layer -> layer-1.
 				LNKSize rows, columns;
 				const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layer rows:&rows columns:&columns];
 				const LNKSize columnsIgnoringBias = columns - 1;
 				
+				// s_i = theta * s_i+1
 				LNKFloat *errorVector = LNKFloatAlloc(columns);
 				LNK_mmul(thetaVector, UNIT_STRIDE, currentErrorVector, UNIT_STRIDE, errorVector, UNIT_STRIDE, columns, 1, rows);
 				
@@ -109,6 +110,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 				LNK_vsigmoidgrad(hiddenLayerActivations[layer - layerPrior] + 1 /* ignore bias unit */, sigmoidGradient, columnsIgnoringBias);
 				
 				// Multiply the error vector by the sigmoid gradient.
+				// s_i * g'(i)
 				LNK_vmul(errorVectorIgnoringBias, UNIT_STRIDE, sigmoidGradient, UNIT_STRIDE, errorVectorIgnoringBias, UNIT_STRIDE, columnsIgnoringBias);
 				LNKMemoryBufferManagerFreeBlock(memoryManager, sigmoidGradient, columnsIgnoringBias);
 				
