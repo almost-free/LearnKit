@@ -173,13 +173,6 @@ typedef struct {
 	LNKFloatCopy(_thetaVectorBuckets[index]->thetaVector, thetaVector, _thetaVectorBuckets[index]->rows * _thetaVectorBuckets[index]->columns);
 }
 
-- (void)setHiddenLayerCount:(LNKSize)hiddenLayerCount {
-	if (hiddenLayerCount == 0)
-		[NSException raise:NSGenericException format:@"Neural networks must have at least 1 hidden layer"];
-	
-	_hiddenLayerCount = hiddenLayerCount;
-}
-
 - (void)dealloc {
 	free(_hiddenLayers);
 	
