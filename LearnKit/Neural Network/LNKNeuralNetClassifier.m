@@ -22,6 +22,7 @@ typedef struct {
 @implementation LNKNeuralNetClassifier {
 	ThetaVectorBucket **_thetaVectorBuckets;
 	LNKSize _thetaVectorBucketCount;
+	LNKNeuralNetLayer *_hiddenLayers;
 }
 
 + (NSArray *)supportedImplementationTypes {
@@ -40,16 +41,33 @@ typedef struct {
 }
 
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(LNKNeuralNetLayer *)layers hiddenLayerCount:(LNKSize)layerCount classes:(LNKClasses *)classes {
 	if (!matrix.hasBiasColumn)
-		[NSException raise:NSGenericException format:@"The matrix should have a bias column"];
+		[NSException raise:NSInvalidArgumentException format:@"The matrix must have a bias column"];
 	
-	if (!(self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm]))
+	if (layerCount == 0)
+		[NSException raise:NSInvalidArgumentException format:@"The number of hidden layers must be at least one"];
+	
+	if (!layers)
+		[NSException raise:NSInvalidArgumentException format:@"The array of hidden layers must not be NULL"];
+	
+	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes]))
 		return nil;
 	
-	_hiddenLayerCount = 1;
+	const LNKSize size = layerCount * sizeof(LNKNeuralNetLayer);
+	_hiddenLayers = malloc(size);
+	memcpy(_hiddenLayers, layers, size);
+	
+	_hiddenLayerCount = layerCount;
 	
 	return self;
+}
+
+- (LNKNeuralNetLayer)hiddenLayerAtIndex:(LNKSize)index {
+	if (index >= _hiddenLayerCount)
+		[NSException raise:NSInvalidArgumentException format:@"The hidden layer index is out of bounds (%lld)", _hiddenLayerCount];
+	
+	return _hiddenLayers[index];
 }
 
 - (LNKSize)_totalUnitCount {
@@ -163,8 +181,12 @@ typedef struct {
 }
 
 - (void)dealloc {
-	if (!_thetaVectorBuckets)
+	free(_hiddenLayers);
+	
+	if (!_thetaVectorBuckets) {
+		[super dealloc];
 		return;
+	}
 	
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	
@@ -180,7 +202,7 @@ typedef struct {
 
 - (LNKSize)totalLayerCount {
 	// Each neural network has an input and output layer, hence 2.
-	return self.hiddenLayerCount + 2;
+	return _hiddenLayerCount + 2;
 }
 
 - (LNKSize)_thetaVectorCount {

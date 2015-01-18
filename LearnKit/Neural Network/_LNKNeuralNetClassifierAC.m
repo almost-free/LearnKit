@@ -221,7 +221,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 }
 
 - (void)_initializeRandomThetaVectors {
-	const LNKSize hiddenLayerUnitCount = self.hiddenLayerUnitCount;
+	const LNKSize hiddenLayerUnitCount = [self hiddenLayerAtIndex:0].unitCount;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	
 	LNKSize columnCount[thetaVectorCount];
