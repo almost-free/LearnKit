@@ -34,6 +34,7 @@
 @property (nonatomic, readonly) LNKNeuralNetLayer *inputLayer;
 @property (nonatomic, readonly) LNKNeuralNetLayer *outputLayer;
 
+- (LNKNeuralNetLayer *)layerAtIndex:(LNKSize)index;
 - (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index;
 
 #warning TODO: assert correct values

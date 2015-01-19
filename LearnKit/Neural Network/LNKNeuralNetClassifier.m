@@ -87,6 +87,13 @@ typedef struct {
 	return _layers.lastObject;
 }
 
+- (LNKNeuralNetLayer *)layerAtIndex:(LNKSize)index {
+	if (index >= _layers.count)
+		[NSException raise:NSInvalidArgumentException format:@"The layer index is out of bounds (%lld)", _layers.count];
+	
+	return _layers[index];
+}
+
 - (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index {
 	if (index >= self.hiddenLayerCount)
 		[NSException raise:NSInvalidArgumentException format:@"The hidden layer index is out of bounds (%lld)", self.hiddenLayerCount];
