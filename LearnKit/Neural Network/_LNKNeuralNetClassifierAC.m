@@ -34,12 +34,12 @@
 	LNKSize *unitsInThetaVector = malloc(thetaVectorCount * sizeof(LNKSize)); // Cache
 	*deltas = malloc(thetaVectorCount * sizeof(LNKFloat *));
 	LNKFloat **deltasValue = *deltas;
-	LNKFloat **tempBuffers = malloc(thetaVectorCount * sizeof(LNKFloat *));
+	LNKFloat **gradients = malloc(thetaVectorCount * sizeof(LNKFloat *));
 	
 	for (LNKSize i = 0; i < thetaVectorCount; i++) {
 		unitsInThetaVector[i] = [self _unitsInThetaVectorAtIndex:i];
 		deltasValue[i] = LNKFloatCalloc(unitsInThetaVector[i]); // Initially zero
-		tempBuffers[i] = LNKFloatAlloc(unitsInThetaVector[i]);
+		gradients[i] = LNKFloatAlloc(unitsInThetaVector[i]);
 	}
 	
 	const LNKSize hiddenLayerCount = self.hiddenLayerCount;
@@ -50,22 +50,22 @@
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputVector;
 		
-		// First predict the output, then propagate the error.
+		// First predict the output, then use backpropagation to find weight gradients.
 		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) hiddenLayerActivations:hiddenLayerActivations outputVector:&outputVector];
-		[self _runBackpropogationForExample:m featureVector:featureVector hiddenLayerActivations:hiddenLayerActivations resultVector:outputVector gradients:tempBuffers];
+		[self _runBackpropogationForExample:m featureVector:featureVector hiddenLayerActivations:hiddenLayerActivations resultVector:outputVector gradients:gradients];
 		
-		// Accumulate deltas.
+		// Accumulate the gradients.
 		for (LNKSize i = 0; i < thetaVectorCount; i++) {
-			LNK_vadd(deltasValue[i], UNIT_STRIDE, tempBuffers[i], UNIT_STRIDE, deltasValue[i], UNIT_STRIDE, unitsInThetaVector[i]);
+			LNK_vadd(deltasValue[i], UNIT_STRIDE, gradients[i], UNIT_STRIDE, deltasValue[i], UNIT_STRIDE, unitsInThetaVector[i]);
 			free(hiddenLayerActivations[i]);
 		}
 	}
 	
 	for (LNKSize i = 0; i < thetaVectorCount; i++) {
-		free(tempBuffers[i]);
+		free(gradients[i]);
 	}
 	
-	free(tempBuffers);
+	free(gradients);
 	free(unitsInThetaVector);
 	free(hiddenLayerActivations);
 }
