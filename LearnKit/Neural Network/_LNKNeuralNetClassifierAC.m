@@ -110,7 +110,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 				LNK_vsigmoidgrad(hiddenLayerActivations[layer - layerPrior] + 1 /* ignore bias unit */, sigmoidGradient, columnsIgnoringBias);
 				
 				// Multiply the error vector by the sigmoid gradient.
-				// s_i * g'(i)
+				// s_i = s_i * g'(i)
 				LNK_vmul(errorVectorIgnoringBias, UNIT_STRIDE, sigmoidGradient, UNIT_STRIDE, errorVectorIgnoringBias, UNIT_STRIDE, columnsIgnoringBias);
 				LNKMemoryBufferManagerFreeBlock(memoryManager, sigmoidGradient, columnsIgnoringBias);
 				
@@ -120,7 +120,9 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 				if (previousRows != columnsIgnoringBias)
 					[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible matrix sizes", layer];
 				
-				LNK_mmul(errorVectorIgnoringBias, UNIT_STRIDE, featureVector, UNIT_STRIDE, tempBuffers[layer - layerPrior], UNIT_STRIDE, columnsIgnoringBias, previousColumns, 1);
+				// Error term = s_i * a_i-1
+				const LNKFloat *activationVector = layer == 1 ? featureVector : hiddenLayerActivations[layer - inputLayerOffset - layerPrior];
+				LNK_mmul(errorVectorIgnoringBias, UNIT_STRIDE, activationVector, UNIT_STRIDE, tempBuffers[layer - layerPrior], UNIT_STRIDE, columnsIgnoringBias, previousColumns, 1);
 			}
 		}
 		
