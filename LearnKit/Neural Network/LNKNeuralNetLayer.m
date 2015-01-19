@@ -7,6 +7,8 @@
 
 #import "LNKNeuralNetLayer.h"
 
+#import "LNKAccelerate.h"
+
 @implementation LNKNeuralNetLayer
 
 - (instancetype)initWithUnitCount:(LNKSize)unitCount {
@@ -35,6 +37,22 @@
 - (void)dealloc {
 	[_classes release];
 	[super dealloc];
+}
+
+- (LNKActivationFunction)activationFunction {
+	[NSException raise:NSGenericException format:@"%s must be overriden", __PRETTY_FUNCTION__];
+	return NULL;
+}
+
+@end
+
+
+@implementation LNKNeuralNetSigmoidLayer
+
+- (LNKActivationFunction)activationFunction {
+	return ^(LNKFloat *vector, LNKSize length) {
+		LNK_vsigmoid(vector, length);
+	};
 }
 
 @end

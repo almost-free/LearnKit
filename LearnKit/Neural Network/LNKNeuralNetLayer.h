@@ -7,6 +7,8 @@
 
 #import "LNKClasses.h"
 
+typedef void(^LNKActivationFunction)(LNKFloat *vector, LNKSize length);
+
 @interface LNKNeuralNetLayer : NSObject
 
 /// The unit count should exclude the bias unit.
@@ -19,5 +21,12 @@
 
 @property (nonatomic, readonly, getter=isOutputLayer) BOOL outputLayer;
 @property (nonatomic, readonly) LNKClasses *classes;
+
+- (LNKActivationFunction)activationFunction;
+
+@end
+
+
+@interface LNKNeuralNetSigmoidLayer : LNKNeuralNetLayer
 
 @end

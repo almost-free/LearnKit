@@ -282,6 +282,8 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	LNKSize currentInputLayerLength = self.matrix.columnCount;
 	
 	for (LNKSize layerIndex = 0; layerIndex < thetaVectorCount; layerIndex++) {
+		LNKNeuralNetLayer *layer = [self layerAtIndex:layerIndex + 1];
+		
 		LNKSize rows, columns;
 		const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layerIndex rows:&rows columns:&columns];
 		
@@ -296,7 +298,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 		const LNKSize biasUnitOffset = shouldAddBiasUnit ? 1 : 0;
 		const LNKSize actualOutputVectorLength = rows + biasUnitOffset;
 		
-		// sigmoid(featureVector . thetaVector) -> next layer
+		// Perform linear combination: featureVector . thetaVector
 		// In anticipation of the bias unit we may need to add, allocate space for one more element.
 		LNKFloat *outputVector = LNKFloatAlloc(actualOutputVectorLength);
 		LNK_mmul(currentInputLayer, UNIT_STRIDE, transposedThetaVector, UNIT_STRIDE, outputVector + biasUnitOffset, UNIT_STRIDE, 1, rows, columns);
@@ -310,7 +312,8 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 			free((void *)currentInputLayer);
 		}
 		
-		LNK_vsigmoid(outputVector + biasUnitOffset, rows);
+		// Apply the layer's activation function:
+		layer.activationFunction(outputVector + biasUnitOffset, rows);
 		
 		if (activations) {
 			activations[layerIndex] = LNKFloatAlloc(rows);
