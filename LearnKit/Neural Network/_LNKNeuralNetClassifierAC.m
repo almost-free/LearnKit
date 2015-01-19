@@ -106,13 +106,14 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 				currentErrorVector = errorVector;
 				
 				LNKFloat *errorVectorIgnoringBias = errorVector + 1;
-				LNKFloat *sigmoidGradient = LNKMemoryBufferManagerAllocBlock(memoryManager, columnsIgnoringBias);
-				LNK_vsigmoidgrad(hiddenLayerActivations[layerIndex - layerPrior] + 1 /* ignore bias unit */, sigmoidGradient, columnsIgnoringBias);
+				LNKFloat *activationGradient = LNKMemoryBufferManagerAllocBlock(memoryManager, columnsIgnoringBias);
+				LNKNeuralNetLayer *layer = [self layerAtIndex:layerIndex];
+				layer.activationGradientFunction(hiddenLayerActivations[layerIndex - layerPrior] + 1 /* ignore bias unit */, activationGradient, columnsIgnoringBias);
 				
-				// Multiply the error vector by the sigmoid gradient.
+				// Multiply the error vector by the derivative of the activation function.
 				// s_i = s_i * g'(i)
-				LNK_vmul(errorVectorIgnoringBias, UNIT_STRIDE, sigmoidGradient, UNIT_STRIDE, errorVectorIgnoringBias, UNIT_STRIDE, columnsIgnoringBias);
-				LNKMemoryBufferManagerFreeBlock(memoryManager, sigmoidGradient, columnsIgnoringBias);
+				LNK_vmul(errorVectorIgnoringBias, UNIT_STRIDE, activationGradient, UNIT_STRIDE, errorVectorIgnoringBias, UNIT_STRIDE, columnsIgnoringBias);
+				LNKMemoryBufferManagerFreeBlock(memoryManager, activationGradient, columnsIgnoringBias);
 				
 				LNKSize previousRows, previousColumns;
 				[self _getDimensionsOfLayerAtIndex:layerIndex - layerPrior rows:&previousRows columns:&previousColumns];

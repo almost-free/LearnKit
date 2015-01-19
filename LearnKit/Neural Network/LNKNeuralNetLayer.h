@@ -8,6 +8,7 @@
 #import "LNKClasses.h"
 
 typedef void(^LNKActivationFunction)(LNKFloat *vector, LNKSize length);
+typedef void(^LNKActivationGradientFunction)(const LNKFloat *vector, LNKFloat *outVector, LNKSize length);
 
 @interface LNKNeuralNetLayer : NSObject
 
@@ -23,6 +24,7 @@ typedef void(^LNKActivationFunction)(LNKFloat *vector, LNKSize length);
 @property (nonatomic, readonly) LNKClasses *classes;
 
 - (LNKActivationFunction)activationFunction;
+- (LNKActivationGradientFunction)activationGradientFunction;
 
 @end
 

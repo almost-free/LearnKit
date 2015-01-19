@@ -44,6 +44,11 @@
 	return NULL;
 }
 
+- (LNKActivationGradientFunction)activationGradientFunction {
+	[NSException raise:NSGenericException format:@"%s must be overriden", __PRETTY_FUNCTION__];
+	return NULL;
+}
+
 @end
 
 
@@ -52,6 +57,12 @@
 - (LNKActivationFunction)activationFunction {
 	return ^(LNKFloat *vector, LNKSize length) {
 		LNK_vsigmoid(vector, length);
+	};
+}
+
+- (LNKActivationGradientFunction)activationGradientFunction {
+	return ^(const LNKFloat *vector, LNKFloat *outVector, LNKSize length) {
+		LNK_vsigmoidgrad(vector, outVector, length);
 	};
 }
 
