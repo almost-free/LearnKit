@@ -281,18 +281,18 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	const LNKFloat *currentInputLayer = featureVector.data;
 	LNKSize currentInputLayerLength = self.matrix.columnCount;
 	
-	for (LNKSize layer = 0; layer < thetaVectorCount; layer++) {
+	for (LNKSize layerIndex = 0; layerIndex < thetaVectorCount; layerIndex++) {
 		LNKSize rows, columns;
-		const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layer rows:&rows columns:&columns];
+		const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layerIndex rows:&rows columns:&columns];
 		
 		if (currentInputLayerLength != columns)
-			[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible theta matrix sizes", layer];
+			[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible theta matrix sizes", layerIndex];
 		
 		LNKFloat *transposedThetaVector = LNKMemoryBufferManagerAllocBlock(memoryManager, rows * columns);
 		LNK_mtrans(thetaVector, UNIT_STRIDE, transposedThetaVector, UNIT_STRIDE, columns, rows);
 		
 		// We don't need a bias unit when prediciting outputs.
-		const BOOL shouldAddBiasUnit = layer < thetaVectorCount-1;
+		const BOOL shouldAddBiasUnit = layerIndex < thetaVectorCount-1;
 		const LNKSize biasUnitOffset = shouldAddBiasUnit ? 1 : 0;
 		const LNKSize actualOutputVectorLength = rows + biasUnitOffset;
 		
@@ -306,17 +306,17 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 			outputVector[0] = 1;
 		
 		if (currentInputLayer != featureVector.data) {
-			assert(layer >= 1);
+			assert(layerIndex >= 1);
 			free((void *)currentInputLayer);
 		}
 		
 		LNK_vsigmoid(outputVector + biasUnitOffset, rows);
 		
 		if (activations) {
-			activations[layer] = LNKFloatAlloc(rows);
+			activations[layerIndex] = LNKFloatAlloc(rows);
 			
 			// We ignore the bias unit.
-			LNKFloatCopy(activations[layer], outputVector, actualOutputVectorLength);
+			LNKFloatCopy(activations[layerIndex], outputVector, actualOutputVectorLength);
 		}
 		
 		currentInputLayer = outputVector;
