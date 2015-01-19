@@ -7,6 +7,8 @@
 
 #import "LNKOptimizationAlgorithm.h"
 
+#import "fmincg.h"
+
 @implementation LNKFixedAlpha
 
 + (instancetype)withValue:(LNKFloat)value {
@@ -130,7 +132,9 @@
 
 @end
 
-@implementation LNKOptimizationAlgorithmCG
+@implementation LNKOptimizationAlgorithmCG {
+	id<LNKOptimizationAlgorithmDelegate> _delegate;
+}
 
 - (instancetype)init {
 	self = [super _init];
@@ -138,6 +142,38 @@
 		_iterationCount = 100;
 	}
 	return self;
+}
+
+static LNKOptimizationAlgorithmCG *tempSelf = nil;
+
+static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat *gradientVector) {
+	LNKOptimizationAlgorithmCG *self = tempSelf;
+	assert(self);
+	assert(inputVector);
+	assert(outCost);
+	assert(gradientVector);
+	
+	id<LNKOptimizationAlgorithmDelegate> delegate = self->_delegate;
+	[delegate optimizationAlgorithmWillBeginIterationWithInputVector:inputVector];
+	const LNKFloat cost = [delegate costForOptimizationAlgorithm];
+	[delegate computeGradientForOptimizationAlgorithm:gradientVector];
+	
+	*outCost = cost;
+}
+
+- (void)runWithParameterVector:(LNKFloat *)vector length:(LNKSize)length delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+	if (!delegate)
+		[NSException raise:NSInvalidArgumentException format:@"A delegate must be specified"];
+	
+	_delegate = delegate;
+	tempSelf = self;
+	
+#ifdef DEBUG
+	int result = fmincg(_fmincg_evaluate, vector, (int)length, (int)_iterationCount);
+	NSAssert(result == 0 || result == 1, @"Could not minimize the function");
+#else
+	fmincg(_fmincg_evaluate, vector, (int)length, (int)_iterationCount);
+#endif
 }
 
 @end

@@ -31,7 +31,18 @@ typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 @end
 
 
+@protocol LNKOptimizationAlgorithmDelegate
+
+- (void)optimizationAlgorithmWillBeginIterationWithInputVector:(const LNKFloat *)inputVector;
+- (LNKFloat)costForOptimizationAlgorithm;
+- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradient;
+
+@end
+
 @protocol LNKOptimizationAlgorithm <NSObject>
+
+- (void)runWithParameterVector:(LNKFloat *)vector length:(LNKSize)length delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate;
+
 @end
 
 /// Abstract

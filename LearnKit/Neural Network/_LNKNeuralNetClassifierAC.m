@@ -7,7 +7,6 @@
 
 #import "_LNKNeuralNetClassifierAC.h"
 
-#import "fmincg.h"
 #import "LNKAccelerate.h"
 #import "LNKClassifierPrivate.h"
 #import "LNKMatrix.h"
@@ -17,32 +16,11 @@
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
+@interface _LNKNeuralNetClassifierAC () <LNKOptimizationAlgorithmDelegate>
+
+@end
+
 @implementation _LNKNeuralNetClassifierAC
-
-static _LNKNeuralNetClassifierAC *tempSelf = nil;
-
-
-static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat *gradientVector) {
-	_LNKNeuralNetClassifierAC *self = tempSelf;
-	assert(self);
-	assert(inputVector);
-	assert(outCost);
-	assert(gradientVector);
-	
-	// Unroll the inputVector into our Theta vectors.
-	const LNKSize thetaVectorCount = [self _thetaVectorCount];
-	LNKSize offset = 0;
-	
-	for (LNKSize i = 0; i < thetaVectorCount; i++) {
-		[self _updateThetaVector:inputVector + offset atIndex:i];
-		offset += [self _unitsInThetaVectorAtIndex:i];
-	}
-	
-	const LNKFloat cost = [self _evaluateCostFunction];
-	[self _computeGradientAndCopyToVector:gradientVector];
-	
-	*outCost = cost;
-}
 
 - (void)_computeGradientForExamplesInRange:(NSRange)range delta:(LNKFloat ***)deltas {
 	NSParameterAssert(range.length);
@@ -145,7 +123,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	free(hiddenLayerActivations);
 }
 
-- (void)_computeGradientAndCopyToVector:(LNKFloat *)gradient {
+- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradient {
 	NSParameterAssert(gradient);
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
@@ -257,17 +235,20 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
 	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
-	
-	tempSelf = self;
-	
-#ifdef DEBUG
-	int result = fmincg(_fmincg_evaluate, thetaUnrolled, (int)totalUnitCount, (int)algorithm.iterationCount);
-	NSAssert(result == 0 || result == 1, @"Could not minimize the function");
-#else
-	fmincg(_fmincg_evaluate, thetaUnrolled, (int)totalUnitCount, (int)algorithm.iterationCount);
-#endif
+	[algorithm runWithParameterVector:thetaUnrolled length:totalUnitCount delegate:self];
 	
 	free(thetaUnrolled);
+}
+
+- (void)optimizationAlgorithmWillBeginIterationWithInputVector:(const LNKFloat *)inputVector {
+	// Unroll the inputVector into our Theta vectors.
+	const LNKSize thetaVectorCount = [self _thetaVectorCount];
+	LNKSize offset = 0;
+	
+	for (LNKSize i = 0; i < thetaVectorCount; i++) {
+		[self _updateThetaVector:inputVector + offset atIndex:i];
+		offset += [self _unitsInThetaVectorAtIndex:i];
+	}
 }
 
 /// `outOutputVector` and `outActivations` (and its members) must be freed by the caller.
@@ -402,6 +383,10 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	LNKMemoryBufferManagerFreeBlock(memoryManager, outputVector, classesCount);
 	
 	return J;
+}
+
+- (LNKFloat)costForOptimizationAlgorithm {
+	return [self _evaluateCostFunction];
 }
 
 - (LNKFloat)_evaluateCostFunction {
