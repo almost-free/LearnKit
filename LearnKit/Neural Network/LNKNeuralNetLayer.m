@@ -18,3 +18,24 @@
 }
 
 @end
+
+
+@implementation LNKNeuralNetOutputLayer
+
+- (instancetype)initWithClasses:(LNKClasses *)classes {
+	if (!classes.count)
+		[NSException raise:NSInvalidArgumentException format:@"Classes must be specified"];
+	
+	self = [super initWithUnitCount:classes.count];
+	if (self) {
+		_classes = [classes retain];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[_classes release];
+	[super dealloc];
+}
+
+@end

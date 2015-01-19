@@ -22,7 +22,7 @@ typedef struct {
 @implementation LNKNeuralNetClassifier {
 	ThetaVectorBucket **_thetaVectorBuckets;
 	LNKSize _thetaVectorBucketCount;
-	NSArray *_hiddenLayers;
+	NSArray *_layers;
 }
 
 + (NSArray *)supportedImplementationTypes {
@@ -41,31 +41,60 @@ typedef struct {
 }
 
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray *)layers classes:(LNKClasses *)classes {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray *)hiddenLayers outputLayer:(LNKNeuralNetOutputLayer *)outputLayer {
 	if (!matrix.hasBiasColumn)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must have a bias column"];
 	
-	if (!layers.count)
+	if (!hiddenLayers.count)
 		[NSException raise:NSInvalidArgumentException format:@"At least one hidden layer must be specified"];
 	
-	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes]))
+	if (!outputLayer)
+		[NSException raise:NSInvalidArgumentException format:@"An output layer must be specified"];
+	
+	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:outputLayer.classes]))
 		return nil;
 	
-	_hiddenLayers = [layers retain];
+	NSMutableArray *allLayers = [[NSMutableArray alloc] init];
+	
+	LNKNeuralNetLayer *inputLayer = [[LNKNeuralNetLayer alloc] initWithUnitCount:matrix.columnCount];
+	[allLayers addObject:inputLayer];
+	[inputLayer release];
+	
+	[allLayers addObjectsFromArray:hiddenLayers];
+	[allLayers addObject:outputLayer];
+	
+	_layers = [allLayers copy];
+	[allLayers release];
 	
 	return self;
+}
+
+#pragma mark - Layer Management
+
+- (LNKSize)layerCount {
+	return _layers.count;
+}
+
+- (LNKSize)hiddenLayerCount {
+	return _layers.count - 2; // Offset by input and output layer
+}
+
+- (LNKNeuralNetLayer *)inputLayer {
+	return _layers.firstObject;
+}
+
+- (LNKNeuralNetLayer *)outputLayer {
+	return _layers.lastObject;
 }
 
 - (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index {
 	if (index >= self.hiddenLayerCount)
 		[NSException raise:NSInvalidArgumentException format:@"The hidden layer index is out of bounds (%lld)", self.hiddenLayerCount];
 	
-	return _hiddenLayers[index];
+	return _layers[index + 1 /* offset by input layer */];
 }
 
-- (LNKSize)hiddenLayerCount {
-	return _hiddenLayers.count;
-}
+#pragma mark -
 
 - (LNKSize)_totalUnitCount {
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
@@ -171,7 +200,7 @@ typedef struct {
 }
 
 - (void)dealloc {
-	[_hiddenLayers release];
+	[_layers release];
 	
 	if (!_thetaVectorBuckets) {
 		[super dealloc];
@@ -190,14 +219,9 @@ typedef struct {
 	[super dealloc];
 }
 
-- (LNKSize)totalLayerCount {
-	// Each neural network has an input and output layer, hence 2.
-	return self.hiddenLayerCount + 2;
-}
-
 - (LNKSize)_thetaVectorCount {
 	// We only have totalLayerCount - 1 Theta vectors since each Theta vector transitions us to the next layer.
-	return self.totalLayerCount - 1;
+	return self.layerCount - 1;
 }
 
 @end

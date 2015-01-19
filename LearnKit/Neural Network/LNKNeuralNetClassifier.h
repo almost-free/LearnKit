@@ -21,14 +21,18 @@
 			implementationType:(LNKImplementationType)implementation
 		 optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm
 				  hiddenLayers:(NSArray *)layers
-					   classes:(LNKClasses *)classes NS_DESIGNATED_INITIALIZER;
+				   outputLayer:(LNKNeuralNetOutputLayer *)outputLayer NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix
 			implementationType:(LNKImplementationType)implementation
 		 optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm
 					   classes:(LNKClasses *)classes NS_UNAVAILABLE;
 
+@property (nonatomic, readonly) LNKSize layerCount;
 @property (nonatomic, readonly) LNKSize hiddenLayerCount;
+
+@property (nonatomic, readonly) LNKNeuralNetLayer *inputLayer;
+@property (nonatomic, readonly) LNKNeuralNetLayer *outputLayer;
 
 - (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index;
 

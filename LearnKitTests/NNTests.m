@@ -42,15 +42,17 @@
 		algorithm.lambda = 1;
 	
 	NSArray *hiddenLayers = @[ [[[LNKNeuralNetLayer alloc] initWithUnitCount:25] autorelease] ];
+	LNKNeuralNetOutputLayer *outputLayer = [[LNKNeuralNetOutputLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
 																	 implementationType:LNKImplementationTypeAccelerate
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
-																				classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+																			outputLayer:outputLayer];
 	
 	[matrix release];
 	[algorithm release];
+	[outputLayer release];
 	
 	NSData *thetaVectorData1 = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:theta1Path], 401 * 25 * sizeof(double));
 	NSData *thetaVectorData2 = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:theta2Path],  26 * 10 * sizeof(double));
@@ -96,15 +98,17 @@
 	algorithm.iterationCount = 400;
 	
 	NSArray *hiddenLayers = @[ [[[LNKNeuralNetLayer alloc] initWithUnitCount:25] autorelease] ];
+	LNKNeuralNetOutputLayer *outputLayer = [[LNKNeuralNetOutputLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
 																	 implementationType:LNKImplementationTypeAccelerate
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
-																				classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+																			outputLayer:outputLayer];
 	
 	[matrix release];
 	[algorithm release];
+	[outputLayer release];
 	
 	[classifier train];
 	

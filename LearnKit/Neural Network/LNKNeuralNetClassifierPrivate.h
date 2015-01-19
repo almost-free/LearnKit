@@ -10,8 +10,6 @@
 /// Adds support for multiple Theta vectors as used in neural networks.
 @interface LNKNeuralNetClassifier (Private)
 
-@property (readonly) LNKSize totalLayerCount;
-
 - (LNKSize)_thetaVectorCount;
 - (LNKSize)_totalUnitCount;
 - (LNKSize)_unitsInThetaVectorAtIndex:(NSUInteger)index;
