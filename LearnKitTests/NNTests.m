@@ -41,15 +41,12 @@
 	if (regularize)
 		algorithm.lambda = 1;
 	
-	const LNKSize hiddenLayerCount = 1;
-	LNKNeuralNetLayer hiddenLayers[hiddenLayerCount];
-	hiddenLayers[0].unitCount = 25;
+	NSArray *hiddenLayers = @[ [[[LNKNeuralNetLayer alloc] initWithUnitCount:25] autorelease] ];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
 																	 implementationType:LNKImplementationTypeAccelerate
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
-																	   hiddenLayerCount:hiddenLayerCount
 																				classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	[matrix release];
@@ -98,15 +95,12 @@
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
 	
-	const LNKSize hiddenLayerCount = 1;
-	LNKNeuralNetLayer hiddenLayers[hiddenLayerCount];
-	hiddenLayers[0].unitCount = 25;
+	NSArray *hiddenLayers = @[ [[[LNKNeuralNetLayer alloc] initWithUnitCount:25] autorelease] ];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
 																	 implementationType:LNKImplementationTypeAccelerate
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
-																	   hiddenLayerCount:hiddenLayerCount
 																				classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	[matrix release];

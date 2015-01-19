@@ -6,11 +6,7 @@
 //
 
 #import "LNKClassifier.h"
-
-typedef struct {
-	// The number of units in the layer (excluding the bias unit).
-	LNKSize unitCount;
-} LNKNeuralNetLayer;
+#import "LNKNeuralNetLayer.h"
 
 /// For neural network classifiers, the only supported algorithm is CG.
 /// Predicted values are of type LNKClass.
@@ -24,8 +20,7 @@ typedef struct {
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix
 			implementationType:(LNKImplementationType)implementation
 		 optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm
-				  hiddenLayers:(LNKNeuralNetLayer *)layers
-			  hiddenLayerCount:(LNKSize)layerCount
+				  hiddenLayers:(NSArray *)layers
 					   classes:(LNKClasses *)classes NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix
@@ -35,7 +30,7 @@ typedef struct {
 
 @property (nonatomic, readonly) LNKSize hiddenLayerCount;
 
-- (LNKNeuralNetLayer)hiddenLayerAtIndex:(LNKSize)index;
+- (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index;
 
 #warning TODO: assert correct values
 #warning TODO: better way of specifying classes

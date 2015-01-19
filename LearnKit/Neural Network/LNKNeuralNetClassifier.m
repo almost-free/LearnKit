@@ -22,7 +22,7 @@ typedef struct {
 @implementation LNKNeuralNetClassifier {
 	ThetaVectorBucket **_thetaVectorBuckets;
 	LNKSize _thetaVectorBucketCount;
-	LNKNeuralNetLayer *_hiddenLayers;
+	NSArray *_hiddenLayers;
 }
 
 + (NSArray *)supportedImplementationTypes {
@@ -41,33 +41,30 @@ typedef struct {
 }
 
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(LNKNeuralNetLayer *)layers hiddenLayerCount:(LNKSize)layerCount classes:(LNKClasses *)classes {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray *)layers classes:(LNKClasses *)classes {
 	if (!matrix.hasBiasColumn)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must have a bias column"];
 	
-	if (layerCount == 0)
-		[NSException raise:NSInvalidArgumentException format:@"The number of hidden layers must be at least one"];
-	
-	if (!layers)
-		[NSException raise:NSInvalidArgumentException format:@"The array of hidden layers must not be NULL"];
+	if (!layers.count)
+		[NSException raise:NSInvalidArgumentException format:@"At least one hidden layer must be specified"];
 	
 	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes]))
 		return nil;
 	
-	const LNKSize size = layerCount * sizeof(LNKNeuralNetLayer);
-	_hiddenLayers = malloc(size);
-	memcpy(_hiddenLayers, layers, size);
-	
-	_hiddenLayerCount = layerCount;
+	_hiddenLayers = [layers retain];
 	
 	return self;
 }
 
-- (LNKNeuralNetLayer)hiddenLayerAtIndex:(LNKSize)index {
-	if (index >= _hiddenLayerCount)
-		[NSException raise:NSInvalidArgumentException format:@"The hidden layer index is out of bounds (%lld)", _hiddenLayerCount];
+- (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index {
+	if (index >= self.hiddenLayerCount)
+		[NSException raise:NSInvalidArgumentException format:@"The hidden layer index is out of bounds (%lld)", self.hiddenLayerCount];
 	
 	return _hiddenLayers[index];
+}
+
+- (LNKSize)hiddenLayerCount {
+	return _hiddenLayers.count;
 }
 
 - (LNKSize)_totalUnitCount {
@@ -174,7 +171,7 @@ typedef struct {
 }
 
 - (void)dealloc {
-	free(_hiddenLayers);
+	[_hiddenLayers release];
 	
 	if (!_thetaVectorBuckets) {
 		[super dealloc];
@@ -195,7 +192,7 @@ typedef struct {
 
 - (LNKSize)totalLayerCount {
 	// Each neural network has an input and output layer, hence 2.
-	return _hiddenLayerCount + 2;
+	return self.hiddenLayerCount + 2;
 }
 
 - (LNKSize)_thetaVectorCount {
