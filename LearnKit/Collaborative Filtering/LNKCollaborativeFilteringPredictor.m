@@ -13,7 +13,9 @@
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
-#import "fmincg.h"
+@interface LNKCollaborativeFilteringPredictor () < LNKOptimizationAlgorithmDelegate >
+
+@end
 
 @implementation LNKCollaborativeFilteringPredictor {
 	LNKMatrix *_indicatorMatrix;
@@ -196,55 +198,40 @@
 	LNKFloatCopy(_unrolledGradient, dataMatrix.matrixBuffer, exampleCount * _featureCount);
 }
 
-static LNKCollaborativeFilteringPredictor *tempSelf = nil;
-
-static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat *gradientVector) {
-	LNKCollaborativeFilteringPredictor *self = tempSelf;
-	assert(self);
-	assert(inputVector);
-	assert(outCost);
-	assert(gradientVector);
-	
-	LNKMatrix *matrix = self.matrix;
-	const LNKSize userCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
-	const LNKSize unrolledExampleCount = exampleCount + userCount;
-	const LNKSize totalCount = unrolledExampleCount * self->_featureCount;
-	
-	LNKFloatCopy(self->_unrolledGradient, inputVector, totalCount);
-	
-	const LNKFloat cost = [self _evaluateCostFunction];
-	const LNKFloat *gradient = [self _computeGradient];
-	LNKFloatCopy(gradientVector, gradient, totalCount);
-	free((void *)gradient);
-	
-	*outCost = cost;
-}
-
 - (void)train {
-	tempSelf = self;
-	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
 	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
 	
-	LNKMatrix *matrix = self.matrix;
-	const LNKSize userCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
-	const LNKSize unrolledExampleCount = exampleCount + userCount;
-	const LNKSize totalCount = unrolledExampleCount * _featureCount;
-	
+	const LNKSize totalCount = [self _totalUnitCount];
 	const LNKFloat epsilon = 1.5;
 	
 	for (LNKSize n = 0; n < totalCount; n++) {
 		_unrolledGradient[n] = (((LNKFloat) arc4random_uniform(UINT32_MAX) / UINT32_MAX) - 0.5) * 2 * epsilon;
 	}
 	
-#ifdef DEBUG
-	int result = fmincg(_fmincg_evaluate, _unrolledGradient, (int)totalCount, (int)algorithm.iterationCount);
-	NSAssert(result == 0 || result == 1, @"Could not minimize the function");
-#else
-	fmincg(_fmincg_evaluate, _unrolledGradient, (int)totalCount, (int)algorithm.iterationCount);
-#endif
+	[algorithm runWithParameterVector:_unrolledGradient length:totalCount delegate:self];
+}
+
+- (LNKSize)_totalUnitCount {
+	LNKMatrix *matrix = self.matrix;
+	const LNKSize userCount = matrix.columnCount;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize unrolledExampleCount = exampleCount + userCount;
+	return unrolledExampleCount * _featureCount;
+}
+
+- (void)optimizationAlgorithmWillBeginIterationWithInputVector:(const LNKFloat *)inputVector {
+	LNKFloatCopy(_unrolledGradient, inputVector, [self _totalUnitCount]);
+}
+
+- (LNKFloat)costForOptimizationAlgorithm {
+	return [self _evaluateCostFunction];
+}
+
+- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradientVector {
+	const LNKFloat *gradient = [self _computeGradient];
+	LNKFloatCopy(gradientVector, gradient, [self _totalUnitCount]);
+	free((void *)gradient);
 }
 
 - (NSIndexSet *)findTopK:(LNKSize)k predictionsForUser:(LNKSize)userIndex {
