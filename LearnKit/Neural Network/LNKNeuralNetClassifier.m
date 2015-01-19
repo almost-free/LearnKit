@@ -207,14 +207,14 @@ typedef struct {
 }
 
 - (void)dealloc {
+	const LNKSize thetaVectorCount = [self _thetaVectorCount];
+	
 	[_layers release];
 	
 	if (!_thetaVectorBuckets) {
 		[super dealloc];
 		return;
 	}
-	
-	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	
 	for (LNKSize i = 0; i < thetaVectorCount; i++) {
 		if (_thetaVectorBuckets[i])
@@ -228,7 +228,7 @@ typedef struct {
 
 - (LNKSize)_thetaVectorCount {
 	// We only have totalLayerCount - 1 Theta vectors since each Theta vector transitions us to the next layer.
-	return self.layerCount - 1;
+	return _layers.count - 1;
 }
 
 @end
