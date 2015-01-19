@@ -21,7 +21,7 @@
 			implementationType:(LNKImplementationType)implementation
 		 optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm
 				  hiddenLayers:(NSArray *)layers
-				   outputLayer:(LNKNeuralNetOutputLayer *)outputLayer NS_DESIGNATED_INITIALIZER;
+				   outputLayer:(LNKNeuralNetLayer *)outputLayer NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix
 			implementationType:(LNKImplementationType)implementation

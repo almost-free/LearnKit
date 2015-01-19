@@ -12,15 +12,12 @@
 /// The unit count should exclude the bias unit.
 - (instancetype)initWithUnitCount:(LNKSize)unitCount NS_DESIGNATED_INITIALIZER;
 
+/// Initializes a special 'output' layer with the given classes.
+- (instancetype)initWithClasses:(LNKClasses *)classes;
+
 @property (nonatomic, readonly) LNKSize unitCount;
 
-@end
-
-
-@interface LNKNeuralNetOutputLayer : LNKNeuralNetLayer
-
-- (instancetype)initWithClasses:(LNKClasses *)classes NS_DESIGNATED_INITIALIZER;
-
+@property (nonatomic, readonly, getter=isOutputLayer) BOOL outputLayer;
 @property (nonatomic, readonly) LNKClasses *classes;
 
 @end

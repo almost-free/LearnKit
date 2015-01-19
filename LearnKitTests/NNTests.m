@@ -42,7 +42,7 @@
 		algorithm.lambda = 1;
 	
 	NSArray *hiddenLayers = @[ [[[LNKNeuralNetLayer alloc] initWithUnitCount:25] autorelease] ];
-	LNKNeuralNetOutputLayer *outputLayer = [[LNKNeuralNetOutputLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
 																	 implementationType:LNKImplementationTypeAccelerate
@@ -98,7 +98,7 @@
 	algorithm.iterationCount = 400;
 	
 	NSArray *hiddenLayers = @[ [[[LNKNeuralNetLayer alloc] initWithUnitCount:25] autorelease] ];
-	LNKNeuralNetOutputLayer *outputLayer = [[LNKNeuralNetOutputLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
 																	 implementationType:LNKImplementationTypeAccelerate

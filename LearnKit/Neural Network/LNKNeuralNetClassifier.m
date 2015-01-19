@@ -41,14 +41,14 @@ typedef struct {
 }
 
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray *)hiddenLayers outputLayer:(LNKNeuralNetOutputLayer *)outputLayer {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray *)hiddenLayers outputLayer:(LNKNeuralNetLayer *)outputLayer {
 	if (!matrix.hasBiasColumn)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must have a bias column"];
 	
 	if (!hiddenLayers.count)
 		[NSException raise:NSInvalidArgumentException format:@"At least one hidden layer must be specified"];
 	
-	if (!outputLayer)
+	if (!outputLayer.isOutputLayer)
 		[NSException raise:NSInvalidArgumentException format:@"An output layer must be specified"];
 	
 	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:outputLayer.classes]))
