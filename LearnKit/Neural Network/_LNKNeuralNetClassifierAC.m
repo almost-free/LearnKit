@@ -51,7 +51,7 @@
 		LNKFloat *outputVector;
 		
 		// First predict the output, then use backpropagation to find weight gradients.
-		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) hiddenLayerActivations:hiddenLayerActivations outputVector:&outputVector];
+		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:hiddenLayerActivations outputVector:&outputVector];
 		[self _runBackpropogationForExample:m featureVector:featureVector hiddenLayerActivations:hiddenLayerActivations resultVector:outputVector gradients:gradients];
 		
 		// Accumulate the gradients.
@@ -263,7 +263,7 @@
 }
 
 /// `outOutputVector` and `outActivations` (and its members) must be freed by the caller.
-- (void)_feedForwardFeatureVector:(LNKVector)featureVector hiddenLayerActivations:(LNKFloat **)activations outputVector:(LNKFloat **)outOutputVector {
+- (void)_feedForwardFeatureVector:(LNKVector)featureVector activations:(LNKFloat **)activations outputVector:(LNKFloat **)outOutputVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
 	NSParameterAssert(outOutputVector);
@@ -328,7 +328,7 @@
 	NSParameterAssert(featureVector.length);
 	
 	LNKFloat *outputLayer;
-	[self _feedForwardFeatureVector:featureVector hiddenLayerActivations:NULL outputVector:&outputLayer];
+	[self _feedForwardFeatureVector:featureVector activations:NULL outputVector:&outputLayer];
 	
 	LNKSize index = 0;
 	for (LNKClass *class in self.classes) {
@@ -358,7 +358,7 @@
 	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputLayer;
-		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) hiddenLayerActivations:NULL outputVector:&outputLayer];
+		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:NULL outputVector:&outputLayer];
 		
 		// Optimize for true positives and negatives for all classes.
 		// -y log(h) - (1 - y) log(1 - h)
