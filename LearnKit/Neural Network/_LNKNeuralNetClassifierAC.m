@@ -42,8 +42,7 @@
 		gradients[i] = LNKFloatAlloc(unitsInThetaVector[i]);
 	}
 	
-	const LNKSize hiddenLayerCount = self.hiddenLayerCount;
-	LNKFloat **hiddenLayerActivations = malloc(hiddenLayerCount * sizeof(LNKFloat *));
+	LNKFloat **hiddenLayerActivations = malloc(thetaVectorCount * sizeof(LNKFloat *));
 	
 	// Accumulate the deltas through all the examples.
 	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
