@@ -60,7 +60,7 @@
 		const LNKSize classIndex = [classes indexForClass:[LNKClass classWithUnsignedInteger:outputVector[m]]];
 		outputError[classIndex] -= 1; // This is the row where y = 1
 		
-		[self _runBackpropogationForExample:m featureVector:featureVector activations:activations outputError:outputError gradients:gradients];
+		[self _runBackpropogationForFeatureVector:featureVector activations:activations outputError:outputError gradients:gradients];
 		
 		// Accumulate the gradients.
 		for (LNKSize i = 0; i < layerCount; i++) {
@@ -80,11 +80,10 @@
 	free(activations);
 }
 
-- (void)_runBackpropogationForExample:(LNKSize)m
-						featureVector:(const LNKFloat *)featureVector
-						  activations:(LNKFloat **)activations
-						  outputError:(LNKFloat *)outputError
-							gradients:(LNKFloat **)gradients {
+- (void)_runBackpropogationForFeatureVector:(const LNKFloat *)featureVector
+								activations:(LNKFloat **)activations
+								outputError:(LNKFloat *)outputError
+								  gradients:(LNKFloat **)gradients {
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
