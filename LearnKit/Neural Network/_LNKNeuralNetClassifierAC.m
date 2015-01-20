@@ -27,9 +27,12 @@
 	NSParameterAssert(deltas);
 	
 	LNKMatrix *matrix = self.matrix;
+	LNKClasses *classes = self.classes;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
+	const LNKSize layerCount = self.layerCount;
+	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKSize *unitsInThetaVector = malloc(thetaVectorCount * sizeof(LNKSize)); // Cache
 	*deltas = malloc(thetaVectorCount * sizeof(LNKFloat *));
@@ -42,21 +45,29 @@
 		gradients[i] = LNKFloatAlloc(unitsInThetaVector[i]);
 	}
 	
-	LNKFloat **hiddenLayerActivations = malloc(thetaVectorCount * sizeof(LNKFloat *));
+	LNKFloat **activations = malloc(layerCount * sizeof(LNKFloat *));
 	
 	// Accumulate the deltas through all the examples.
 	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
-		LNKFloat *outputVector;
-		
 		// First predict the output, then use backpropagation to find weight gradients.
-		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:hiddenLayerActivations outputVector:&outputVector];
-		[self _runBackpropogationForExample:m featureVector:featureVector hiddenLayerActivations:hiddenLayerActivations resultVector:outputVector gradients:gradients];
+		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:activations outputVector:NULL];
+		
+		// Calculate the error for the output layer (the last array of activations).
+		LNKFloat *outputError = LNKFloatAllocAndCopy(activations[layerCount-1], unitsInThetaVector[thetaVectorCount-1]);
+		
+		// In this case, the error signal s_outputLayer = a_outputLayer - y
+		const LNKSize classIndex = [classes indexForClass:[LNKClass classWithUnsignedInteger:outputVector[m]]];
+		outputError[classIndex] -= 1; // This is the row where y = 1
+		
+		[self _runBackpropogationForExample:m featureVector:featureVector activations:activations outputError:outputError gradients:gradients];
 		
 		// Accumulate the gradients.
-		for (LNKSize i = 0; i < thetaVectorCount; i++) {
-			LNK_vadd(deltasValue[i], UNIT_STRIDE, gradients[i], UNIT_STRIDE, deltasValue[i], UNIT_STRIDE, unitsInThetaVector[i]);
-			free(hiddenLayerActivations[i]);
+		for (LNKSize i = 0; i < layerCount; i++) {
+			if (i < layerCount - 1) // ignore the input layer
+				LNK_vadd(deltasValue[i], UNIT_STRIDE, gradients[i], UNIT_STRIDE, deltasValue[i], UNIT_STRIDE, unitsInThetaVector[i]);
+			
+			free(activations[i]);
 		}
 	}
 	
@@ -66,34 +77,27 @@
 	
 	free(gradients);
 	free(unitsInThetaVector);
-	free(hiddenLayerActivations);
+	free(activations);
 }
 
 - (void)_runBackpropogationForExample:(LNKSize)m
 						featureVector:(const LNKFloat *)featureVector
-			   hiddenLayerActivations:(LNKFloat **)activations
-						 resultVector:(LNKFloat *)resultVector
+						  activations:(LNKFloat **)activations
+						  outputError:(LNKFloat *)outputError
 							gradients:(LNKFloat **)gradients {
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
-	LNKMatrix *matrix = self.matrix;
-	LNKClasses *classes = self.classes;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
-	const LNKSize inputLayerOffset = 1, layerPrior = 1;
-	const LNKFloat *outputVector = matrix.outputVector;
+	const LNKSize layerPrior = 1;
 	
 	for (LNKSize layerIndex = thetaVectorCount; layerIndex >= 1; layerIndex--) {
 		if (layerIndex == thetaVectorCount) {
-			// In this case, the error signal s_outputLayer = a_outputLayer - y
-			const LNKSize classIndex = [classes indexForClass:[LNKClass classWithUnsignedInteger:outputVector[m]]];
-			resultVector[classIndex] -= 1; // This is the row where y = 1
-			
 			LNKSize rows, columns;
 			[self _getDimensionsOfLayerAtIndex:layerIndex - layerPrior rows:&rows columns:&columns]; // These weights map from layer-1 to the outputLayer
 			
 			// The term that gets accumulated is s_outputLayer * a_layer-1
-			LNK_mmul(resultVector, UNIT_STRIDE, activations[layerIndex - inputLayerOffset - layerPrior], UNIT_STRIDE, gradients[layerIndex - layerPrior], UNIT_STRIDE, rows, columns, 1);
+			LNK_mmul(outputError, UNIT_STRIDE, activations[layerIndex - layerPrior], UNIT_STRIDE, gradients[layerIndex - layerPrior], UNIT_STRIDE, rows, columns, 1);
 		}
 		else {
 			// Propagate the error vector going from layer -> layer-1.
@@ -103,15 +107,15 @@
 			
 			// s_i = theta * s_i+1
 			LNKFloat *errorVector = LNKFloatAlloc(columns);
-			LNK_mmul(thetaVector, UNIT_STRIDE, resultVector, UNIT_STRIDE, errorVector, UNIT_STRIDE, columns, 1, rows);
+			LNK_mmul(thetaVector, UNIT_STRIDE, outputError, UNIT_STRIDE, errorVector, UNIT_STRIDE, columns, 1, rows);
 			
-			free(resultVector);
-			resultVector = errorVector;
+			free(outputError);
+			outputError = errorVector;
 			
 			LNKFloat *errorVectorIgnoringBias = errorVector + 1;
 			LNKFloat *activationGradient = LNKMemoryBufferManagerAllocBlock(memoryManager, columnsIgnoringBias);
 			LNKNeuralNetLayer *layer = [self layerAtIndex:layerIndex];
-			layer.activationGradientFunction(activations[layerIndex - layerPrior] + 1 /* ignore bias unit */, activationGradient, columnsIgnoringBias);
+			layer.activationGradientFunction(activations[layerIndex] + 1 /* ignore bias unit */, activationGradient, columnsIgnoringBias);
 			
 			// Multiply the error vector by the derivative of the activation function.
 			// s_i = s_i * g'(i)
@@ -125,12 +129,12 @@
 				[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible matrix sizes", layerIndex];
 			
 			// Error term = s_i * a_i-1
-			const LNKFloat *activationVector = layerIndex == 1 ? featureVector : activations[layerIndex - inputLayerOffset - layerPrior];
+			const LNKFloat *activationVector = layerIndex == 1 ? featureVector : activations[layerIndex - layerPrior];
 			LNK_mmul(errorVectorIgnoringBias, UNIT_STRIDE, activationVector, UNIT_STRIDE, gradients[layerIndex - layerPrior], UNIT_STRIDE, columnsIgnoringBias, previousColumns, 1);
 		}
 	}
 	
-	free(resultVector);
+	free(outputError);
 }
 
 - (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradient {
@@ -261,11 +265,12 @@
 	}
 }
 
-/// `outOutputVector` and `outActivations` (and its members) must be freed by the caller.
+/// Only one of `activations` or `outOutputVector` can be retrieved.
+/// `outOutputVector`/members of `activations` must be freed by the caller.
 - (void)_feedForwardFeatureVector:(LNKVector)featureVector activations:(LNKFloat **)activations outputVector:(LNKFloat **)outOutputVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
-	NSParameterAssert(outOutputVector);
+	NSParameterAssert((activations && !outOutputVector) || (!activations && outOutputVector));
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
@@ -308,7 +313,7 @@
 		layer.activationFunction(outputVector + biasUnitOffset, rows);
 		
 		if (activations) {
-			activations[layerIndex-1] = LNKFloatAllocAndCopy(outputVector, actualOutputVectorLength);
+			activations[layerIndex] = LNKFloatAllocAndCopy(outputVector, actualOutputVectorLength);
 			// We ignore the bias unit.
 		}
 		
@@ -319,7 +324,8 @@
 	if (currentInputLayerLength != self.classes.count)
 		[NSException raise:NSGenericException format:@"Every class must be given an output"];
 	
-	*outOutputVector = (LNKFloat *)currentInputLayer;
+	if (outOutputVector)
+		*outOutputVector = (LNKFloat *)currentInputLayer;
 }
 
 - (void)_predictValueForFeatureVector:(LNKVector)featureVector {
