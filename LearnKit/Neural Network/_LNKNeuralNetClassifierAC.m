@@ -309,10 +309,8 @@
 		layer.activationFunction(outputVector + biasUnitOffset, rows);
 		
 		if (activations) {
-			activations[layerIndex] = LNKFloatAlloc(rows);
-			
+			activations[layerIndex] = LNKFloatAllocAndCopy(outputVector, actualOutputVectorLength);
 			// We ignore the bias unit.
-			LNKFloatCopy(activations[layerIndex], outputVector, actualOutputVectorLength);
 		}
 		
 		currentInputLayer = outputVector;
