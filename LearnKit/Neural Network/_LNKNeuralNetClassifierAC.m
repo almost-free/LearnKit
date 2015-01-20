@@ -274,11 +274,11 @@
 	const LNKFloat *currentInputLayer = featureVector.data;
 	LNKSize currentInputLayerLength = self.matrix.columnCount;
 	
-	for (LNKSize layerIndex = 0; layerIndex < thetaVectorCount; layerIndex++) {
-		LNKNeuralNetLayer *layer = [self layerAtIndex:layerIndex + 1];
+	for (LNKSize layerIndex = 1 /* ignore input layer */; layerIndex <= thetaVectorCount; layerIndex++) {
+		LNKNeuralNetLayer *layer = [self layerAtIndex:layerIndex];
 		
 		LNKSize rows, columns;
-		const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layerIndex rows:&rows columns:&columns];
+		const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:layerIndex-1 rows:&rows columns:&columns];
 		
 		if (currentInputLayerLength != columns)
 			[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible theta matrix sizes", layerIndex];
@@ -287,7 +287,7 @@
 		LNK_mtrans(thetaVector, UNIT_STRIDE, transposedThetaVector, UNIT_STRIDE, columns, rows);
 		
 		// We don't need a bias unit when prediciting outputs.
-		const BOOL shouldAddBiasUnit = layerIndex < thetaVectorCount-1;
+		const BOOL shouldAddBiasUnit = layerIndex != thetaVectorCount;
 		const LNKSize biasUnitOffset = shouldAddBiasUnit ? 1 : 0;
 		const LNKSize actualOutputVectorLength = rows + biasUnitOffset;
 		
@@ -309,7 +309,7 @@
 		layer.activationFunction(outputVector + biasUnitOffset, rows);
 		
 		if (activations) {
-			activations[layerIndex] = LNKFloatAllocAndCopy(outputVector, actualOutputVectorLength);
+			activations[layerIndex-1] = LNKFloatAllocAndCopy(outputVector, actualOutputVectorLength);
 			// We ignore the bias unit.
 		}
 		
