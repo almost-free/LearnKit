@@ -274,8 +274,6 @@
 	if (activations) // The activation values for the input layer are just the original feature vectors.
 		activations[0] = LNKFloatAllocAndCopy(featureVector.data, featureVector.length);
 	
-	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
-	
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	const LNKFloat *currentInputLayer = featureVector.data;
 	LNKSize currentInputLayerLength = self.matrix.columnCount;
@@ -289,9 +287,6 @@
 		if (currentInputLayerLength != columns)
 			[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible theta matrix sizes", layerIndex];
 		
-		LNKFloat *transposedThetaVector = LNKMemoryBufferManagerAllocBlock(memoryManager, rows * columns);
-		LNK_mtrans(thetaVector, UNIT_STRIDE, transposedThetaVector, UNIT_STRIDE, columns, rows);
-		
 		// We don't need a bias unit when prediciting outputs.
 		const BOOL shouldAddBiasUnit = layerIndex != thetaVectorCount;
 		const LNKSize biasUnitOffset = shouldAddBiasUnit ? 1 : 0;
@@ -300,8 +295,7 @@
 		// Perform linear combination: featureVector . thetaVector
 		// In anticipation of the bias unit we may need to add, allocate space for one more element.
 		LNKFloat *outputVector = LNKFloatAlloc(actualOutputVectorLength);
-		LNK_mmul(currentInputLayer, UNIT_STRIDE, transposedThetaVector, UNIT_STRIDE, outputVector + biasUnitOffset, UNIT_STRIDE, 1, rows, columns);
-		LNKMemoryBufferManagerFreeBlock(memoryManager, transposedThetaVector, rows * columns);
+		LNK_mmul(thetaVector, UNIT_STRIDE, currentInputLayer, UNIT_STRIDE, outputVector + biasUnitOffset, UNIT_STRIDE, rows, 1, columns);
 		
 		if (shouldAddBiasUnit)
 			outputVector[0] = 1;
