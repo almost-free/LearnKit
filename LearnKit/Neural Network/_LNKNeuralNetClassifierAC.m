@@ -50,6 +50,7 @@
 	// Accumulate the deltas through all the examples.
 	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
+		
 		// First predict the output, then use backpropagation to find weight gradients.
 		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:activations outputVector:NULL];
 		
@@ -60,7 +61,7 @@
 		const LNKSize classIndex = [classes indexForClass:[LNKClass classWithUnsignedInteger:outputVector[m]]];
 		outputError[classIndex] -= 1; // This is the row where y = 1
 		
-		[self _runBackpropogationForFeatureVector:featureVector activations:activations outputError:outputError gradients:gradients];
+		[self _runBackpropogationForActivations:activations outputError:outputError gradients:gradients];
 		
 		// Accumulate the gradients.
 		for (LNKSize i = 0; i < layerCount; i++) {
@@ -80,10 +81,9 @@
 	free(activations);
 }
 
-- (void)_runBackpropogationForFeatureVector:(const LNKFloat *)featureVector
-								activations:(LNKFloat **)activations
-								outputError:(LNKFloat *)outputError
-								  gradients:(LNKFloat **)gradients {
+- (void)_runBackpropogationForActivations:(LNKFloat **)activations
+							  outputError:(LNKFloat *)outputError
+								gradients:(LNKFloat **)gradients {
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
@@ -128,7 +128,7 @@
 				[NSException raise:NSGenericException format:@"The transition to layer %lld is invalid due to incompatible matrix sizes", layerIndex];
 			
 			// Error term = s_i * a_i-1
-			const LNKFloat *activationVector = layerIndex == 1 ? featureVector : activations[layerIndex - layerPrior];
+			const LNKFloat *activationVector = activations[layerIndex - layerPrior];
 			LNK_mmul(errorVectorIgnoringBias, UNIT_STRIDE, activationVector, UNIT_STRIDE, gradients[layerIndex - layerPrior], UNIT_STRIDE, columnsIgnoringBias, previousColumns, 1);
 		}
 	}
@@ -270,6 +270,9 @@
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
 	NSParameterAssert((activations && !outOutputVector) || (!activations && outOutputVector));
+	
+	if (activations) // The activation values for the input layer are just the original feature vectors.
+		activations[0] = LNKFloatAllocAndCopy(featureVector.data, featureVector.length);
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
