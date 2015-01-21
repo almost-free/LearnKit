@@ -141,6 +141,8 @@
 	LNKFloat *gradient = LNKFloatAlloc(vector.length);
 	
 	for (LNKSize iteration = 0; iteration < iterationCount; iteration++) {
+		[delegate optimizationAlgorithmWillBeginIteration];
+		
 		for (NSUInteger batch = 0; batch < batchCount; batch++) {
 			LNKRange range = LNKRangeMake(batch * batchSize, batch == batchCount - 1 ? exampleCount - batch * batchSize : batchSize);
 			
@@ -191,6 +193,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	
 	id<LNKOptimizationAlgorithmDelegate> delegate = self->_delegate;
 	LNKRange range = LNKRangeMake(0, self->_exampleCount);
+	
 	[delegate optimizationAlgorithmWillBeginWithInputVector:inputVector];
 	const LNKFloat cost = [delegate costForOptimizationAlgorithm];
 	[delegate computeGradientForOptimizationAlgorithm:gradientVector inRange:range];

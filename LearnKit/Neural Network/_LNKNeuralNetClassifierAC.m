@@ -20,13 +20,20 @@
 
 @end
 
-@implementation _LNKNeuralNetClassifierAC
+@implementation _LNKNeuralNetClassifierAC {
+	LNKMatrix *_shuffledMatrix;
+}
+
+- (void)dealloc {
+	[_shuffledMatrix release];
+	[super dealloc];
+}
 
 - (void)_computeGradientForExamplesInRange:(LNKRange)range delta:(LNKFloat ***)deltas {
 	NSParameterAssert(range.length);
 	NSParameterAssert(deltas);
 	
-	LNKMatrix *matrix = self.matrix;
+	LNKMatrix *matrix = self.shuffleMatrixOnEachIteration ? _shuffledMatrix : self.matrix;
 	LNKClasses *classes = self.classes;
 	const LNKSize classesCount = classes.count;
 	const LNKSize columnCount = matrix.columnCount;
@@ -249,6 +256,16 @@
 	free(thetaUnrolled);
 }
 
+- (void)optimizationAlgorithmWillBeginIteration {
+	if (!self.shuffleMatrixOnEachIteration)
+		return;
+	
+	if (_shuffledMatrix)
+		[_shuffledMatrix release];
+	
+	_shuffledMatrix = [self.matrix copyShuffledMatrix];
+}
+
 - (void)optimizationAlgorithmWillBeginWithInputVector:(const LNKFloat *)inputVector {
 	// Unroll the inputVector into our Theta vectors.
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
@@ -335,10 +352,14 @@
 	free(outputLayer);
 }
 
+- (BOOL)shuffleMatrixOnEachIteration {
+	return [self.algorithm isKindOfClass:[LNKOptimizationAlgorithmStochasticGradientDescent class]];
+}
+
 - (LNKFloat)_evaluateCostFunctionForExamplesInRange:(LNKRange)range {
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
-	LNKMatrix *matrix = self.matrix;
+	LNKMatrix *matrix = self.shuffleMatrixOnEachIteration ? _shuffledMatrix : self.matrix;
 	LNKClasses *classes = self.classes;
 	const LNKSize classesCount = self.classes.count;
 	const LNKSize columnCount = matrix.columnCount;
