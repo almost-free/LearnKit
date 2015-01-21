@@ -64,7 +64,7 @@
 														 }];
 	
 	LNKOptimizationAlgorithmStochasticGradientDescent *algorithm = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.3]
-																														  iterationCount:5];
+																														  iterationCount:30];
 	algorithm.stepCount = 50;
 	
 	NSArray *hiddenLayers = @[ [[[LNKNeuralNetReLULayer alloc] initWithUnitCount:400] autorelease] ];
@@ -89,7 +89,7 @@
 														 return YES;
 													 }];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:testMatrix], 0.90, @"Poor accuracy");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:testMatrix], 0.97, @"Poor accuracy");
 	[testMatrix release];
 	[classifier release];
 }
