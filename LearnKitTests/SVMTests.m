@@ -22,8 +22,8 @@
 	NSString *path = [[NSBundle bundleForClass:self.class] pathForResource:@"Cancer" ofType:@"csv"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	
-	LNKMatrix *trainingMatrix = [matrix shuffledSubmatrixWithExampleCount:483];
-	LNKMatrix *testMatrix = [matrix shuffledSubmatrixWithExampleCount:100];
+	LNKMatrix *trainingMatrix = [[matrix copyShuffledSubmatrixWithExampleCount:483] autorelease];
+	LNKMatrix *testMatrix = [[matrix copyShuffledSubmatrixWithExampleCount:100] autorelease];
 	
 	const LNKSize epochs = 50;
 	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
