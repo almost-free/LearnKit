@@ -209,7 +209,7 @@
 		_unrolledGradient[n] = (((LNKFloat) arc4random_uniform(UINT32_MAX) / UINT32_MAX) - 0.5) * 2 * epsilon;
 	}
 	
-	[algorithm runWithParameterVector:_unrolledGradient length:totalCount delegate:self];
+	[algorithm runWithParameterVector:LNKVectorMakeUnsafe(_unrolledGradient, totalCount) exampleCount:self.matrix.exampleCount delegate:self];
 }
 
 - (LNKSize)_totalUnitCount {
