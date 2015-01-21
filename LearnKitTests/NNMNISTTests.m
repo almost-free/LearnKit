@@ -40,10 +40,10 @@
 	NSAssert(labelsData, @"Cannot load labels data");
 	
 	// Matrix data files are padded with 16 bytes.
-	uint8 *matrixBytes = (uint8 *)[matrixData bytes] + 16;
+	const uint8 *matrixBytes = (const uint8 *)[matrixData bytes] + 16;
 	
 	// Label data files are padded with 8 bytes.
-	uint8 *labelBytes = (uint8 *)[labelsData bytes] + 8;
+	const uint8 *labelBytes = (const uint8 *)[labelsData bytes] + 8;
 	
 	for (LNKSize i = 0; i < exampleCount; i++) {
 		for (LNKSize n = 0; n < FEATURES; n++) {
@@ -67,7 +67,7 @@
 																														  iterationCount:5];
 	algorithm.stepCount = 50;
 	
-	NSArray *hiddenLayers = @[ [[[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:400] autorelease] ];
+	NSArray *hiddenLayers = @[ [[[LNKNeuralNetReLULayer alloc] initWithUnitCount:400] autorelease] ];
 	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetSigmoidLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(0, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:trainingMatrix

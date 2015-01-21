@@ -32,3 +32,8 @@ typedef void(^LNKActivationGradientFunction)(const LNKFloat *vector, LNKFloat *o
 @interface LNKNeuralNetSigmoidLayer : LNKNeuralNetLayer
 
 @end
+
+
+@interface LNKNeuralNetReLULayer : LNKNeuralNetLayer
+
+@end

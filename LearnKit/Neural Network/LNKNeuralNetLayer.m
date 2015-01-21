@@ -67,3 +67,24 @@
 }
 
 @end
+
+
+@implementation LNKNeuralNetReLULayer
+
+- (LNKActivationFunction)activationFunction {
+	return ^(LNKFloat *vector, LNKSize length) {
+		for (LNKSize i = 0; i < length; i++) {
+			vector[i] = vector[i] < 0 ? 0 : vector[i];
+		}
+	};
+}
+
+- (LNKActivationGradientFunction)activationGradientFunction {
+	return ^(const LNKFloat *vector, LNKFloat *outVector, LNKSize length) {
+		for (LNKSize i = 0; i < length; i++) {
+			outVector[i] = vector[i] > 0 ? 1 : 0;
+		}
+	};
+}
+
+@end
