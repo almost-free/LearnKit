@@ -23,11 +23,12 @@
 
 #define DACCURACY 0.01
 
-#define EXAMPLES 60000
+#define TRAIN_EXAMPLES 60000
+#define TEST_EXAMPLES  10000
 #define FEATURES (28 * 28)
 #define FEATURES_PLUS_ONE (FEATURES+1)
 
-- (void)_copyMNISTDataWithBasename:(NSString *)basename toMatrixBuffer:(LNKFloat *)buffer outputVector:(LNKFloat *)outputVector {
+- (void)_copyMNISTDataWithBasename:(NSString *)basename toMatrixBuffer:(LNKFloat *)buffer outputVector:(LNKFloat *)outputVector examples:(LNKSize)exampleCount {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSURL *matrixURL = [bundle URLForResource:[basename stringByAppendingString:@"-images"] withExtension:@"idx3-ubyte"];
 	NSURL *labelsURL = [bundle URLForResource:[basename stringByAppendingString:@"-labels"] withExtension:@"idx1-ubyte"];
@@ -44,7 +45,7 @@
 	// Label data files are padded with 8 bytes.
 	uint8 *labelBytes = (uint8 *)[labelsData bytes] + 8;
 	
-	for (LNKSize i = 0; i < EXAMPLES; i++) {
+	for (LNKSize i = 0; i < exampleCount; i++) {
 		for (LNKSize n = 0; n < FEATURES; n++) {
 			buffer[i * FEATURES_PLUS_ONE + n + 1 /* offset bias unit */] = (CGFloat)matrixBytes[i * FEATURES + n] / 255.0f;
 		}
@@ -54,11 +55,11 @@
 }
 
 - (void)test1Training {
-	LNKMatrix *trainingMatrix = [[LNKMatrix alloc] initWithExampleCount:EXAMPLES
+	LNKMatrix *trainingMatrix = [[LNKMatrix alloc] initWithExampleCount:TRAIN_EXAMPLES
 															columnCount:FEATURES
 													   addingOnesColumn:YES
 														 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-															 [self _copyMNISTDataWithBasename:@"train" toMatrixBuffer:matrix outputVector:outputVector];
+															 [self _copyMNISTDataWithBasename:@"train" toMatrixBuffer:matrix outputVector:outputVector examples:TRAIN_EXAMPLES];
 															 return YES;
 														 }];
 	
@@ -76,12 +77,20 @@
 																			outputLayer:outputLayer];
 	
 	[trainingMatrix release];
-	[algorithm release];
 	[outputLayer release];
 	
 	[classifier train];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.90, @"Poor accuracy");
+	LNKMatrix *testMatrix = [[LNKMatrix alloc] initWithExampleCount:TEST_EXAMPLES
+														columnCount:FEATURES
+												   addingOnesColumn:YES
+													 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+														 [self _copyMNISTDataWithBasename:@"t10k" toMatrixBuffer:matrix outputVector:outputVector examples:TEST_EXAMPLES];
+														 return YES;
+													 }];
+	
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:testMatrix], 0.90, @"Poor accuracy");
+	[testMatrix release];
 	[classifier release];
 }
 
