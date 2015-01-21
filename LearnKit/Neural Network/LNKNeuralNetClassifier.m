@@ -30,7 +30,7 @@ typedef struct {
 }
 
 + (NSArray *)supportedAlgorithms {
-	return @[ [LNKOptimizationAlgorithmCG class] ];
+	return @[ [LNKOptimizationAlgorithmCG class], [LNKOptimizationAlgorithmStochasticGradientDescent class] ];
 }
 
 + (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {

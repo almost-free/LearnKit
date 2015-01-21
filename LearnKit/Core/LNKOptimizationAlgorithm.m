@@ -8,6 +8,7 @@
 #import "LNKOptimizationAlgorithm.h"
 
 #import "fmincg.h"
+#import "LNKAccelerate.h"
 
 @implementation LNKFixedAlpha
 
@@ -122,6 +123,40 @@
 
 @implementation LNKOptimizationAlgorithmStochasticGradientDescent
 
+- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+	NSAssert([self.alpha isKindOfClass:[LNKFixedAlpha class]], @"Only fixed alpha values are suppored by this method");
+	NSParameterAssert(vector.data);
+	NSParameterAssert(vector.length);
+	NSParameterAssert(delegate);
+	NSParameterAssert(exampleCount);
+	
+	const LNKFloat alpha = [(LNKFixedAlpha *)self.alpha value];
+	const LNKSize iterationCount = self.iterationCount;
+	const LNKSize batchCount = self.stepCount == NSNotFound ? exampleCount : self.stepCount;
+	const LNKSize batchSize = exampleCount / batchCount;
+	
+	LNKFloat *weights = LNKFloatAllocAndCopy(vector.data, vector.length);
+	
+	// Re-used across iterations.
+	LNKFloat *gradient = LNKFloatAlloc(vector.length);
+	
+	for (LNKSize iteration = 0; iteration < iterationCount; iteration++) {
+		for (NSUInteger batch = 0; batch < batchCount; batch++) {
+			LNKRange range = LNKRangeMake(batch * batchSize, batch == batchCount - 1 ? exampleCount - batch * batchSize : batchSize);
+			
+			[delegate optimizationAlgorithmWillBeginIterationWithInputVector:weights];
+			[delegate computeGradientForOptimizationAlgorithm:gradient inRange:range];
+			
+			// Multiply by alpha.
+			LNK_vsmul(gradient, UNIT_STRIDE, &alpha, gradient, UNIT_STRIDE, vector.length);
+			
+			LNK_vsub(gradient, UNIT_STRIDE, weights, UNIT_STRIDE, weights, UNIT_STRIDE, vector.length);
+		}
+	}
+	
+	free(gradient);
+}
+
 @end
 
 @implementation LNKOptimizationAlgorithmLBFGS
@@ -134,6 +169,7 @@
 
 @implementation LNKOptimizationAlgorithmCG {
 	id<LNKOptimizationAlgorithmDelegate> _delegate;
+	LNKSize _exampleCount;
 }
 
 - (instancetype)init {
@@ -154,25 +190,29 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	assert(gradientVector);
 	
 	id<LNKOptimizationAlgorithmDelegate> delegate = self->_delegate;
+	LNKRange range = LNKRangeMake(0, self->_exampleCount);
 	[delegate optimizationAlgorithmWillBeginIterationWithInputVector:inputVector];
 	const LNKFloat cost = [delegate costForOptimizationAlgorithm];
-	[delegate computeGradientForOptimizationAlgorithm:gradientVector];
+	[delegate computeGradientForOptimizationAlgorithm:gradientVector inRange:range];
 	
 	*outCost = cost;
 }
 
-- (void)runWithParameterVector:(LNKFloat *)vector length:(LNKSize)length delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
-	if (!delegate)
-		[NSException raise:NSInvalidArgumentException format:@"A delegate must be specified"];
+- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+	NSParameterAssert(vector.data);
+	NSParameterAssert(vector.length);
+	NSParameterAssert(delegate);
+	NSParameterAssert(exampleCount);
 	
 	_delegate = delegate;
+	_exampleCount = exampleCount;
 	tempSelf = self;
 	
 #ifdef DEBUG
-	int result = fmincg(_fmincg_evaluate, vector, (int)length, (int)_iterationCount);
+	int result = fmincg(_fmincg_evaluate, (LNKFloat *)vector.data, (int)vector.length, (int)_iterationCount);
 	NSAssert(result == 0 || result == 1, @"Could not minimize the function");
 #else
-	fmincg(_fmincg_evaluate, vector, (int)length, (int)_iterationCount);
+	fmincg(_fmincg_evaluate, (LNKFloat *)vector.data, (int)vector.length, (int)_iterationCount);
 #endif
 }
 

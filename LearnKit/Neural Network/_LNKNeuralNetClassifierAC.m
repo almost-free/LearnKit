@@ -22,12 +22,13 @@
 
 @implementation _LNKNeuralNetClassifierAC
 
-- (void)_computeGradientForExamplesInRange:(NSRange)range delta:(LNKFloat ***)deltas {
+- (void)_computeGradientForExamplesInRange:(LNKRange)range delta:(LNKFloat ***)deltas {
 	NSParameterAssert(range.length);
 	NSParameterAssert(deltas);
 	
 	LNKMatrix *matrix = self.matrix;
 	LNKClasses *classes = self.classes;
+	const LNKSize classesCount = classes.count;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
@@ -48,14 +49,14 @@
 	LNKFloat **activations = malloc(layerCount * sizeof(LNKFloat *));
 	
 	// Accumulate the deltas through all the examples.
-	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
+	for (LNKSize m = range.location; m < range.location + range.length; m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
 		
 		// First predict the output, then use backpropagation to find weight gradients.
 		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:activations outputVector:NULL];
 		
 		// Calculate the error for the output layer (the last array of activations).
-		LNKFloat *outputError = LNKFloatAllocAndCopy(activations[layerCount-1], unitsInThetaVector[thetaVectorCount-1]);
+		LNKFloat *outputError = LNKFloatAllocAndCopy(activations[layerCount-1], classesCount);
 		
 		// In this case, the error signal s_outputLayer = a_outputLayer - y
 		const LNKSize classIndex = [classes indexForClass:[LNKClass classWithUnsignedInteger:outputVector[m]]];
@@ -136,13 +137,11 @@
 	free(outputError);
 }
 
-- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradient {
+- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradient inRange:(LNKRange)range {
 	NSParameterAssert(gradient);
 	
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
-	LNKMatrix *matrix = self.matrix;
-	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	
 	LNKSize *unitsInThetaVector = malloc(thetaVectorCount * sizeof(LNKSize)); // Cache
@@ -157,8 +156,8 @@
 	LNKFloat ***results = malloc(processorCount * sizeof(LNKFloat **));
 	
 	// We can parallelize running FP-BP on examples.
-	[self _parallelReduceExamples:exampleCount worker:^(NSRange range, NSUInteger index) {
-		[self _computeGradientForExamplesInRange:range delta:&results[index]];
+	[self _parallelReduceExamplesInRange:range worker:^(LNKRange innerRange, NSUInteger index) {
+		[self _computeGradientForExamplesInRange:innerRange delta:&results[index]];
 	}];
 	
 	for (NSUInteger p = 0; p < processorCount; p++) {
@@ -173,11 +172,10 @@
 	free(results);
 	
 	// Need the 1/m factor.
-	const LNKFloat m = (LNKFloat)exampleCount;
+	const LNKFloat m = (LNKFloat)range.length;
 	LNKSize gradientOffset = 0;
 	
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
-	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
+	LNKOptimizationAlgorithmRegularizable *algorithm = self.algorithm;
 	
 	for (LNKSize i = 0; i < thetaVectorCount; i++) {
 		LNK_vsdiv(globalDeltas[i], UNIT_STRIDE, &m, globalDeltas[i], UNIT_STRIDE, unitsInThetaVector[i]);
@@ -187,16 +185,16 @@
 			// Delta += lambda / m * Theta
 			LNKSize rows, columns;
 			const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:i rows:&rows columns:&columns];
-			
+
 			LNKFloat *thetaVectorCopy = LNKMemoryBufferManagerAllocBlock(memoryManager, rows * columns);
 			LNKFloatCopy(thetaVectorCopy, thetaVector, rows * columns);
-			
+
 			// Ignore weights corresponding to bias units (first column).
 			LNK_vclr(thetaVectorCopy, columns, rows);
-			
+
 			const LNKFloat factor = algorithm.lambda / m;
 			LNK_vsmul(thetaVectorCopy, UNIT_STRIDE, &factor, thetaVectorCopy, UNIT_STRIDE, rows * columns);
-			
+
 			LNK_vadd(thetaVectorCopy, UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, rows * columns);
 			LNKMemoryBufferManagerFreeBlock(memoryManager, thetaVectorCopy, rows * columns);
 		}
@@ -246,9 +244,7 @@
 	LNKFloat *thetaUnrolled = LNKFloatAlloc(totalUnitCount);
 	[self _copyUnrolledThetaVectorIntoVector:thetaUnrolled];
 	
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
-	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
-	[algorithm runWithParameterVector:thetaUnrolled length:totalUnitCount delegate:self];
+	[self.algorithm runWithParameterVector:LNKVectorMakeUnsafe(thetaUnrolled, totalUnitCount) exampleCount:self.matrix.exampleCount delegate:self];
 	
 	free(thetaUnrolled);
 }
@@ -339,7 +335,7 @@
 	free(outputLayer);
 }
 
-- (LNKFloat)_evaluateCostFunctionForExamplesInRange:(NSRange)range {
+- (LNKFloat)_evaluateCostFunctionForExamplesInRange:(LNKRange)range {
 	LNKMemoryBufferManagerRef memoryManager = LNKGetCurrentMemoryBufferManager();
 	
 	LNKMatrix *matrix = self.matrix;
@@ -356,7 +352,7 @@
 	
 	LNKFloat J = 0;
 	
-	for (LNKSize m = range.location; m < NSMaxRange(range); m++) {
+	for (LNKSize m = range.location; m < range.location + range.length; m++) {
 		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputLayer;
 		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:NULL outputVector:&outputLayer];
@@ -405,7 +401,7 @@
 	LNKFloat *results = LNKFloatAlloc(processorCount);
 	
 	// We can parallelize running feed-forward on examples.
-	[self _parallelReduceExamples:exampleCount worker:^(NSRange range, NSUInteger index) {
+	[self _parallelReduceExamplesInRange:LNKRangeMake(0, exampleCount) worker:^(LNKRange range, NSUInteger index) {
 		results[index] = [self _evaluateCostFunctionForExamplesInRange:range];
 	}];
 	
@@ -446,17 +442,18 @@ static inline NSUInteger _parallelProcessorCount() {
 	return [NSProcessInfo processInfo].processorCount;
 }
 
-- (void)_parallelReduceExamples:(LNKSize)exampleCount worker:(void(^)(NSRange range, NSUInteger index))worker {
+- (void)_parallelReduceExamplesInRange:(LNKRange)exampleRange worker:(void(^)(LNKRange range, NSUInteger index))worker {
 	dispatch_queue_t queue = dispatch_queue_create(NULL, DISPATCH_QUEUE_CONCURRENT);
 	dispatch_group_t group = dispatch_group_create();
 	
 	const NSUInteger processorCount = _parallelProcessorCount();
+	const LNKSize exampleCount = exampleRange.length;
 	const LNKSize workgroupSize = exampleCount / processorCount;
 	
 	for (NSUInteger p = 0; p < processorCount; p++) {
-		NSRange range;
-		range.location = p * workgroupSize;
-		range.length = p == processorCount - 1 ? exampleCount - p * workgroupSize : workgroupSize;
+		const LNKSize location = p * workgroupSize + exampleRange.location;
+		const LNKSize length = p == processorCount - 1 ? exampleCount - p * workgroupSize : workgroupSize;
+		LNKRange range = LNKRangeMake(location, length);
 		
 		dispatch_group_async(group, queue, ^{
 			worker(range, p);

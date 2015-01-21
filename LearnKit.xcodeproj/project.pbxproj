@@ -10,6 +10,11 @@
 		C905AD8A1A1E688B004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
 		C905AD8C1A1E6907004812DD /* Numbers.h in Headers */ = {isa = PBXBuildFile; fileRef = C905AD8B1A1E6907004812DD /* Numbers.h */; };
 		C905AD8D1A1E6BDB004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
+		C906704F1A6E10F700ED09D8 /* NNMNISTTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C906704E1A6E10F700ED09D8 /* NNMNISTTests.m */; };
+		C90670551A6E113200ED09D8 /* t10k-images.idx3-ubyte in Resources */ = {isa = PBXBuildFile; fileRef = C90670511A6E113200ED09D8 /* t10k-images.idx3-ubyte */; };
+		C90670561A6E113200ED09D8 /* t10k-labels.idx1-ubyte in Resources */ = {isa = PBXBuildFile; fileRef = C90670521A6E113200ED09D8 /* t10k-labels.idx1-ubyte */; };
+		C90670571A6E113200ED09D8 /* train-images.idx3-ubyte in Resources */ = {isa = PBXBuildFile; fileRef = C90670531A6E113200ED09D8 /* train-images.idx3-ubyte */; };
+		C90670581A6E113200ED09D8 /* train-labels.idx1-ubyte in Resources */ = {isa = PBXBuildFile; fileRef = C90670541A6E113200ED09D8 /* train-labels.idx1-ubyte */; };
 		C90ACF5119E358B7002DB7C0 /* NaiveBayesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */; };
 		C90DDBC819CF1F80003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
 		C90DDBCB19CF202B003220C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DDBC719CF1F80003220C7 /* Cocoa.framework */; };
@@ -211,6 +216,11 @@
 /* Begin PBXFileReference section */
 		C905AD891A1E688B004812DD /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		C905AD8B1A1E6907004812DD /* Numbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Numbers.h; sourceTree = "<group>"; };
+		C906704E1A6E10F700ED09D8 /* NNMNISTTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NNMNISTTests.m; path = LearnKitTests/NNMNISTTests.m; sourceTree = SOURCE_ROOT; };
+		C90670511A6E113200ED09D8 /* t10k-images.idx3-ubyte */ = {isa = PBXFileReference; lastKnownFileType = file; path = "t10k-images.idx3-ubyte"; sourceTree = "<group>"; };
+		C90670521A6E113200ED09D8 /* t10k-labels.idx1-ubyte */ = {isa = PBXFileReference; lastKnownFileType = file; path = "t10k-labels.idx1-ubyte"; sourceTree = "<group>"; };
+		C90670531A6E113200ED09D8 /* train-images.idx3-ubyte */ = {isa = PBXFileReference; lastKnownFileType = file; path = "train-images.idx3-ubyte"; sourceTree = "<group>"; };
+		C90670541A6E113200ED09D8 /* train-labels.idx1-ubyte */ = {isa = PBXFileReference; lastKnownFileType = file; path = "train-labels.idx1-ubyte"; sourceTree = "<group>"; };
 		C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NaiveBayesTests.m; path = LearnKitTests/NaiveBayesTests.m; sourceTree = SOURCE_ROOT; };
 		C90DDBC719CF1F80003220C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C915806A19E8B12F00879FD5 /* ServerStatistics.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = ServerStatistics.mat; sourceTree = "<group>"; };
@@ -386,6 +396,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C90670501A6E112600ED09D8 /* MNIST */ = {
+			isa = PBXGroup;
+			children = (
+				C90670511A6E113200ED09D8 /* t10k-images.idx3-ubyte */,
+				C90670521A6E113200ED09D8 /* t10k-labels.idx1-ubyte */,
+				C90670531A6E113200ED09D8 /* train-images.idx3-ubyte */,
+				C90670541A6E113200ED09D8 /* train-labels.idx1-ubyte */,
+			);
+			name = MNIST;
+			sourceTree = "<group>";
+		};
 		C915807219E8B1C000879FD5 /* Anomaly Detector */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +554,7 @@
 				C9460E281A144AA4000E577B /* MatrixTests.m */,
 				C90ACF5019E358B7002DB7C0 /* NaiveBayesTests.m */,
 				C9AE9EF319AC2D2100A47178 /* NNTests.m */,
+				C906704E1A6E10F700ED09D8 /* NNMNISTTests.m */,
 				C93E7B0619D79C140014C67B /* PCATests.m */,
 				C971B4EE19DA6ECB0066C78B /* StructureTests.m */,
 				C93BFDEF1A354948000E5325 /* SVMTests.m */,
@@ -701,6 +723,7 @@
 		C9CBD2F619E5D69000AE71D5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				C90670501A6E112600ED09D8 /* MNIST */,
 				C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */,
 				C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */,
 				C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */,
@@ -915,11 +938,15 @@
 				C93BFDF21A354982000E5325 /* Cancer.csv in Resources */,
 				C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */,
 				C9CBD30B19E5D69000AE71D5 /* ex2data2.txt in Resources */,
+				C90670571A6E113200ED09D8 /* train-images.idx3-ubyte in Resources */,
+				C90670561A6E113200ED09D8 /* t10k-labels.idx1-ubyte in Resources */,
 				C9CBD30C19E5D69000AE71D5 /* ex3data1_theta1.dat in Resources */,
 				C9CBD31119E5D69000AE71D5 /* ex5_Xcv.dat in Resources */,
 				C9CBD30E19E5D69000AE71D5 /* ex3data1_X.dat in Resources */,
+				C90670551A6E113200ED09D8 /* t10k-images.idx3-ubyte in Resources */,
 				C9CBD31219E5D69000AE71D5 /* ex5_y.dat in Resources */,
 				C915808619E8EC9600879FD5 /* AnomalyPerformance.mat in Resources */,
+				C90670581A6E113200ED09D8 /* train-labels.idx1-ubyte in Resources */,
 				C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */,
 				C9CBD31019E5D69000AE71D5 /* ex5_X.dat in Resources */,
 				C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */,
@@ -1038,6 +1065,7 @@
 				C97FF0AC1A1D083100F6CEDA /* NSIndexSetAdditions.m in Sources */,
 				C9CBD29819E5D4AD00AE71D5 /* LNKNeuralNetClassifier.m in Sources */,
 				C9EC9A5B1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */,
+				C906704F1A6E10F700ED09D8 /* NNMNISTTests.m in Sources */,
 				C9CBD28B19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
 				C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */,
 				C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,

@@ -8,7 +8,7 @@
 #import "LNKClassifier.h"
 #import "LNKNeuralNetLayer.h"
 
-/// For neural network classifiers, the only supported algorithm is CG.
+/// For neural network classifiers, the only supported algorithms are CG and stochastic gradient descent.
 /// Predicted values are of type LNKClass.
 @interface LNKNeuralNetClassifier : LNKClassifier
 

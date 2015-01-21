@@ -37,6 +37,11 @@ typedef uint64_t LNKSize;
 
 #define LNKFloatAllocAndCopy(data, size) LNKFloatCopy(LNKFloatAlloc(size), data, size)
 
+typedef struct {
+	const LNKSize location, length;
+} LNKRange;
+
+#define LNKRangeMake(location, length) ((LNKRange) { location, length })
 
 typedef struct {
 	const LNKFloat *data;
