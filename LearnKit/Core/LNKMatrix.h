@@ -49,10 +49,10 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (void)clipExampleCountTo:(LNKSize)exampleCount;
 
 /// Returns a copy of the current matrix with its rows reshuffled.
-- (LNKMatrix *)shuffledMatrix;
+- (LNKMatrix *)copyShuffledMatrix;
 
 /// Returns a copy of the current matrix with `exampleCount` of its rows reshuffled.
-- (LNKMatrix *)shuffledSubmatrixWithExampleCount:(LNKSize)exampleCount;
+- (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)exampleCount;
 
 - (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount;
 

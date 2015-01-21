@@ -242,15 +242,15 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	_exampleCount = exampleCount;
 }
 
-- (LNKMatrix *)shuffledMatrix {
-	return [self shuffledSubmatrixWithExampleCount:_exampleCount];
+- (LNKMatrix *)copyShuffledMatrix {
+	return [self copyShuffledSubmatrixWithExampleCount:_exampleCount];
 }
 
-- (LNKMatrix *)shuffledSubmatrixWithExampleCount:(LNKSize)exampleCount {
+- (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)exampleCount {
 	if (exampleCount > _exampleCount)
 		[NSException raise:NSInvalidArgumentException format:@"The number of examples in the submatrix cannot be greater than the number of examples in the current matrix"];
 	
-	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKSize *indices = malloc(sizeof(LNKSize) * _exampleCount);
 		
 		for (LNKSize index = 0; index < _exampleCount; index++) {
@@ -278,8 +278,6 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		
 		return YES;
 	}];
-	
-	return [submatrix autorelease];
 }
 
 - (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount {
