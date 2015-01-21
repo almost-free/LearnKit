@@ -33,7 +33,7 @@ typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 
 @protocol LNKOptimizationAlgorithmDelegate
 
-- (void)optimizationAlgorithmWillBeginIterationWithInputVector:(const LNKFloat *)inputVector;
+- (void)optimizationAlgorithmWillBeginWithInputVector:(const LNKFloat *)inputVector;
 - (LNKFloat)costForOptimizationAlgorithm;
 - (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradient inRange:(LNKRange)range;
 

@@ -144,7 +144,7 @@
 		for (NSUInteger batch = 0; batch < batchCount; batch++) {
 			LNKRange range = LNKRangeMake(batch * batchSize, batch == batchCount - 1 ? exampleCount - batch * batchSize : batchSize);
 			
-			[delegate optimizationAlgorithmWillBeginIterationWithInputVector:weights];
+			[delegate optimizationAlgorithmWillBeginWithInputVector:weights];
 			[delegate computeGradientForOptimizationAlgorithm:gradient inRange:range];
 			
 			// Multiply by alpha.
@@ -191,7 +191,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	
 	id<LNKOptimizationAlgorithmDelegate> delegate = self->_delegate;
 	LNKRange range = LNKRangeMake(0, self->_exampleCount);
-	[delegate optimizationAlgorithmWillBeginIterationWithInputVector:inputVector];
+	[delegate optimizationAlgorithmWillBeginWithInputVector:inputVector];
 	const LNKFloat cost = [delegate costForOptimizationAlgorithm];
 	[delegate computeGradientForOptimizationAlgorithm:gradientVector inRange:range];
 	

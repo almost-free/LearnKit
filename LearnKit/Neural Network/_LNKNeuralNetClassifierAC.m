@@ -249,7 +249,7 @@
 	free(thetaUnrolled);
 }
 
-- (void)optimizationAlgorithmWillBeginIterationWithInputVector:(const LNKFloat *)inputVector {
+- (void)optimizationAlgorithmWillBeginWithInputVector:(const LNKFloat *)inputVector {
 	// Unroll the inputVector into our Theta vectors.
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	LNKSize offset = 0;
