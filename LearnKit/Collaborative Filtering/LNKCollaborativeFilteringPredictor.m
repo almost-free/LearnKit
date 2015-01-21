@@ -220,7 +220,7 @@
 	return unrolledExampleCount * _featureCount;
 }
 
-- (void)optimizationAlgorithmWillBeginIterationWithInputVector:(const LNKFloat *)inputVector {
+- (void)optimizationAlgorithmWillBeginWithInputVector:(const LNKFloat *)inputVector {
 	LNKFloatCopy(_unrolledGradient, inputVector, [self _totalUnitCount]);
 }
 
@@ -228,7 +228,8 @@
 	return [self _evaluateCostFunction];
 }
 
-- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradientVector {
+- (void)computeGradientForOptimizationAlgorithm:(LNKFloat *)gradientVector inRange:(LNKRange)range {
+#pragma unused(range)
 	const LNKFloat *gradient = [self _computeGradient];
 	LNKFloatCopy(gradientVector, gradient, [self _totalUnitCount]);
 	free((void *)gradient);
