@@ -112,7 +112,7 @@
 	
 	[classifier train];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Poor accuracy");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.95, @"Poor accuracy");
 	[classifier release];
 }
 
