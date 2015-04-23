@@ -194,7 +194,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
 	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, exampleCount);
 	
 	_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, exampleCount, columnCount, regularizationEnabled, lambda, NULL);
 	XCTAssertEqualWithAccuracy(workgroupCC[0], -15.3030, DACCURACY, @"Incorrect gradient");

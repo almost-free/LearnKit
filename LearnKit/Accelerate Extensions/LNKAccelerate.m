@@ -7,6 +7,23 @@
 
 #import "LNKAccelerate.h"
 
+void LNK_mtrans(const LNKFloat *source, LNKFloat *dest, vDSP_Length N, vDSP_Length M) {
+#define BLOCK_SIZE 16
+	
+	for (vDSP_Length i = 0; i < N; i += BLOCK_SIZE) {
+		for (vDSP_Length j = 0; j < M; j += BLOCK_SIZE) {
+			const vDSP_Length imax = MIN(i + BLOCK_SIZE, N);
+			const vDSP_Length jmax = MIN(j + BLOCK_SIZE, M);
+			
+			for (vDSP_Length k = i; k < imax; ++k) {
+				for (vDSP_Length l = j; l < jmax; ++l) {
+					dest[l + k*M] = source[k + l*N];
+				}
+			}
+		}
+	}
+}
+
 void LNK_minvert(LNKFloat *matrix, LNKSize n) {
 	assert(matrix);
 	assert(n);

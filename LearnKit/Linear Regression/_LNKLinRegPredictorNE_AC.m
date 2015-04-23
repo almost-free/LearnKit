@@ -22,7 +22,7 @@
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	
 	LNKFloat *transpose = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transpose, UNIT_STRIDE, columnCount, exampleCount);
+	LNK_mtrans(matrixBuffer, transpose, columnCount, exampleCount);
 	
 	LNKFloat *square = LNKFloatAlloc(columnCount * columnCount);
 	LNK_mmul(transpose, UNIT_STRIDE, matrixBuffer, UNIT_STRIDE, square, UNIT_STRIDE, columnCount, columnCount, exampleCount);

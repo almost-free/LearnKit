@@ -62,7 +62,7 @@
 	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
 	
 	LNKFloat *thetaTranspose = LNKFloatAlloc(userCount * _featureCount);
-	LNK_mtrans(thetaMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, _featureCount, userCount);
+	LNK_mtrans(thetaMatrix, thetaTranspose, _featureCount, userCount);
 	
 	// 1/2 * sum((((X * Theta') - Y) ^ 2) * R)
 	const LNKSize resultSize = exampleCount * userCount;

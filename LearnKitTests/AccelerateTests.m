@@ -36,4 +36,16 @@
 	XCTAssertEqualWithAccuracy(sample[1], 0, DACCURACY, @"Invalid sigmoid application");
 }
 
+- (void)testTiledMatrixTranspose {
+	// 2x4
+	LNKFloat data[8] = { 1, 2, 3, 4,
+		                 5, 6, 7, 8 };
+	LNKFloat *result = LNKFloatAlloc(8);
+	LNK_mtrans(data, result, 4, 2);
+	
+	XCTAssertEqualWithAccuracy(result[0], 1, DACCURACY);
+	XCTAssertEqualWithAccuracy(result[1], 5, DACCURACY);
+	XCTAssertEqualWithAccuracy(result[2], 2, DACCURACY);
+}
+
 @end

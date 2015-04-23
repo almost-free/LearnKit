@@ -177,7 +177,7 @@ typedef struct {
 	[self _createThetaVectorForLayerAtIndex:index rows:rows columns:columns];
 	
 	if (transpose)
-		LNK_mtrans(thetaVector, UNIT_STRIDE, _thetaVectorBuckets[index]->thetaVector, UNIT_STRIDE, rows, columns);
+		LNK_mtrans(thetaVector, _thetaVectorBuckets[index]->thetaVector, rows, columns);
 	else
 		LNKFloatCopy(_thetaVectorBuckets[index]->thetaVector, thetaVector, rows * columns);
 }

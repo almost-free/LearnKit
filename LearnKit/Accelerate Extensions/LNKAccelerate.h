@@ -24,7 +24,6 @@
 #define LNK_mmov		vDSP_mmovD
 #define LNK_vmul		vDSP_vmulD
 #define LNK_vsmul		vDSP_vsmulD
-#define LNK_mtrans		vDSP_mtransD
 #define LNK_vneg		vDSP_vnegD
 #define LNK_svdiv		vDSP_svdivD
 #define LNK_vsum		vDSP_sveD
@@ -58,7 +57,6 @@
 #define LNK_mmov		vDSP_mmov
 #define LNK_vmul		vDSP_vmul
 #define LNK_vsmul		vDSP_vsmul
-#define LNK_mtrans		vDSP_mtrans
 #define LNK_vneg		vDSP_vneg
 #define LNK_svdiv		vDSP_svdiv
 #define LNK_vsum		vDSP_sve
@@ -80,6 +78,8 @@
 #endif
 
 /* In-place operations */
+
+extern void LNK_mtrans(const LNKFloat *source, LNKFloat *dest, vDSP_Length N, vDSP_Length M);
 
 /// Inverts a matrix of dimensions n * n.
 extern void LNK_minvert(LNKFloat *matrix, LNKSize n);

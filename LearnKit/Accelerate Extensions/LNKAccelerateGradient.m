@@ -77,7 +77,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
 	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, exampleCount);
 	
 	const BOOL stochastic = [algorithm isKindOfClass:[LNKOptimizationAlgorithmStochasticGradientDescent class]];
 	
@@ -206,7 +206,7 @@ void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regular
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
 	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrix.matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	LNK_mtrans(matrix.matrixBuffer, transposeMatrix, columnCount, exampleCount);
 	
 	LBFGSContext *context = [[LBFGSContext alloc] init];
 	context.matrix = matrix;

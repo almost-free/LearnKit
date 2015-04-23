@@ -33,7 +33,7 @@
 	
 	// S = 1/m X' X
 	LNKFloat *transposeMatrix = LNKFloatAlloc(columnCount * exampleCount);
-	LNK_mtrans(matrixBuffer, UNIT_STRIDE, transposeMatrix, UNIT_STRIDE, columnCount, exampleCount);
+	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, exampleCount);
 	
 	LNK_mmul(transposeMatrix, UNIT_STRIDE, matrixBuffer, UNIT_STRIDE, sigmaMatrix, UNIT_STRIDE, columnCount, columnCount, exampleCount);
 	free(transposeMatrix);
