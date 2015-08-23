@@ -122,6 +122,7 @@
 																								  featureCount:featureCount];
 	[indicatorMatrix release];
 	[outputMatrix release];
+	[algorithm release];
 	
 	[predictor train];
 	
