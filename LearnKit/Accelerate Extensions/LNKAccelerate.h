@@ -36,6 +36,7 @@
 #define LNK_sqrt		sqrt
 #define LNK_pow			pow
 #define LNK_exp			exp
+#define LNKLog			log
 #define LNKLog2			log2
 #define LNK_strtoflt(str,len)	strtod((str), (char **)((str) + (len)))
 
@@ -69,6 +70,7 @@
 #define LNK_sqrt		sqrtf
 #define LNK_pow			powf
 #define LNK_exp			expf
+#define LNKLog			logf
 #define LNKLog2			log2f
 #define LNK_strtoflt(str,len)	strtof((str), (char **)((str) + (len)))
 

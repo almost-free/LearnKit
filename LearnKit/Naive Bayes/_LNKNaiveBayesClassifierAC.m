@@ -85,21 +85,29 @@
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
 	if (!featureVector.data || !featureVector.length)
 		[NSException raise:NSGenericException format:@"The feature vector must have a non-zero length"];
-	
+
 	LNKClasses *classes = self.classes;
 	const LNKSize columnCount = self.matrix.columnCount;
+	const BOOL computesSumOfLogarithms = self.computesSumOfLogarithms;
 	LNKSize classIndex = 0;
 	
 	LNKClass *bestClass = nil;
 	LNKFloat bestLikelihood = -1;
 	
 	for (LNKClass *class in classes) {
-		LNKFloat expectation = _priorProbabilities[classIndex];
+		// Sum of logarithms:
+		//   log(P(c)) + log(P(f_1 | c)) + log(P(f_2 | c)) ... + log(P(f_3 | c))
+		// Otherwise:
+		//   P(c) * P(f_1 | c) * P(f_2 | c) ... P(f_3 | c)
+		LNKFloat expectation = computesSumOfLogarithms ? LNKLog(_priorProbabilities[classIndex]) : _priorProbabilities[classIndex];
 		
 		for (LNKSize column = 0; column < columnCount; column++) {
 			const LNKSize featureIndex = featureVector.data[column];
-			
-			expectation *= _featureProbabilities[classIndex * columnCount + column][featureIndex];
+
+			if (computesSumOfLogarithms)
+				expectation += LNKLog(_featureProbabilities[classIndex * columnCount + column][featureIndex]);
+			else
+				expectation *= _featureProbabilities[classIndex * columnCount + column][featureIndex];
 		}
 		
 		if (expectation > bestLikelihood) {
