@@ -44,6 +44,7 @@
 	LNKSize classIndex = 0;
 	
 	for (LNKClass *class in classes) {
+		// P(c) = # of occurences of c / total number of examples
 		const LNKSize outputValue = class.unsignedIntegerValue;
 		LNKSize hits = 0;
 		
