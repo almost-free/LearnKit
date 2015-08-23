@@ -20,11 +20,11 @@ typedef NS_ENUM(NSUInteger, LNKImplementationType) {
 
 #if USE_DOUBLE_PRECISION
 typedef double LNKFloat;
-#define LNKFloatMin	DBL_MIN
+#define LNKFloatMin	-DBL_MAX
 #define LNKFloatMax	DBL_MAX
 #else
 typedef float LNKFloat;
-#define LNKFloatMin	FLT_MIN
+#define LNKFloatMin	-FLT_MAX
 #define LNKFloatMax	FLT_MAX
 #endif
 

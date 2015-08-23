@@ -31,7 +31,9 @@
 	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *outputVector = matrix.outputVector;
-	
+	const BOOL performsLaplacianSmoothing = self.performsLaplacianSmoothing;
+	const NSUInteger laplacianSmoothingFactor = self.laplacianSmoothingFactor;
+
 	if (_priorProbabilities)
 		free(_priorProbabilities);
 	
@@ -53,13 +55,21 @@
 				hits++;
 		}
 
-		_priorProbabilities[classIndex] = (LNKFloat)hits / exampleCount;
+		NSUInteger adjustedDenominator = 0;
+
+		if (performsLaplacianSmoothing) {
+			hits += laplacianSmoothingFactor;
+			adjustedDenominator = laplacianSmoothingFactor * classCount;
+		}
+
+		_priorProbabilities[classIndex] = (LNKFloat)hits / (exampleCount + adjustedDenominator);
 
 		// Calculate P(f_(x,n) | c) for all values n of feature/column x
 		for (LNKSize column = 0; column < columnCount; column++) {
 			NSArray *values = [columnsToValues pointerAtIndex:column];
+			const NSUInteger valuesCount = values.count;
 			
-			LNKFloat *valuesVector = LNKFloatCalloc(values.count);
+			LNKFloat *valuesVector = LNKFloatCalloc(valuesCount);
 			_featureProbabilities[classIndex * columnCount + column] = valuesVector;
 			
 			NSUInteger valueIndex = 0;
@@ -75,8 +85,15 @@
 							valuesVector[valueIndex]++;
 					}
 				}
+
+				adjustedDenominator = 0;
+
+				if (performsLaplacianSmoothing) {
+					valuesVector[valueIndex] += laplacianSmoothingFactor;
+					adjustedDenominator = valuesCount * laplacianSmoothingFactor;
+				}
 				
-				valuesVector[valueIndex] /= (LNKFloat)hits;
+				valuesVector[valueIndex] /= (LNKFloat)(hits + adjustedDenominator);
 				valueIndex++;
 			}
 		}
@@ -86,6 +103,10 @@
 }
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
+	return [self predictValueForFeatureVector:featureVector probability:NULL];
+}
+
+- (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(LNKFloat *)outProbability {
 	if (!featureVector.data || !featureVector.length)
 		[NSException raise:NSGenericException format:@"The feature vector must have a non-zero length"];
 
@@ -93,34 +114,46 @@
 	const LNKSize columnCount = self.matrix.columnCount;
 	const BOOL computesSumOfLogarithms = self.computesSumOfLogarithms;
 	LNKSize classIndex = 0;
-	
+
 	LNKClass *bestClass = nil;
-	LNKFloat bestLikelihood = -1;
-	
+	LNKFloat bestLikelihood = LNKFloatMin;
+
 	for (LNKClass *class in classes) {
 		// Sum of logarithms:
 		//   log(P(c)) + log(P(f_1 | c)) + log(P(f_2 | c)) ... + log(P(f_3 | c))
 		// Otherwise:
 		//   P(c) * P(f_1 | c) * P(f_2 | c) ... P(f_3 | c)
-		LNKFloat expectation = computesSumOfLogarithms ? LNKLog(_priorProbabilities[classIndex]) : _priorProbabilities[classIndex];
-		
+		const LNKFloat priorProbability = _priorProbabilities[classIndex];
+		LNKFloat expectation = computesSumOfLogarithms ? LNKLog(priorProbability) : priorProbability;
+
 		for (LNKSize column = 0; column < columnCount; column++) {
 			const LNKSize featureIndex = featureVector.data[column];
+			const LNKFloat probability = _featureProbabilities[classIndex * columnCount + column][featureIndex];
+
+			if (probability == 0) {
+				expectation = LNKFloatMin;
+				break;
+			}
 
 			if (computesSumOfLogarithms)
-				expectation += LNKLog(_featureProbabilities[classIndex * columnCount + column][featureIndex]);
+				expectation += LNKLog(probability);
 			else
-				expectation *= _featureProbabilities[classIndex * columnCount + column][featureIndex];
+				expectation *= probability;
 		}
-		
+
 		if (expectation > bestLikelihood) {
 			bestLikelihood = expectation;
 			bestClass = class;
 		}
-		
+
 		classIndex++;
 	}
-	
+
+	if (outProbability) {
+		const LNKFloat probability = computesSumOfLogarithms ? LNK_exp(bestLikelihood) : bestLikelihood;
+		*outProbability = bestClass ? probability : 0;
+	}
+
 	return bestClass;
 }
 

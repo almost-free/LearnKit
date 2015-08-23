@@ -17,7 +17,16 @@
 /// than the product of probabilities. The default is `YES`.
 @property (nonatomic) BOOL computesSumOfLogarithms;
 
+/// Laplacian Smoothing should be enabled whenever probabilities can be zero to prevent calculation
+/// errors. The default is `YES`.
+@property (nonatomic) BOOL performsLaplacianSmoothing;
+
+/// This is only applicable when `performsLaplacianSmoothing` is set to `YES`. The default is 1.
+@property (nonatomic) NSUInteger laplacianSmoothingFactor;
+
 /// Prior to training, all possible value types must be registered for each column.
 - (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex;
+
+- (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(LNKFloat *)outProbability;
 
 @end

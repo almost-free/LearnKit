@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C904FC1C1B7AE26200276F73 /* FluChills.csv in Resources */ = {isa = PBXBuildFile; fileRef = C904FC1B1B7AE26200276F73 /* FluChills.csv */; };
 		C905AD8A1A1E688B004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
 		C905AD8C1A1E6907004812DD /* Numbers.h in Headers */ = {isa = PBXBuildFile; fileRef = C905AD8B1A1E6907004812DD /* Numbers.h */; };
 		C905AD8D1A1E6BDB004812DD /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C905AD891A1E688B004812DD /* ScriptingBridge.framework */; };
@@ -214,6 +215,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C904FC1B1B7AE26200276F73 /* FluChills.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FluChills.csv; sourceTree = "<group>"; };
 		C905AD891A1E688B004812DD /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		C905AD8B1A1E6907004812DD /* Numbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Numbers.h; sourceTree = "<group>"; };
 		C906704E1A6E10F700ED09D8 /* NNMNISTTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NNMNISTTests.m; path = LearnKitTests/NNMNISTTests.m; sourceTree = SOURCE_ROOT; };
@@ -744,6 +746,7 @@
 				C9CBD30419E5D69000AE71D5 /* ex7data1_X.dat */,
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
+				C904FC1B1B7AE26200276F73 /* FluChills.csv */,
 				C92E45191A15396400B6E33F /* MovieIDs.txt */,
 				C9860BE01A0B4F04009FADAE /* Movies_R.mat */,
 				C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */,
@@ -950,6 +953,7 @@
 				C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */,
 				C9CBD31019E5D69000AE71D5 /* ex5_X.dat in Resources */,
 				C915806B19E8B12F00879FD5 /* ServerStatistics.mat in Resources */,
+				C904FC1C1B7AE26200276F73 /* FluChills.csv in Resources */,
 				C97FF0B01A1D116600F6CEDA /* WillWait.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

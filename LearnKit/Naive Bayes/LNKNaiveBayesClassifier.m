@@ -33,6 +33,8 @@
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
 	if (self) {
 		_computesSumOfLogarithms = YES;
+		_performsLaplacianSmoothing = YES;
+		_laplacianSmoothingFactor = 1;
 	}
 	return self;
 }
@@ -56,6 +58,14 @@
 
 - (NSPointerArray *)_columnsToValues {
 	return _columnsToValues;
+}
+
+- (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(LNKFloat *)outProbability {
+#pragma unused(featureVector)
+#pragma unused(outProbability)
+
+	[NSException raise:NSInternalInconsistencyException format:@"%s must be overriden by subclasses", __PRETTY_FUNCTION__];
+	return nil;
 }
 
 - (void)dealloc {
