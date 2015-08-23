@@ -1,0 +1,3 @@
+Naïve Bayes classifier:
+- Added support for Laplacian smoothing
+- Added support for sum of logarithms computations to prevent underflows when probabilities get small
