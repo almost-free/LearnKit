@@ -64,7 +64,7 @@ void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n) {
 	assert(outVector);
 	assert(n);
 	
-	// sigmoid(vector) (1 - sigmoid(vector))
+	// vector (1 - vector) = vector - vector^2
 	LNKFloat *vectorSquared = LNKFloatAlloc(n);
 	LNK_vsq(vector, UNIT_STRIDE, vectorSquared, UNIT_STRIDE, n);
 	
