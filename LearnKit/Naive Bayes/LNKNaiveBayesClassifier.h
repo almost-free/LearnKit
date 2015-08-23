@@ -14,7 +14,7 @@
 @interface LNKNaiveBayesClassifier : LNKClassifier
 
 /// To prevent underflow issues, the sum of the logarithms of probabilities can be maximized rather
-/// than the product of probabilities. The default is YES.
+/// than the product of probabilities. The default is `YES`.
 @property (nonatomic) BOOL computesSumOfLogarithms;
 
 /// Prior to training, all possible value types must be registered for each column.
