@@ -83,7 +83,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	
 	void (^gradientIteration)(LNKFloat alpha) = ^(LNKFloat alpha) {
 		if (stochastic) {
-			LNKMatrix *randomMatrix = [matrix shuffledMatrix];
+			LNKMatrix *randomMatrix = [matrix copyShuffledMatrix];
 			const LNKFloat *randomMatrixBuffer = randomMatrix.matrixBuffer;
 			const LNKSize stepCount = ((LNKOptimizationAlgorithmStochasticGradientDescent *)algorithm).stepCount;
 			
