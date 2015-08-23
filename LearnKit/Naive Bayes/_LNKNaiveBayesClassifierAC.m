@@ -64,13 +64,14 @@
 			NSUInteger valueIndex = 0;
 			
 			for (NSNumber *value in values) {
+				const NSUInteger valueUnboxed = value.unsignedIntegerValue;
+
 				for (LNKSize example = 0; example < exampleCount; example++) {
 					if (outputVector[example] == outputValue) {
 						const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
 						
-						if (exampleRow[column] == value.unsignedIntegerValue) {
+						if (exampleRow[column] == valueUnboxed)
 							valuesVector[valueIndex]++;
-						}
 					}
 				}
 				
