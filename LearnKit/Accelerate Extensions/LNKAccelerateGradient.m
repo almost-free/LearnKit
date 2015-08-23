@@ -103,6 +103,8 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 				LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
 				LNK_vsub(workgroupCC, UNIT_STRIDE, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
 			}
+
+			[randomMatrix release];
 		}
 		else {
 			// Batch gradient descent:
