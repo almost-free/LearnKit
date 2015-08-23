@@ -52,9 +52,10 @@
 			if (outputVector[example] == outputValue)
 				hits++;
 		}
-		
+
 		_priorProbabilities[classIndex] = (LNKFloat)hits / exampleCount;
-		
+
+		// Calculate P(f_(x,n) | c) for all values n of feature/column x
 		for (LNKSize column = 0; column < columnCount; column++) {
 			NSArray *values = [columnsToValues pointerAtIndex:column];
 			
