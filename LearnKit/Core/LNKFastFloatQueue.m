@@ -21,7 +21,7 @@ struct _LNKFastFloatQueue {
 };
 
 LNKFastFloatQueueRef LNKFastFloatQueueCreate(LNKSize capacity) {
-	assert(capacity);
+	NSCAssert(capacity, @"The capacity of the float queue must be greater than 0");
 	
 	// Zeros out the head and tail buckets and size for us.
 	LNKFastFloatQueueRef queue = calloc(sizeof(LNKFastFloatQueue), 1);
@@ -44,8 +44,8 @@ void LNKFastFloatQueueFree(LNKFastFloatQueueRef queue) {
 }
 
 void LNKFastFloatQueueEnqueue(LNKFastFloatQueueRef queue, LNKFloat value) {
-	assert(queue);
-	assert(queue->size < queue->capacity);
+	NSCAssert(queue, @"The queue must not be NULL");
+	NSCAssert(queue->size < queue->capacity, @"The size of the queue must be within bounds");
 	
 	struct _LNKFastFloatQueueBucket *freeBucket = queue->reuseQueue;
 	queue->reuseQueue = freeBucket->next;
@@ -66,8 +66,8 @@ void LNKFastFloatQueueEnqueue(LNKFastFloatQueueRef queue, LNKFloat value) {
 }
 
 LNKFloat LNKFastFloatQueueDequeue(LNKFastFloatQueueRef queue) {
-	assert(queue);
-	assert(queue->size);
+	NSCAssert(queue, @"The queue must not be NULL");
+	NSCAssert(queue->size, @"The size of the queue must be greater than 0");
 	
 	struct _LNKFastFloatQueueBucket *oldestBucket = queue->head;
 	LNKFloat value = oldestBucket->value;
@@ -87,7 +87,7 @@ LNKFloat LNKFastFloatQueueDequeue(LNKFastFloatQueueRef queue) {
 }
 
 LNKSize LNKFastFloatQueueSize(LNKFastFloatQueueRef queue) {
-	assert(queue);
+	NSCAssert(queue, @"The queue must not be NULL");
 	return queue->size;
 }
 
