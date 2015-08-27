@@ -314,7 +314,7 @@
 			outputVector[0] = 1;
 		
 		if (currentInputLayer != featureVector.data) {
-			assert(layerIndex >= 1);
+			NSCAssert(layerIndex >= 1, @"The layer index must be greater than 0");
 			free((void *)currentInputLayer);
 		}
 		

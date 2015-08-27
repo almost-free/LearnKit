@@ -25,8 +25,8 @@ void LNK_mtrans(const LNKFloat *source, LNKFloat *dest, vDSP_Length N, vDSP_Leng
 }
 
 void LNK_minvert(LNKFloat *matrix, LNKSize n) {
-	assert(matrix);
-	assert(n);
+	NSCAssert(matrix, @"The matrix must not be NULL");
+	NSCAssert(n, @"The length must be greater than 0");
 	
 	__CLPK_integer *pivot = malloc(n * n * sizeof(__CLPK_integer));
 	__CLPK_integer error = 0;
@@ -46,8 +46,8 @@ void LNK_minvert(LNKFloat *matrix, LNKSize n) {
 }
 
 void LNK_vsigmoid(LNKFloat *vector, LNKSize n) {
-	assert(vector);
-	assert(n);
+	NSCAssert(vector, @"The vector must not be NULL");
+	NSCAssert(n, @"The length must be greater than 0");
 	
 	const int np = (int)n;
 	const LNKFloat one = 1;
@@ -60,9 +60,9 @@ void LNK_vsigmoid(LNKFloat *vector, LNKSize n) {
 }
 
 void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n) {
-	assert(vector);
-	assert(outVector);
-	assert(n);
+	NSCAssert(vector, @"The vector must not be NULL");
+	NSCAssert(outVector, @"The out vector must not be NULL");
+	NSCAssert(n, @"The length must be greater than 0");
 	
 	// vector (1 - vector) = vector - vector^2
 	LNKFloat *vectorSquared = LNKFloatAlloc(n);
@@ -73,9 +73,9 @@ void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n) {
 }
 
 LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample) {
-	assert(vector);
-	assert(workgroup);
-	assert(n);
+	NSCAssert(vector, @"The vector must not be NULL");
+	NSCAssert(workgroup, @"The workgroup must not be NULL");
+	NSCAssert(n, @"The length must be greater than 0");
 	
 	const LNKFloat minusMean = -mean;
 	LNK_vsadd(vector, stride, &minusMean, workgroup, UNIT_STRIDE, n);
@@ -89,8 +89,8 @@ LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *wo
 }
 
 LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n) {
-	assert(matrix);
-	assert(n);
+	NSCAssert(matrix, @"The matrix must not be NULL");
+	NSCAssert(n, @"The length must be greater than 0");
 	
 	__CLPK_integer np = (__CLPK_integer)n;
 	__CLPK_integer error = 0;
