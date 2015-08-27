@@ -17,7 +17,7 @@ struct _LNKFastArray {
 };
 
 LNKFastArrayRef LNKFastArrayCreate(LNKSize elementWidth) {
-	assert(elementWidth);
+	NSCAssert(elementWidth, @"The element width must be greater than 0");
 	
 	LNKFastArrayRef array = malloc(sizeof(LNKFastArray));
 	array->capacity = DEFAULT_COUNT;
@@ -36,7 +36,7 @@ void LNKFastArrayFree(LNKFastArrayRef array) {
 
 void LNKFastArrayAddElement(LNKFastArrayRef array, void *bytes) {
 	NSCAssert(array, @"The array must not be NULL");
-	assert(bytes);
+	NSCAssert(bytes, @"The bytes buffer must not be NULL");
 	
 	if (array->count == array->capacity) {
 		array->capacity *= 2;
@@ -50,7 +50,7 @@ void LNKFastArrayAddElement(LNKFastArrayRef array, void *bytes) {
 
 void *LNKFastArrayElementAtIndex(LNKFastArrayRef array, LNKSize index) {
 	NSCAssert(array, @"The array must not be NULL");
-	assert(index < array->count);
+	NSCAssert(index < array->count, @"The index must be within bounds");
 	
 	char *bytes = (char *)array->buffer;
 	return &bytes[index * array->elementWidth];

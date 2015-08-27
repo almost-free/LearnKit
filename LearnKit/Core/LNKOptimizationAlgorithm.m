@@ -186,10 +186,10 @@ static LNKOptimizationAlgorithmCG *tempSelf = nil;
 
 static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat *gradientVector) {
 	LNKOptimizationAlgorithmCG *self = tempSelf;
-	assert(self);
-	assert(inputVector);
-	assert(outCost);
-	assert(gradientVector);
+	NSCAssert(self, @"The self reference must not be nil");
+	NSCAssert(inputVector, @"The input vector must not be NULL");
+	NSCAssert(outCost, @"The output cost vector must not be NULL");
+	NSCAssert(gradientVector, @"The gradient vector must not be NULL");
 	
 	id<LNKOptimizationAlgorithmDelegate> delegate = self->_delegate;
 	LNKRange range = LNKRangeMake(0, self->_exampleCount);
