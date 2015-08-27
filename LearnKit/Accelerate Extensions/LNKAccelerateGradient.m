@@ -58,9 +58,9 @@ void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *tran
 }
 
 void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimizationAlgorithmGradientDescent *algorithm, LNKCostFunction costFunction) {
-	assert(matrix);
-	assert(thetaVector);
-	assert(algorithm);
+	NSCAssert(matrix, @"The matrix must not be NULL");
+	NSCAssert(thetaVector, @"The theta vector must not be NULL");
+	NSCAssert(algorithm, @"The algorithm must not be nil");
 	
 	const LNKSize iterationCount = algorithm.iterationCount;
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
@@ -169,13 +169,13 @@ static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t
 #pragma unused(step)
 	
 	LBFGSContext *context = (__bridge LBFGSContext *)instance;
-	assert(context);
+	NSCAssert(context, @"The context must not be nil");
 	
 	LNKMatrix *matrix = context.matrix;
 	LNKFloat *workgroupCC = context.workgroupCC;
 	LNKFloat *workgroupCC2 = context.workgroupCC2;
 	const LNKSize columnCount = matrix.columnCount;
-	assert(columnCount == (LNKSize)n);
+	NSCAssert(columnCount == (LNKSize)n, @"Size mismatch");
 	
 	_LNKComputeBatchGradient(matrix.matrixBuffer, context.transposeMatrix, x, matrix.outputVector, context.workgroupEC, workgroupCC, workgroupCC2, matrix.exampleCount, columnCount, context.regularizationEnabled, context.lambda, context.hFunction);
 	
@@ -185,11 +185,13 @@ static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t
 }
 
 void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regularizationEnabled, LNKFloat lambda, LNKHFunction hFunction, LNKCostFunction costFunction) {
-	assert(matrix);
-	assert(thetaVector);
-	assert(costFunction);
-	
-	assert(sizeof(lbfgsfloatval_t) == sizeof(LNKFloat));
+	NSCAssert(matrix, @"The matrix must not be NULL");
+	NSCAssert(thetaVector, @"The theta vector must not be NULL");
+	NSCAssert(hFunction, @"The h function must not be nil");
+	NSCAssert(costFunction, @"The cost function must not be nil");
+
+	//TODO: should this be a static assert?
+	NSCAssert(sizeof(lbfgsfloatval_t) == sizeof(LNKFloat), @"Size mismatch");
 	
 	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize columnCount = matrix.columnCount;
@@ -224,7 +226,7 @@ void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regular
 	
 	int status = lbfgs((int)columnCount, theta, NULL, _LNK_lbfgs_evaluate, NULL, (__bridge void *)context, &parameters);
 	[context release];
-	assert(status == 0);
+	NSCAssert(status == 0, @"LBFGS optimization failed");
 	
 	free(workgroupEC);
 	free(workgroupCC);
