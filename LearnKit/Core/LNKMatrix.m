@@ -28,7 +28,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	else if (type == LNKValueTypeNone)
 		return 0;
 	
-	assert(0); // Invalid type
+	NSCAssert(0, @"Invalid type - not reached");
 }
 
 - (instancetype)init {

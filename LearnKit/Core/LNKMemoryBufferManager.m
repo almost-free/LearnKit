@@ -37,7 +37,7 @@ LNKMemoryBufferManagerRef LNKMemoryBufferManagerCreate() {
 }
 
 void LNKMemoryBufferManagerFree(LNKMemoryBufferManagerRef manager) {
-	assert(manager);
+	NSCAssert(manager, @"The manager must not be NULL");
 	
 	struct _LNKMemoryBufferBucket **pages = manager->pages;
 	struct _LNKMemoryBufferBucket *bucket = manager->head;
@@ -55,8 +55,8 @@ void LNKMemoryBufferManagerFree(LNKMemoryBufferManagerRef manager) {
 LNKFloat *LNKMemoryBufferManagerAllocBlock(LNKMemoryBufferManagerRef manager, LNKSize size) {
 	return malloc(size * sizeof(LNKFloat));
 	
-	assert(manager);
-	assert(size);
+	NSCAssert(manager, @"The manager must not be NULL");
+	NSCAssert(size, @"The size must be greater than 0");
 	
 	// We don't support 64-bit sizes.
 	if (size > MAX_SUPPORTED_SIZE)
@@ -95,9 +95,9 @@ void LNKMemoryBufferManagerFreeBlock(LNKMemoryBufferManagerRef manager, LNKFloat
 	free(buffer);
 	return;
 	
-	assert(manager);
-	assert(buffer);
-	assert(size);
+	NSCAssert(manager, @"The manager must not be NULL");
+	NSCAssert(buffer, @"The buffer must not be NULL");
+	NSCAssert(size, @"The size must be greater than 0");
 	
 	// We don't support 64-bit sizes.
 	if (size > MAX_SUPPORTED_SIZE)
