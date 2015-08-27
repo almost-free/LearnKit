@@ -9,6 +9,8 @@
 
 #import <pthread.h>
 
+#define MEMORY_BUFFER_MANAGER_ENABLED 0
+
 #define FIRST_PAGE_LENGTH	4096
 #define TOTAL_PAGES			1048575 // floor(UINT32_MAX / FIRST_PAGE_LENGTH)
 #define MAX_SUPPORTED_SIZE	4294963200
@@ -53,8 +55,10 @@ void LNKMemoryBufferManagerFree(LNKMemoryBufferManagerRef manager) {
 }
 
 LNKFloat *LNKMemoryBufferManagerAllocBlock(LNKMemoryBufferManagerRef manager, LNKSize size) {
+#if !MEMORY_BUFFER_MANAGER_ENABLED
+#pragma unused(manager)
 	return malloc(size * sizeof(LNKFloat));
-	
+#else
 	NSCAssert(manager, @"The manager must not be NULL");
 	NSCAssert(size, @"The size must be greater than 0");
 	
@@ -89,12 +93,16 @@ LNKFloat *LNKMemoryBufferManagerAllocBlock(LNKMemoryBufferManagerRef manager, LN
 	}
 	
 	return malloc(size * sizeof(LNKFloat));
+#endif
 }
 
 void LNKMemoryBufferManagerFreeBlock(LNKMemoryBufferManagerRef manager, LNKFloat *buffer, LNKSize size) {
+#if !MEMORY_BUFFER_MANAGER_ENABLED
+#pragma unused(manager)
+#pragma unused(size)
 	free(buffer);
 	return;
-	
+#else
 	NSCAssert(manager, @"The manager must not be NULL");
 	NSCAssert(buffer, @"The buffer must not be NULL");
 	NSCAssert(size, @"The size must be greater than 0");
@@ -132,6 +140,7 @@ void LNKMemoryBufferManagerFreeBlock(LNKMemoryBufferManagerRef manager, LNKFloat
 	freeBucket->previous = NULL;
 	freeBucket->next = manager->head;
 	manager->head = freeBucket;
+#endif
 }
 
 
