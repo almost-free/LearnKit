@@ -187,7 +187,6 @@ static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t
 void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regularizationEnabled, LNKFloat lambda, LNKHFunction hFunction, LNKCostFunction costFunction) {
 	NSCAssert(matrix, @"The matrix must not be NULL");
 	NSCAssert(thetaVector, @"The theta vector must not be NULL");
-	NSCAssert(hFunction, @"The h function must not be nil");
 	NSCAssert(costFunction, @"The cost function must not be nil");
 
 	//TODO: should this be a static assert?
