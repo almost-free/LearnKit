@@ -28,14 +28,14 @@ LNKFastArrayRef LNKFastArrayCreate(LNKSize elementWidth) {
 }
 
 void LNKFastArrayFree(LNKFastArrayRef array) {
-	assert(array);
+	NSCAssert(array, @"The array must not be NULL");
 	
 	free(array->buffer);
 	free(array);
 }
 
 void LNKFastArrayAddElement(LNKFastArrayRef array, void *bytes) {
-	assert(array);
+	NSCAssert(array, @"The array must not be NULL");
 	assert(bytes);
 	
 	if (array->count == array->capacity) {
@@ -49,7 +49,7 @@ void LNKFastArrayAddElement(LNKFastArrayRef array, void *bytes) {
 }
 
 void *LNKFastArrayElementAtIndex(LNKFastArrayRef array, LNKSize index) {
-	assert(array);
+	NSCAssert(array, @"The array must not be NULL");
 	assert(index < array->count);
 	
 	char *bytes = (char *)array->buffer;
@@ -57,7 +57,7 @@ void *LNKFastArrayElementAtIndex(LNKFastArrayRef array, LNKSize index) {
 }
 
 LNKSize LNKFastArrayElementCount(LNKFastArrayRef array) {
-	assert(array);
+	NSCAssert(array, @"The array must not be NULL");
 	
 	return array->count;
 }

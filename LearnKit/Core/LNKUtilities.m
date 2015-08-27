@@ -8,8 +8,8 @@
 #import "LNKUtilities.h"
 
 void LNKPrintVector(const char *name, LNKFloat *vector, LNKSize n) {
-	assert(name);
-	assert(vector);
+	NSCAssert(name, @"The name must not be NULL");
+	NSCAssert(vector, @"The vector must not be NULL");
 	
 	printf("Vector '%s':\n", name);
 	for (LNKSize i = 0; i < n; i++) {
@@ -19,8 +19,8 @@ void LNKPrintVector(const char *name, LNKFloat *vector, LNKSize n) {
 }
 
 void LNKPrintMatrix(const char *name, LNKFloat *matrix, LNKSize m, LNKSize n) {
-	assert(name);
-	assert(matrix);
+	NSCAssert(name, @"The name must not be NULL");
+	NSCAssert(matrix, @"The matrix must not be NULL");
 	
 	printf("Matrix '%s':\n", name);
 	for (LNKSize i = 0; i < m; i++) {
@@ -33,8 +33,8 @@ void LNKPrintMatrix(const char *name, LNKFloat *matrix, LNKSize m, LNKSize n) {
 }
 
 NSData *LNKLoadBinaryMatrixFromFileAtURL(NSURL *url, LNKSize expectedLength) {
-	assert(url);
-	assert(expectedLength);
+	NSCAssert(url, @"The url must not be nil");
+	NSCAssert(expectedLength, @"The expected length must be greater than 0");
 	
 	NSError *error = nil;
 	NSData *matrixData = [NSData dataWithContentsOfURL:url options:0 error:&error];
