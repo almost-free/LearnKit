@@ -66,20 +66,23 @@
 }
 
 - (void)test1FeedForwardPrediction {
+	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:NO];
 	[self measureBlock:^{
-		XCTAssertGreaterThanOrEqual([[self _preLearnedClassifierWithRegularization:NO] computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Unexpectedly low classification rate");
+		XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Unexpectedly low classification rate");
 	}];
 }
 
 - (void)test2CostFunction {
+	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:NO];
 	[self measureBlock:^{
-		XCTAssertEqualWithAccuracy(0.287629, [[self _preLearnedClassifierWithRegularization:NO] _evaluateCostFunction], DACCURACY, @"Incorrect cost");
+		XCTAssertEqualWithAccuracy(0.287629, [classifier _evaluateCostFunction], DACCURACY, @"Incorrect cost");
 	}];
 }
 
 - (void)test3CostFunctionRegularized {
+	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:YES];
 	[self measureBlock:^{
-		XCTAssertEqualWithAccuracy(0.383770, [[self _preLearnedClassifierWithRegularization:YES] _evaluateCostFunction], DACCURACY, @"Incorrect cost");
+		XCTAssertEqualWithAccuracy(0.383770, [classifier _evaluateCostFunction], DACCURACY, @"Incorrect cost");
 	}];
 }
 
