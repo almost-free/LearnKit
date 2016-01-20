@@ -167,6 +167,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 
 static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t *x, lbfgsfloatval_t *g, const int n, const lbfgsfloatval_t step) {
 #pragma unused(step)
+#pragma unused(n)
 	
 	LBFGSContext *context = (__bridge LBFGSContext *)instance;
 	NSCAssert(context, @"The context must not be nil");
@@ -222,10 +223,15 @@ void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regular
 	context.transposeMatrix = transposeMatrix;
 	context.regularizationEnabled = regularizationEnabled;
 	context.lambda = lambda;
-	
+
+#if DEBUG
 	int status = lbfgs((int)columnCount, theta, NULL, _LNK_lbfgs_evaluate, NULL, (__bridge void *)context, &parameters);
-	[context release];
 	NSCAssert(status == 0, @"LBFGS optimization failed");
+#else
+	lbfgs((int)columnCount, theta, NULL, _LNK_lbfgs_evaluate, NULL, (__bridge void *)context, &parameters);
+#endif
+
+	[context release];
 	
 	free(workgroupEC);
 	free(workgroupCC);

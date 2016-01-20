@@ -65,6 +65,8 @@
 }
 
 - (LNKFloat)_probabilityWithFeatureVector:(const LNKFloat *)featureVector length:(LNKSize)length {
+#pragma unused(length)
+	
 	NSParameterAssert(featureVector);
 	NSParameterAssert(length);
 	

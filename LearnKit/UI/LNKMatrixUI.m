@@ -25,6 +25,8 @@
 	const LNKFloat *pixels = self.matrixBuffer + (index * self.columnCount);
 	
 	return [NSImage imageWithSize:NSMakeSize(width, height) flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
+#pragma unused(dstRect)
+		
 		NSAssert(NSEqualRects(dstRect, NSMakeRect(0, 0, width, height)), @"Unexpected drawing area");
 		
 		for (LNKSize x = 0; x < width; x++) {
