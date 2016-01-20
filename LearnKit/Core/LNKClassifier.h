@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Abstract
 @interface LNKClassifier : LNKPredictor
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(nullable id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, retain, readonly) LNKClasses *classes;
 

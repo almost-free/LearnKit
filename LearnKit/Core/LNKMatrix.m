@@ -119,7 +119,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		const LNKSize outputVectorValueSize = _sizeOfLNKValueType(outputVectorValueType);
 		const LNKSize expectedOutputVectorSize = exampleCount * outputVectorValueSize;
 		
-		NSData *outputVectorData = [NSData dataWithContentsOfURL:outputVectorURL options:0 error:&error];
+		NSData *outputVectorData = [NSData dataWithContentsOfURL:(NSURL *__nonnull)outputVectorURL options:0 error:&error];
 		
 		if (!outputVectorData) {
 			NSLog(@"Error while loading matrix: could not load the output vector file at the given URL: %@", error);

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix
 			implementationType:(LNKImplementationType)implementation
-		 optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm
+		 optimizationAlgorithm:(nullable id<LNKOptimizationAlgorithm>)algorithm
 					   classes:(LNKClasses *)classes NS_UNAVAILABLE;
 
 @property (nonatomic, readonly) LNKSize layerCount;

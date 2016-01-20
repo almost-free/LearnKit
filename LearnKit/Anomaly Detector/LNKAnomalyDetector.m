@@ -41,9 +41,7 @@
 }
 
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
-#pragma unused(classes)
-	
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	if (matrix.hasBiasColumn)
 		[NSException raise:NSGenericException format:@"The matrix used for anomaly detection should not have a bias column"];
 	
@@ -94,10 +92,10 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 	
 	const LNKSize cvExampleCount = cvMatrix.exampleCount;
 	
-	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:nil];
+	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
 	[detector train];
 	
-	LNKAnomalyDetector *cvDetector = [[LNKAnomalyDetector alloc] initWithMatrix:cvMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:nil];
+	LNKAnomalyDetector *cvDetector = [[LNKAnomalyDetector alloc] initWithMatrix:cvMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
 	[cvDetector _setMuVector:[detector _muVector]];
 	[cvDetector _setSigmaMatrix:[detector _sigmaMatrix]];
 	

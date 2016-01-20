@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Not all optimization algorithms are supported for all predictors.
 /// Check each predictor's documentation for more information.
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm;
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(nullable id<LNKOptimizationAlgorithm>)algorithm;
 
 @property (nonatomic, readonly) LNKMatrix *matrix;
 @property (nonatomic, readonly) id <LNKOptimizationAlgorithm> algorithm;

@@ -26,7 +26,7 @@
 														exampleCount:307
 														 columnCount:2
 													addingOnesColumn:NO];
-	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:nil];
+	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
 	detector.threshold = 8.99e-05;
 	
 	[matrix release];
