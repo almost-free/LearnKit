@@ -8,6 +8,8 @@
 #import "LNKClassifier.h"
 #import "LNKNeuralNetLayer.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// For neural network classifiers, the only supported algorithms are CG and stochastic gradient descent.
 /// Predicted values are of type LNKClass.
 @interface LNKNeuralNetClassifier : LNKClassifier
@@ -41,3 +43,5 @@
 #warning TODO: better way of specifying classes
 
 @end
+
+NS_ASSUME_NONNULL_END

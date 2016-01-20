@@ -7,6 +7,8 @@
 
 #import "LNKClasses.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void(^LNKActivationFunction)(LNKFloat *vector, LNKSize length);
 typedef void(^LNKActivationGradientFunction)(const LNKFloat *vector, LNKFloat *outVector, LNKSize length);
 
@@ -40,3 +42,5 @@ typedef void(^LNKActivationGradientFunction)(const LNKFloat *vector, LNKFloat *o
 @interface LNKNeuralNetReLULayer : LNKNeuralNetLayer
 
 @end
+
+NS_ASSUME_NONNULL_END

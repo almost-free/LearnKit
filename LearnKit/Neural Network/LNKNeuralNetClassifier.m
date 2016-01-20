@@ -80,11 +80,11 @@ typedef struct {
 }
 
 - (LNKNeuralNetLayer *)inputLayer {
-	return _layers.firstObject;
+	return (_Nonnull id)_layers.firstObject;
 }
 
 - (LNKNeuralNetLayer *)outputLayer {
-	return _layers.lastObject;
+	return (_Nonnull id)_layers.lastObject;
 }
 
 - (LNKNeuralNetLayer *)layerAtIndex:(LNKSize)index {
