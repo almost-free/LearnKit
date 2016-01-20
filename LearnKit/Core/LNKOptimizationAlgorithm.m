@@ -157,6 +157,7 @@
 	}
 	
 	free(gradient);
+	free(weights);
 }
 
 @end
