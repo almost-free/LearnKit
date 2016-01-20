@@ -57,6 +57,14 @@
 
 
 @implementation LNKOptimizationAlgorithmNormalEquations
+
+- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+#pragma unused(vector)
+#pragma unused(exampleCount)
+#pragma unused(delegate)
+	[NSException raise:NSInternalInconsistencyException format:@"The implementation of normal equations is currently up to the learning algorithm itself"];
+}
+
 @end
 
 @implementation LNKOptimizationAlgorithmRegularizable
@@ -81,6 +89,13 @@
 
 - (BOOL)regularizationEnabled {
 	return _lambda > 0;
+}
+
+- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+#pragma unused(vector)
+#pragma unused(exampleCount)
+#pragma unused(delegate)
+	[NSException raise:NSInternalInconsistencyException format:@"This method must be overriden by subclasses"];
 }
 
 @end
