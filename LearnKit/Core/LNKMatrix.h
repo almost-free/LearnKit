@@ -5,6 +5,8 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, LNKValueType) {
 	LNKValueTypeDouble,
 	LNKValueTypeUInt8,
@@ -76,3 +78,5 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (void)printMatrix;
 
 @end
+
+NS_ASSUME_NONNULL_END

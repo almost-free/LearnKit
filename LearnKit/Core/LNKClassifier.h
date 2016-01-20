@@ -8,10 +8,11 @@
 #import "LNKClasses.h"
 #import "LNKPredictor.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Abstract
 @interface LNKClassifier : LNKPredictor
 
-/// The desired output classes must be non-`nil`.
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, retain, readonly) LNKClasses *classes;
@@ -21,3 +22,5 @@
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix;
 
 @end
+
+NS_ASSUME_NONNULL_END

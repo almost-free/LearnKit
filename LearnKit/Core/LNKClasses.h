@@ -5,6 +5,8 @@
 //  Copyright (c) 2015 Matt Rajca. All rights reserved.
 //
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LNKClass : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -32,3 +34,5 @@ typedef NSUInteger(^LNKClassMapper)(LNKClass *aClass);
 @property (nonatomic, readonly) NSUInteger count;
 
 @end
+
+NS_ASSUME_NONNULL_END

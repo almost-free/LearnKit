@@ -5,6 +5,8 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol LNKAlpha <NSObject>
 @end
 
@@ -102,3 +104,5 @@ typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 @property (nonatomic) NSUInteger iterationCount;
 
 @end
+
+NS_ASSUME_NONNULL_END

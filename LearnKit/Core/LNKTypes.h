@@ -44,7 +44,7 @@ typedef struct {
 #define LNKRangeMake(location, length) ((LNKRange) { location, length })
 
 typedef struct {
-	const LNKFloat *data;
+	const LNKFloat *__nonnull data;
 	const LNKSize length;
 } LNKVector;
 
@@ -55,8 +55,8 @@ typedef struct {
 
 @interface NSNumber (LNKTypes)
 
-+ (NSNumber *)numberWithLNKFloat:(LNKFloat)value;
-+ (NSNumber *)numberWithLNKSize:(LNKSize)value;
++ (nonnull NSNumber *)numberWithLNKFloat:(LNKFloat)value;
++ (nonnull NSNumber *)numberWithLNKSize:(LNKSize)value;
 
 @property (nonatomic, readonly) LNKFloat LNKFloatValue;
 @property (nonatomic, readonly) LNKSize LNKSizeValue;

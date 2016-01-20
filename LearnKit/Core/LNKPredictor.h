@@ -5,6 +5,8 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class LNKMatrix;
 @protocol LNKOptimizationAlgorithm;
 
@@ -28,6 +30,8 @@
 
 /// The predictor should be trained prior to calling this method.
 /// The type of object returned varies by predictor.
-- (id)predictValueForFeatureVector:(LNKVector)featureVector;
+- (nullable id)predictValueForFeatureVector:(LNKVector)featureVector;
 
 @end
+
+NS_ASSUME_NONNULL_END
