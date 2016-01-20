@@ -12,6 +12,9 @@ typedef void(^LNKActivationGradientFunction)(const LNKFloat *vector, LNKFloat *o
 
 @interface LNKNeuralNetLayer : NSObject
 
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
 /// The unit count should exclude the bias unit.
 - (instancetype)initWithUnitCount:(LNKSize)unitCount NS_DESIGNATED_INITIALIZER;
 
