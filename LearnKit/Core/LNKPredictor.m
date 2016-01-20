@@ -60,7 +60,7 @@
 	
 	NSArray *supportedAlgorithms = [[self class] supportedAlgorithms];
 	
-	if (supportedAlgorithms != nil && ![supportedAlgorithms containsObject:[algorithm class]]) {
+	if (algorithm && supportedAlgorithms != nil && ![supportedAlgorithms containsObject:[(__nonnull id <LNKOptimizationAlgorithm>)algorithm class]]) {
 		[NSException raise:NSGenericException format:@"Unsupported optimization algorithm"];
 		return nil;
 	}
