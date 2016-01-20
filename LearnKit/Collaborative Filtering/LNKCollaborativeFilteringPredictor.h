@@ -7,6 +7,8 @@
 
 #import "LNKPredictor.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// A collaborative filtering predictor for recommendation engines.
 /// Supported optimization algorithms:
 ///  - Conjugate Gradient/Accelerate
@@ -29,3 +31,5 @@
 - (NSIndexSet *)findTopK:(LNKSize)k predictionsForUser:(LNKSize)userIndex;
 
 @end
+
+NS_ASSUME_NONNULL_END

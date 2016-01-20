@@ -7,6 +7,8 @@
 
 #import "LNKClassifier.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LNKDecisionTreeNode : NSObject
 
 @end
@@ -19,7 +21,7 @@
 + (instancetype)withClass:(LNKClass *)class;
 + (instancetype)unknownClass;
 
-@property (nonatomic, readonly) LNKClass *classification;
+@property (nonatomic, nullable, readonly) LNKClass *classification;
 
 @end
 
@@ -33,6 +35,8 @@
 
 - (void)addBranch:(LNKDecisionTreeNode *)branch value:(LNKSize)value;
 
-- (LNKDecisionTreeNode *)branchForValue:(LNKSize)value;
+- (nullable LNKDecisionTreeNode *)branchForValue:(LNKSize)value;
 
 @end
+
+NS_ASSUME_NONNULL_END

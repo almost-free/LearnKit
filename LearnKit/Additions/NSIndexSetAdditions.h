@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void(^NSIndexSetSimpleEnumerator)(NSUInteger);
 
 @interface NSIndexSet (Additions)
@@ -16,3 +18,5 @@ typedef void(^NSIndexSetSimpleEnumerator)(NSUInteger);
 - (void)enumerateAllIndicesUsingBlock:(NSIndexSetSimpleEnumerator)block;
 
 @end
+
+NS_ASSUME_NONNULL_END

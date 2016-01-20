@@ -7,6 +7,8 @@
 
 #import "LNKClassifier.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef LNKFloat(^LNKKNNDistanceFunction)(LNKVector example1, LNKVector example2);
 extern const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction;
 
@@ -36,3 +38,5 @@ typedef NS_ENUM(NSUInteger, LNKKNNOutputFunction) {
 @property (nonatomic) LNKKNNOutputFunction outputFunction;
 
 @end
+
+NS_ASSUME_NONNULL_END

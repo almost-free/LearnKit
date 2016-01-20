@@ -24,7 +24,7 @@
 	return [[[self alloc] initWithClass:nil] autorelease];
 }
 
-- (instancetype)initWithClass:(LNKClass *)class {
+- (instancetype)initWithClass:(nullable LNKClass *)class {
 	self = [super init];
 	if (self) {
 		_classification = [class retain];

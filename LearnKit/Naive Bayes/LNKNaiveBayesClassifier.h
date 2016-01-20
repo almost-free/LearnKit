@@ -7,6 +7,8 @@
 
 #import "LNKClassifier.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The optimization algorithm for Naive Bayes classifiers is ignored and can be `nil`.
 /// All the features of the matrix should be categorical and represented as integers.
 /// Conditional independence is assumed.
@@ -27,6 +29,8 @@
 /// Prior to training, all possible value types must be registered for each column.
 - (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex;
 
-- (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(LNKFloat *)outProbability;
+- (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(nullable LNKFloat *)outProbability;
 
 @end
+
+NS_ASSUME_NONNULL_END

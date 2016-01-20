@@ -7,6 +7,8 @@
 
 #import "LNKClassifier.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The optimization algorithm for k-means classifiers is ignored and can be `nil`.
 /// The classes specified correspond to the number of clusters.
 /// For example, initializing a LNKClassifier with `[LNKClasses withCount:3]` specifies 3 clusters.
@@ -20,3 +22,5 @@
 - (LNKVector)centroidForClusterAtIndex:(LNKSize)clusterIndex;
 
 @end
+
+NS_ASSUME_NONNULL_END

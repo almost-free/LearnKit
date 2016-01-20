@@ -9,6 +9,6 @@
 
 @interface NSCountedSet (Additions)
 
-- (id)mostFrequentObject;
+- (nullable id)mostFrequentObject;
 
 @end

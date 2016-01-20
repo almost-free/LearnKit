@@ -9,6 +9,8 @@
 
 #import "LNKMatrix.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LNKMatrix (UI)
 
 /// Generates a grayscale image representing an example in the matrix.
@@ -19,5 +21,7 @@
 - (void)importToNumbersAsTable;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif

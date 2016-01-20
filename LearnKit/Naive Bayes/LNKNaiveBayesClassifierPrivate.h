@@ -9,6 +9,6 @@
 
 @interface LNKNaiveBayesClassifier (Private)
 
-- (NSPointerArray *)_columnsToValues;
+- (nullable NSPointerArray *)_columnsToValues;
 
 @end

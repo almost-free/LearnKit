@@ -39,6 +39,7 @@
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	NSParameterAssert(matrix);
+	NSParameterAssert(algorithm);
 	
 	if (!(self = [super init]))
 		return nil;
