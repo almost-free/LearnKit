@@ -25,11 +25,11 @@
 
 #define DEFAULT_THRESHOLD 0.01
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return nil;
 }
 

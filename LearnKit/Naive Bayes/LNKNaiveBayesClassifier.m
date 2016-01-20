@@ -14,11 +14,11 @@
 	NSPointerArray *_columnsToValues;
 }
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return nil;
 }
 
@@ -39,7 +39,7 @@
 	return self;
 }
 
-- (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex {
+- (void)registerValues:(NSArray<NSNumber *> *)values forColumn:(LNKSize)columnIndex {
 	if (!values)
 		[NSException raise:NSGenericException format:@"The array of values must not be nil"];
 	

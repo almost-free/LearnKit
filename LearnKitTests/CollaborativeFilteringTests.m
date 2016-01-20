@@ -128,7 +128,7 @@
 	
 	NSURL *movieListURL = [bundle URLForResource:@"MovieIDs" withExtension:@"txt"];
 	NSString *movieList = [[NSString alloc] initWithContentsOfURL:movieListURL encoding:NSASCIIStringEncoding error:nil];
-	NSArray *movies = [movieList componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+	NSArray<NSString *> *movies = [movieList componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	[movieList release];
 	
 	[[predictor findTopK:10 predictionsForUser:1] enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {

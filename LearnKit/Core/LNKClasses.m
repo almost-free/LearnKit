@@ -34,12 +34,12 @@
 
 
 @implementation LNKClasses {
-	NSArray *_classes;
+	NSArray<LNKClass *> *_classes;
 	LNKClassMapper _mapper;
 }
 
-static NSArray *_LNKIntegersInRange(NSRange range) {
-	NSMutableArray *array = [[NSMutableArray alloc] init];
+static NSArray<LNKClass *> *_LNKIntegersInRange(NSRange range) {
+	NSMutableArray<LNKClass *> *array = [[NSMutableArray alloc] init];
 	
 	for (NSUInteger n = range.location; n < NSMaxRange(range); n++) {
 		[array addObject:[LNKClass classWithUnsignedInteger:n]];
@@ -50,7 +50,7 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 
 + (instancetype)withRange:(NSRange)range {
 	NSParameterAssert(range.length);
-	NSArray *classes = _LNKIntegersInRange(range);
+	NSArray<LNKClass *> *classes = _LNKIntegersInRange(range);
 	
 	return [self withClasses:classes mapper:^NSUInteger(LNKClass *aClass) {
 		return [aClass unsignedIntegerValue] - range.location;
@@ -62,11 +62,11 @@ static NSArray *_LNKIntegersInRange(NSRange range) {
 	return [self withRange:NSMakeRange(0, count)];
 }
 
-+ (instancetype)withClasses:(NSArray *)classes mapper:(LNKClassMapper)mapper {
++ (instancetype)withClasses:(NSArray<LNKClass *> *)classes mapper:(LNKClassMapper)mapper {
 	return [[self alloc] initWithClasses:classes mapper:mapper];
 }
 
-- (instancetype)initWithClasses:(NSArray *)classes mapper:(LNKClassMapper)mapper {
+- (instancetype)initWithClasses:(NSArray<LNKClass *> *)classes mapper:(LNKClassMapper)mapper {
 	NSParameterAssert(classes.count);
 	NSParameterAssert(mapper);
 	

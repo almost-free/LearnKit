@@ -25,7 +25,7 @@ typedef NSUInteger(^LNKClassMapper)(LNKClass *aClass);
 /// All integers in the given range are mapped to indices 0..length
 + (instancetype)withRange:(NSRange)range;
 + (instancetype)withCount:(LNKSize)count;
-+ (instancetype)withClasses:(NSArray *)classes mapper:(LNKClassMapper)mapper;
++ (instancetype)withClasses:(NSArray<LNKClass *> *)classes mapper:(LNKClassMapper)mapper;
 
 - (instancetype)init NS_UNAVAILABLE;
 

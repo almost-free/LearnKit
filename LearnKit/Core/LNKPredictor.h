@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Abstract
 @interface LNKPredictor : NSObject
 
-+ (NSArray * /* <LNKImplementationType */)supportedImplementationTypes;
-+ (NSArray * /* <Class> */)supportedAlgorithms;
++ (NSArray<NSNumber *> *)supportedImplementationTypes;
++ (NSArray<Class> *)supportedAlgorithms;
 
 - (instancetype)init NS_UNAVAILABLE;
 

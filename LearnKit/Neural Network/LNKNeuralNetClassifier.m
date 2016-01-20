@@ -22,14 +22,14 @@ typedef struct {
 @implementation LNKNeuralNetClassifier {
 	ThetaVectorBucket **_thetaVectorBuckets;
 	LNKSize _thetaVectorBucketCount;
-	NSArray *_layers;
+	NSArray<LNKNeuralNetLayer *> *_layers;
 }
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return @[ [LNKOptimizationAlgorithmCG class], [LNKOptimizationAlgorithmStochasticGradientDescent class] ];
 }
 
@@ -41,7 +41,7 @@ typedef struct {
 }
 
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray *)hiddenLayers outputLayer:(LNKNeuralNetLayer *)outputLayer {
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray<LNKNeuralNetLayer *> *)hiddenLayers outputLayer:(LNKNeuralNetLayer *)outputLayer {
 	if (!matrix.hasBiasColumn)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must have a bias column"];
 	
@@ -54,7 +54,7 @@ typedef struct {
 	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:outputLayer.classes]))
 		return nil;
 	
-	NSMutableArray *allLayers = [[NSMutableArray alloc] init];
+	NSMutableArray<LNKNeuralNetLayer *> *allLayers = [[NSMutableArray alloc] init];
 	
 	LNKNeuralNetLayer *inputLayer = [[LNKNeuralNetLayer alloc] initWithUnitCount:matrix.columnCount];
 	[allLayers addObject:inputLayer];

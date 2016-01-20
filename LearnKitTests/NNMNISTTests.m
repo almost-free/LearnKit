@@ -67,7 +67,7 @@
 																														  iterationCount:30];
 	algorithm.stepCount = 50;
 	
-	NSArray *hiddenLayers = @[ [[[LNKNeuralNetReLULayer alloc] initWithUnitCount:400] autorelease] ];
+	NSArray<LNKNeuralNetLayer *> *hiddenLayers = @[ [[[LNKNeuralNetReLULayer alloc] initWithUnitCount:400] autorelease] ];
 	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetSigmoidLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(0, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:trainingMatrix

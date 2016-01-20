@@ -17,11 +17,11 @@
 
 #define DEFAULT_ITERATION_COUNT 100
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return nil;
 }
 

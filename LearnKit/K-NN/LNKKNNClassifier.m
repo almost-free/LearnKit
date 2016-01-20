@@ -22,11 +22,11 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(LNKVect
 
 #define DEFAULT_K 1
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return nil;
 }
 

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSUInteger laplacianSmoothingFactor;
 
 /// Prior to training, all possible value types must be registered for each column.
-- (void)registerValues:(NSArray *)values forColumn:(LNKSize)columnIndex;
+- (void)registerValues:(NSArray<NSNumber *> *)values forColumn:(LNKSize)columnIndex;
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(nullable LNKFloat *)outProbability;
 

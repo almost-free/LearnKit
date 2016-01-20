@@ -18,11 +18,11 @@
 	NSMutableDictionary *_columnsToPossibleValues;
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return nil;
 }
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
@@ -117,7 +117,7 @@
 	return (LNKFloat)count / exampleIndices.count;
 }
 
-static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
+static LNKFloat _calculateEntropyForClasses(NSCountedSet<LNKClass *> *classFrequencies) {
 	LNKSize total = 0;
 	
 	for (LNKClass *class in classFrequencies) {
@@ -146,7 +146,7 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
 	NSParameterAssert(exampleIndices);
 	
 	LNKMatrix *matrix = self.matrix;
-	NSCountedSet *classFrequencies = [[NSCountedSet alloc] init];
+	NSCountedSet<LNKClass *> *classFrequencies = [[NSCountedSet alloc] init];
 	
 	NSIndexSetSimpleEnumerator enumerator = ^(NSUInteger index) {
 		[classFrequencies addObject:[LNKClass classWithUnsignedInteger:matrix.outputVector[index]]];
@@ -202,7 +202,7 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet *classFrequencies) {
 	NSParameterAssert(exampleIndices);
 	
 	const LNKFloat *outputVector = self.matrix.outputVector;
-	NSCountedSet *classFrequencies = [[NSCountedSet alloc] init];
+	NSCountedSet<LNKClass *> *classFrequencies = [[NSCountedSet alloc] init];
 	
 	[exampleIndices enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 #pragma unused(stop)

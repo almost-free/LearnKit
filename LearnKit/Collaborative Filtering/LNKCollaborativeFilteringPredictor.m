@@ -23,11 +23,11 @@
 	LNKFloat *_unrolledGradient;
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return @[ [LNKOptimizationAlgorithmCG class] ];
 }
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
@@ -249,7 +249,7 @@
 	LNKFloat *predictions = LNKFloatAlloc(userCount * exampleCount);
 	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaMatrix, UNIT_STRIDE, predictions, UNIT_STRIDE, exampleCount, userCount, _featureCount);
 	
-	NSMutableArray *results = [NSMutableArray new];
+	NSMutableArray<NSDictionary *> *results = [NSMutableArray new];
 	
 	for (LNKSize example = 0; example < exampleCount; example++) {
 		LNKFloat prediction = predictions[example * _featureCount + userIndex];

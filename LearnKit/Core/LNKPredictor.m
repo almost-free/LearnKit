@@ -13,12 +13,12 @@
 
 @implementation LNKPredictor
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	[NSException raise:NSGenericException format:@"%s should be implemented by subclasses", __PRETTY_FUNCTION__];
 	return nil;
 }
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	[NSException raise:NSGenericException format:@"%s should be implemented by subclasses", __PRETTY_FUNCTION__];
 	return nil;
 }
@@ -58,7 +58,7 @@
 		return nil;
 	}
 	
-	NSArray *supportedAlgorithms = [[self class] supportedAlgorithms];
+	NSArray<Class> *supportedAlgorithms = [[self class] supportedAlgorithms];
 	
 	if (algorithm && supportedAlgorithms != nil && ![supportedAlgorithms containsObject:[(__nonnull id <LNKOptimizationAlgorithm>)algorithm class]]) {
 		[NSException raise:NSGenericException format:@"Unsupported optimization algorithm"];

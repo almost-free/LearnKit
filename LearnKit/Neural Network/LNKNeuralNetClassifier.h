@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix
 			implementationType:(LNKImplementationType)implementation
 		 optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm
-				  hiddenLayers:(NSArray *)layers
+				  hiddenLayers:(NSArray<LNKNeuralNetLayer *> *)layers
 				   outputLayer:(LNKNeuralNetLayer *)outputLayer NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix

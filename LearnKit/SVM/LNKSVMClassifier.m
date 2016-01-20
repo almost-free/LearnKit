@@ -17,11 +17,11 @@
 	LNKFloat *_theta;
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return @[ [LNKOptimizationAlgorithmStochasticGradientDescent class] ];
 }
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 

@@ -66,7 +66,7 @@
 
 		// Calculate P(f_(x,n) | c) for all values n of feature/column x
 		for (LNKSize column = 0; column < columnCount; column++) {
-			NSArray *values = [columnsToValues pointerAtIndex:column];
+			NSArray<NSNumber *> *values = [columnsToValues pointerAtIndex:column];
 			const NSUInteger valuesCount = values.count;
 			
 			LNKFloat *valuesVector = LNKFloatCalloc(valuesCount);

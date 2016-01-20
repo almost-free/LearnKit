@@ -26,7 +26,7 @@ typedef struct {
 	const LNKFloat *outputVector = self.matrix.outputVector;
 	
 	// Vote for the item with the most-frequent class.
-	NSCountedSet *frequencies = [[NSCountedSet alloc] initWithCapacity:k];
+	NSCountedSet<LNKClass *> *frequencies = [[NSCountedSet alloc] initWithCapacity:k];
 	
 	for (LNKSize kOffset = 0; kOffset < k; kOffset++) {
 		const _LNKDistanceBucket example = closestExamples[kOffset];

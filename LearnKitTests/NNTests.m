@@ -41,7 +41,7 @@
 	if (regularize)
 		algorithm.lambda = 1;
 	
-	NSArray *hiddenLayers = @[ [[[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:25] autorelease] ];
+	NSArray<LNKNeuralNetLayer *> *hiddenLayers = @[ [[[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:25] autorelease] ];
 	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetSigmoidLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix
@@ -100,7 +100,7 @@
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
 	
-	NSArray *hiddenLayers = @[ [[[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:25] autorelease] ];
+	NSArray<LNKNeuralNetLayer *> *hiddenLayers = @[ [[[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:25] autorelease] ];
 	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetSigmoidLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
 	LNKNeuralNetClassifier *classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:matrix

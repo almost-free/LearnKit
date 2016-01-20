@@ -12,11 +12,11 @@
 
 @implementation LNKOneVsAllLogRegClassifier
 
-+ (NSArray *)supportedImplementationTypes {
++ (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
 }
 
-+ (NSArray *)supportedAlgorithms {
++ (NSArray<Class> *)supportedAlgorithms {
 	return @[ [LNKOptimizationAlgorithmLBFGS class] ];
 }
 
