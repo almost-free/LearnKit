@@ -89,7 +89,7 @@ typedef struct {
 
 - (LNKNeuralNetLayer *)layerAtIndex:(LNKSize)index {
 	if (index >= _layers.count)
-		[NSException raise:NSInvalidArgumentException format:@"The layer index is out of bounds (%lld)", _layers.count];
+		[NSException raise:NSInvalidArgumentException format:@"The layer index is out of bounds (%ld)", (unsigned long)_layers.count];
 	
 	return _layers[index];
 }
