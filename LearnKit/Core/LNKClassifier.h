@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LNKConfusionMatrix;
+
 /// Abstract
 @interface LNKClassifier : LNKPredictor
 
@@ -20,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// The classifier should be trained prior to calling these methods.
 - (LNKFloat)computeClassificationAccuracyOnTrainingMatrix;
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix;
+
+- (LNKConfusionMatrix *)computeConfusionMatrixOnMatrix:(LNKMatrix *)matrix;
 
 @end
 

@@ -30,6 +30,11 @@
 	return [object isKindOfClass:[LNKClass class]] && _unsignedIntegerValue == object.unsignedIntegerValue;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+#pragma unused(zone)
+	return [[LNKClass alloc] initWithUnsignedInteger:_unsignedIntegerValue];
+}
+
 @end
 
 

@@ -33,6 +33,9 @@
 		C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */; };
 		C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */; };
 		C92E451A1A15396400B6E33F /* MovieIDs.txt in Resources */ = {isa = PBXBuildFile; fileRef = C92E45191A15396400B6E33F /* MovieIDs.txt */; };
+		C9369BA61C5EC647009EF659 /* LNKConfusionMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = C9369BA41C5EC647009EF659 /* LNKConfusionMatrix.h */; };
+		C9369BA71C5EC647009EF659 /* LNKConfusionMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */; };
+		C9369BA91C5ECDD5009EF659 /* LNKConfusionMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */; };
 		C93BFDEC1A354798000E5325 /* LNKSVMClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C93BFDEA1A354798000E5325 /* LNKSVMClassifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C93BFDED1A354798000E5325 /* LNKSVMClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */; };
 		C93BFDEE1A354798000E5325 /* LNKSVMClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */; };
@@ -237,6 +240,9 @@
 		C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceVal.mat; sourceTree = "<group>"; };
 		C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceValY.mat; sourceTree = "<group>"; };
 		C92E45191A15396400B6E33F /* MovieIDs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MovieIDs.txt; sourceTree = "<group>"; };
+		C9369BA41C5EC647009EF659 /* LNKConfusionMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKConfusionMatrix.h; sourceTree = "<group>"; };
+		C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKConfusionMatrix.m; sourceTree = "<group>"; };
+		C9369BA81C5EC8C4009EF659 /* LNKConfusionMatrixPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LNKConfusionMatrixPrivate.h; sourceTree = "<group>"; };
 		C93BFDEA1A354798000E5325 /* LNKSVMClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKSVMClassifier.h; sourceTree = "<group>"; };
 		C93BFDEB1A354798000E5325 /* LNKSVMClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKSVMClassifier.m; sourceTree = "<group>"; };
 		C93BFDEF1A354948000E5325 /* SVMTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVMTests.m; path = LearnKitTests/SVMTests.m; sourceTree = SOURCE_ROOT; };
@@ -695,6 +701,9 @@
 				C9CBD2BE19E5D52900AE71D5 /* LNKClassifier.h */,
 				C9CBD2BF19E5D52900AE71D5 /* LNKClassifier.m */,
 				C9CBD2C019E5D52900AE71D5 /* LNKClassifierPrivate.h */,
+				C9369BA41C5EC647009EF659 /* LNKConfusionMatrix.h */,
+				C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */,
+				C9369BA81C5EC8C4009EF659 /* LNKConfusionMatrixPrivate.h */,
 				C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */,
 				C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */,
 				C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */,
@@ -805,6 +814,7 @@
 				C9CBD2F019E5D52900AE71D5 /* LNKTypes.h in Headers */,
 				C9CBD2F319E5D52900AE71D5 /* LNKUtilities.h in Headers */,
 				C9CBD25E19E5D44400AE71D5 /* _LNKKNNClassifierAC.h in Headers */,
+				C9369BA61C5EC647009EF659 /* LNKConfusionMatrix.h in Headers */,
 				C9CBD24919E5D3F500AE71D5 /* LNKAccelerateGradient.h in Headers */,
 				C9CBD25219E5D41D00AE71D5 /* _LNKKMeansClassifierAC.h in Headers */,
 				C9CBD2B319E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.h in Headers */,
@@ -994,6 +1004,7 @@
 				C9CBD25F19E5D44400AE71D5 /* _LNKKNNClassifierAC.m in Sources */,
 				C9CBD2E719E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,
 				C9CBD2E119E5D52900AE71D5 /* LNKFastArray.m in Sources */,
+				C9369BA71C5EC647009EF659 /* LNKConfusionMatrix.m in Sources */,
 				C99219871A6C817600D9CACA /* LNKNeuralNetLayer.m in Sources */,
 				C9CBD27719E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */,
 				C9CBD29419E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */,
@@ -1015,6 +1026,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9369BA91C5ECDD5009EF659 /* LNKConfusionMatrix.m in Sources */,
 				C9CBD26319E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
 				C9CBD2E819E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,
 				C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */,

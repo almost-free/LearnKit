@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
+#import "LNKConfusionMatrix.h"
 #import "LNKMatrix.h"
 #import "LNKNeuralNetClassifier.h"
 #import "LNKNeuralNetClassifierPrivate.h"
@@ -117,6 +118,15 @@
 	
 	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.95, @"Poor accuracy");
 	[classifier release];
+}
+
+- (void)test5ConfusionMatrix {
+	LNKClassifier *const classifier = [self _preLearnedClassifierWithRegularization:NO];
+	LNKMatrix *const matrix = classifier.matrix;
+	LNKConfusionMatrix *const confusionMatrix = [classifier computeConfusionMatrixOnMatrix:matrix];
+	LNKClass *const eight = [LNKClass classWithUnsignedInteger:8];
+	const LNKSize examples = matrix.exampleCount / 10;
+	XCTAssertGreaterThanOrEqual([confusionMatrix frequencyForTrueClass:eight predictedClass:eight], 0.8 * examples);
 }
 
 @end

@@ -8,6 +8,7 @@
 #import "LNKClassifier.h"
 
 #import "LNKClassifierPrivate.h"
+#import "LNKConfusionMatrixPrivate.h"
 #import "LNKMatrix.h"
 #import "LNKMatrixPrivate.h"
 
@@ -88,6 +89,34 @@
 	}
 	
 	return (LNKFloat)hits / exampleCount;
+}
+
+- (LNKConfusionMatrix *)computeConfusionMatrixOnMatrix:(LNKMatrix *)matrix {
+	if (!matrix) {
+		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
+	}
+
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *const matrixBuffer = matrix.matrixBuffer;
+	const LNKFloat *const outputVector = matrix.outputVector;
+
+	LNKConfusionMatrix *const confusionMatrix = [[LNKConfusionMatrix alloc] init];
+
+	for (LNKSize m = 0; m < exampleCount; m++) {
+		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe(_EXAMPLE_IN_MATRIX_BUFFER(m), columnCount)];
+
+		if (![predictedValue isKindOfClass:[LNKClass class]]) {
+			continue;
+		}
+
+		LNKClass *const predictedClass = predictedValue;
+		LNKClass *const trueClass = [LNKClass classWithUnsignedInteger:outputVector[m]];
+
+		[confusionMatrix _incrementFrequencyForTrueClass:trueClass predictedClass:predictedClass];
+	}
+
+	return [confusionMatrix autorelease];
 }
 
 - (void)dealloc {

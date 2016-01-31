@@ -7,7 +7,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LNKClass : NSObject
+@interface LNKClass : NSObject <NSCopying>
 
 - (instancetype)init NS_UNAVAILABLE;
 
