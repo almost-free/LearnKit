@@ -27,7 +27,7 @@
 }
 
 - (BOOL)isEqual:(LNKClass *)object {
-	return [object isKindOfClass:[LNKClass class]] && _unsignedIntegerValue == object->_unsignedIntegerValue;
+	return [object isKindOfClass:[LNKClass class]] && _unsignedIntegerValue == object.unsignedIntegerValue;
 }
 
 @end
