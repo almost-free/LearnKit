@@ -15,10 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Predicted values are of type LNKClass.
 @interface LNKNaiveBayesClassifier : LNKClassifier
 
-/// To prevent underflow issues, the sum of the logarithms of probabilities can be maximized rather
-/// than the product of probabilities. The default is `YES`.
-@property (nonatomic) BOOL computesSumOfLogarithms;
-
 /// Laplacian Smoothing should be enabled whenever probabilities can be zero to prevent calculation
 /// errors. The default is `YES`.
 @property (nonatomic) BOOL performsLaplacianSmoothing;

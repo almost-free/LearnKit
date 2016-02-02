@@ -24,13 +24,12 @@
 	[classifier registerValues:@[ @0, @1 ] forColumn:3];
 }
 
-- (void)runTestWithSumOfLogarithmsComputations:(BOOL)computesSumOfLogarithms {
+- (void)testNaiveBayes {
 	// Columns of Flu.csv: chills, runny nose, headache, fever, flu? (output)
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"Flu" ofType:@"csv"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
 
 	LNKNaiveBayesClassifier *classifier = [[LNKNaiveBayesClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
-	classifier.computesSumOfLogarithms = computesSumOfLogarithms;
 	classifier.performsLaplacianSmoothing = NO;
 	[matrix release];
 
@@ -45,21 +44,6 @@
 	[classifier release];
 }
 
-- (void)testNaiveBayes {
-	[self runTestWithSumOfLogarithmsComputations:YES];
-	[self runTestWithSumOfLogarithmsComputations:NO];
-}
-
-- (void)testNaiveBayesWithZeroProbability {
-	[self _testNaiveBayesWithZeroProbabilityAndSumOfLogarithmsComputations:NO];
-	[self _testNaiveBayesWithZeroProbabilityAndSumOfLogarithmsComputations:YES];
-}
-
-- (void)testNaiveBayesWithLaplacianSmoothing {
-	[self _testNaiveBayesWithLaplacianSmoothingAndSumOfLogarithmsComputations:NO];
-	[self _testNaiveBayesWithLaplacianSmoothingAndSumOfLogarithmsComputations:YES];
-}
-
 - (LNKNaiveBayesClassifier *)_classifierForFluChills {
 	// Columns of FluChills.csv: chills (always 1), runny nose, headache, fever, flu? (output)
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"FluChills" ofType:@"csv"];
@@ -71,9 +55,8 @@
 	return [classifier autorelease];
 }
 
-- (void)_testNaiveBayesWithZeroProbabilityAndSumOfLogarithmsComputations:(BOOL)computesSumOfLogarithms {
+- (void)testNaiveBayesWithZeroProbability {
 	LNKNaiveBayesClassifier *classifier = [self _classifierForFluChills];
-	classifier.computesSumOfLogarithms = computesSumOfLogarithms;
 	classifier.performsLaplacianSmoothing = NO;
 
 	[self _registerValuesForClassifier:classifier];
@@ -87,9 +70,8 @@
 	XCTAssertNil(outputClass, @"No information");
 }
 
-- (void)_testNaiveBayesWithLaplacianSmoothingAndSumOfLogarithmsComputations:(BOOL)computesSumOfLogarithms {
+- (void)testNaiveBayesWithLaplacianSmoothing {
 	LNKNaiveBayesClassifier *classifier = [self _classifierForFluChills];
-	classifier.computesSumOfLogarithms = computesSumOfLogarithms;
 	classifier.performsLaplacianSmoothing = YES;
 
 	[self _registerValuesForClassifier:classifier];

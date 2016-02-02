@@ -112,7 +112,6 @@
 
 	LNKClasses *classes = self.classes;
 	const LNKSize columnCount = self.matrix.columnCount;
-	const BOOL computesSumOfLogarithms = self.computesSumOfLogarithms;
 	LNKSize classIndex = 0;
 
 	LNKClass *bestClass = nil;
@@ -124,7 +123,7 @@
 		// Otherwise:
 		//   P(c) * P(f_1 | c) * P(f_2 | c) ... P(f_3 | c)
 		const LNKFloat priorProbability = _priorProbabilities[classIndex];
-		LNKFloat expectation = computesSumOfLogarithms ? LNKLog(priorProbability) : priorProbability;
+		LNKFloat expectation = LNKLog(priorProbability);
 
 		for (LNKSize column = 0; column < columnCount; column++) {
 			const LNKSize featureIndex = featureVector.data[column];
@@ -135,10 +134,7 @@
 				break;
 			}
 
-			if (computesSumOfLogarithms)
-				expectation += LNKLog(probability);
-			else
-				expectation *= probability;
+			expectation += LNKLog(probability);
 		}
 
 		if (expectation > bestLikelihood) {
@@ -150,7 +146,7 @@
 	}
 
 	if (outProbability) {
-		const LNKFloat probability = computesSumOfLogarithms ? LNK_exp(bestLikelihood) : bestLikelihood;
+		const LNKFloat probability = LNK_exp(bestLikelihood);
 		*outProbability = bestClass ? probability : 0;
 	}
 

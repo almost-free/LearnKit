@@ -32,7 +32,6 @@
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
 	if (self) {
-		_computesSumOfLogarithms = YES;
 		_performsLaplacianSmoothing = YES;
 		_laplacianSmoothingFactor = 1;
 	}
