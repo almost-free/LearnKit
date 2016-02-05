@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "LNKDiscreteProbabilityDistribution.h"
+#import "LNKGaussianProbabilityDistribution.h"
 #import "LNKMatrix.h"
 #import "LNKNaiveBayesClassifier.h"
 
@@ -98,6 +99,29 @@
 	XCTAssertGreaterThan(probability, 0);
 	XCTAssertNotNil(outputClass);
 	XCTAssertEqual(outputClass.unsignedIntegerValue, 0ULL);
+}
+
+- (void)testGaussianNaiveBayes {
+	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	LNKMatrix *trainingMatrix;
+	LNKMatrix *testMatrix;
+	[matrix splitIntoTrainingMatrix:&trainingMatrix testMatrix:&testMatrix trainingBias:0.8];
+	[matrix release];
+	
+	LNKClasses *const classes = [LNKClasses withCount:2];
+
+	LNKGaussianProbabilityDistribution *const distribution = [[LNKGaussianProbabilityDistribution alloc] initWithClasses:classes featureCount:trainingMatrix.columnCount];
+
+	LNKNaiveBayesClassifier *const classifier = [[LNKNaiveBayesClassifier alloc] initWithMatrix:trainingMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:classes probabilityDistribution:distribution];
+	[distribution release];
+
+	[classifier train];
+
+	const LNKFloat accuracy = [classifier computeClassificationAccuracyOnMatrix:testMatrix];
+	XCTAssertGreaterThan(accuracy, 0.65);
+
+	[classifier release];
 }
 
 @end

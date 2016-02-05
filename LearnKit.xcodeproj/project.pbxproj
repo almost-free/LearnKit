@@ -54,6 +54,9 @@
 		C975913819A04B44003D3A48 /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
 		C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
 		C975914619A04BB3003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
+		C97D57AA1C65183600B03E40 /* LNKGaussianProbabilityDistribution.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D57A81C65183600B03E40 /* LNKGaussianProbabilityDistribution.h */; };
+		C97D57AB1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = C97D57A91C65183600B03E40 /* LNKGaussianProbabilityDistribution.m */; };
+		C97D57AC1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = C97D57A91C65183600B03E40 /* LNKGaussianProbabilityDistribution.m */; };
 		C97FF0AA1A1D083100F6CEDA /* NSIndexSetAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C97FF0A81A1D083100F6CEDA /* NSIndexSetAdditions.h */; };
 		C97FF0AB1A1D083100F6CEDA /* NSIndexSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C97FF0A91A1D083100F6CEDA /* NSIndexSetAdditions.m */; };
 		C97FF0AC1A1D083100F6CEDA /* NSIndexSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C97FF0A91A1D083100F6CEDA /* NSIndexSetAdditions.m */; };
@@ -83,6 +86,7 @@
 		C99C8B121A1D80A6000F0136 /* NSCountedSetAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C99C8B101A1D80A6000F0136 /* NSCountedSetAdditions.h */; };
 		C99C8B131A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */; };
 		C99C8B141A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */; };
+		C99F0E861C653872000F9242 /* Pima.csv in Resources */ = {isa = PBXBuildFile; fileRef = C99F0E851C653872000F9242 /* Pima.csv */; };
 		C9A27CCA1C64718900D7C2F7 /* LNKClassProbabilityDistribution.h in Headers */ = {isa = PBXBuildFile; fileRef = C9A27CC81C64718900D7C2F7 /* LNKClassProbabilityDistribution.h */; };
 		C9A27CCB1C64718900D7C2F7 /* LNKClassProbabilityDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A27CC91C64718900D7C2F7 /* LNKClassProbabilityDistribution.m */; };
 		C9A27CCC1C64718900D7C2F7 /* LNKClassProbabilityDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A27CC91C64718900D7C2F7 /* LNKClassProbabilityDistribution.m */; };
@@ -265,6 +269,8 @@
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
 		C971B4EE19DA6ECB0066C78B /* StructureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StructureTests.m; path = LearnKitTests/StructureTests.m; sourceTree = SOURCE_ROOT; };
 		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C97D57A81C65183600B03E40 /* LNKGaussianProbabilityDistribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKGaussianProbabilityDistribution.h; sourceTree = "<group>"; };
+		C97D57A91C65183600B03E40 /* LNKGaussianProbabilityDistribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKGaussianProbabilityDistribution.m; sourceTree = "<group>"; };
 		C97FF0A81A1D083100F6CEDA /* NSIndexSetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSIndexSetAdditions.h; sourceTree = "<group>"; };
 		C97FF0A91A1D083100F6CEDA /* NSIndexSetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSIndexSetAdditions.m; sourceTree = "<group>"; };
 		C97FF0AD1A1D111300F6CEDA /* DecisionTreeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DecisionTreeTests.m; path = LearnKitTests/DecisionTreeTests.m; sourceTree = SOURCE_ROOT; };
@@ -287,6 +293,7 @@
 		C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDecisionTreeClassifier.m; sourceTree = "<group>"; };
 		C99C8B101A1D80A6000F0136 /* NSCountedSetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCountedSetAdditions.h; sourceTree = "<group>"; };
 		C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCountedSetAdditions.m; sourceTree = "<group>"; };
+		C99F0E851C653872000F9242 /* Pima.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pima.csv; sourceTree = "<group>"; };
 		C9A27CC81C64718900D7C2F7 /* LNKClassProbabilityDistribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKClassProbabilityDistribution.h; sourceTree = "<group>"; };
 		C9A27CC91C64718900D7C2F7 /* LNKClassProbabilityDistribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKClassProbabilityDistribution.m; sourceTree = "<group>"; };
 		C9A27CCD1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDiscreteProbabilityDistribution.h; sourceTree = "<group>"; };
@@ -509,6 +516,8 @@
 				C94D42551C64FE36007D537D /* LNKClassProbabilityDistributionPrivate.h */,
 				C9A27CCD1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h */,
 				C9A27CCE1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m */,
+				C97D57A81C65183600B03E40 /* LNKGaussianProbabilityDistribution.h */,
+				C97D57A91C65183600B03E40 /* LNKGaussianProbabilityDistribution.m */,
 			);
 			name = "Probability Distributions";
 			path = "LearnKit/Probability Distributions";
@@ -784,6 +793,7 @@
 				C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */,
 				C9860BE21A0B4F04009FADAE /* Movies_X.mat */,
 				C9860BE31A0B4F04009FADAE /* Movies_Y.mat */,
+				C99F0E851C653872000F9242 /* Pima.csv */,
 				C915806A19E8B12F00879FD5 /* ServerStatistics.mat */,
 				C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */,
 				C915808019E8E4FB00879FD5 /* ServerStatisticsValY.mat */,
@@ -849,6 +859,7 @@
 				C9CBD27319E5D46900AE71D5 /* _LNKLinRegPredictorGD_AC.h in Headers */,
 				C99219861A6C817600D9CACA /* LNKNeuralNetLayer.h in Headers */,
 				C9CBD2E319E5D52900AE71D5 /* LNKFastFloatQueue.h in Headers */,
+				C97D57AA1C65183600B03E40 /* LNKGaussianProbabilityDistribution.h in Headers */,
 				C97FF0AA1A1D083100F6CEDA /* NSIndexSetAdditions.h in Headers */,
 				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
 				C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */,
@@ -956,6 +967,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C99F0E861C653872000F9242 /* Pima.csv in Resources */,
 				C9CBD30A19E5D69000AE71D5 /* ex2data1.csv in Resources */,
 				C9CBD31519E5D69000AE71D5 /* ex7data2_X.dat in Resources */,
 				C92E451A1A15396400B6E33F /* MovieIDs.txt in Resources */,
@@ -1014,6 +1026,7 @@
 				C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
 				C9EC9A5A1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */,
 				C975913819A04B44003D3A48 /* lbfgs.m in Sources */,
+				C97D57AB1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */,
 				C9860BF21A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m in Sources */,
 				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
 				C9A27CD01C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m in Sources */,
@@ -1083,6 +1096,7 @@
 				C99C8B141A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */,
 				C995017B1A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m in Sources */,
 				C9CBD2F519E5D52900AE71D5 /* LNKUtilities.m in Sources */,
+				C97D57AC1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */,
 				C9CBD2E219E5D52900AE71D5 /* LNKFastArray.m in Sources */,
 				C992198D1A6C883D00D9CACA /* LNKClasses.m in Sources */,
 				C9CBD2EE19E5D52900AE71D5 /* LNKPredictor.m in Sources */,

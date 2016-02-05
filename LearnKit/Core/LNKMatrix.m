@@ -243,6 +243,37 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	_exampleCount = exampleCount;
 }
 
+- (LNKVector)copyOfColumnAtIndex:(LNKSize)columnIndex {
+	LNKFloat *values = LNKFloatAlloc(_exampleCount);
+
+	for (LNKSize index = 0; index < _exampleCount; index++) {
+		values[index] = _matrix[index * _columnCount + columnIndex];
+	}
+
+	return LNKVectorMakeUnsafe(values, _exampleCount);
+}
+
+// The result must be freed by the caller.
+- (LNKSize *)_shuffleIndices {
+	LNKSize *indices = malloc(sizeof(LNKSize) * _exampleCount);
+
+	for (LNKSize index = 0; index < _exampleCount; index++) {
+		indices[index] = index;
+	}
+
+	// Shuffle the indices.
+	for (LNKSize index = 0; index < _exampleCount; index++) {
+		const LNKSize leftElements = _exampleCount - index;
+		const LNKSize otherIndex = arc4random_uniform((uint32_t)leftElements) + index;
+
+		const LNKSize temp = indices[otherIndex];
+		indices[otherIndex] = indices[index];
+		indices[index] = temp;
+	}
+
+	return indices;
+}
+
 - (LNKMatrix *)copyShuffledMatrix {
 	return [self copyShuffledSubmatrixWithExampleCount:_exampleCount];
 }
@@ -252,21 +283,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		[NSException raise:NSInvalidArgumentException format:@"The number of examples in the submatrix cannot be greater than the number of examples in the current matrix"];
 	
 	return [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-		LNKSize *indices = malloc(sizeof(LNKSize) * _exampleCount);
-		
-		for (LNKSize index = 0; index < _exampleCount; index++) {
-			indices[index] = index;
-		}
-		
-		// Shuffle the indices.
-		for (LNKSize index = 0; index < _exampleCount; index++) {
-			const LNKSize leftElements = _exampleCount - index;
-			const LNKSize otherIndex = arc4random_uniform((uint32_t)leftElements) + index;
-			
-			const LNKSize temp = indices[otherIndex];
-			indices[otherIndex] = indices[index];
-			indices[index] = temp;
-		}
+		LNKSize *const indices = [self _shuffleIndices];
 		
 		for (LNKSize index = 0; index < exampleCount; index++) {
 			const LNKSize actualIndex = indices[index];
@@ -279,6 +296,35 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		
 		return YES;
 	}];
+}
+
+- (void)splitIntoTrainingMatrix:(LNKMatrix **)trainingMatrix testMatrix:(LNKMatrix **)testMatrix trainingBias:(LNKFloat)trainingBias {
+	const LNKSize exampleCount = self.exampleCount;
+	const LNKSize trainingSize = exampleCount * trainingBias;
+	const LNKSize testSize = exampleCount - trainingSize;
+
+	LNKMatrix *const shuffledMatrix = [self copyShuffledMatrix];
+	*trainingMatrix = [shuffledMatrix submatrixWithExampleRange:NSMakeRange(0, trainingSize)];
+	*testMatrix = [shuffledMatrix submatrixWithExampleRange:NSMakeRange(trainingSize, testSize)];
+
+	[shuffledMatrix release];
+}
+
+- (LNKMatrix *)submatrixWithExampleRange:(NSRange)range {
+	const LNKSize columnCount = self.columnCount;
+
+	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithExampleCount:range.length columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+		for (LNKSize example = range.location; example < NSMaxRange(range); example++) {
+			const LNKFloat *inputExample = [self exampleAtIndex:example];
+			LNKFloatCopy(matrix + (example - range.location) * columnCount, inputExample, columnCount);
+
+			outputVector[example - range.location] = _outputVector[example];
+		}
+
+		return YES;
+	}];
+
+	return [submatrix autorelease];
 }
 
 - (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount {
@@ -457,7 +503,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNK_vmean(columnPointer, _columnCount, &mean, _exampleCount);
 		
 		_columnToMu[n] = -mean;
-		_columnToSD[n] = LNK_vsd(columnPointer, _exampleCount, _columnCount, workgroup, mean, YES);
+		_columnToSD[n] = LNK_vsd(LNKVectorMakeUnsafe(columnPointer, _exampleCount), _columnCount, workgroup, mean, YES);
 	}
 	
 	[self normalizeWithMeanVector:_columnToMu standardDeviationVector:_columnToSD];

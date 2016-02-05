@@ -28,7 +28,7 @@
 
 	_classes = [classes retain];
 	_featureCount = featureCount;
-	_priorProbabilities = LNKFloatAlloc(classes.count);
+	_priorProbabilities = LNKFloatCalloc(classes.count);
 
 	return self;
 }

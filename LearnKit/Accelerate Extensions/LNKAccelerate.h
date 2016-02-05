@@ -95,7 +95,7 @@ extern void LNK_vsigmoid(LNKFloat *vector, LNKSize n);
 extern void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n);
 
 /// Computes the standard deviation of the elements in the vector.
-extern LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample);
+extern LNKFloat LNK_vsd(LNKVector vector, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample);
 
 /// Computes the determinant of the n * n matrix.
 extern LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n);

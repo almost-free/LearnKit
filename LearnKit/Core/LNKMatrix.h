@@ -46,6 +46,9 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 - (const LNKFloat *)exampleAtIndex:(LNKSize)index NS_RETURNS_INNER_POINTER;
 
+/// The result must be freed by the caller.
+- (LNKVector)copyOfColumnAtIndex:(LNKSize)columnIndex;
+
 - (void)clipExampleCountTo:(LNKSize)exampleCount;
 
 /// Returns a copy of the current matrix with its rows reshuffled.
@@ -53,6 +56,8 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 /// Returns a copy of the current matrix with `exampleCount` of its rows reshuffled.
 - (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)exampleCount;
+
+- (void)splitIntoTrainingMatrix:(LNKMatrix *__nonnull *__nonnull)trainingMatrix testMatrix:(LNKMatrix *__nonnull *__nonnull)testMatrix trainingBias:(LNKFloat)trainingBias;
 
 - (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount;
 

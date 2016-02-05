@@ -72,19 +72,27 @@ void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n) {
 	free(vectorSquared);
 }
 
-LNKFloat LNK_vsd(const LNKFloat *vector, LNKSize n, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample) {
-	NSCAssert(vector, @"The vector must not be NULL");
-	NSCAssert(workgroup, @"The workgroup must not be NULL");
-	NSCAssert(n, @"The length must be greater than 0");
+LNKFloat LNK_vsd(LNKVector vector, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample) {
+	NSCAssert(vector.data != NULL, @"The vector must not be NULL");
+	NSCAssert(vector.length > 0, @"The length must be greater than 0");
+
+	BOOL shouldFreeWorkgroup = NO;
+	if (workgroup == NULL) {
+		workgroup = LNKFloatAlloc(vector.length);
+		shouldFreeWorkgroup = YES;
+	}
 	
 	const LNKFloat minusMean = -mean;
-	LNK_vsadd(vector, stride, &minusMean, workgroup, UNIT_STRIDE, n);
+	LNK_vsadd(vector.data, stride, &minusMean, workgroup, UNIT_STRIDE, vector.length);
 
 	LNKFloat sd;
-	LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sd, n);
-	
-	const LNKSize adjustedN = inSample ? n - 1 : n;
-	
+	LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sd, vector.length);
+
+	if (shouldFreeWorkgroup) {
+		free(workgroup);
+	}
+
+	const LNKSize adjustedN = inSample ? vector.length - 1 : vector.length;
 	return LNK_sqrt(1.0 / adjustedN * sd);
 }
 
