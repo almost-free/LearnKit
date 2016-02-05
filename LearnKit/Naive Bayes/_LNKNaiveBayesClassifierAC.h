@@ -8,5 +8,4 @@
 #import "LNKNaiveBayesClassifier.h"
 
 @interface _LNKNaiveBayesClassifierAC : LNKNaiveBayesClassifier
-
 @end

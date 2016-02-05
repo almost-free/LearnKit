@@ -8,32 +8,38 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
+#import "LNKDiscreteProbabilityDistribution.h"
 #import "LNKMatrix.h"
 #import "LNKNaiveBayesClassifier.h"
 
 @interface NaiveBayesTests : XCTestCase
-
 @end
 
 @implementation NaiveBayesTests
 
-- (void)_registerValuesForClassifier:(LNKNaiveBayesClassifier *)classifier {
-	[classifier registerValues:@[ @0, @1 ] forColumn:0];
-	[classifier registerValues:@[ @0, @1 ] forColumn:1];
-	[classifier registerValues:@[ @0, @1, @2 ] forColumn:2];
-	[classifier registerValues:@[ @0, @1 ] forColumn:3];
+- (void)_registerValuesForDistribution:(LNKDiscreteProbabilityDistribution *)distribution {
+	NSParameterAssert(distribution != nil);
+
+	[distribution registerValues:@[ @0, @1 ] forColumnAtIndex:0];
+	[distribution registerValues:@[ @0, @1 ] forColumnAtIndex:1];
+	[distribution registerValues:@[ @0, @1, @2 ] forColumnAtIndex:2];
+	[distribution registerValues:@[ @0, @1 ] forColumnAtIndex:3];
 }
 
 - (void)testNaiveBayes {
 	// Columns of Flu.csv: chills, runny nose, headache, fever, flu? (output)
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"Flu" ofType:@"csv"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Flu" ofType:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	LNKClasses *const classes = [LNKClasses withCount:2];
 
-	LNKNaiveBayesClassifier *classifier = [[LNKNaiveBayesClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
-	classifier.performsLaplacianSmoothing = NO;
+	LNKDiscreteProbabilityDistribution *const discreteDistribution = [[LNKDiscreteProbabilityDistribution alloc] initWithClasses:classes featureCount:matrix.columnCount];
+	discreteDistribution.performsLaplacianSmoothing = NO;
+
+	LNKNaiveBayesClassifier *const classifier = [[LNKNaiveBayesClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:classes probabilityDistribution:discreteDistribution];
 	[matrix release];
+	[discreteDistribution release];
 
-	[self _registerValuesForClassifier:classifier];
+	[self _registerValuesForDistribution:discreteDistribution];
 	[classifier train];
 
 	const LNKFloat inputVector[] = {1,0,1,0};
@@ -46,40 +52,48 @@
 
 - (LNKNaiveBayesClassifier *)_classifierForFluChills {
 	// Columns of FluChills.csv: chills (always 1), runny nose, headache, fever, flu? (output)
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"FluChills" ofType:@"csv"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"FluChills" ofType:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	LNKClasses *const classes = [LNKClasses withCount:2];
 
-	LNKNaiveBayesClassifier *classifier = [[LNKNaiveBayesClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
+	LNKDiscreteProbabilityDistribution *const discreteDistribution = [[LNKDiscreteProbabilityDistribution alloc] initWithClasses:classes featureCount:matrix.columnCount];
+
+	LNKNaiveBayesClassifier *const classifier = [[LNKNaiveBayesClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:classes probabilityDistribution:discreteDistribution];
 	[matrix release];
+	[discreteDistribution release];
 
 	return [classifier autorelease];
 }
 
 - (void)testNaiveBayesWithZeroProbability {
-	LNKNaiveBayesClassifier *classifier = [self _classifierForFluChills];
-	classifier.performsLaplacianSmoothing = NO;
+	LNKNaiveBayesClassifier *const classifier = [self _classifierForFluChills];
 
-	[self _registerValuesForClassifier:classifier];
+	LNKDiscreteProbabilityDistribution *const probabilityDistribution = classifier.probabilityDistribution;
+	probabilityDistribution.performsLaplacianSmoothing = NO;
+
+	[self _registerValuesForDistribution:probabilityDistribution];
 	[classifier train];
 
 	const LNKFloat inputVector[] = {0,0,1,0};
 	LNKFloat probability = 0;
-	LNKClass *outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4) probability:&probability];
+	LNKClass *const outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4) probability:&probability];
 
 	XCTAssertEqual(probability, 0, @"There were no prior example of flus without chills");
 	XCTAssertNil(outputClass, @"No information");
 }
 
 - (void)testNaiveBayesWithLaplacianSmoothing {
-	LNKNaiveBayesClassifier *classifier = [self _classifierForFluChills];
-	classifier.performsLaplacianSmoothing = YES;
+	LNKNaiveBayesClassifier *const classifier = [self _classifierForFluChills];
 
-	[self _registerValuesForClassifier:classifier];
+	LNKDiscreteProbabilityDistribution *const probabilityDistribution = classifier.probabilityDistribution;
+	probabilityDistribution.performsLaplacianSmoothing = YES;
+
+	[self _registerValuesForDistribution:probabilityDistribution];
 	[classifier train];
 
 	const LNKFloat inputVector[] = {0,0,1,0};
 	LNKFloat probability = 0;
-	LNKClass *outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4) probability:&probability];
+	LNKClass *const outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4) probability:&probability];
 
 	XCTAssertGreaterThan(probability, 0);
 	XCTAssertNotNil(outputClass);

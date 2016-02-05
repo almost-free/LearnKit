@@ -10,9 +10,7 @@
 #import "_LNKNaiveBayesClassifierAC.h"
 #import "LNKMatrix.h"
 
-@implementation LNKNaiveBayesClassifier {
-	NSPointerArray *_columnsToValues;
-}
+@implementation LNKNaiveBayesClassifier
 
 + (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
@@ -29,34 +27,18 @@
 	return [_LNKNaiveBayesClassifierAC class];
 }
 
-- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
-	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
-	if (self) {
-		_performsLaplacianSmoothing = YES;
-		_laplacianSmoothingFactor = 1;
-	}
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes probabilityDistribution:(LNKClassProbabilityDistribution *)probabilityDistribution {
+	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes]))
+		return nil;
+
+	_probabilityDistribution = [probabilityDistribution retain];
+
 	return self;
 }
 
-- (void)registerValues:(NSArray<NSNumber *> *)values forColumn:(LNKSize)columnIndex {
-	if (!values)
-		[NSException raise:NSGenericException format:@"The array of values must not be nil"];
-	
-	const LNKSize columnCount = self.matrix.columnCount;
-	
-	if (columnIndex >= columnCount)
-		[NSException raise:NSGenericException format:@"The given index (%lld) is out-of-bounds (%lld)", columnIndex, columnCount];
-	
-	if (!_columnsToValues) {
-		_columnsToValues = [[NSPointerArray alloc] initWithOptions:NSPointerFunctionsStrongMemory];
-		_columnsToValues.count = columnCount;
-	}
-	
-	[_columnsToValues insertPointer:values atIndex:columnIndex];
-}
-
-- (NSPointerArray *)_columnsToValues {
-	return _columnsToValues;
+- (void)dealloc {
+	[_probabilityDistribution release];
+	[super dealloc];
 }
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector probability:(LNKFloat *)outProbability {
@@ -65,11 +47,6 @@
 
 	[NSException raise:NSInternalInconsistencyException format:@"%s must be overriden by subclasses", __PRETTY_FUNCTION__];
 	return nil;
-}
-
-- (void)dealloc {
-	[_columnsToValues release];
-	[super dealloc];
 }
 
 @end
