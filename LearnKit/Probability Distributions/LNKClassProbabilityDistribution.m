@@ -48,7 +48,7 @@
 	[NSException raise:NSGenericException format:@"%s must be overriden", __PRETTY_FUNCTION__];
 }
 
-- (LNKFloat)probabilityForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value {
+- (LNKFloat)probabilityLogForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value {
 #pragma unused(classIndex)
 #pragma unused(featureIndex)
 #pragma unused(value)

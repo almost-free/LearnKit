@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) LNKSize featureCount;
 
 - (LNKFloat)priorForClassAtIndex:(LNKSize)index;
-- (LNKFloat)probabilityForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value;
+- (LNKFloat)probabilityLogForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value;
 
 // Subclasses must override this method to build a probability distribution.
 - (void)buildWithMatrix:(LNKMatrix *)matrix;

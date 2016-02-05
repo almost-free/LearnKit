@@ -42,14 +42,14 @@
 
 		for (LNKSize column = 0; column < columnCount; column++) {
 			const LNKFloat featureValue = featureVector.data[column];
-			const LNKFloat probability = [probabilityDistribution probabilityForClassAtIndex:classIndex featureAtIndex:column value:featureValue];
+			const LNKFloat probabilityLog = [probabilityDistribution probabilityLogForClassAtIndex:classIndex featureAtIndex:column value:featureValue];
 
-			if (probability == 0) {
+			if (fabs(probabilityLog) < FLT_MIN) {
 				expectation = LNKFloatMin;
 				break;
 			}
 
-			expectation += LNKLog(probability);
+			expectation += probabilityLog;
 		}
 
 		if (expectation > bestLikelihood) {

@@ -7,6 +7,7 @@
 
 #import "LNKDiscreteProbabilityDistribution.h"
 
+#import "LNKAccelerate.h"
 #import "LNKClasses.h"
 #import "LNKClassProbabilityDistributionPrivate.h"
 #import "LNKMatrix.h"
@@ -153,7 +154,7 @@
 	}
 }
 
-- (LNKFloat)probabilityForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value {
+- (LNKFloat)probabilityLogForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value {
 	if (classIndex >= self.classes.count) {
 		[NSException raise:NSGenericException format:@"The class index is out-of-bounds"];
 	}
@@ -164,7 +165,7 @@
 		[NSException raise:NSGenericException format:@"The feature index is out-of-bounds"];
 	}
 
-	return _featureProbabilities[classIndex * featureCount + featureIndex][(LNKSize)value];
+	return LNKLog(_featureProbabilities[classIndex * featureCount + featureIndex][(LNKSize)value]);
 }
 
 @end

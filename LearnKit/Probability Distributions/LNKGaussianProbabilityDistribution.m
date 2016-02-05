@@ -74,9 +74,9 @@ typedef struct {
 
 			const LNKVector vector = [matrix copyOfColumnAtIndex:column];
 			LNKFloat mean = 0;
-			LNK_vmean(vector.data, 1, &mean, vector.length);
+			LNK_vmean(vector.data, UNIT_STRIDE, &mean, vector.length);
 
-			const LNKFloat sd = LNK_vsd(vector, 1, NULL, mean, NO);
+			const LNKFloat sd = LNK_vsd(vector, UNIT_STRIDE, NULL, mean, NO);
 
 			parameters->mean = mean;
 			parameters->sd = sd;
@@ -86,7 +86,7 @@ typedef struct {
 	}
 }
 
-- (LNKFloat)probabilityForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value {
+- (LNKFloat)probabilityLogForClassAtIndex:(LNKSize)classIndex featureAtIndex:(LNKSize)featureIndex value:(LNKFloat)value {
 	if (classIndex >= self.classes.count) {
 		[NSException raise:NSGenericException format:@"The class index is out-of-bounds"];
 	}
@@ -98,10 +98,9 @@ typedef struct {
 	}
 
 	const LNKGaussianParameters parameters = _featureParameters[classIndex * featureCount + featureIndex];
-	const LNKFloat normalizer = 1.0 / (parameters.sd * LNK_sqrt(2 * M_PI));
-	const LNKFloat top = LNK_pow((value - parameters.mean), 2);
-	const LNKFloat bottom = 2 * LNK_pow(parameters.sd, 2);
-	return normalizer * LNK_exp(-top / bottom);
+	const LNKFloat top = value - parameters.mean;
+	const LNKFloat bottom = parameters.sd * parameters.sd;
+	return -0.5 * top * top / bottom - LNKLog(parameters.sd);
 }
 
 @end
