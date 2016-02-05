@@ -104,8 +104,8 @@
 - (void)testGaussianNaiveBayes {
 	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
-	LNKMatrix *trainingMatrix;
-	LNKMatrix *testMatrix;
+	LNKMatrix *trainingMatrix = nil;
+	LNKMatrix *testMatrix = nil;
 	[matrix splitIntoTrainingMatrix:&trainingMatrix testMatrix:&testMatrix trainingBias:0.8];
 	[matrix release];
 	
