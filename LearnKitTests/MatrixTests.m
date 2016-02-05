@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "LNKMatrix.h"
+#import "LNKMatrixPrivate.h"
 
 @interface MatrixTests : XCTestCase
 
@@ -45,6 +46,32 @@
 	XCTAssertEqual([submatrix exampleAtIndex:1][0], 0);
 	XCTAssertEqual([submatrix exampleAtIndex:1][1], 1);
 	XCTAssertEqual([submatrix exampleAtIndex:1][2], 2);
+}
+
+- (void)testShufflingIndices {
+	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+
+	const LNKSize exampleCount = matrix.exampleCount;
+	XCTAssertEqual(exampleCount, (LNKSize)768);
+
+	LNKSize *const indices = [matrix _shuffleIndices];
+
+	for (LNKSize example = 0; example < exampleCount; example++) {
+		BOOL okay = NO;
+		for (LNKSize local = 0; local < exampleCount; local++) {
+			if (indices[local] == example) {
+				okay = YES;
+				break;
+			}
+		}
+
+		if (!okay) {
+			XCTFail(@"An index went missing");
+		}
+	}
+
+	free(indices);
 }
 
 @end
