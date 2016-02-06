@@ -102,7 +102,7 @@
 
 - (LNKFloat)_evaluateCostFunction {
 #warning TODO: implement cost function
-	// Hinge-loss cost function: max(0, 1 - y_k (Theta . x)) + 0.5 * lambda * Theta^2
+	// Hinge-loss cost function: max(0, 1 - y_k (Theta . x + b)) + 0.5 * lambda * Theta^T Theta
 	return 0;
 }
 
