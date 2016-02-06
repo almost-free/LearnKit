@@ -101,9 +101,30 @@
 }
 
 - (LNKFloat)_evaluateCostFunction {
-#warning TODO: implement cost function
-	// Hinge-loss cost function: max(0, 1 - y_k (Theta . x + b)) + 0.5 * lambda * Theta^T Theta
-	return 0;
+	// Hinge-loss cost function: sum over N: max(0, 1 - y_k (Theta . x + b)) + 0.5 * lambda * Theta^T Theta
+	LNKMatrix *const matrix = self.matrix;
+	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *const outputVector = matrix.outputVector;
+	LNKOptimizationAlgorithmStochasticGradientDescent *const algorithm = self.algorithm;
+	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
+	const LNKFloat lambda = regularizationEnabled ? algorithm.lambda : 0;
+
+	LNKFloat cost = 0;
+
+	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
+		LNKFloat y = 0;
+		LNK_dotpr(_theta, UNIT_STRIDE, [matrix exampleAtIndex:exampleIndex], UNIT_STRIDE, &y, columnCount);
+		//TODO: include the +b term
+		
+		cost += MAX(0, 1 - outputVector[exampleIndex] * y);
+	}
+
+	LNKFloat thetaSquared = 0;
+	LNK_dotpr(_theta, UNIT_STRIDE, _theta, UNIT_STRIDE, &thetaSquared, columnCount);
+	cost += 0.5 * lambda * thetaSquared;
+
+	return cost;
 }
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
