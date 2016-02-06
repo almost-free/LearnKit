@@ -46,13 +46,21 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(LNKVect
 	if (matrix.hasBiasColumn) {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The matrix used with k-NN should not have a bias column" userInfo:nil];
 	}
-	
-	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
-	if (self) {
-		_k = DEFAULT_K;
-		_distanceFunction = [LNKKNNEuclideanDistanceFunction copy];
-		_outputFunction = LNKKNNOutputFunctionMostFrequent;
+
+	LNKMatrix *const normalizedCopy = [matrix copy];
+	[normalizedCopy normalize];
+
+	if (!(self = [super initWithMatrix:normalizedCopy implementationType:implementation optimizationAlgorithm:algorithm classes:classes])) {
+		[normalizedCopy release];
+		return nil;
 	}
+
+	[normalizedCopy release];
+
+	_k = DEFAULT_K;
+	_distanceFunction = [LNKKNNEuclideanDistanceFunction copy];
+	_outputFunction = LNKKNNOutputFunctionMostFrequent;
+
 	return self;
 }
 

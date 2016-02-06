@@ -81,6 +81,10 @@ typedef struct {
 	if (featureVector.length != columnCount) {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The length of the feature vector is incompatible with the matrix" userInfo:nil];
 	}
+
+	NSAssert(matrix.isNormalized, @"The matrix should have been normalized during initialization");
+	LNKFloat *const normalizedVector = LNKFloatAllocAndCopy(featureVector.data, featureVector.length);
+	[matrix normalizeVector:normalizedVector];
 	
 	const LNKSize exampleCount = matrix.exampleCount;
 	const LNKSize k = self.k;
@@ -91,7 +95,7 @@ typedef struct {
 	// Find the k closest examples.
 	for (LNKSize example = 0; example < exampleCount; example++) {
 		const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
-		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), featureVector);
+		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), LNKVectorMakeUnsafe(normalizedVector, exampleCount));
 		
 		if (example < k) {
 			closestExamples[example].distance = distance;
@@ -120,7 +124,8 @@ typedef struct {
 	}
 	
 	free(closestExamples);
-	
+	free(normalizedVector);
+
 	return predictedValue;
 }
 

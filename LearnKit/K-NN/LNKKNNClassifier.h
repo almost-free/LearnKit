@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, LNKKNNOutputFunction) {
 
 /// The optimization algorithm for k-NN classifiers is ignored and can be `nil`.
 /// Predicted values depend on the output function used.
+/// LNKKNNClassifier makes a copy of the matrix it is created with and normalizes it so that all features are on the same scale.
 @interface LNKKNNClassifier : LNKClassifier
 
 /// The value of `k` must be >= 1 and less than the number of examples in the matrix.
