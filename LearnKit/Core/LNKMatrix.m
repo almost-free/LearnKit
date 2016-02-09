@@ -367,15 +367,28 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	void (^cleanupLines)() = ^{
 		if (currentLine) {
+			for (LNKSize i = 0; i < LNKFastArrayElementCount(currentLine); i++) {
+				char *buffer = *(char **)LNKFastArrayElementAtIndex(currentLine, i);
+				free(buffer);
+			}
+
 			LNKFastArrayFree(currentLine);
-			currentLine = NULL;
 		}
-		
+
 		LNKSize m = LNKFastArrayElementCount(lines);
 		for (LNKSize i = 0; i < m; i++) {
 			LNKFastArrayRef line = *(LNKFastArrayRef *)LNKFastArrayElementAtIndex(lines, i);
+
+			for (LNKSize j = 0; j < LNKFastArrayElementCount(line); j++) {
+				char *buffer = *(char **)LNKFastArrayElementAtIndex(line, j);
+				free(buffer);
+			}
+
 			LNKFastArrayFree(line);
 		}
+
+		currentLine = NULL;
+		LNKFastArrayFree(lines);
 	};
 	
 	for (NSUInteger n = 0; n < stringLength; n++) {
