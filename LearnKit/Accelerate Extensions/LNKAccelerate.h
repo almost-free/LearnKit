@@ -38,7 +38,7 @@
 #define LNK_exp			exp
 #define LNKLog			log
 #define LNKLog2			log2
-#define LNK_strtoflt(str,len)	strtod((str), (char **)((str) + (len)))
+#define LNK_strtoflt(str)	strtod((str), NULL)
 
 /// Computes the euclidean distance between the two vectors.
 #define LNKVectorDistance(vector1, vector2, outDistance, n) vDSP_distancesqD((vector1), UNIT_STRIDE, (vector2), UNIT_STRIDE, (outDistance), (n))
@@ -72,7 +72,7 @@
 #define LNK_exp			expf
 #define LNKLog			logf
 #define LNKLog2			log2f
-#define LNK_strtoflt(str,len)	strtof((str), (char **)((str) + (len)))
+#define LNK_strtoflt(str,len)	strtof((str), NULL)
 
 /// Computes the euclidean distance between the two vectors.
 #define LNKVectorDistance(vector1, vector2, outDistance, n) vDSP_distancesq((vector1), UNIT_STRIDE, (vector2), UNIT_STRIDE, (outDistance), (n))

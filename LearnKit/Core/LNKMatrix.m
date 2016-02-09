@@ -358,7 +358,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 - (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
 	LNKSize fileColumnCount = LNKSizeMax;
-	LNKFastArrayRef lines = LNKFastArrayCreate(sizeof(LNKFastArrayRef));
+	LNKFastArrayRef lines = LNKFastArrayCreate();
 	const char *rawString = stringContents.UTF8String;
 	const NSUInteger stringLength = stringContents.length;
 	
@@ -394,7 +394,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	for (NSUInteger n = 0; n < stringLength; n++) {
 		if (!currentLine) {
-			currentLine = LNKFastArrayCreate(sizeof(char *));
+			currentLine = LNKFastArrayCreate();
 			startIndex = n;
 		}
 		
@@ -431,8 +431,9 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 				currentLine = NULL;
 			}
 		}
-		else if (startIndex == NSNotFound)
+		else if (startIndex == NSNotFound) {
 			startIndex = n;
+		}
 	}
 	
 	if (LNKFastArrayElementCount(lines) == 0) {
@@ -483,7 +484,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			cleanupLines();
 			return NO;
 		} else {
-			_outputVector[m] = LNK_strtoflt(outputString, strlen(outputString));
+			_outputVector[m] = LNK_strtoflt(outputString);
 		}
 
 		LNKSize localColumn = 0;
@@ -502,12 +503,12 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
 				// Skips to the next column without storing anything.
 			} else {
-				_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + localColumn] = LNK_strtoflt(columnString, strlen(columnString));
+				_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + localColumn] = LNK_strtoflt(columnString);
 				localColumn += 1;
 			}
 		}
 	}
-	
+
 	cleanupLines();
 	return YES;
 }
