@@ -47,7 +47,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
-	if (preprocessingRules != nil) {
+	if (preprocessingRules == nil) {
 		[NSException raise:NSInvalidArgumentException format:@"The dictionary of preprocessing rules must not be nil"];
 	}
 
