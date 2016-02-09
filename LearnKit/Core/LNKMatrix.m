@@ -366,7 +366,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	NSUInteger startIndex = NSNotFound;
 	
 	void (^cleanupLines)() = ^{
-		if (currentLine) {
+		if (currentLine != NULL) {
 			for (LNKSize i = 0; i < LNKFastArrayElementCount(currentLine); i++) {
 				char *buffer = LNKFastArrayElementAtIndex(currentLine, i);
 				free(buffer);
@@ -378,6 +378,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNKSize m = LNKFastArrayElementCount(lines);
 		for (LNKSize i = 0; i < m; i++) {
 			LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, i);
+			NSAssert(line != currentLine, @"Anticipating a double-free");
 
 			for (LNKSize j = 0; j < LNKFastArrayElementCount(line); j++) {
 				char *buffer = LNKFastArrayElementAtIndex(line, j);
