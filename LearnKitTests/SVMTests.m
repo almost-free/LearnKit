@@ -8,12 +8,12 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 
+#import "LNKCSVColumnRule.h"
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKSVMClassifier.h"
 
 @interface SVMTests : XCTestCase
-
 @end
 
 @implementation SVMTests
@@ -21,6 +21,7 @@
 - (void)test1 {
 	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Cancer" ofType:@"csv"];
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	XCTAssertNotNil(matrix);
 
 	LNKMatrix *const subsetMatrix = [matrix submatrixWithExampleRange:NSMakeRange(0, 583)];
 	XCTAssertEqual(subsetMatrix.exampleCount, (LNKSize)583);
@@ -48,6 +49,57 @@
 
 	const LNKFloat accuracy = [classifier computeClassificationAccuracyOnMatrix:testMatrix];
 	XCTAssertGreaterThanOrEqual(accuracy, 0.9, "Poor accuracy");
+
+	[classifier release];
+}
+
+- (void)testIncome {
+	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"income" ofType:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] delimiter:',' addingOnesColumn:YES columnPreprocessingRules:@{
+		@1: [LNKCSVColumnRule deleteRule],
+		@3: [LNKCSVColumnRule deleteRule],
+		@5: [LNKCSVColumnRule deleteRule],
+		@6: [LNKCSVColumnRule deleteRule],
+		@7: [LNKCSVColumnRule deleteRule],
+		@8: [LNKCSVColumnRule deleteRule],
+		@9: [LNKCSVColumnRule deleteRule],
+		@13: [LNKCSVColumnRule deleteRule],
+		@14: [LNKCSVColumnRule conversionRuleWithBlock:^LNKFloat(NSString *string) {
+			if ([string isEqualToString:@" >50K"]) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}]
+	}];
+	XCTAssertNotNil(matrix);
+
+	[matrix normalize];
+
+	LNKMatrix *trainingMatrix = nil;
+	LNKMatrix *testMatrix = nil;
+	[matrix splitIntoTrainingMatrix:&trainingMatrix testMatrix:&testMatrix trainingBias:0.8];
+	[matrix release];
+
+	XCTAssertNotNil(trainingMatrix);
+	XCTAssertNotNil(testMatrix);
+
+	const LNKSize epochs = 50;
+	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
+		return 1.0/(0.01 * iteration + 50);
+	}] iterationCount:epochs];
+	sgd.lambda = 0.001;
+	sgd.stepCount = 300;
+
+	LNKSVMClassifier *const classifier = [[LNKSVMClassifier alloc] initWithMatrix:trainingMatrix
+															   implementationType:LNKImplementationTypeAccelerate
+															optimizationAlgorithm:sgd
+																		  classes:[LNKClasses withCount:2]];
+	[classifier train];
+
+	const LNKFloat accuracy = [classifier computeClassificationAccuracyOnMatrix:testMatrix];
+	NSLog(@"%s: Accuracy: %g", __PRETTY_FUNCTION__, accuracy);
+	XCTAssertGreaterThanOrEqual(accuracy, 0.8, "Poor accuracy");
 
 	[classifier release];
 }

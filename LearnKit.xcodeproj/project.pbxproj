@@ -49,6 +49,10 @@
 		C94FE76A19BA8A6600251EDF /* fmincg.m in Sources */ = {isa = PBXBuildFile; fileRef = C94FE76719BA8A6600251EDF /* fmincg.m */; };
 		C94FE76B19BA8A6600251EDF /* fmincg.h in Headers */ = {isa = PBXBuildFile; fileRef = C94FE76819BA8A6600251EDF /* fmincg.h */; };
 		C958905C1A6DA90E0081EED1 /* LNKMatrixTestExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C958905B1A6DA90E0081EED1 /* LNKMatrixTestExtras.m */; };
+		C95940861C6A4EE800EAFEA9 /* LNKCSVColumnRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C95940841C6A4EE800EAFEA9 /* LNKCSVColumnRule.h */; };
+		C95940871C6A4EE800EAFEA9 /* LNKCSVColumnRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */; };
+		C95940881C6A594300EAFEA9 /* LNKCSVColumnRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */; };
+		C95963231C6A49DD00AF0EBA /* income.csv in Resources */ = {isa = PBXBuildFile; fileRef = C95963221C6A49DD00AF0EBA /* income.csv */; };
 		C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D950C19DFBCE300BE8768 /* KNNTests.m */; };
 		C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C971B4EE19DA6ECB0066C78B /* StructureTests.m */; };
 		C975913819A04B44003D3A48 /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
@@ -266,6 +270,9 @@
 		C94FE76819BA8A6600251EDF /* fmincg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fmincg.h; sourceTree = "<group>"; };
 		C958905A1A6DA90E0081EED1 /* LNKMatrixTestExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixTestExtras.h; sourceTree = "<group>"; };
 		C958905B1A6DA90E0081EED1 /* LNKMatrixTestExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixTestExtras.m; sourceTree = "<group>"; };
+		C95940841C6A4EE800EAFEA9 /* LNKCSVColumnRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKCSVColumnRule.h; sourceTree = "<group>"; };
+		C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKCSVColumnRule.m; sourceTree = "<group>"; };
+		C95963221C6A49DD00AF0EBA /* income.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = income.csv; sourceTree = "<group>"; };
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
 		C971B4EE19DA6ECB0066C78B /* StructureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StructureTests.m; path = LearnKitTests/StructureTests.m; sourceTree = SOURCE_ROOT; };
 		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -736,6 +743,8 @@
 				C9369BA41C5EC647009EF659 /* LNKConfusionMatrix.h */,
 				C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */,
 				C9369BA81C5EC8C4009EF659 /* LNKConfusionMatrixPrivate.h */,
+				C95940841C6A4EE800EAFEA9 /* LNKCSVColumnRule.h */,
+				C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */,
 				C9CBD2C619E5D52900AE71D5 /* LNKFastArray.h */,
 				C9CBD2C719E5D52900AE71D5 /* LNKFastArray.m */,
 				C9CBD2C819E5D52900AE71D5 /* LNKFastFloatQueue.h */,
@@ -788,6 +797,7 @@
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
 				C904FC1B1B7AE26200276F73 /* FluChills.csv */,
+				C95963221C6A49DD00AF0EBA /* income.csv */,
 				C92E45191A15396400B6E33F /* MovieIDs.txt */,
 				C9860BE01A0B4F04009FADAE /* Movies_R.mat */,
 				C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */,
@@ -864,6 +874,7 @@
 				C9CBD27F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h in Headers */,
 				C9CBD2D819E5D52900AE71D5 /* LNKClassifierPrivate.h in Headers */,
 				C905AD8C1A1E6907004812DD /* Numbers.h in Headers */,
+				C95940861C6A4EE800EAFEA9 /* LNKCSVColumnRule.h in Headers */,
 				C9CBD27019E5D46900AE71D5 /* _LNKLinRegPredictorAC.h in Headers */,
 				C9CBD2B019E5D4FD00AE71D5 /* _LNKLogRegClassifierLBFGS_AC.h in Headers */,
 				C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */,
@@ -982,6 +993,7 @@
 				C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */,
 				C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */,
 				C9860BE41A0B4F04009FADAE /* Movies_R.mat in Resources */,
+				C95963231C6A49DD00AF0EBA /* income.csv in Resources */,
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
 				C9860BE61A0B4F04009FADAE /* Movies_X.mat in Resources */,
@@ -1048,6 +1060,7 @@
 				C99219871A6C817600D9CACA /* LNKNeuralNetLayer.m in Sources */,
 				C9CBD27719E5D46900AE71D5 /* _LNKLinRegPredictorLBFGS_AC.m in Sources */,
 				C9CBD29419E5D4AD00AE71D5 /* _LNKNeuralNetClassifierAC.m in Sources */,
+				C95940871C6A4EE800EAFEA9 /* LNKCSVColumnRule.m in Sources */,
 				C9CBD2F119E5D52900AE71D5 /* LNKTypes.m in Sources */,
 				C9CBD25319E5D41D00AE71D5 /* _LNKKMeansClassifierAC.m in Sources */,
 				C9CBD25619E5D41D00AE71D5 /* LNKKMeansClassifier.m in Sources */,
@@ -1066,6 +1079,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C95940881C6A594300EAFEA9 /* LNKCSVColumnRule.m in Sources */,
 				C9369BA91C5ECDD5009EF659 /* LNKConfusionMatrix.m in Sources */,
 				C9CBD26319E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
 				C9CBD2E819E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,

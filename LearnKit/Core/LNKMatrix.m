@@ -8,6 +8,7 @@
 #import "LNKMatrix.h"
 
 #import "LNKAccelerate.h"
+#import "LNKCSVColumnRule.h"
 #import "LNKFastArray.h"
 #import "LNKUtilities.h"
 
@@ -42,6 +43,14 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn {
+	return [self initWithCSVFileAtURL:url delimiter:delimiter addingOnesColumn:addOnesColumn columnPreprocessingRules:@{}];
+}
+
+- (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
+	if (preprocessingRules != nil) {
+		[NSException raise:NSInvalidArgumentException format:@"The dictionary of preprocessing rules must not be nil"];
+	}
+
 	NSParameterAssert(url);
 	
 	if (!(self = [super init]))
@@ -55,7 +64,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		return nil;
 	}
 	
-	if (![self _parseMatrixCSVString:stringContents delimiter:delimiter addingOnesColumn:addOnesColumn]) {
+	if (![self _parseMatrixCSVString:stringContents delimiter:delimiter addingOnesColumn:addOnesColumn columnPreprocessingRules:preprocessingRules]) {
 		[stringContents release];
 		return nil;
 	}
@@ -347,7 +356,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return [submatrix autorelease];
 }
 
-- (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn {
+- (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
 	LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate(sizeof(LNKFastArrayRef));
 	const char *rawString = stringContents.UTF8String;
@@ -355,7 +364,6 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	__block LNKFastArrayRef currentLine = NULL;
 	NSUInteger startIndex = NSNotFound;
-	char buffer[NUMBER_BUFFER_SIZE];
 	
 	void (^cleanupLines)() = ^{
 		if (currentLine) {
@@ -372,7 +380,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	for (NSUInteger n = 0; n < stringLength; n++) {
 		if (!currentLine) {
-			currentLine = LNKFastArrayCreate(sizeof(LNKFloat));
+			currentLine = LNKFastArrayCreate(sizeof(char *));
 			startIndex = n;
 		}
 		
@@ -380,12 +388,11 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		
 		if (startIndex != NSNotFound && (c == delimiter || c == '\n' || c == '\r')) {
 			LNKSize length = n - startIndex;
-			memcpy(buffer, rawString + startIndex, length);
-			buffer[length] = '\0';
-			
-			if (length) {
-				LNKFloat value = LNK_strtoflt(buffer, length);
-				LNKFastArrayAddElement(currentLine, &value);
+
+			if (length > 0) {
+				char *buffer = calloc(length + 1 /* NULL terminator */, sizeof(char));
+				memcpy(buffer, rawString + startIndex, length);
+				LNKFastArrayAddElement(currentLine, &buffer);
 			}
 			
 			startIndex = NSNotFound;
@@ -414,7 +421,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			startIndex = n;
 	}
 	
-	if (!LNKFastArrayElementCount(lines)) {
+	if (LNKFastArrayElementCount(lines) == 0) {
 		NSLog(@"Error while loading matrix: the matrix does not contain any examples");
 		cleanupLines();
 		return NO;
@@ -425,11 +432,22 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		cleanupLines();
 		return NO;
 	}
-	
+
+	LNKFastArrayRef firstLine = *(LNKFastArrayRef *)LNKFastArrayElementAtIndex(lines, 0);
+	const LNKSize firstLineColumns = LNKFastArrayElementCount(firstLine);
+	__block LNKSize deletedColumns = 0;
+
+	[preprocessingRules enumerateKeysAndObjectsUsingBlock:^(NSNumber *column, LNKCSVColumnRule *rule, BOOL *stop) {
+#pragma unused(stop)
+		if (rule.type == LNKCSVColumnRuleTypeDelete && column.LNKSizeValue < firstLineColumns) {
+			deletedColumns += 1;
+		}
+	}];
+
 	_exampleCount = LNKFastArrayElementCount(lines);
 	
 	// The matrix's column count does not include the output vector, but should include the optional ones column.
-	_columnCount = fileColumnCount - 1 + (addOnesColumn ? 1 : 0);
+	_columnCount = fileColumnCount - 1 + (addOnesColumn ? 1 : 0) - deletedColumns;
 	_hasBiasColumn = addOnesColumn;
 	
 	[self _allocateBuffers];
@@ -437,11 +455,42 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	for (LNKSize m = 0; m < _exampleCount; m++) {
 		// The last column contains the output vector.
 		LNKFastArrayRef line = *(LNKFastArrayRef *)LNKFastArrayElementAtIndex(lines, m);
-		_outputVector[m] = *(LNKFloat *)LNKFastArrayElementAtIndex(line, _columnCount - (addOnesColumn ? 1 : 0));
-		
+		const LNKSize outputColumnIndex = fileColumnCount - 1;
+		char *outputString = *(char **)LNKFastArrayElementAtIndex(line, outputColumnIndex);
+
+		LNKCSVColumnRule *outputRule = preprocessingRules[@(outputColumnIndex)];
+		if (outputRule && outputRule.type == LNKCSVColumnRuleTypeConversion) {
+			LNKCSVColumnRuleTypeConversionHandler handler = outputRule.object;
+			NSAssert(handler != nil, @"Conversions should always have a handler");
+
+			_outputVector[m] = handler([NSString stringWithUTF8String:outputString]);
+		} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
+			NSLog(@"Error while loading the matrix: the output column cannot be deleted");
+			cleanupLines();
+			return NO;
+		} else {
+			_outputVector[m] = LNK_strtoflt(outputString, strlen(outputString));
+		}
+
+		LNKSize localColumn = 0;
+
 		// Ignore the last column since it's actually our output vector.
-		for (LNKSize n = 0; n < _columnCount - (addOnesColumn ? 1 : 0); n++) {
-			_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + n] = *(LNKFloat *)LNKFastArrayElementAtIndex(line, n);
+		for (LNKSize n = 0; n < outputColumnIndex; n++) {
+			char *columnString = *(char **)LNKFastArrayElementAtIndex(line, n);
+
+			LNKCSVColumnRule *outputRule = preprocessingRules[@(n)];
+			if (outputRule && outputRule.type == LNKCSVColumnRuleTypeConversion) {
+				LNKCSVColumnRuleTypeConversionHandler handler = outputRule.object;
+				NSAssert(handler != nil, @"Conversions should always have a handler");
+
+				_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + localColumn] = handler([NSString stringWithUTF8String:columnString]);
+				localColumn += 1;
+			} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
+				// Skips to the next column without storing anything.
+			} else {
+				_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + localColumn] = LNK_strtoflt(columnString, strlen(columnString));
+				localColumn += 1;
+			}
 		}
 	}
 	
