@@ -10,7 +10,7 @@ typedef LNKFastArray *LNKFastArrayRef;
 
 /// The returned object must be freed with `LNKFastArrayFree`.
 /// Each element stored in the array must be of size `elementWidth`.
-extern LNKFastArrayRef LNKFastArrayCreate(LNKSize elementWidth);
+extern LNKFastArrayRef LNKFastArrayCreate();
 
 /// The same fast array must not be freed more than once.
 extern void LNKFastArrayFree(LNKFastArrayRef array);

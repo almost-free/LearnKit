@@ -368,7 +368,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	void (^cleanupLines)() = ^{
 		if (currentLine) {
 			for (LNKSize i = 0; i < LNKFastArrayElementCount(currentLine); i++) {
-				char *buffer = *(char **)LNKFastArrayElementAtIndex(currentLine, i);
+				char *buffer = LNKFastArrayElementAtIndex(currentLine, i);
 				free(buffer);
 			}
 
@@ -377,10 +377,10 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 		LNKSize m = LNKFastArrayElementCount(lines);
 		for (LNKSize i = 0; i < m; i++) {
-			LNKFastArrayRef line = *(LNKFastArrayRef *)LNKFastArrayElementAtIndex(lines, i);
+			LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, i);
 
 			for (LNKSize j = 0; j < LNKFastArrayElementCount(line); j++) {
-				char *buffer = *(char **)LNKFastArrayElementAtIndex(line, j);
+				char *buffer = LNKFastArrayElementAtIndex(line, j);
 				free(buffer);
 			}
 
@@ -405,7 +405,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			if (length > 0) {
 				char *buffer = calloc(length + 1 /* NULL terminator */, sizeof(char));
 				memcpy(buffer, rawString + startIndex, length);
-				LNKFastArrayAddElement(currentLine, &buffer);
+				LNKFastArrayAddElement(currentLine, buffer);
 			}
 			
 			startIndex = NSNotFound;
@@ -426,7 +426,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 					return NO;
 				}
 				
-				LNKFastArrayAddElement(lines, &currentLine);
+				LNKFastArrayAddElement(lines, currentLine);
 				currentLine = NULL;
 			}
 		}
@@ -446,7 +446,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		return NO;
 	}
 
-	LNKFastArrayRef firstLine = *(LNKFastArrayRef *)LNKFastArrayElementAtIndex(lines, 0);
+	LNKFastArrayRef firstLine = LNKFastArrayElementAtIndex(lines, 0);
 	const LNKSize firstLineColumns = LNKFastArrayElementCount(firstLine);
 	__block LNKSize deletedColumns = 0;
 
@@ -467,9 +467,9 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	for (LNKSize m = 0; m < _exampleCount; m++) {
 		// The last column contains the output vector.
-		LNKFastArrayRef line = *(LNKFastArrayRef *)LNKFastArrayElementAtIndex(lines, m);
+		LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, m);
 		const LNKSize outputColumnIndex = fileColumnCount - 1;
-		char *outputString = *(char **)LNKFastArrayElementAtIndex(line, outputColumnIndex);
+		char *outputString = LNKFastArrayElementAtIndex(line, outputColumnIndex);
 
 		LNKCSVColumnRule *outputRule = preprocessingRules[@(outputColumnIndex)];
 		if (outputRule && outputRule.type == LNKCSVColumnRuleTypeConversion) {
@@ -489,7 +489,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 		// Ignore the last column since it's actually our output vector.
 		for (LNKSize n = 0; n < outputColumnIndex; n++) {
-			char *columnString = *(char **)LNKFastArrayElementAtIndex(line, n);
+			char *columnString = LNKFastArrayElementAtIndex(line, n);
 
 			LNKCSVColumnRule *outputRule = preprocessingRules[@(n)];
 			if (outputRule && outputRule.type == LNKCSVColumnRuleTypeConversion) {
