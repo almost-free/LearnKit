@@ -55,7 +55,7 @@
 
 - (void)testIncome {
 	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"income" ofType:@"csv"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] delimiter:',' addingOnesColumn:YES columnPreprocessingRules:@{
+	LNKMatrix *const unnormalizedMatrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] delimiter:',' addingOnesColumn:YES columnPreprocessingRules:@{
 		@1: [LNKCSVColumnRule deleteRule],
 		@3: [LNKCSVColumnRule deleteRule],
 		@5: [LNKCSVColumnRule deleteRule],
@@ -72,14 +72,14 @@
 			}
 		}]
 	}];
-	XCTAssertNotNil(matrix);
+	XCTAssertNotNil(unnormalizedMatrix);
 
-	[matrix normalize];
+	LNKMatrix *const matrix = unnormalizedMatrix.normalizedMatrix;
+	[unnormalizedMatrix release];
 
 	LNKMatrix *trainingMatrix = nil;
 	LNKMatrix *testMatrix = nil;
 	[matrix splitIntoTrainingMatrix:&trainingMatrix testMatrix:&testMatrix trainingBias:0.8];
-	[matrix release];
 
 	XCTAssertNotNil(trainingMatrix);
 	XCTAssertNotNil(testMatrix);

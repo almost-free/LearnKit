@@ -82,18 +82,18 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 }
 
 - (void)test5Normalization {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data2" ofType:@"txt"];
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"ex1data2" withExtension:@"txt"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
-	[matrix normalize];
-	
+	LNKMatrix *const unnormalizedMatrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url addingOnesColumn:YES];
+	LNKMatrix *const matrix = unnormalizedMatrix.normalizedMatrix;
+	[unnormalizedMatrix release];
+
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
 																						   iterationCount:400];
 	
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
-	[matrix release];
 	[predictor train];
 	
 	LNKFloat *thetaVector = [predictor _thetaVector];
@@ -287,14 +287,14 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKMatrix *trainingSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
 															  exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
-	LNKMatrix *trainingSet = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
-	[trainingSet normalize];
+	LNKMatrix *trainingSet__ = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
+	LNKMatrix *trainingSet = trainingSet__.normalizedMatrix;
 	
 	LNKMatrix *cvSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
 														exampleCount:21 columnCount:1 addingOnesColumn:YES];
-	LNKMatrix *cvSet = [[cvSet_ polynomialMatrixOfDegree:8] retain];
-	[cvSet normalizeWithMeanVector:[trainingSet normalizationMeanVector] standardDeviationVector:[trainingSet normalizationStandardDeviationVector]];
+	LNKMatrix *cvSet__ = [[cvSet_ polynomialMatrixOfDegree:8] retain];
+	LNKMatrix *cvSet = [cvSet__ normalizedMatrixWithMeanVector:trainingSet.normalizationMeanVector standardDeviationVector:trainingSet.normalizationStandardDeviationVector];
 	
 	LNKFloat trainError[exampleCount];
 	LNKFloat cvError[exampleCount];
@@ -338,9 +338,9 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(cvError[11],  21,      2);
 	
 	[trainingSet_ release];
-	[trainingSet release];
+	[trainingSet__ release];
 	[cvSet_ release];
-	[cvSet release];
+	[cvSet__ release];
 }
 
 @end
