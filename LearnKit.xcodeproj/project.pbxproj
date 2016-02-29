@@ -32,6 +32,7 @@
 		C915808619E8EC9600879FD5 /* AnomalyPerformance.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */; };
 		C915808719E8EC9600879FD5 /* AnomalyPerformanceVal.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */; };
 		C915808819E8EC9600879FD5 /* AnomalyPerformanceValY.mat in Resources */ = {isa = PBXBuildFile; fileRef = C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */; };
+		C9266FF41C84C3A3002F917E /* Iris.dat in Resources */ = {isa = PBXBuildFile; fileRef = C9266FF31C84C3A3002F917E /* Iris.dat */; };
 		C92E451A1A15396400B6E33F /* MovieIDs.txt in Resources */ = {isa = PBXBuildFile; fileRef = C92E45191A15396400B6E33F /* MovieIDs.txt */; };
 		C9369BA61C5EC647009EF659 /* LNKConfusionMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = C9369BA41C5EC647009EF659 /* LNKConfusionMatrix.h */; };
 		C9369BA71C5EC647009EF659 /* LNKConfusionMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */; };
@@ -253,6 +254,7 @@
 		C915808319E8EC9600879FD5 /* AnomalyPerformance.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformance.mat; sourceTree = "<group>"; };
 		C915808419E8EC9600879FD5 /* AnomalyPerformanceVal.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceVal.mat; sourceTree = "<group>"; };
 		C915808519E8EC9600879FD5 /* AnomalyPerformanceValY.mat */ = {isa = PBXFileReference; lastKnownFileType = file; path = AnomalyPerformanceValY.mat; sourceTree = "<group>"; };
+		C9266FF31C84C3A3002F917E /* Iris.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Iris.dat; sourceTree = "<group>"; };
 		C92E45191A15396400B6E33F /* MovieIDs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MovieIDs.txt; sourceTree = "<group>"; };
 		C9369BA41C5EC647009EF659 /* LNKConfusionMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKConfusionMatrix.h; sourceTree = "<group>"; };
 		C9369BA51C5EC647009EF659 /* LNKConfusionMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKConfusionMatrix.m; sourceTree = "<group>"; };
@@ -798,6 +800,7 @@
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
 				C904FC1B1B7AE26200276F73 /* FluChills.csv */,
 				C95963221C6A49DD00AF0EBA /* income.csv */,
+				C9266FF31C84C3A3002F917E /* Iris.dat */,
 				C92E45191A15396400B6E33F /* MovieIDs.txt */,
 				C9860BE01A0B4F04009FADAE /* Movies_R.mat */,
 				C9860BE11A0B4F04009FADAE /* Movies_Theta.mat */,
@@ -994,6 +997,7 @@
 				C915808219E8E4FB00879FD5 /* ServerStatisticsValY.mat in Resources */,
 				C9860BE41A0B4F04009FADAE /* Movies_R.mat in Resources */,
 				C95963231C6A49DD00AF0EBA /* income.csv in Resources */,
+				C9266FF41C84C3A3002F917E /* Iris.dat in Resources */,
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
 				C9860BE61A0B4F04009FADAE /* Movies_X.mat in Resources */,
