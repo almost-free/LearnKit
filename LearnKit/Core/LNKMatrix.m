@@ -559,6 +559,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	if (_hasBiasColumn) {
 		_columnToSD[0] = 1;
+		_columnToMu[0] = 0;
 		
 		if (allocateMatrix) {
 			const LNKFloat one = 1;
