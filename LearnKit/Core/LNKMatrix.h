@@ -80,9 +80,9 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (const LNKFloat *)normalizationMeanVector NS_RETURNS_INNER_POINTER;
 - (const LNKFloat *)normalizationStandardDeviationVector NS_RETURNS_INNER_POINTER;
 
-/// Normalizes a vector in-place.
-/// `normalizeFeatures` must be called prior to normalizing a vector.
-- (void)normalizeVector:(LNKFloat *)input;
+/// Normalizes a vector in-place by subtracting the mean and dividing by the standard deviation of the matrix.
+/// This method throws an exception if the matrix has not been normalized.
+- (void)normalizeVector:(LNKFloat *)vector;
 
 /// Provides mutable access to the output vector.
 - (void)modifyOutputVector:(void(^)(LNKFloat *outputVector, LNKSize m))transformationBlock;

@@ -602,7 +602,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNKFloat mean;
 		LNK_vmean(columnPointer, _columnCount, &mean, _exampleCount);
 		
-		_columnToMu[n] = -mean;
+		_columnToMu[n] = mean;
 		_columnToSD[n] = LNK_vsd(LNKVectorMakeUnsafe(columnPointer, _exampleCount), _columnCount, workgroup, mean, YES);
 	}
 	
@@ -624,7 +624,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	for (LNKSize n = _hasBiasColumn; n < _columnCount; n++) {
 		LNKFloat *columnPointer = _matrix + n;
 		
-		const LNKFloat minusMean = meanVector[n];
+		const LNKFloat minusMean = -meanVector[n];
 		const LNKFloat sd = sdVector[n];
 		
 		// (column - mean) / standardDeviation
@@ -651,12 +651,14 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (void)normalizeVector:(LNKFloat *)input {
+	if (!_normalized) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The matrix must be normalized prior to calling -normalizeVetor:" userInfo:nil];
+	}
+
 	NSParameterAssert(input);
-	NSAssert(_normalized, @"The matrix needs to be normalized first");
 	
 	// (input - mean) / standardDeviation
-	// Since mu has been negated initially, we add instead of subtracting.
-	LNK_vadd(input, UNIT_STRIDE, _columnToMu, UNIT_STRIDE, input, UNIT_STRIDE, _columnCount);
+	LNK_vsub(_columnToMu, UNIT_STRIDE, input, UNIT_STRIDE, input, UNIT_STRIDE, _columnCount);
 	LNK_vdiv(_columnToSD, UNIT_STRIDE, input, UNIT_STRIDE, input, UNIT_STRIDE, _columnCount);
 }
 
