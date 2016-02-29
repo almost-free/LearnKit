@@ -591,39 +591,58 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	[super dealloc];
 }
 
-- (void)normalize {
-	if (_normalized)
-		return;
+- (LNKMatrix *)normalizedMatrix {
+	if (_normalized) {
+		return self;
+	}
 	
-	LNKFloat *workgroup = LNKFloatAlloc(_exampleCount);
+	LNKFloat *const workgroup = LNKFloatAlloc(_exampleCount);
+	LNKFloat *const columnToMu = LNKFloatAlloc(_columnCount);
+	LNKFloat *const columnToSD = LNKFloatAlloc(_columnCount);
+
+	if (_hasBiasColumn) {
+		columnToSD[0] = 1;
+		columnToMu[0] = 0;
+	}
 	
 	for (LNKSize n = _hasBiasColumn; n < _columnCount; n++) {
-		LNKFloat *columnPointer = _matrix + n;
+		LNKFloat *const columnPointer = _matrix + n;
 		
 		LNKFloat mean;
 		LNK_vmean(columnPointer, _columnCount, &mean, _exampleCount);
 		
-		_columnToMu[n] = mean;
-		_columnToSD[n] = LNK_vsd(LNKVectorMakeUnsafe(columnPointer, _exampleCount), _columnCount, workgroup, mean, YES);
+		columnToMu[n] = mean;
+		columnToSD[n] = LNK_vsd(LNKVectorMakeUnsafe(columnPointer, _exampleCount), _columnCount, workgroup, mean, YES);
 	}
-	
-	[self normalizeWithMeanVector:_columnToMu standardDeviationVector:_columnToSD];
-	
+
 	free(workgroup);
+
+	LNKMatrix *const matrix = [self normalizedMatrixWithMeanVector:columnToMu standardDeviationVector:columnToSD];
+	free(columnToMu);
+	free(columnToSD);
+	
+	return matrix;
 }
 
-- (void)normalizeWithMeanVector:(const LNKFloat *)meanVector standardDeviationVector:(const LNKFloat *)sdVector {
+- (LNKMatrix *)normalizedMatrixWithMeanVector:(const LNKFloat *)meanVector standardDeviationVector:(const LNKFloat *)sdVector {
+	if (_normalized) {
+		return self;
+	}
+
 	NSParameterAssert(meanVector);
 	NSParameterAssert(sdVector);
-	
-	if (meanVector != _columnToMu)
-		LNKFloatCopy(_columnToMu, meanVector, _columnCount);
-	
-	if (sdVector != _columnToSD)
-		LNKFloatCopy(_columnToSD, sdVector, _columnCount);
+
+	LNKMatrix *const normalizedMatrix = [[LNKMatrix alloc] initWithExampleCount:_exampleCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+		LNKFloatCopy(matrix, _matrix, _columnCount * _exampleCount);
+		LNKFloatCopy(outputVector, _outputVector, _exampleCount);
+		return YES;
+	}];
+
+	LNKFloatCopy(normalizedMatrix->_columnToMu, meanVector, _columnCount);
+	LNKFloatCopy(normalizedMatrix->_columnToSD, sdVector, _columnCount);
 	
 	for (LNKSize n = _hasBiasColumn; n < _columnCount; n++) {
-		LNKFloat *columnPointer = _matrix + n;
+		LNKFloat *const columnPointer = normalizedMatrix->_matrix + n;
 		
 		const LNKFloat minusMean = -meanVector[n];
 		const LNKFloat sd = sdVector[n];
@@ -633,7 +652,9 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNK_vsdiv(columnPointer, _columnCount, &sd, columnPointer, _columnCount, _exampleCount);
 	}
 	
-	_normalized = YES;
+	normalizedMatrix->_normalized = YES;
+
+	return [normalizedMatrix autorelease];
 }
 
 - (void)_ensureNormalization {

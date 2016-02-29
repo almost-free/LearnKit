@@ -73,8 +73,9 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 @property (nonatomic, readonly, getter=isNormalized) BOOL normalized;
 
-- (void)normalize;
-- (void)normalizeWithMeanVector:(const LNKFloat *)meanVector standardDeviationVector:(const LNKFloat *)sdVector;
+/// If the matrix has already been normalized, `self` is returned.
+- (LNKMatrix *)normalizedMatrix;
+- (LNKMatrix *)normalizedMatrixWithMeanVector:(const LNKFloat *)meanVector standardDeviationVector:(const LNKFloat *)sdVector;
 
 /// An exception will be thrown if these methods are called prior to normalizing the matrix.
 - (const LNKFloat *)normalizationMeanVector NS_RETURNS_INNER_POINTER;
