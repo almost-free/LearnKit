@@ -56,6 +56,10 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 - (void)clipExampleCountTo:(LNKSize)exampleCount;
 
+/// Throws an exception if the passed-in matrix is `nil` or if matrix dimensions are incompatible.
+- (LNKMatrix *)multiplyByMatrix:(LNKMatrix *)matrix;
+- (LNKMatrix *)transposedMatrix;
+
 /// Returns a copy of the current matrix with its rows reshuffled.
 - (LNKMatrix *)copyShuffledMatrix;
 

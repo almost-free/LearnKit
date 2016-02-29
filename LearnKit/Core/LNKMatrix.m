@@ -262,6 +262,42 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return LNKVectorMakeUnsafe(values, _exampleCount);
 }
 
+- (LNKMatrix *)multiplyByMatrix:(LNKMatrix *)matrix {
+	if (matrix == nil) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The passed in matrix must not be nil" userInfo:nil];
+	}
+
+	const LNKSize columnCount = self.columnCount;
+	const LNKSize matrixExampleCount = matrix.exampleCount;
+
+	if (columnCount != matrixExampleCount) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The matrix sizes do not match" userInfo:nil];
+	}
+
+	const LNKSize exampleCount = self.exampleCount;
+	const LNKSize matrixColumnCount = matrix.columnCount;
+
+	LNKFloat *const result = LNKFloatAlloc(exampleCount * matrixColumnCount);
+	LNK_mmul(_matrix, UNIT_STRIDE, matrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, matrixColumnCount, columnCount);
+
+	return [[[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:matrixColumnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+		LNKFloatCopy(localMatrix, result, exampleCount * matrixColumnCount);
+		return YES;
+	}] autorelease];
+}
+
+- (LNKMatrix *)transposedMatrix {
+	const LNKSize columnCount = self.columnCount;
+	const LNKSize exampleCount = self.exampleCount;
+
+	return [[[LNKMatrix alloc] initWithExampleCount:columnCount columnCount:exampleCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+		LNK_mtrans(_matrix, matrix, columnCount, exampleCount);
+		return YES;
+	}] autorelease];
+}
+
 // The result must be freed by the caller.
 - (LNKSize *)_shuffleIndices {
 	LNKSize *indices = malloc(sizeof(LNKSize) * _exampleCount);
