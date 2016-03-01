@@ -349,13 +349,13 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	const LNKSize testSize = rowCount - trainingSize;
 
 	LNKMatrix *const shuffledMatrix = [self copyShuffledMatrix];
-	*trainingMatrix = [shuffledMatrix submatrixWithExampleRange:NSMakeRange(0, trainingSize)];
-	*testMatrix = [shuffledMatrix submatrixWithExampleRange:NSMakeRange(trainingSize, testSize)];
+	*trainingMatrix = [shuffledMatrix submatrixWithRowRange:NSMakeRange(0, trainingSize)];
+	*testMatrix = [shuffledMatrix submatrixWithRowRange:NSMakeRange(trainingSize, testSize)];
 
 	[shuffledMatrix release];
 }
 
-- (LNKMatrix *)submatrixWithExampleRange:(NSRange)range {
+- (LNKMatrix *)submatrixWithRowRange:(NSRange)range {
 	const LNKSize columnCount = self.columnCount;
 
 	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithExampleCount:range.length columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {

@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 - (void)splitIntoTrainingMatrix:(LNKMatrix *__nonnull *__nonnull)trainingMatrix testMatrix:(LNKMatrix *__nonnull *__nonnull)testMatrix trainingBias:(LNKFloat)trainingBias;
 
-- (LNKMatrix *)submatrixWithExampleRange:(NSRange)range;
+- (LNKMatrix *)submatrixWithRowRange:(NSRange)range;
 - (LNKMatrix *)submatrixWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount;
 
 @property (nonatomic, readonly, getter=isNormalized) BOOL normalized;

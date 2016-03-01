@@ -23,7 +23,7 @@
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
 	XCTAssertNotNil(matrix);
 
-	LNKMatrix *const subsetMatrix = [matrix submatrixWithExampleRange:NSMakeRange(0, 583)];
+	LNKMatrix *const subsetMatrix = [matrix submatrixWithRowRange:NSMakeRange(0, 583)];
 	XCTAssertEqual(subsetMatrix.rowCount, (LNKSize)583);
 	XCTAssertEqual(subsetMatrix.columnCount, matrix.columnCount);
 	[matrix release];
