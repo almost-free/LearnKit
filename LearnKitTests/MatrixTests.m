@@ -24,9 +24,9 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithRowCount:4 columnCount:4 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
-		for (LNKSize example = 0; example < rowCount; example++) {
+		for (LNKSize row = 0; row < rowCount; row++) {
 			for (LNKSize column = 0; column < columnCount; column++) {
-				matrix[example * columnCount + column] = example * column;
+				matrix[row * columnCount + column] = row * column;
 			}
 		}
 		
@@ -57,10 +57,10 @@
 
 	LNKSize *const indices = [matrix _shuffleIndices];
 
-	for (LNKSize example = 0; example < rowCount; example++) {
+	for (LNKSize row = 0; row < rowCount; row++) {
 		BOOL okay = NO;
 		for (LNKSize local = 0; local < rowCount; local++) {
-			if (indices[local] == example) {
+			if (indices[local] == row) {
 				okay = YES;
 				break;
 			}

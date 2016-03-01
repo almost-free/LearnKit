@@ -251,10 +251,10 @@
 	
 	NSMutableArray<NSDictionary *> *results = [NSMutableArray new];
 	
-	for (LNKSize example = 0; example < rowCount; example++) {
-		LNKFloat prediction = predictions[example * _featureCount + userIndex];
+	for (LNKSize row = 0; row < rowCount; row++) {
+		LNKFloat prediction = predictions[row * _featureCount + userIndex];
 		
-		[results addObject:@{ @"prediction": @(prediction), @"index": @(example) }];
+		[results addObject:@{ @"prediction": @(prediction), @"index": @(row) }];
 	}
 	
 	free(predictions);

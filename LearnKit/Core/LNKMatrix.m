@@ -380,9 +380,9 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	
 	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
-		for (LNKSize example = 0; example < rowCount; example++) {
-			const LNKFloat *inputExample = [self rowAtIndex:example];
-			LNKFloatCopy(matrix + example * columnCount, inputExample, columnCount);
+		for (LNKSize row = 0; row < rowCount; row++) {
+			const LNKFloat *inputExample = [self rowAtIndex:row];
+			LNKFloatCopy(matrix + row * columnCount, inputExample, columnCount);
 		}
 		
 		return YES;

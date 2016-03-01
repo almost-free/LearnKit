@@ -56,13 +56,13 @@
 
 - (void)test1Training {
 	LNKMatrix *trainingMatrix = [[LNKMatrix alloc] initWithRowCount:TRAIN_EXAMPLES
-															columnCount:FEATURES
-													   addingOnesColumn:YES
-														 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-															 [self _copyMNISTDataWithBasename:@"train" toMatrixBuffer:matrix outputVector:outputVector examples:TRAIN_EXAMPLES];
-															 return YES;
-														 }];
-	
+														columnCount:FEATURES
+												   addingOnesColumn:YES
+													 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+														 [self _copyMNISTDataWithBasename:@"train" toMatrixBuffer:matrix outputVector:outputVector examples:TRAIN_EXAMPLES];
+														 return YES;
+													 }];
+
 	LNKOptimizationAlgorithmStochasticGradientDescent *algorithm = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.3]
 																														  iterationCount:30];
 	algorithm.stepCount = 50;

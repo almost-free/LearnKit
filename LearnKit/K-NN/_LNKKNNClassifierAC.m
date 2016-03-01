@@ -93,19 +93,19 @@ typedef struct {
 	_LNKDistanceBucket *closestExamples = calloc(sizeof(_LNKDistanceBucket), k);
 	
 	// Find the k closest examples.
-	for (LNKSize example = 0; example < rowCount; example++) {
-		const LNKFloat *exampleRow = [matrix rowAtIndex:example];
+	for (LNKSize row = 0; row < rowCount; row++) {
+		const LNKFloat *exampleRow = [matrix rowAtIndex:row];
 		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), LNKVectorMakeUnsafe(normalizedVector, rowCount));
 		
-		if (example < k) {
-			closestExamples[example].distance = distance;
-			closestExamples[example].index = example;
+		if (row < k) {
+			closestExamples[row].distance = distance;
+			closestExamples[row].index = row;
 		}
 		else {
 			for (LNKSize kOffset = 0; kOffset < k; kOffset++) {
 				if (distance < closestExamples[kOffset].distance) {
 					closestExamples[kOffset].distance = distance;
-					closestExamples[kOffset].index = example;
+					closestExamples[kOffset].index = row;
 					break;
 				}
 			}
