@@ -8,6 +8,15 @@
 #import "LNKAccelerate.h"
 
 void LNK_mtrans(const LNKFloat *source, LNKFloat *dest, vDSP_Length N, vDSP_Length M) {
+	if (source == dest) {
+#if USE_DOUBLE_PRECISION
+		vDSP_mtransD(source, UNIT_STRIDE, dest, UNIT_STRIDE, N, M);
+#else
+		vDSP_mtrans(source, UNIT_STRIDE, dest, UNIT_STRIDE, N, M);
+#endif
+		return;
+	}
+
 #define BLOCK_SIZE 16
 	
 	for (vDSP_Length i = 0; i < N; i += BLOCK_SIZE) {
