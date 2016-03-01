@@ -30,7 +30,7 @@ LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:matrixURL
 												 matrixValueType:LNKValueTypeDouble
 											   outputVectorAtURL:matrixOutputURL
 										   outputVectorValueType:LNKValueTypeUInt8
-													exampleCount:5000
+														rowCount:5000
 													 columnCount:400
 												addingOnesColumn:YES];
 ```
