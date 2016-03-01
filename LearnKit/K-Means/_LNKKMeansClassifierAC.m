@@ -34,7 +34,7 @@
 			const LNKSize selectedExample = arc4random_uniform((uint32_t)exampleCount);
 			
 			if (![usedIndices containsIndex:selectedExample]) {
-				LNKFloatCopy(OFFSET_BY_CLUSTER(clusterCentroids), _EXAMPLE_IN_MATRIX_BUFFER(selectedExample), columnCount);
+				LNKFloatCopy(OFFSET_BY_CLUSTER(clusterCentroids), _ROW_IN_MATRIX_BUFFER(selectedExample), columnCount);
 				[usedIndices addIndex:selectedExample];
 				break;
 			}
@@ -91,7 +91,7 @@
 		
 		// Assign examples to clusters.
 		for (LNKSize index = 0; index < exampleCount; index++) {
-			const LNKFloat *example = _EXAMPLE_IN_MATRIX_BUFFER(index);
+			const LNKFloat *example = _ROW_IN_MATRIX_BUFFER(index);
 			const LNKSize cluster = [self _closestClusterToExample:example];
 			examplesToClusters[index] = cluster;
 			

@@ -57,7 +57,7 @@
 	
 	// Accumulate the deltas through all the examples.
 	for (LNKSize m = range.location; m < range.location + range.length; m++) {
-		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
+		const LNKFloat *featureVector = _ROW_IN_MATRIX_BUFFER(m);
 		
 		// First predict the output, then use backpropagation to find weight gradients.
 		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:activations outputVector:NULL];
@@ -374,7 +374,7 @@
 	LNKFloat J = 0;
 	
 	for (LNKSize m = range.location; m < range.location + range.length; m++) {
-		const LNKFloat *featureVector = _EXAMPLE_IN_MATRIX_BUFFER(m);
+		const LNKFloat *featureVector = _ROW_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputLayer;
 		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:NULL outputVector:&outputLayer];
 		
