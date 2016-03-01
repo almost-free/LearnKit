@@ -236,7 +236,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKOptimizationAlgorithmLBFGS *cvAlgorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	
 	for (LNKSize i = 1; i <= rowCount; i++) {
-		[trainingSet clipExampleCountTo:i];
+		[trainingSet clipRowCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.lambda = 0;
@@ -302,7 +302,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKOptimizationAlgorithmLBFGS *cvAlgorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	
 	for (LNKSize i = 1; i <= rowCount; i++) {
-		[trainingSet clipExampleCountTo:i];
+		[trainingSet clipRowCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.lambda = 0;

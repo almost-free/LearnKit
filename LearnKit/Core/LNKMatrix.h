@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// The result must be freed by the caller.
 - (LNKVector)copyOfColumnAtIndex:(LNKSize)columnIndex;
 
-- (void)clipExampleCountTo:(LNKSize)rowCount;
+- (void)clipRowCountTo:(LNKSize)rowCount;
 
 /// Throws an exception if the passed-in matrix is `nil` or if matrix dimensions are incompatible.
 - (LNKMatrix *)multiplyByMatrix:(LNKMatrix *)matrix;

@@ -247,7 +247,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return _matrix + (index * _columnCount);
 }
 
-- (void)clipExampleCountTo:(LNKSize)rowCount {
+- (void)clipRowCountTo:(LNKSize)rowCount {
 	NSParameterAssert(rowCount);
 	_rowCount = rowCount;
 }
