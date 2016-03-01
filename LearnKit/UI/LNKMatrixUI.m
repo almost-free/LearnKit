@@ -19,8 +19,8 @@
 	if (!width || !height)
 		[NSException raise:NSGenericException format:@"The width and height must be greater than 0"];
 	
-	if (index >= self.exampleCount)
-		[NSException raise:NSGenericException format:@"The given index (%lld) is out-of-bounds (%lld)", index, self.exampleCount];
+	if (index >= self.rowCount)
+		[NSException raise:NSGenericException format:@"The given index (%lld) is out-of-bounds (%lld)", index, self.rowCount];
 	
 	const LNKFloat *pixels = self.matrixBuffer + (index * self.columnCount);
 	
@@ -59,7 +59,7 @@
 	
 	table.headerColumnCount = 0;
 	table.headerRowCount = 0;
-	table.rowCount = self.exampleCount;
+	table.rowCount = self.rowCount;
 	table.columnCount = self.columnCount;
 	table.name = @"Matrix";
 	

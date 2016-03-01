@@ -36,7 +36,7 @@
 	LNKMatrix *submatrix = [matrix submatrixWithExampleCount:2 columnCount:3];
 	[matrix release];
 	
-	XCTAssertEqual(submatrix.exampleCount, 2UL);
+	XCTAssertEqual(submatrix.rowCount, 2UL);
 	XCTAssertEqual(submatrix.columnCount, 3UL);
 	
 	XCTAssertEqual([submatrix rowAtIndex:0][0], 0);
@@ -52,7 +52,7 @@
 	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
 
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	XCTAssertEqual(exampleCount, (LNKSize)768);
 
 	LNKSize *const indices = [matrix _shuffleIndices];

@@ -74,7 +74,7 @@
 	if (!matrix)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
 	
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
@@ -96,7 +96,7 @@
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
 	}
 
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *const matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *const outputVector = matrix.outputVector;

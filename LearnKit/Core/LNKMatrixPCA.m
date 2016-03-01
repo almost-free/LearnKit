@@ -53,7 +53,7 @@
 
 	NSAssert(columnCount == workingMatrix.columnCount, @"The number of columns should not change");
 
-	const LNKSize exampleCount = workingMatrix.exampleCount;
+	const LNKSize exampleCount = workingMatrix.rowCount;
 	const LNKFloat *matrixBuffer = workingMatrix.matrixBuffer;
 
 	LNKFloat *const sigmaMatrix = LNKFloatAlloc(columnCount * columnCount);
@@ -134,7 +134,7 @@
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be less than the column count" userInfo:nil];
 	}
 
-	const LNKSize exampleCount = self.exampleCount;
+	const LNKSize exampleCount = self.rowCount;
 
 	LNKPCAInformation *const pca = [[self analyzePrincipalComponents] retain];
 
@@ -168,7 +168,7 @@
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be less than the column count" userInfo:nil];
 	}
 
-	const LNKSize exampleCount = self.exampleCount;
+	const LNKSize exampleCount = self.rowCount;
 
 	LNKPCAInformation *const pca = [[self analyzePrincipalComponents] retain];
 
@@ -177,7 +177,7 @@
 	}
 
 	LNKMatrix *const rotationMatrix = pca.rotationMatrix;
-	const LNKSize rotationMatrixRows = rotationMatrix.exampleCount;
+	const LNKSize rotationMatrixRows = rotationMatrix.rowCount;
 	const LNKSize rotationMatrixColumns = rotationMatrix.columnCount;
 
 	// Zeros out the eigenvectors corresponding to the irrelevant principal components.
@@ -186,7 +186,7 @@
 		LNKFloatCopy(localMatrix, rotationMatrix.matrixBuffer, rotationMatrixRows * rotationMatrixColumns);
 
 		for (LNKSize d = dimension; d < pca.rotationMatrix.columnCount; d++) {
-			for (LNKSize m = 0; m < pca.rotationMatrix.exampleCount; m++) {
+			for (LNKSize m = 0; m < pca.rotationMatrix.rowCount; m++) {
 				localMatrix[m * pca.rotationMatrix.columnCount + d] = 0;
 			}
 		}

@@ -45,7 +45,7 @@
 - (LNKFloat)_evaluateCostFunction {
 	LNKFloat *thetaVector = [self _thetaVector];
 	LNKMatrix *matrix = self.matrix;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	// 1 / (2 m) * sum(pow(h - y, 2))

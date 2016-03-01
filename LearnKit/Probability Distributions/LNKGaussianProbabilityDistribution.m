@@ -50,7 +50,7 @@ typedef struct {
 	const LNKSize classCount = classes.count;
 	_featureParameters = calloc(columnCount * classCount, sizeof(LNKGaussianParameters));
 
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
 
 	LNKSize classIndex = 0;

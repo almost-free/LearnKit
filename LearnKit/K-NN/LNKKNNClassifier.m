@@ -68,7 +68,7 @@ const LNKKNNDistanceFunction LNKKNNEuclideanDistanceFunction = ^LNKFloat(LNKVect
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The parameter k must not be less than 1" userInfo:nil];
 	}
 	
-	if (k >= self.matrix.exampleCount) {
+	if (k >= self.matrix.rowCount) {
 		@throw [NSException exceptionWithName:NSGenericException reason:@"The parameter k must be less than the number of examples" userInfo:nil];
 	}
 	

@@ -17,7 +17,7 @@
 
 - (void)train {
 	LNKMatrix *matrix = self.matrix;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	

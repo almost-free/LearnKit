@@ -262,7 +262,7 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet<LNKClass *> *classFrequ
 - (void)train {
 	LNKMatrix *matrix = self.matrix;
 	NSIndexSet *allColumns = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.columnCount)];
-	NSIndexSet *allExamples = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.exampleCount)];
+	NSIndexSet *allExamples = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.rowCount)];
 	
 	_learnedTree = [[self _learnTreeWithExampleIndices:allExamples columnIndices:allColumns] retain];
 }

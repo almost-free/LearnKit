@@ -46,7 +46,7 @@
 		_indicatorMatrix = [indicatorMatrix retain];
 		
 		const LNKSize userCount = outputMatrix.columnCount;
-		const LNKSize exampleCount = outputMatrix.exampleCount;
+		const LNKSize exampleCount = outputMatrix.rowCount;
 		const LNKSize unrolledExampleCount = exampleCount + userCount;
 		
 		_unrolledGradient = LNKFloatAlloc(unrolledExampleCount * _featureCount);
@@ -57,7 +57,7 @@
 - (LNKFloat)_evaluateCostFunction {
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.exampleCount;
+	const LNKSize exampleCount = outputMatrix.rowCount;
 	const LNKFloat *dataMatrix = _unrolledGradient;
 	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
 	
@@ -106,7 +106,7 @@
 - (const LNKFloat *)_computeGradient {
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.exampleCount;
+	const LNKSize exampleCount = outputMatrix.rowCount;
 	const LNKSize unrolledExampleCount = exampleCount + userCount;
 	const LNKFloat *dataMatrix = _unrolledGradient;
 	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
@@ -185,7 +185,7 @@
 	
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.exampleCount;
+	const LNKSize exampleCount = outputMatrix.rowCount;
 	
 	LNKFloatCopy(_unrolledGradient + _featureCount * exampleCount, thetaMatrix.matrixBuffer, userCount * thetaMatrix.columnCount);
 }
@@ -194,7 +194,7 @@
 	NSParameterAssert(dataMatrix);
 	NSParameterAssert(dataMatrix.columnCount == _featureCount);
 	
-	const LNKSize exampleCount = self.matrix.exampleCount;
+	const LNKSize exampleCount = self.matrix.rowCount;
 	LNKFloatCopy(_unrolledGradient, dataMatrix.matrixBuffer, exampleCount * _featureCount);
 }
 
@@ -209,13 +209,13 @@
 		_unrolledGradient[n] = (((LNKFloat) arc4random_uniform(UINT32_MAX) / UINT32_MAX) - 0.5) * 2 * epsilon;
 	}
 	
-	[algorithm runWithParameterVector:LNKVectorMakeUnsafe(_unrolledGradient, totalCount) exampleCount:self.matrix.exampleCount delegate:self];
+	[algorithm runWithParameterVector:LNKVectorMakeUnsafe(_unrolledGradient, totalCount) exampleCount:self.matrix.rowCount delegate:self];
 }
 
 - (LNKSize)_totalUnitCount {
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize userCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize unrolledExampleCount = exampleCount + userCount;
 	return unrolledExampleCount * _featureCount;
 }
@@ -241,7 +241,7 @@
 	
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.exampleCount;
+	const LNKSize exampleCount = outputMatrix.rowCount;
 	
 	const LNKFloat *dataMatrix = _unrolledGradient;
 	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;

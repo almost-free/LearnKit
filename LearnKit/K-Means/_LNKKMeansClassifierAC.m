@@ -24,7 +24,7 @@
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
 	const LNKSize columnCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	
 	NSMutableIndexSet *usedIndices = [[NSMutableIndexSet alloc] init];
@@ -73,7 +73,7 @@
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
 	const LNKSize columnCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize iterationCount = self.iterationCount;
 	LNKFloat *clusterCentroids = [self _clusterCentroids];

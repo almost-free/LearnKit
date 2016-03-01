@@ -42,7 +42,7 @@
 		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The matrix used with k-means should not have a bias column" userInfo:nil];
 	}
 	
-	if (classes.count >= matrix.exampleCount) {
+	if (classes.count >= matrix.rowCount) {
 		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"The number of clusters should be less than the number of examples" userInfo:nil];
 	}
 	

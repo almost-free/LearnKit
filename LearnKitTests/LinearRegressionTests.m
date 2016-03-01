@@ -58,7 +58,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)test1Loading {
 	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
 	XCTAssertNotNil(predictor, @"We should have a predictor");
-	XCTAssertEqual(predictor.matrix.exampleCount, 97UL, @"There should be 97 examples");
+	XCTAssertEqual(predictor.matrix.rowCount, 97UL, @"There should be 97 examples");
 	XCTAssertEqual(predictor.matrix.columnCount, 2UL, @"There should be 2 columns: one feature column and the predicted value column");
 }
 
@@ -183,7 +183,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;

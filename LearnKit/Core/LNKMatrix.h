@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 					addingOnesColumn:(BOOL)addOnesColumn
 					  prepareBuffers:(BOOL (^)(LNKFloat *matrix, LNKFloat *outputVector))preparationBlock;
 
-@property (nonatomic, readonly) LNKSize exampleCount;
+@property (nonatomic, readonly) LNKSize rowCount;
 @property (nonatomic, readonly) LNKSize columnCount;
 
 @property (nonatomic, readonly) BOOL hasBiasColumn;

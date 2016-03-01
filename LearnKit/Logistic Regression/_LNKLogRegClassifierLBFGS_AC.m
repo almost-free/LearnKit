@@ -46,7 +46,7 @@
 - (LNKFloat)_evaluateCostFunction {
 	LNKFloat *thetaVector = [self _thetaVector];
 	LNKMatrix *matrix = self.matrix;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
@@ -112,7 +112,7 @@
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
 	LNKFloat *thetaVector = [self _thetaVector];
 	
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;

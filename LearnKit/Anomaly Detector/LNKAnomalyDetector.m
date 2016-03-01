@@ -45,7 +45,7 @@
 	if (matrix.hasBiasColumn)
 		[NSException raise:NSGenericException format:@"The matrix used for anomaly detection should not have a bias column"];
 	
-	if (matrix.exampleCount < matrix.columnCount)
+	if (matrix.rowCount < matrix.columnCount)
 		[NSException raise:NSGenericException format:@"The matrix used for anomaly detection must have more example rows than columns"];
 	
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:[LNKClasses withCount:2]];
@@ -90,7 +90,7 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 	if (matrix.columnCount != cvColumnCount)
 		[NSException raise:NSGenericException format:@"The cross validation matrix must have the same number of columns as the matrix"];
 	
-	const LNKSize cvExampleCount = cvMatrix.exampleCount;
+	const LNKSize cvExampleCount = cvMatrix.rowCount;
 	
 	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
 	[detector train];

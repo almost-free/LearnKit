@@ -125,7 +125,7 @@
 	LNKMatrix *const matrix = classifier.matrix;
 	LNKConfusionMatrix *const confusionMatrix = [classifier computeConfusionMatrixOnMatrix:matrix];
 	LNKClass *const eight = [LNKClass classWithUnsignedInteger:8];
-	const LNKSize examples = matrix.exampleCount / 10;
+	const LNKSize examples = matrix.rowCount / 10;
 	XCTAssertGreaterThanOrEqual([confusionMatrix frequencyForTrueClass:eight predictedClass:eight], 0.8 * examples);
 }
 

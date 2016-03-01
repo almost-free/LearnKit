@@ -18,7 +18,7 @@
 	const LNKFloat *currentBuffer = self.matrixBuffer;
 	const LNKSize currentColumnCount = self.columnCount;
 	
-	const LNKSize exampleCount = self.exampleCount;
+	const LNKSize exampleCount = self.rowCount;
 	const LNKSize columnCountWithoutOnes = maxDegree;
 	const LNKSize hasOnesColumn = 1;
 	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
@@ -58,7 +58,7 @@ static inline LNKSize _columnsInPairwisePolynomialMatrixOfDegree(LNKSize maxDegr
 	const LNKFloat *currentBuffer = self.matrixBuffer;
 	const LNKSize currentColumnCount = self.columnCount;
 	
-	const LNKSize exampleCount = self.exampleCount;
+	const LNKSize exampleCount = self.rowCount;
 	const LNKSize columnCountWithoutOnes = _columnsInPairwisePolynomialMatrixOfDegree(maxDegree);
 	const LNKSize hasOnesColumn = 1;
 	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;

@@ -70,7 +70,7 @@
 			alpha = [(LNKDecayingAlpha *)alphaBox function](epoch);
 		
 		for (LNKSize step = 0; step < stepCount; step++) {
-			const LNKSize index = arc4random_uniform((uint32_t)matrix.exampleCount);
+			const LNKSize index = arc4random_uniform((uint32_t)matrix.rowCount);
 			const LNKFloat *row = [matrix rowAtIndex:index];
 			const LNKFloat output = outputVector[index];
 			
@@ -103,7 +103,7 @@
 - (LNKFloat)_evaluateCostFunction {
 	// Hinge-loss cost function: sum over N: max(0, 1 - y_k (Theta . x + b)) + 0.5 * lambda * Theta^T Theta
 	LNKMatrix *const matrix = self.matrix;
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
 	LNKOptimizationAlgorithmStochasticGradientDescent *const algorithm = self.algorithm;
@@ -143,7 +143,7 @@
 }
 
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *outputVector = matrix.outputVector;
 	

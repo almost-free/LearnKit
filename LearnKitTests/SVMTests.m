@@ -24,7 +24,7 @@
 	XCTAssertNotNil(matrix);
 
 	LNKMatrix *const subsetMatrix = [matrix submatrixWithExampleRange:NSMakeRange(0, 583)];
-	XCTAssertEqual(subsetMatrix.exampleCount, (LNKSize)583);
+	XCTAssertEqual(subsetMatrix.rowCount, (LNKSize)583);
 	XCTAssertEqual(subsetMatrix.columnCount, matrix.columnCount);
 	[matrix release];
 

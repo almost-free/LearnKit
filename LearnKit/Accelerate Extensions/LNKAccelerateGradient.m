@@ -66,7 +66,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
@@ -178,7 +178,7 @@ static lbfgsfloatval_t _LNK_lbfgs_evaluate(void *instance, const lbfgsfloatval_t
 	const LNKSize columnCount = matrix.columnCount;
 	NSCAssert(columnCount == (LNKSize)n, @"Size mismatch");
 	
-	_LNKComputeBatchGradient(matrix.matrixBuffer, context.transposeMatrix, x, matrix.outputVector, context.workgroupEC, workgroupCC, workgroupCC2, matrix.exampleCount, columnCount, context.regularizationEnabled, context.lambda, context.hFunction);
+	_LNKComputeBatchGradient(matrix.matrixBuffer, context.transposeMatrix, x, matrix.outputVector, context.workgroupEC, workgroupCC, workgroupCC2, matrix.rowCount, columnCount, context.regularizationEnabled, context.lambda, context.hFunction);
 	
 	// Give liblbfgs our gradient and return the cost.
 	LNKFloatCopy(g, workgroupCC, columnCount);
@@ -193,7 +193,7 @@ void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regular
 	//TODO: should this be a static assert?
 	NSCAssert(sizeof(lbfgsfloatval_t) == sizeof(LNKFloat), @"Size mismatch");
 	
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	// Minimizing theta

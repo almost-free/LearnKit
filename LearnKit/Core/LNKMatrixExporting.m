@@ -15,7 +15,7 @@
 	
 	NSMutableString *output = [[NSMutableString alloc] init];
 	
-	for (LNKSize exampleIndex = 0; exampleIndex < self.exampleCount; exampleIndex++) {
+	for (LNKSize exampleIndex = 0; exampleIndex < self.rowCount; exampleIndex++) {
 		const LNKFloat *example = [self rowAtIndex:exampleIndex];
 		
 		for (LNKSize column = 0; column < self.columnCount; column++) {

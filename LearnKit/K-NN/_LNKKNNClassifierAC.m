@@ -86,7 +86,7 @@ typedef struct {
 	LNKFloat *const normalizedVector = LNKFloatAllocAndCopy(featureVector.data, featureVector.length);
 	[matrix normalizeVector:normalizedVector];
 	
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKSize k = self.k;
 	const LNKKNNDistanceFunction distanceFunction = self.distanceFunction;
 	

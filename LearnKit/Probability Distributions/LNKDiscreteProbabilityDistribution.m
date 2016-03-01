@@ -90,7 +90,7 @@
 
 	_featureProbabilities = calloc(sizeof(LNKFloat *), classCount * columnCount);
 
-	const LNKSize exampleCount = matrix.exampleCount;
+	const LNKSize exampleCount = matrix.rowCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
 	const BOOL performsLaplacianSmoothing = self.performsLaplacianSmoothing;
 	const NSUInteger laplacianSmoothingFactor = self.laplacianSmoothingFactor;

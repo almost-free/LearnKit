@@ -251,7 +251,7 @@
 	LNKFloat *thetaUnrolled = LNKFloatAlloc(totalUnitCount);
 	[self _copyUnrolledThetaVectorIntoVector:thetaUnrolled];
 	
-	[self.algorithm runWithParameterVector:LNKVectorMakeUnsafe(thetaUnrolled, totalUnitCount) exampleCount:self.matrix.exampleCount delegate:self];
+	[self.algorithm runWithParameterVector:LNKVectorMakeUnsafe(thetaUnrolled, totalUnitCount) exampleCount:self.matrix.rowCount delegate:self];
 	
 	free(thetaUnrolled);
 }
@@ -417,7 +417,7 @@
 }
 
 - (LNKFloat)_evaluateCostFunction {
-	const LNKSize exampleCount = self.matrix.exampleCount;
+	const LNKSize exampleCount = self.matrix.rowCount;
 	const NSUInteger processorCount = _parallelProcessorCount();
 	LNKFloat *results = LNKFloatAlloc(processorCount);
 	
