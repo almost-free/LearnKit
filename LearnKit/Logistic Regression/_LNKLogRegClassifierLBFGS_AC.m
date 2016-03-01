@@ -46,53 +46,53 @@
 - (LNKFloat)_evaluateCostFunction {
 	LNKFloat *thetaVector = [self _thetaVector];
 	LNKMatrix *matrix = self.matrix;
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
 	
 	// 1 / m * sum(-y log(h) - (1 - y) log(1 - h))
-	LNKFloat *workgroup = LNKFloatAlloc(exampleCount);
-	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
+	LNKFloat *workgroup = LNKFloatAlloc(rowCount);
+	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, rowCount, 1, columnCount);
 	
 	// At this point, `workgroup` contains 'h'.
-	LNK_vsigmoid(workgroup, exampleCount);
+	LNK_vsigmoid(workgroup, rowCount);
 	
-	const int n = (int)exampleCount;
+	const int n = (int)rowCount;
 	const LNKFloat one = 1;
 	
-	LNKFloat *logVector = LNKFloatAlloc(exampleCount);
+	LNKFloat *logVector = LNKFloatAlloc(rowCount);
 	LNK_vlog(logVector, workgroup, &n);
 	
-	LNKFloat *negativeOutputVector = LNKFloatAlloc(exampleCount);
-	LNK_vneg(outputVector, UNIT_STRIDE, negativeOutputVector, UNIT_STRIDE, exampleCount);
+	LNKFloat *negativeOutputVector = LNKFloatAlloc(rowCount);
+	LNK_vneg(outputVector, UNIT_STRIDE, negativeOutputVector, UNIT_STRIDE, rowCount);
 	
 	LNKFloat sum1;
-	LNK_dotpr(negativeOutputVector, UNIT_STRIDE, logVector, UNIT_STRIDE, &sum1, exampleCount);
+	LNK_dotpr(negativeOutputVector, UNIT_STRIDE, logVector, UNIT_STRIDE, &sum1, rowCount);
 	
 	// Re-purpose workgroup since it's not used anymore.
 	LNKFloat *minusLogVector = workgroup;
-	LNK_vneg(minusLogVector, UNIT_STRIDE, minusLogVector, UNIT_STRIDE, exampleCount);
-	LNK_vsadd(minusLogVector, UNIT_STRIDE, &one, minusLogVector, UNIT_STRIDE, exampleCount);
+	LNK_vneg(minusLogVector, UNIT_STRIDE, minusLogVector, UNIT_STRIDE, rowCount);
+	LNK_vsadd(minusLogVector, UNIT_STRIDE, &one, minusLogVector, UNIT_STRIDE, rowCount);
 	LNK_vlog(minusLogVector, minusLogVector, &n);
 	
-	LNK_vsadd(negativeOutputVector, UNIT_STRIDE, &one, negativeOutputVector, UNIT_STRIDE, exampleCount);
+	LNK_vsadd(negativeOutputVector, UNIT_STRIDE, &one, negativeOutputVector, UNIT_STRIDE, rowCount);
 	
 	LNKFloat sum2;
-	LNK_dotpr(negativeOutputVector, UNIT_STRIDE, minusLogVector, UNIT_STRIDE, &sum2, exampleCount);
+	LNK_dotpr(negativeOutputVector, UNIT_STRIDE, minusLogVector, UNIT_STRIDE, &sum2, rowCount);
 	
 	free(logVector);
 	free(minusLogVector);
 	free(negativeOutputVector);
 	
-	LNKFloat cost = (sum1 - sum2) / exampleCount;
+	LNKFloat cost = (sum1 - sum2) / rowCount;
 	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unsupported algorithm class");
 	LNKOptimizationAlgorithmLBFGS *algorithm = self.algorithm;
 	
 	if (algorithm.regularizationEnabled) {
 		// 1/2 lambda / m * sum(pow(theta, 2))
-		const LNKFloat regularizationFactor = algorithm.lambda * 0.5 / exampleCount;
+		const LNKFloat regularizationFactor = algorithm.lambda * 0.5 / rowCount;
 		
 		// Don't regularize the first parameter.
 		const LNKFloat previousFirstValue = thetaVector[0];
@@ -112,25 +112,25 @@
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
 	LNKFloat *thetaVector = [self _thetaVector];
 	
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
 	
-	LNKFloat *workgroup = LNKFloatAlloc(exampleCount);
-	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
+	LNKFloat *workgroup = LNKFloatAlloc(rowCount);
+	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, rowCount, 1, columnCount);
 	
 	LNKSize hits = 0;
 	
 	// With a sigmoid function, y=1 when X . theta > 0
-	for (LNKSize m = 0; m < exampleCount; m++) {
+	for (LNKSize m = 0; m < rowCount; m++) {
 		if ((workgroup[m] > 0 && outputVector[m] == 1) || (workgroup[m] <= 0 && outputVector[m] == 0))
 			hits++;
 	}
 	
 	free(workgroup);
 	
-	return (LNKFloat)hits / exampleCount;
+	return (LNKFloat)hits / rowCount;
 }
 
 @end

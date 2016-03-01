@@ -90,7 +90,7 @@
 
 	_featureProbabilities = calloc(sizeof(LNKFloat *), classCount * columnCount);
 
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
 	const BOOL performsLaplacianSmoothing = self.performsLaplacianSmoothing;
 	const NSUInteger laplacianSmoothingFactor = self.laplacianSmoothingFactor;
@@ -102,7 +102,7 @@
 		const LNKSize outputValue = class.unsignedIntegerValue;
 		LNKSize hits = 0;
 
-		for (LNKSize example = 0; example < exampleCount; example++) {
+		for (LNKSize example = 0; example < rowCount; example++) {
 			if (outputVector[example] == outputValue)
 				hits++;
 		}
@@ -114,7 +114,7 @@
 			adjustedDenominator = laplacianSmoothingFactor * classCount;
 		}
 
-		[self _setPrior:(LNKFloat)hits / (exampleCount + adjustedDenominator) forClassAtIndex:classIndex];
+		[self _setPrior:(LNKFloat)hits / (rowCount + adjustedDenominator) forClassAtIndex:classIndex];
 
 		// Calculate P(f_(x,n) | c) for all values n of feature/column x
 		for (LNKSize column = 0; column < columnCount; column++) {
@@ -129,7 +129,7 @@
 			for (NSNumber *value in values) {
 				const NSUInteger valueUnboxed = value.unsignedIntegerValue;
 
-				for (LNKSize example = 0; example < exampleCount; example++) {
+				for (LNKSize example = 0; example < rowCount; example++) {
 					if (outputVector[example] == outputValue) {
 						const LNKFloat *exampleRow = [matrix rowAtIndex:example];
 

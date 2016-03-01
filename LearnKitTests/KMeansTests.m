@@ -24,7 +24,7 @@
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex7data2_X" ofType:@"dat"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														exampleCount:300
+														rowCount:300
 														 columnCount:2
 													addingOnesColumn:NO];
 	LNKKMeansClassifier *classifier = [[LNKKMeansClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:3]];

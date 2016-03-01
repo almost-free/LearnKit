@@ -103,7 +103,7 @@
 - (LNKFloat)_evaluateCostFunction {
 	// Hinge-loss cost function: sum over N: max(0, 1 - y_k (Theta . x + b)) + 0.5 * lambda * Theta^T Theta
 	LNKMatrix *const matrix = self.matrix;
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
 	LNKOptimizationAlgorithmStochasticGradientDescent *const algorithm = self.algorithm;
@@ -112,7 +112,7 @@
 
 	LNKFloat cost = 0;
 
-	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
+	for (LNKSize exampleIndex = 0; exampleIndex < rowCount; exampleIndex++) {
 		LNKFloat y = 0;
 		LNK_dotpr(_theta, UNIT_STRIDE, [matrix rowAtIndex:exampleIndex], UNIT_STRIDE, &y, columnCount);
 		//TODO: include the +b term
@@ -143,13 +143,13 @@
 }
 
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKSize hits = 0;
 	
-	for (LNKSize m = 0; m < exampleCount; m++) {
+	for (LNKSize m = 0; m < rowCount; m++) {
 		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe([matrix rowAtIndex:m], columnCount)];
 		NSAssert([predictedValue isKindOfClass:[NSNumber class]], @"Unexpected value");
 		
@@ -159,7 +159,7 @@
 			hits++;
 	}
 	
-	return (LNKFloat)hits / exampleCount;
+	return (LNKFloat)hits / rowCount;
 }
 
 - (void)dealloc {

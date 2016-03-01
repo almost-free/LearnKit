@@ -33,11 +33,11 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// If there is no output vector, pass `nil` for the output vector URL and `LNKValueTypeNone` for the output vector value type.
 - (nullable instancetype)initWithBinaryMatrixAtURL:(NSURL *)matrixURL matrixValueType:(LNKValueType)matrixValueType
 								 outputVectorAtURL:(nullable NSURL *)outputVectorURL outputVectorValueType:(LNKValueType)outputVectorValueType
-									  exampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn;
+									  rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn;
 
 /// Initializes a matrix by filling the given buffers.
 /// The column count should not include the ones column.
-- (instancetype)initWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount
+- (instancetype)initWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount
 					addingOnesColumn:(BOOL)addOnesColumn
 					  prepareBuffers:(BOOL (^)(LNKFloat *matrix, LNKFloat *outputVector))preparationBlock;
 
@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// The result must be freed by the caller.
 - (LNKVector)copyOfColumnAtIndex:(LNKSize)columnIndex;
 
-- (void)clipExampleCountTo:(LNKSize)exampleCount;
+- (void)clipExampleCountTo:(LNKSize)rowCount;
 
 /// Throws an exception if the passed-in matrix is `nil` or if matrix dimensions are incompatible.
 - (LNKMatrix *)multiplyByMatrix:(LNKMatrix *)matrix;
@@ -63,13 +63,13 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// Returns a copy of the current matrix with its rows reshuffled.
 - (LNKMatrix *)copyShuffledMatrix;
 
-/// Returns a copy of the current matrix with `exampleCount` of its rows reshuffled.
-- (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)exampleCount;
+/// Returns a copy of the current matrix with `rowCount` of its rows reshuffled.
+- (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)rowCount;
 
 - (void)splitIntoTrainingMatrix:(LNKMatrix *__nonnull *__nonnull)trainingMatrix testMatrix:(LNKMatrix *__nonnull *__nonnull)testMatrix trainingBias:(LNKFloat)trainingBias;
 
 - (LNKMatrix *)submatrixWithExampleRange:(NSRange)range;
-- (LNKMatrix *)submatrixWithExampleCount:(LNKSize)exampleCount columnCount:(LNKSize)columnCount;
+- (LNKMatrix *)submatrixWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount;
 
 @property (nonatomic, readonly, getter=isNormalized) BOOL normalized;
 

@@ -50,7 +50,7 @@ typedef struct {
 	const LNKSize classCount = classes.count;
 	_featureParameters = calloc(columnCount * classCount, sizeof(LNKGaussianParameters));
 
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
 
 	LNKSize classIndex = 0;
@@ -60,13 +60,13 @@ typedef struct {
 		const LNKSize outputValue = class.unsignedIntegerValue;
 		LNKSize hits = 0;
 
-		for (LNKSize example = 0; example < exampleCount; example++) {
+		for (LNKSize example = 0; example < rowCount; example++) {
 			if (fabs(outputVector[example] - (LNKFloat)outputValue) < FLT_MIN) {
 				hits++;
 			}
 		}
 
-		[self _setPrior:(LNKFloat)hits / exampleCount forClassAtIndex:classIndex];
+		[self _setPrior:(LNKFloat)hits / rowCount forClassAtIndex:classIndex];
 
 		// Calculate mean and SD for all features and classes.
 		for (LNKSize column = 0; column < columnCount; column++) {

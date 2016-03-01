@@ -19,12 +19,12 @@
 @implementation MatrixTests
 
 - (void)testSubmatrices {
-	const LNKSize exampleCount = 4;
+	const LNKSize rowCount = 4;
 	const LNKSize columnCount = 4;
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithExampleCount:4 columnCount:4 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
-		for (LNKSize example = 0; example < exampleCount; example++) {
+		for (LNKSize example = 0; example < rowCount; example++) {
 			for (LNKSize column = 0; column < columnCount; column++) {
 				matrix[example * columnCount + column] = example * column;
 			}
@@ -52,14 +52,14 @@
 	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
 
-	const LNKSize exampleCount = matrix.rowCount;
-	XCTAssertEqual(exampleCount, (LNKSize)768);
+	const LNKSize rowCount = matrix.rowCount;
+	XCTAssertEqual(rowCount, (LNKSize)768);
 
 	LNKSize *const indices = [matrix _shuffleIndices];
 
-	for (LNKSize example = 0; example < exampleCount; example++) {
+	for (LNKSize example = 0; example < rowCount; example++) {
 		BOOL okay = NO;
-		for (LNKSize local = 0; local < exampleCount; local++) {
+		for (LNKSize local = 0; local < rowCount; local++) {
 			if (indices[local] == example) {
 				okay = YES;
 				break;

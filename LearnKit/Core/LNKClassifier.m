@@ -74,21 +74,21 @@
 	if (!matrix)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
 	
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
 	
 	LNKSize hits = 0;
 	
-	for (LNKSize m = 0; m < exampleCount; m++) {
+	for (LNKSize m = 0; m < rowCount; m++) {
 		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe(_ROW_IN_MATRIX_BUFFER(m), columnCount)];
 		
 		if ([predictedValue isEqual:[LNKClass classWithUnsignedInteger:outputVector[m]]])
 			hits++;
 	}
 	
-	return (LNKFloat)hits / exampleCount;
+	return (LNKFloat)hits / rowCount;
 }
 
 - (LNKConfusionMatrix *)computeConfusionMatrixOnMatrix:(LNKMatrix *)matrix {
@@ -96,14 +96,14 @@
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
 	}
 
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *const matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *const outputVector = matrix.outputVector;
 
 	LNKConfusionMatrix *const confusionMatrix = [[LNKConfusionMatrix alloc] init];
 
-	for (LNKSize m = 0; m < exampleCount; m++) {
+	for (LNKSize m = 0; m < rowCount; m++) {
 		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe(_ROW_IN_MATRIX_BUFFER(m), columnCount)];
 
 		if (![predictedValue isKindOfClass:[LNKClass class]]) {

@@ -45,17 +45,17 @@
 - (LNKFloat)_evaluateCostFunction {
 	LNKFloat *thetaVector = [self _thetaVector];
 	LNKMatrix *matrix = self.matrix;
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	// 1 / (2 m) * sum(pow(h - y, 2))
-	const LNKFloat factor = 0.5 / exampleCount;
-	LNKFloat *workgroup = LNKFloatAlloc(exampleCount);
+	const LNKFloat factor = 0.5 / rowCount;
+	LNKFloat *workgroup = LNKFloatAlloc(rowCount);
 	
-	LNK_mmul(matrix.matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount, 1, columnCount);
-	LNK_vsub(workgroup, UNIT_STRIDE, matrix.outputVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, exampleCount);
+	LNK_mmul(matrix.matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, rowCount, 1, columnCount);
+	LNK_vsub(workgroup, UNIT_STRIDE, matrix.outputVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, rowCount);
 	LNKFloat sum;
-	LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sum, exampleCount);
+	LNK_dotpr(workgroup, UNIT_STRIDE, workgroup, UNIT_STRIDE, &sum, rowCount);
 	free(workgroup);
 	
 	sum *= factor;
@@ -68,7 +68,7 @@
 			const LNKSize skipBiasUnit = 1;
 			LNKFloat thetaSum;
 			LNK_dotpr(thetaVector + skipBiasUnit, UNIT_STRIDE, thetaVector + skipBiasUnit, UNIT_STRIDE, &thetaSum, columnCount - skipBiasUnit);
-			sum += 0.5 * algorithm.lambda / exampleCount * thetaSum;
+			sum += 0.5 * algorithm.lambda / rowCount * thetaSum;
 		}
 	}
 	

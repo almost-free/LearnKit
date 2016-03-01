@@ -25,7 +25,7 @@
 
 #define DACCURACY 1.0
 
-extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize exampleCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction);
+extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize rowCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction);
 
 - (LNKLinRegPredictor *)_ex1PredictorGD {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
@@ -166,7 +166,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-														exampleCount:12 columnCount:1 addingOnesColumn:YES];
+														rowCount:12 columnCount:1 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = 1;
@@ -183,20 +183,20 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
 	
-	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
+	LNKFloat *workgroupEC = LNKFloatAlloc(rowCount);
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
-	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, exampleCount);
+	LNKFloat *transposeMatrix = LNKFloatAlloc(rowCount * columnCount);
+	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, rowCount);
 	
-	_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, exampleCount, columnCount, regularizationEnabled, lambda, NULL);
+	_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, rowCount, columnCount, regularizationEnabled, lambda, NULL);
 	XCTAssertEqualWithAccuracy(workgroupCC[0], -15.3030, DACCURACY, @"Incorrect gradient");
 	XCTAssertEqualWithAccuracy(workgroupCC[1], 598.2507, DACCURACY, @"Incorrect gradient");
 	
@@ -220,22 +220,22 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSString *xcvPath = [bundle pathForResource:@"ex5_Xcv" ofType:@"dat"];
 	NSString *ycvPath = [bundle pathForResource:@"ex5_ycv" ofType:@"dat"];
 	
-	const LNKSize exampleCount = 12;
+	const LNKSize rowCount = 12;
 	
 	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-															 exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
+															 rowCount:rowCount columnCount:1 addingOnesColumn:YES];
 	
 	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 												  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-													   exampleCount:21 columnCount:1 addingOnesColumn:YES];
+													   rowCount:21 columnCount:1 addingOnesColumn:YES];
 	
-	LNKFloat trainError[exampleCount];
-	LNKFloat cvError[exampleCount];
+	LNKFloat trainError[rowCount];
+	LNKFloat cvError[rowCount];
 	
 	LNKOptimizationAlgorithmLBFGS *cvAlgorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	
-	for (LNKSize i = 1; i <= exampleCount; i++) {
+	for (LNKSize i = 1; i <= rowCount; i++) {
 		[trainingSet clipExampleCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
@@ -282,26 +282,26 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSString *xcvPath = [bundle pathForResource:@"ex5_Xcv" ofType:@"dat"];
 	NSString *ycvPath = [bundle pathForResource:@"ex5_ycv" ofType:@"dat"];
 	
-	const LNKSize exampleCount = 12;
+	const LNKSize rowCount = 12;
 	
 	LNKMatrix *trainingSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-															  exampleCount:exampleCount columnCount:1 addingOnesColumn:YES];
+															  rowCount:rowCount columnCount:1 addingOnesColumn:YES];
 	LNKMatrix *trainingSet__ = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *trainingSet = trainingSet__.normalizedMatrix;
 	
 	LNKMatrix *cvSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-														exampleCount:21 columnCount:1 addingOnesColumn:YES];
+														rowCount:21 columnCount:1 addingOnesColumn:YES];
 	LNKMatrix *cvSet__ = [[cvSet_ polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *cvSet = [cvSet__ normalizedMatrixWithMeanVector:trainingSet.normalizationMeanVector standardDeviationVector:trainingSet.normalizationStandardDeviationVector];
 	
-	LNKFloat trainError[exampleCount];
-	LNKFloat cvError[exampleCount];
+	LNKFloat trainError[rowCount];
+	LNKFloat cvError[rowCount];
 	
 	LNKOptimizationAlgorithmLBFGS *cvAlgorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	
-	for (LNKSize i = 1; i <= exampleCount; i++) {
+	for (LNKSize i = 1; i <= rowCount; i++) {
 		[trainingSet clipExampleCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];

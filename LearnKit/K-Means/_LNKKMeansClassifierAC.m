@@ -24,14 +24,14 @@
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
 	const LNKSize columnCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	
 	NSMutableIndexSet *usedIndices = [[NSMutableIndexSet alloc] init];
 	
 	for (LNKSize cluster = 0; cluster < clusterCount; cluster++) {
 		while (YES) {
-			const LNKSize selectedExample = arc4random_uniform((uint32_t)exampleCount);
+			const LNKSize selectedExample = arc4random_uniform((uint32_t)rowCount);
 			
 			if (![usedIndices containsIndex:selectedExample]) {
 				LNKFloatCopy(OFFSET_BY_CLUSTER(clusterCentroids), _ROW_IN_MATRIX_BUFFER(selectedExample), columnCount);
@@ -73,14 +73,14 @@
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
 	const LNKSize columnCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize iterationCount = self.iterationCount;
 	LNKFloat *clusterCentroids = [self _clusterCentroids];
 	
 	LNKFloat *clusterCentroidsWorkspace = LNKFloatAlloc(clusterCount * columnCount);
 	LNKFloat *clusterCounts = LNKFloatAlloc(clusterCount);
-	LNKSize *examplesToClusters = malloc(exampleCount * sizeof(LNKSize));
+	LNKSize *examplesToClusters = malloc(rowCount * sizeof(LNKSize));
 	
 	if (!_isUsingCustomCentroids)
 		[self _setRandomClusters:clusterCentroids];
@@ -90,7 +90,7 @@
 		LNK_vclr(clusterCentroidsWorkspace, UNIT_STRIDE, clusterCount * columnCount);
 		
 		// Assign examples to clusters.
-		for (LNKSize index = 0; index < exampleCount; index++) {
+		for (LNKSize index = 0; index < rowCount; index++) {
 			const LNKFloat *example = _ROW_IN_MATRIX_BUFFER(index);
 			const LNKSize cluster = [self _closestClusterToExample:example];
 			examplesToClusters[index] = cluster;

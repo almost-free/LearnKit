@@ -46,7 +46,7 @@ typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 
 @protocol LNKOptimizationAlgorithm <NSObject>
 
-- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate;
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate;
 
 @end
 

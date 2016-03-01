@@ -23,7 +23,7 @@
 - (void)_runCoFiWithAlgorithm:(LNKOptimizationAlgorithmCG *)algorithm test:(void(^)(LNKFloat, const LNKFloat *))testBlock {
 	const LNKSize movieCount = 1682;
 	const LNKSize userCount = 943;
-	const LNKSize exampleCount = 10;
+	const LNKSize rowCount = 10;
 	
 	const LNKSize reducedMovieCount = 5;
 	const LNKSize reducedUserCount = 4;
@@ -37,12 +37,12 @@
 	
 	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
 															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																 exampleCount:movieCount columnCount:userCount
+																 rowCount:movieCount columnCount:userCount
 															 addingOnesColumn:NO];
 	
 	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															  exampleCount:movieCount columnCount:userCount
+															  rowCount:movieCount columnCount:userCount
 														  addingOnesColumn:NO];
 	
 	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[outputMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount]
@@ -55,14 +55,14 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathX] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														exampleCount:movieCount columnCount:exampleCount
+														rowCount:movieCount columnCount:rowCount
 													addingOnesColumn:NO];
 	[predictor loadDataMatrix:[matrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedExampleCount]];
 	[matrix release];
 	
 	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															 exampleCount:userCount columnCount:exampleCount
+															 rowCount:userCount columnCount:rowCount
 														 addingOnesColumn:NO];
 	[predictor loadThetaMatrix:[thetaMatrix submatrixWithExampleCount:reducedUserCount columnCount:reducedExampleCount]];
 	[thetaMatrix release];
@@ -103,12 +103,12 @@
 	
 	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
 															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																 exampleCount:movieCount columnCount:userCount
+																 rowCount:movieCount columnCount:userCount
 															 addingOnesColumn:NO];
 	
 	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															  exampleCount:movieCount columnCount:userCount
+															  rowCount:movieCount columnCount:userCount
 														  addingOnesColumn:NO];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];

@@ -251,7 +251,7 @@
 	LNKFloat *thetaUnrolled = LNKFloatAlloc(totalUnitCount);
 	[self _copyUnrolledThetaVectorIntoVector:thetaUnrolled];
 	
-	[self.algorithm runWithParameterVector:LNKVectorMakeUnsafe(thetaUnrolled, totalUnitCount) exampleCount:self.matrix.rowCount delegate:self];
+	[self.algorithm runWithParameterVector:LNKVectorMakeUnsafe(thetaUnrolled, totalUnitCount) rowCount:self.matrix.rowCount delegate:self];
 	
 	free(thetaUnrolled);
 }
@@ -417,12 +417,12 @@
 }
 
 - (LNKFloat)_evaluateCostFunction {
-	const LNKSize exampleCount = self.matrix.rowCount;
+	const LNKSize rowCount = self.matrix.rowCount;
 	const NSUInteger processorCount = _parallelProcessorCount();
 	LNKFloat *results = LNKFloatAlloc(processorCount);
 	
 	// We can parallelize running feed-forward on examples.
-	[self _parallelReduceExamplesInRange:LNKRangeMake(0, exampleCount) worker:^(LNKRange range, NSUInteger index) {
+	[self _parallelReduceExamplesInRange:LNKRangeMake(0, rowCount) worker:^(LNKRange range, NSUInteger index) {
 		results[index] = [self _evaluateCostFunctionForExamplesInRange:range];
 	}];
 	
@@ -431,7 +431,7 @@
 	free(results);
 	
 	// Finally take into account the 1/m factor.
-	J /= exampleCount;
+	J /= rowCount;
 	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
 	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
@@ -453,7 +453,7 @@
 			regularizationCost += result;
 		}
 		
-		J += regularizationCost * algorithm.lambda / (2 * exampleCount);
+		J += regularizationCost * algorithm.lambda / (2 * rowCount);
 	}
 	
 	return J;
@@ -468,12 +468,12 @@ static inline NSUInteger _parallelProcessorCount() {
 	dispatch_group_t group = dispatch_group_create();
 	
 	const NSUInteger processorCount = _parallelProcessorCount();
-	const LNKSize exampleCount = exampleRange.length;
-	const LNKSize workgroupSize = exampleCount / processorCount;
+	const LNKSize rowCount = exampleRange.length;
+	const LNKSize workgroupSize = rowCount / processorCount;
 	
 	for (NSUInteger p = 0; p < processorCount; p++) {
 		const LNKSize location = p * workgroupSize + exampleRange.location;
-		const LNKSize length = p == processorCount - 1 ? exampleCount - p * workgroupSize : workgroupSize;
+		const LNKSize length = p == processorCount - 1 ? rowCount - p * workgroupSize : workgroupSize;
 		LNKRange range = LNKRangeMake(location, length);
 		
 		dispatch_group_async(group, queue, ^{

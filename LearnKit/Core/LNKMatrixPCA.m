@@ -53,20 +53,20 @@
 
 	NSAssert(columnCount == workingMatrix.columnCount, @"The number of columns should not change");
 
-	const LNKSize exampleCount = workingMatrix.rowCount;
+	const LNKSize rowCount = workingMatrix.rowCount;
 	const LNKFloat *matrixBuffer = workingMatrix.matrixBuffer;
 
 	LNKFloat *const sigmaMatrix = LNKFloatAlloc(columnCount * columnCount);
 
 	// S = 1/m X' X
 	// After normalization, this holds the covariance matrix.
-	LNKFloat *const transposeMatrix = LNKFloatAlloc(columnCount * exampleCount);
-	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, exampleCount);
+	LNKFloat *const transposeMatrix = LNKFloatAlloc(columnCount * rowCount);
+	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, rowCount);
 
-	LNK_mmul(transposeMatrix, UNIT_STRIDE, matrixBuffer, UNIT_STRIDE, sigmaMatrix, UNIT_STRIDE, columnCount, columnCount, exampleCount);
+	LNK_mmul(transposeMatrix, UNIT_STRIDE, matrixBuffer, UNIT_STRIDE, sigmaMatrix, UNIT_STRIDE, columnCount, columnCount, rowCount);
 	free(transposeMatrix);
 
-	const LNKFloat m = (LNKFloat)exampleCount;
+	const LNKFloat m = (LNKFloat)rowCount;
 	LNK_vsdiv(sigmaMatrix, UNIT_STRIDE, &m, sigmaMatrix, UNIT_STRIDE, columnCount * columnCount);
 
 	__CLPK_integer columnCountCLPK = (__CLPK_integer)columnCount;
@@ -134,7 +134,7 @@
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be less than the column count" userInfo:nil];
 	}
 
-	const LNKSize exampleCount = self.rowCount;
+	const LNKSize rowCount = self.rowCount;
 
 	LNKPCAInformation *const pca = [[self analyzePrincipalComponents] retain];
 
@@ -142,12 +142,12 @@
 		return nil;
 	}
 
-	LNKFloat *const relevantMatrix = LNKFloatAlloc(dimension * exampleCount);
-	LNK_mmov(pca.rotatedMatrix.matrixBuffer, relevantMatrix, dimension, exampleCount, columnCount, dimension);
+	LNKFloat *const relevantMatrix = LNKFloatAlloc(dimension * rowCount);
+	LNK_mmov(pca.rotatedMatrix.matrixBuffer, relevantMatrix, dimension, rowCount, columnCount, dimension);
 
-	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-		LNKFloatCopy(matrix, relevantMatrix, exampleCount * dimension);
-		LNKFloatCopy(outputVector, self.outputVector, exampleCount);
+	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+		LNKFloatCopy(matrix, relevantMatrix, rowCount * dimension);
+		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		return YES;
 	}];
 
@@ -168,7 +168,7 @@
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be less than the column count" userInfo:nil];
 	}
 
-	const LNKSize exampleCount = self.rowCount;
+	const LNKSize rowCount = self.rowCount;
 
 	LNKPCAInformation *const pca = [[self analyzePrincipalComponents] retain];
 
@@ -197,8 +197,8 @@
 	LNKMatrix *const nextRotationMatrix = clearedMatrix.transposedMatrix;
 	[clearedMatrix release];
 
-	LNKFloat *const result = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mmul(pca.rotatedMatrix.matrixBuffer, UNIT_STRIDE, nextRotationMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, columnCount, columnCount);
+	LNKFloat *const result = LNKFloatAlloc(rowCount * columnCount);
+	LNK_mmul(pca.rotatedMatrix.matrixBuffer, UNIT_STRIDE, nextRotationMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, rowCount, columnCount, columnCount);
 
 	const LNKFloat *const centers = pca.centers.data;
 	const LNKFloat *const scales = pca.scales.data;
@@ -209,13 +209,13 @@
 		const LNKFloat mean = centers[column];
 		const LNKFloat sd = scales[column];
 
-		LNK_vsmul(columnPointer, columnCount, &sd, columnPointer, columnCount, exampleCount);
-		LNK_vsadd(columnPointer, columnCount, &mean, columnPointer, columnCount, exampleCount);
+		LNK_vsmul(columnPointer, columnCount, &sd, columnPointer, columnCount, rowCount);
+		LNK_vsadd(columnPointer, columnCount, &mean, columnPointer, columnCount, rowCount);
 	}
 
-	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-		LNKFloatCopy(matrix, result, exampleCount * columnCount);
-		LNKFloatCopy(outputVector, self.outputVector, exampleCount);
+	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+		LNKFloatCopy(matrix, result, rowCount * columnCount);
+		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		return YES;
 	}];
 

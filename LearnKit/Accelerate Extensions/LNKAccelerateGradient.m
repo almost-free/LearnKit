@@ -32,16 +32,16 @@
 
 
 // The final result is in workgroupCC.
-void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize exampleCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction) {
+void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize rowCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction) {
 	// h = x . thetaVector
 	// 1 / m * sum((h - y) * x)
-	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, exampleCount, 1, columnCount);
+	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, rowCount, 1, columnCount);
 	
 	if (hFunction)
-		hFunction(workgroupEC, exampleCount);
+		hFunction(workgroupEC, rowCount);
 	
-	LNK_vsub(outputVector, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, exampleCount);
-	LNK_mmul(transposeMatrix, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount, 1, exampleCount);
+	LNK_vsub(outputVector, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, rowCount);
+	LNK_mmul(transposeMatrix, UNIT_STRIDE, workgroupEC, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount, 1, rowCount);
 	
 	if (enableRegularization) {
 		// cost += lambda * theta
@@ -53,7 +53,7 @@ void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *tran
 		LNK_vadd(workgroupCC, UNIT_STRIDE, workgroupCC2, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount);
 	}
 	
-	const LNKFloat factor = 1.0 / exampleCount;
+	const LNKFloat factor = 1.0 / rowCount;
 	LNK_vsmul(workgroupCC, UNIT_STRIDE, &factor, workgroupCC, UNIT_STRIDE, columnCount);
 }
 
@@ -66,18 +66,18 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKFloat *outputVector = matrix.outputVector;
 	
-	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
+	LNKFloat *workgroupEC = LNKFloatAlloc(rowCount);
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
-	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, exampleCount);
+	LNKFloat *transposeMatrix = LNKFloatAlloc(rowCount * columnCount);
+	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, rowCount);
 	
 	const BOOL stochastic = [algorithm isKindOfClass:[LNKOptimizationAlgorithmStochasticGradientDescent class]];
 	
@@ -109,7 +109,7 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 		else {
 			// Batch gradient descent:
 			// workgroupCC holds the gradient.
-			_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, exampleCount, columnCount, regularizationEnabled, lambda, NULL);
+			_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, rowCount, columnCount, regularizationEnabled, lambda, NULL);
 			
 			// thetaVector = thetaVector - alpha * gradient
 			LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
@@ -193,7 +193,7 @@ void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regular
 	//TODO: should this be a static assert?
 	NSCAssert(sizeof(lbfgsfloatval_t) == sizeof(LNKFloat), @"Size mismatch");
 	
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	
 	// Minimizing theta
@@ -205,12 +205,12 @@ void LNK_learntheta_lbfgs(LNKMatrix *matrix, LNKFloat *thetaVector, BOOL regular
 	// Lowered from 1e-5 for performance
 	parameters.epsilon = 1e-4;
 	
-	LNKFloat *workgroupEC = LNKFloatAlloc(exampleCount);
+	LNKFloat *workgroupEC = LNKFloatAlloc(rowCount);
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
 	
-	LNKFloat *transposeMatrix = LNKFloatAlloc(exampleCount * columnCount);
-	LNK_mtrans(matrix.matrixBuffer, transposeMatrix, columnCount, exampleCount);
+	LNKFloat *transposeMatrix = LNKFloatAlloc(rowCount * columnCount);
+	LNK_mtrans(matrix.matrixBuffer, transposeMatrix, columnCount, rowCount);
 	
 	LBFGSContext *context = [[LBFGSContext alloc] init];
 	context.matrix = matrix;

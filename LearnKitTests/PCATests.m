@@ -23,7 +23,7 @@
 	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"ex7data1_X" withExtension:@"dat"];
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:url matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															  exampleCount:50
+															  rowCount:50
 															   columnCount:2
 														  addingOnesColumn:NO];
 

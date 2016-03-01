@@ -58,9 +58,9 @@
 
 @implementation LNKOptimizationAlgorithmNormalEquations
 
-- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
 #pragma unused(vector)
-#pragma unused(exampleCount)
+#pragma unused(rowCount)
 #pragma unused(delegate)
 	[NSException raise:NSInternalInconsistencyException format:@"The implementation of normal equations is currently up to the learning algorithm itself"];
 }
@@ -91,9 +91,9 @@
 	return _lambda > 0;
 }
 
-- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
 #pragma unused(vector)
-#pragma unused(exampleCount)
+#pragma unused(rowCount)
 #pragma unused(delegate)
 	[NSException raise:NSInternalInconsistencyException format:@"This method must be overriden by subclasses"];
 }
@@ -138,17 +138,17 @@
 
 @implementation LNKOptimizationAlgorithmStochasticGradientDescent
 
-- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
 	NSAssert([self.alpha isKindOfClass:[LNKFixedAlpha class]], @"Only fixed alpha values are suppored by this method");
 	NSParameterAssert(vector.data);
 	NSParameterAssert(vector.length);
 	NSParameterAssert(delegate);
-	NSParameterAssert(exampleCount);
+	NSParameterAssert(rowCount);
 	
 	const LNKFloat alpha = [(LNKFixedAlpha *)self.alpha value];
 	const LNKSize iterationCount = self.iterationCount;
-	const LNKSize batchCount = self.stepCount == NSNotFound ? exampleCount : self.stepCount;
-	const LNKSize batchSize = exampleCount / batchCount;
+	const LNKSize batchCount = self.stepCount == NSNotFound ? rowCount : self.stepCount;
+	const LNKSize batchSize = rowCount / batchCount;
 	
 	LNKFloat *weights = LNKFloatAllocAndCopy(vector.data, vector.length);
 	
@@ -159,7 +159,7 @@
 		[delegate optimizationAlgorithmWillBeginIteration];
 		
 		for (NSUInteger batch = 0; batch < batchCount; batch++) {
-			LNKRange range = LNKRangeMake(batch * batchSize, batch == batchCount - 1 ? exampleCount - batch * batchSize : batchSize);
+			LNKRange range = LNKRangeMake(batch * batchSize, batch == batchCount - 1 ? rowCount - batch * batchSize : batchSize);
 			
 			[delegate optimizationAlgorithmWillBeginWithInputVector:weights];
 			[delegate computeGradientForOptimizationAlgorithm:gradient inRange:range];
@@ -187,7 +187,7 @@
 
 @implementation LNKOptimizationAlgorithmCG {
 	id<LNKOptimizationAlgorithmDelegate> _delegate;
-	LNKSize _exampleCount;
+	LNKSize _rowCount;
 }
 
 - (instancetype)init {
@@ -208,7 +208,7 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	NSCAssert(gradientVector, @"The gradient vector must not be NULL");
 	
 	id<LNKOptimizationAlgorithmDelegate> delegate = self->_delegate;
-	LNKRange range = LNKRangeMake(0, self->_exampleCount);
+	LNKRange range = LNKRangeMake(0, self->_rowCount);
 	
 	[delegate optimizationAlgorithmWillBeginWithInputVector:inputVector];
 	const LNKFloat cost = [delegate costForOptimizationAlgorithm];
@@ -217,14 +217,14 @@ static void _fmincg_evaluate(LNKFloat *inputVector, LNKFloat *outCost, LNKFloat 
 	*outCost = cost;
 }
 
-- (void)runWithParameterVector:(LNKVector)vector exampleCount:(LNKSize)exampleCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
 	NSParameterAssert(vector.data);
 	NSParameterAssert(vector.length);
 	NSParameterAssert(delegate);
-	NSParameterAssert(exampleCount);
+	NSParameterAssert(rowCount);
 	
 	_delegate = delegate;
-	_exampleCount = exampleCount;
+	_rowCount = rowCount;
 	tempSelf = self;
 	
 #ifdef DEBUG

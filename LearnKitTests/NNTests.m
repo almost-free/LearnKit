@@ -35,7 +35,7 @@
 													 matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 											   outputVectorValueType:LNKValueTypeUInt8
-														exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+														rowCount:5000 columnCount:400 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
@@ -96,7 +96,7 @@
 													 matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 											   outputVectorValueType:LNKValueTypeUInt8
-														exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+														rowCount:5000 columnCount:400 addingOnesColumn:YES];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;

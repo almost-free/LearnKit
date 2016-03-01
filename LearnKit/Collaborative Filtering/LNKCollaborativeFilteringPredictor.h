@@ -16,12 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initializes a new collaborative filtering predictor.
 /// The `featureCount` must be greater than 0.
-/// The matrix passed in must be the output matrix, with dimensions `exampleCount` * `userCount`.
-/// The indicator matrix must also be provided, with dimensions `exampleCount` * `userCount`.
+/// The matrix passed in must be the output matrix, with dimensions `rowCount` * `userCount`.
+/// The indicator matrix must also be provided, with dimensions `rowCount` * `userCount`.
 - (instancetype)initWithMatrix:(LNKMatrix *)outputMatrix indicatorMatrix:(LNKMatrix *)indicatorMatrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm featureCount:(NSUInteger)featureCount;
 
 /// Load in pre-trained data and theta matrices.
-/// The data matrix must be of dimensions `exampleCount` * `featureCount`.
+/// The data matrix must be of dimensions `rowCount` * `featureCount`.
 /// The theta matrix must be of dimensions `userCount` * `featureCount`.
 - (void)loadDataMatrix:(LNKMatrix *)dataMatrix;
 - (void)loadThetaMatrix:(LNKMatrix *)thetaMatrix;

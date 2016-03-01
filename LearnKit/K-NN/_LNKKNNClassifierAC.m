@@ -86,16 +86,16 @@ typedef struct {
 	LNKFloat *const normalizedVector = LNKFloatAllocAndCopy(featureVector.data, featureVector.length);
 	[matrix normalizeVector:normalizedVector];
 	
-	const LNKSize exampleCount = matrix.rowCount;
+	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize k = self.k;
 	const LNKKNNDistanceFunction distanceFunction = self.distanceFunction;
 	
 	_LNKDistanceBucket *closestExamples = calloc(sizeof(_LNKDistanceBucket), k);
 	
 	// Find the k closest examples.
-	for (LNKSize example = 0; example < exampleCount; example++) {
+	for (LNKSize example = 0; example < rowCount; example++) {
 		const LNKFloat *exampleRow = [matrix rowAtIndex:example];
-		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), LNKVectorMakeUnsafe(normalizedVector, exampleCount));
+		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), LNKVectorMakeUnsafe(normalizedVector, rowCount));
 		
 		if (example < k) {
 			closestExamples[example].distance = distance;

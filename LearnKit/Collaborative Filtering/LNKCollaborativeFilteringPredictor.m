@@ -46,8 +46,8 @@
 		_indicatorMatrix = [indicatorMatrix retain];
 		
 		const LNKSize userCount = outputMatrix.columnCount;
-		const LNKSize exampleCount = outputMatrix.rowCount;
-		const LNKSize unrolledExampleCount = exampleCount + userCount;
+		const LNKSize rowCount = outputMatrix.rowCount;
+		const LNKSize unrolledExampleCount = rowCount + userCount;
 		
 		_unrolledGradient = LNKFloatAlloc(unrolledExampleCount * _featureCount);
 	}
@@ -57,17 +57,17 @@
 - (LNKFloat)_evaluateCostFunction {
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.rowCount;
+	const LNKSize rowCount = outputMatrix.rowCount;
 	const LNKFloat *dataMatrix = _unrolledGradient;
-	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
+	const LNKFloat *thetaMatrix = _unrolledGradient + rowCount * _featureCount;
 	
 	LNKFloat *thetaTranspose = LNKFloatAlloc(userCount * _featureCount);
 	LNK_mtrans(thetaMatrix, thetaTranspose, _featureCount, userCount);
 	
 	// 1/2 * sum((((X * Theta') - Y) ^ 2) * R)
-	const LNKSize resultSize = exampleCount * userCount;
+	const LNKSize resultSize = rowCount * userCount;
 	LNKFloat *result = LNKFloatAlloc(resultSize);
-	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, result, UNIT_STRIDE, exampleCount, userCount, _featureCount);
+	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, result, UNIT_STRIDE, rowCount, userCount, _featureCount);
 	
 	LNK_vsub(outputMatrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
 	LNK_vmul(result, UNIT_STRIDE, result, UNIT_STRIDE, result, UNIT_STRIDE, resultSize);
@@ -86,12 +86,12 @@
 		// Re-use the theta transpose matrix to compute the theta square.
 		LNK_vmul(thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, userCount * _featureCount);
 		
-		LNKFloat *dataSquare = LNKFloatAlloc(exampleCount * _featureCount);
-		LNK_vmul(dataMatrix, UNIT_STRIDE, dataMatrix, UNIT_STRIDE, dataSquare, UNIT_STRIDE, exampleCount * _featureCount);
+		LNKFloat *dataSquare = LNKFloatAlloc(rowCount * _featureCount);
+		LNK_vmul(dataMatrix, UNIT_STRIDE, dataMatrix, UNIT_STRIDE, dataSquare, UNIT_STRIDE, rowCount * _featureCount);
 		
 		LNKFloat thetaSum, dataSum;
 		LNK_vsum(thetaTranspose, UNIT_STRIDE, &thetaSum, userCount * _featureCount);
-		LNK_vsum(dataSquare, UNIT_STRIDE, &dataSum, exampleCount * _featureCount);
+		LNK_vsum(dataSquare, UNIT_STRIDE, &dataSum, rowCount * _featureCount);
 		free(dataSquare);
 		
 		// ... + lambda / 2 * (sum(Theta^2) + sum(X^2))
@@ -106,15 +106,15 @@
 - (const LNKFloat *)_computeGradient {
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.rowCount;
-	const LNKSize unrolledExampleCount = exampleCount + userCount;
+	const LNKSize rowCount = outputMatrix.rowCount;
+	const LNKSize unrolledExampleCount = rowCount + userCount;
 	const LNKFloat *dataMatrix = _unrolledGradient;
-	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
+	const LNKFloat *thetaMatrix = _unrolledGradient + rowCount * _featureCount;
 	
 	LNKFloat *unrolledGradient = LNKFloatCalloc(unrolledExampleCount * _featureCount);
 	
 	LNKFloat *dataGradient = unrolledGradient;
-	LNKFloat *thetaGradient = unrolledGradient + exampleCount * _featureCount;
+	LNKFloat *thetaGradient = unrolledGradient + rowCount * _featureCount;
 	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
 	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
@@ -123,7 +123,7 @@
 	
 	LNKFloat *workspace = LNKFloatAlloc(_featureCount);
 	
-	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
+	for (LNKSize exampleIndex = 0; exampleIndex < rowCount; exampleIndex++) {
 		const LNKFloat *example = dataMatrix + _featureCount * exampleIndex;
 		const LNKFloat *output = [outputMatrix rowAtIndex:exampleIndex];
 		const LNKFloat *indicator = [_indicatorMatrix rowAtIndex:exampleIndex];
@@ -185,17 +185,17 @@
 	
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.rowCount;
+	const LNKSize rowCount = outputMatrix.rowCount;
 	
-	LNKFloatCopy(_unrolledGradient + _featureCount * exampleCount, thetaMatrix.matrixBuffer, userCount * thetaMatrix.columnCount);
+	LNKFloatCopy(_unrolledGradient + _featureCount * rowCount, thetaMatrix.matrixBuffer, userCount * thetaMatrix.columnCount);
 }
 
 - (void)loadDataMatrix:(LNKMatrix *)dataMatrix {
 	NSParameterAssert(dataMatrix);
 	NSParameterAssert(dataMatrix.columnCount == _featureCount);
 	
-	const LNKSize exampleCount = self.matrix.rowCount;
-	LNKFloatCopy(_unrolledGradient, dataMatrix.matrixBuffer, exampleCount * _featureCount);
+	const LNKSize rowCount = self.matrix.rowCount;
+	LNKFloatCopy(_unrolledGradient, dataMatrix.matrixBuffer, rowCount * _featureCount);
 }
 
 - (void)train {
@@ -209,14 +209,14 @@
 		_unrolledGradient[n] = (((LNKFloat) arc4random_uniform(UINT32_MAX) / UINT32_MAX) - 0.5) * 2 * epsilon;
 	}
 	
-	[algorithm runWithParameterVector:LNKVectorMakeUnsafe(_unrolledGradient, totalCount) exampleCount:self.matrix.rowCount delegate:self];
+	[algorithm runWithParameterVector:LNKVectorMakeUnsafe(_unrolledGradient, totalCount) rowCount:self.matrix.rowCount delegate:self];
 }
 
 - (LNKSize)_totalUnitCount {
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize userCount = matrix.columnCount;
-	const LNKSize exampleCount = matrix.rowCount;
-	const LNKSize unrolledExampleCount = exampleCount + userCount;
+	const LNKSize rowCount = matrix.rowCount;
+	const LNKSize unrolledExampleCount = rowCount + userCount;
 	return unrolledExampleCount * _featureCount;
 }
 
@@ -241,17 +241,17 @@
 	
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
-	const LNKSize exampleCount = outputMatrix.rowCount;
+	const LNKSize rowCount = outputMatrix.rowCount;
 	
 	const LNKFloat *dataMatrix = _unrolledGradient;
-	const LNKFloat *thetaMatrix = _unrolledGradient + exampleCount * _featureCount;
+	const LNKFloat *thetaMatrix = _unrolledGradient + rowCount * _featureCount;
 	
-	LNKFloat *predictions = LNKFloatAlloc(userCount * exampleCount);
-	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaMatrix, UNIT_STRIDE, predictions, UNIT_STRIDE, exampleCount, userCount, _featureCount);
+	LNKFloat *predictions = LNKFloatAlloc(userCount * rowCount);
+	LNK_mmul(dataMatrix, UNIT_STRIDE, thetaMatrix, UNIT_STRIDE, predictions, UNIT_STRIDE, rowCount, userCount, _featureCount);
 	
 	NSMutableArray<NSDictionary *> *results = [NSMutableArray new];
 	
-	for (LNKSize example = 0; example < exampleCount; example++) {
+	for (LNKSize example = 0; example < rowCount; example++) {
 		LNKFloat prediction = predictions[example * _featureCount + userIndex];
 		
 		[results addObject:@{ @"prediction": @(prediction), @"index": @(example) }];

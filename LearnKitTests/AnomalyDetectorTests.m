@@ -23,7 +23,7 @@
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ServerStatistics" ofType:@"mat"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														exampleCount:307
+														rowCount:307
 														 columnCount:2
 													addingOnesColumn:NO];
 	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
@@ -46,13 +46,13 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														exampleCount:307
+														rowCount:307
 														 columnCount:2
 													addingOnesColumn:NO];
 	
 	LNKMatrix *cvMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathVal] matrixValueType:LNKValueTypeDouble
 													 outputVectorAtURL:[NSURL fileURLWithPath:pathValY] outputVectorValueType:LNKValueTypeDouble
-														  exampleCount:307
+														  rowCount:307
 														   columnCount:2
 													  addingOnesColumn:NO];
 	
@@ -70,13 +70,13 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														exampleCount:1000
+														rowCount:1000
 														 columnCount:11
 													addingOnesColumn:NO];
 	
 	LNKMatrix *cvMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathVal] matrixValueType:LNKValueTypeDouble
 													 outputVectorAtURL:[NSURL fileURLWithPath:pathValY] outputVectorValueType:LNKValueTypeDouble
-														  exampleCount:100
+														  rowCount:100
 														   columnCount:11
 													  addingOnesColumn:NO];
 	

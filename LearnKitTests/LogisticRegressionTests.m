@@ -86,7 +86,7 @@
 													 matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 											   outputVectorValueType:LNKValueTypeUInt8
-														exampleCount:5000 columnCount:400 addingOnesColumn:YES];
+														rowCount:5000 columnCount:400 addingOnesColumn:YES];
 	
 	XCTAssertEqual(matrix.columnCount, 401ULL, @"The ones column was not added");
 	

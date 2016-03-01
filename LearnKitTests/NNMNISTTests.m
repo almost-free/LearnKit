@@ -28,7 +28,7 @@
 #define FEATURES (28 * 28)
 #define FEATURES_PLUS_ONE (FEATURES+1)
 
-- (void)_copyMNISTDataWithBasename:(NSString *)basename toMatrixBuffer:(LNKFloat *)buffer outputVector:(LNKFloat *)outputVector examples:(LNKSize)exampleCount {
+- (void)_copyMNISTDataWithBasename:(NSString *)basename toMatrixBuffer:(LNKFloat *)buffer outputVector:(LNKFloat *)outputVector examples:(LNKSize)rowCount {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSURL *matrixURL = [bundle URLForResource:[basename stringByAppendingString:@"-images"] withExtension:@"idx3-ubyte"];
 	NSURL *labelsURL = [bundle URLForResource:[basename stringByAppendingString:@"-labels"] withExtension:@"idx1-ubyte"];
@@ -45,7 +45,7 @@
 	// Label data files are padded with 8 bytes.
 	const uint8 *labelBytes = (const uint8 *)[labelsData bytes] + 8;
 	
-	for (LNKSize i = 0; i < exampleCount; i++) {
+	for (LNKSize i = 0; i < rowCount; i++) {
 		for (LNKSize n = 0; n < FEATURES; n++) {
 			buffer[i * FEATURES_PLUS_ONE + n + 1 /* offset bias unit */] = (CGFloat)matrixBytes[i * FEATURES + n] / 255.0f;
 		}
