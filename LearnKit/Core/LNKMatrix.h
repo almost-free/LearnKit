@@ -33,13 +33,13 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// If there is no output vector, pass `nil` for the output vector URL and `LNKValueTypeNone` for the output vector value type.
 - (nullable instancetype)initWithBinaryMatrixAtURL:(NSURL *)matrixURL matrixValueType:(LNKValueType)matrixValueType
 								 outputVectorAtURL:(nullable NSURL *)outputVectorURL outputVectorValueType:(LNKValueType)outputVectorValueType
-									  rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn;
+										  rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn;
 
 /// Initializes a matrix by filling the given buffers.
 /// The column count should not include the ones column.
-- (instancetype)initWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount
-					addingOnesColumn:(BOOL)addOnesColumn
-					  prepareBuffers:(BOOL (^)(LNKFloat *matrix, LNKFloat *outputVector))preparationBlock;
+- (instancetype)initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount
+				addingOnesColumn:(BOOL)addOnesColumn
+				  prepareBuffers:(BOOL (^)(LNKFloat *matrix, LNKFloat *outputVector))preparationBlock;
 
 @property (nonatomic, readonly) LNKSize rowCount;
 @property (nonatomic, readonly) LNKSize columnCount;
@@ -64,12 +64,12 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (LNKMatrix *)copyShuffledMatrix;
 
 /// Returns a copy of the current matrix with `rowCount` of its rows reshuffled.
-- (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)rowCount;
+- (LNKMatrix *)copyShuffledSubmatrixWithRowCount:(LNKSize)rowCount;
 
 - (void)splitIntoTrainingMatrix:(LNKMatrix *__nonnull *__nonnull)trainingMatrix testMatrix:(LNKMatrix *__nonnull *__nonnull)testMatrix trainingBias:(LNKFloat)trainingBias;
 
 - (LNKMatrix *)submatrixWithRowRange:(NSRange)range;
-- (LNKMatrix *)submatrixWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount;
+- (LNKMatrix *)submatrixWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount;
 
 @property (nonatomic, readonly, getter=isNormalized) BOOL normalized;
 

@@ -22,7 +22,7 @@
 	const LNKSize rowCount = 4;
 	const LNKSize columnCount = 4;
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithExampleCount:4 columnCount:4 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithRowCount:4 columnCount:4 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (LNKSize example = 0; example < rowCount; example++) {
 			for (LNKSize column = 0; column < columnCount; column++) {
@@ -33,7 +33,7 @@
 		return YES;
 	}];
 	
-	LNKMatrix *submatrix = [matrix submatrixWithExampleCount:2 columnCount:3];
+	LNKMatrix *submatrix = [matrix submatrixWithRowCount:2 columnCount:3];
 	[matrix release];
 	
 	XCTAssertEqual(submatrix.rowCount, 2UL);

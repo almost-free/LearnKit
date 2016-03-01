@@ -90,7 +90,7 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 	if (matrix.columnCount != cvColumnCount)
 		[NSException raise:NSGenericException format:@"The cross validation matrix must have the same number of columns as the matrix"];
 	
-	const LNKSize cvExampleCount = cvMatrix.rowCount;
+	const LNKSize cvRowCount = cvMatrix.rowCount;
 	
 	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
 	[detector train];
@@ -99,15 +99,15 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 	[cvDetector _setMuVector:[detector _muVector]];
 	[cvDetector _setSigmaMatrix:[detector _sigmaMatrix]];
 	
-	LNKFloat *pValues = LNKFloatAlloc(cvExampleCount);
+	LNKFloat *pValues = LNKFloatAlloc(cvRowCount);
 	
-	for (LNKSize example = 0; example < cvExampleCount; example++) {
+	for (LNKSize example = 0; example < cvRowCount; example++) {
 		pValues[example] = [cvDetector _probabilityWithFeatureVector:[cvMatrix rowAtIndex:example] length:cvColumnCount];
 	}
 	
 	LNKFloat max, min;
-	LNK_maxv(pValues, UNIT_STRIDE, &max, cvExampleCount);
-	LNK_minv(pValues, UNIT_STRIDE, &min, cvExampleCount);
+	LNK_maxv(pValues, UNIT_STRIDE, &max, cvRowCount);
+	LNK_minv(pValues, UNIT_STRIDE, &min, cvRowCount);
 	
 	const LNKFloat stepSize = (max - min) / 1000;
 	const LNKFloat *outputVector = cvMatrix.outputVector;
@@ -120,7 +120,7 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 		LNKSize falsePositives = 0;
 		LNKSize falseNegatives = 0;
 		
-		for (LNKSize example = 0; example < cvExampleCount; example++) {
+		for (LNKSize example = 0; example < cvRowCount; example++) {
 			BOOL anomaly = pValues[example] < epsilon;
 			
 			if (anomaly) {

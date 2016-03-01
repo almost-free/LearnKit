@@ -55,7 +55,7 @@
 }
 
 - (void)test1Training {
-	LNKMatrix *trainingMatrix = [[LNKMatrix alloc] initWithExampleCount:TRAIN_EXAMPLES
+	LNKMatrix *trainingMatrix = [[LNKMatrix alloc] initWithRowCount:TRAIN_EXAMPLES
 															columnCount:FEATURES
 													   addingOnesColumn:YES
 														 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
@@ -81,7 +81,7 @@
 	
 	[classifier train];
 	
-	LNKMatrix *testMatrix = [[LNKMatrix alloc] initWithExampleCount:TEST_EXAMPLES
+	LNKMatrix *testMatrix = [[LNKMatrix alloc] initWithRowCount:TEST_EXAMPLES
 														columnCount:FEATURES
 												   addingOnesColumn:YES
 													 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {

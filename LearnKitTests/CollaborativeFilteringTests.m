@@ -27,7 +27,7 @@
 	
 	const LNKSize reducedMovieCount = 5;
 	const LNKSize reducedUserCount = 4;
-	const LNKSize reducedExampleCount = 3;
+	const LNKSize reducedRowCount = 3;
 	
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *pathX = [bundle pathForResource:@"Movies_X" ofType:@"mat"];
@@ -45,11 +45,11 @@
 															  rowCount:movieCount columnCount:userCount
 														  addingOnesColumn:NO];
 	
-	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[outputMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount]
-																							   indicatorMatrix:[indicatorMatrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedUserCount]
+	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[outputMatrix submatrixWithRowCount:reducedMovieCount columnCount:reducedUserCount]
+																							   indicatorMatrix:[indicatorMatrix submatrixWithRowCount:reducedMovieCount columnCount:reducedUserCount]
 																							implementationType:LNKImplementationTypeAccelerate
 																						 optimizationAlgorithm:algorithm
-																								  featureCount:reducedExampleCount];
+																								  featureCount:reducedRowCount];
 	[indicatorMatrix release];
 	[outputMatrix release];
 	
@@ -57,14 +57,14 @@
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 														rowCount:movieCount columnCount:rowCount
 													addingOnesColumn:NO];
-	[predictor loadDataMatrix:[matrix submatrixWithExampleCount:reducedMovieCount columnCount:reducedExampleCount]];
+	[predictor loadDataMatrix:[matrix submatrixWithRowCount:reducedMovieCount columnCount:reducedRowCount]];
 	[matrix release];
 	
 	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 															 rowCount:userCount columnCount:rowCount
 														 addingOnesColumn:NO];
-	[predictor loadThetaMatrix:[thetaMatrix submatrixWithExampleCount:reducedUserCount columnCount:reducedExampleCount]];
+	[predictor loadThetaMatrix:[thetaMatrix submatrixWithRowCount:reducedUserCount columnCount:reducedRowCount]];
 	[thetaMatrix release];
 	
 	const LNKFloat *gradient = [predictor _computeGradient];

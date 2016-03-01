@@ -166,7 +166,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return self;
 }
 
-- (instancetype)initWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn prepareBuffers:(BOOL (^)(LNKFloat *, LNKFloat *))preparationBlock {
+- (instancetype)initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn prepareBuffers:(BOOL (^)(LNKFloat *, LNKFloat *))preparationBlock {
 	NSParameterAssert(rowCount);
 	NSParameterAssert(columnCount);
 	NSParameterAssert(preparationBlock);
@@ -190,7 +190,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 // This initializer does not make a copy of the matrix data. Rather, it establishes a weak reference.
-- (instancetype)_initWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn matrix:(LNKFloat *)matrix prepareOutputBuffer:(BOOL (^)(LNKFloat *))preparationBlock {
+- (instancetype)_initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn matrix:(LNKFloat *)matrix prepareOutputBuffer:(BOOL (^)(LNKFloat *))preparationBlock {
 	NSParameterAssert(rowCount);
 	NSParameterAssert(columnCount);
 	NSParameterAssert(preparationBlock);
@@ -218,7 +218,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 #pragma unused(zone)
 	
 	// Even if we already have a ones column, we set addingOnesColumn to NO because we don't want one to be added again.
-	LNKMatrix *matrix = [[LNKMatrix alloc] _initWithExampleCount:_rowCount columnCount:_columnCount addingOnesColumn:NO matrix:_matrix prepareOutputBuffer:^BOOL(LNKFloat *outputVector) {
+	LNKMatrix *matrix = [[LNKMatrix alloc] _initWithRowCount:_rowCount columnCount:_columnCount addingOnesColumn:NO matrix:_matrix prepareOutputBuffer:^BOOL(LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, _outputVector, _rowCount);
 		return YES;
 	}];
@@ -268,9 +268,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	}
 
 	const LNKSize columnCount = self.columnCount;
-	const LNKSize matrixExampleCount = matrix.rowCount;
 
-	if (columnCount != matrixExampleCount) {
+	if (columnCount != matrix.rowCount) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The matrix sizes do not match" userInfo:nil];
 	}
 
@@ -280,7 +279,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	LNKFloat *const result = LNKFloatAlloc(rowCount * matrixColumnCount);
 	LNK_mmul(_matrix, UNIT_STRIDE, matrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, rowCount, matrixColumnCount, columnCount);
 
-	return [[[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:matrixColumnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:matrixColumnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		LNKFloatCopy(localMatrix, result, rowCount * matrixColumnCount);
 		return YES;
@@ -291,7 +290,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	const LNKSize columnCount = self.columnCount;
 	const LNKSize rowCount = self.rowCount;
 
-	return [[[LNKMatrix alloc] initWithExampleCount:columnCount columnCount:rowCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:columnCount columnCount:rowCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		LNK_mtrans(_matrix, matrix, columnCount, rowCount);
 		return YES;
@@ -320,14 +319,14 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (LNKMatrix *)copyShuffledMatrix {
-	return [self copyShuffledSubmatrixWithExampleCount:_rowCount];
+	return [self copyShuffledSubmatrixWithRowCount:_rowCount];
 }
 
-- (LNKMatrix *)copyShuffledSubmatrixWithExampleCount:(LNKSize)rowCount {
+- (LNKMatrix *)copyShuffledSubmatrixWithRowCount:(LNKSize)rowCount {
 	if (rowCount > _rowCount)
 		[NSException raise:NSInvalidArgumentException format:@"The number of examples in the submatrix cannot be greater than the number of examples in the current matrix"];
 	
-	return [[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKSize *const indices = [self _shuffleIndices];
 		
 		for (LNKSize index = 0; index < rowCount; index++) {
@@ -358,7 +357,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 - (LNKMatrix *)submatrixWithRowRange:(NSRange)range {
 	const LNKSize columnCount = self.columnCount;
 
-	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithExampleCount:range.length columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithRowCount:range.length columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		for (LNKSize example = range.location; example < NSMaxRange(range); example++) {
 			const LNKFloat *inputExample = [self rowAtIndex:example];
 			LNKFloatCopy(matrix + (example - range.location) * columnCount, inputExample, columnCount);
@@ -372,14 +371,14 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return [submatrix autorelease];
 }
 
-- (LNKMatrix *)submatrixWithExampleCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount {
+- (LNKMatrix *)submatrixWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount {
 	if (rowCount >= _rowCount)
 		[NSException raise:NSInvalidArgumentException format:@"The number of examples in the submatrix must be less than the number of examples in the current matrix"];
 	
 	if (columnCount >= _columnCount)
 		[NSException raise:NSInvalidArgumentException format:@"The number of columns in the submatrix must be less than the number of columns in the current matrix"];
 	
-	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (LNKSize example = 0; example < rowCount; example++) {
 			const LNKFloat *inputExample = [self rowAtIndex:example];
@@ -632,7 +631,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	NSParameterAssert(meanVector);
 	NSParameterAssert(sdVector);
 
-	LNKMatrix *const normalizedMatrix = [[LNKMatrix alloc] initWithExampleCount:_rowCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const normalizedMatrix = [[LNKMatrix alloc] initWithRowCount:_rowCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(matrix, _matrix, _columnCount * _rowCount);
 		LNKFloatCopy(outputVector, _outputVector, _rowCount);
 		return YES;

@@ -47,9 +47,9 @@
 		
 		const LNKSize userCount = outputMatrix.columnCount;
 		const LNKSize rowCount = outputMatrix.rowCount;
-		const LNKSize unrolledExampleCount = rowCount + userCount;
+		const LNKSize unrolledRowCount = rowCount + userCount;
 		
-		_unrolledGradient = LNKFloatAlloc(unrolledExampleCount * _featureCount);
+		_unrolledGradient = LNKFloatAlloc(unrolledRowCount * _featureCount);
 	}
 	return self;
 }
@@ -107,11 +107,11 @@
 	LNKMatrix *outputMatrix = self.matrix;
 	const LNKSize userCount = outputMatrix.columnCount;
 	const LNKSize rowCount = outputMatrix.rowCount;
-	const LNKSize unrolledExampleCount = rowCount + userCount;
+	const LNKSize unrolledRowCount = rowCount + userCount;
 	const LNKFloat *dataMatrix = _unrolledGradient;
 	const LNKFloat *thetaMatrix = _unrolledGradient + rowCount * _featureCount;
 	
-	LNKFloat *unrolledGradient = LNKFloatCalloc(unrolledExampleCount * _featureCount);
+	LNKFloat *unrolledGradient = LNKFloatCalloc(unrolledRowCount * _featureCount);
 	
 	LNKFloat *dataGradient = unrolledGradient;
 	LNKFloat *thetaGradient = unrolledGradient + rowCount * _featureCount;
@@ -216,8 +216,8 @@
 	LNKMatrix *matrix = self.matrix;
 	const LNKSize userCount = matrix.columnCount;
 	const LNKSize rowCount = matrix.rowCount;
-	const LNKSize unrolledExampleCount = rowCount + userCount;
-	return unrolledExampleCount * _featureCount;
+	const LNKSize unrolledRowCount = rowCount + userCount;
+	return unrolledRowCount * _featureCount;
 }
 
 - (void)optimizationAlgorithmWillBeginWithInputVector:(const LNKFloat *)inputVector {

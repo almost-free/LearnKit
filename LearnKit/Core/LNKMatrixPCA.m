@@ -106,7 +106,7 @@
 		standardDeviations[column] = LNK_sqrt(s[column]);
 	}
 
-	LNKMatrix *const rotationMatrix = [[LNKMatrix alloc] initWithExampleCount:columnCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
+	LNKMatrix *const rotationMatrix = [[LNKMatrix alloc] initWithRowCount:columnCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		LNKFloatCopy(localMatrix, vt, columnCount * columnCount);
 		return YES;
@@ -145,7 +145,7 @@
 	LNKFloat *const relevantMatrix = LNKFloatAlloc(dimension * rowCount);
 	LNK_mmov(pca.rotatedMatrix.matrixBuffer, relevantMatrix, dimension, rowCount, columnCount, dimension);
 
-	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(matrix, relevantMatrix, rowCount * dimension);
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		return YES;
@@ -181,7 +181,7 @@
 	const LNKSize rotationMatrixColumns = rotationMatrix.columnCount;
 
 	// Zeros out the eigenvectors corresponding to the irrelevant principal components.
-	LNKMatrix *const clearedMatrix = [[LNKMatrix alloc] initWithExampleCount:rotationMatrixRows columnCount:rotationMatrixColumns addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
+	LNKMatrix *const clearedMatrix = [[LNKMatrix alloc] initWithRowCount:rotationMatrixRows columnCount:rotationMatrixColumns addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
 	#pragma unused(outputVector)
 		LNKFloatCopy(localMatrix, rotationMatrix.matrixBuffer, rotationMatrixRows * rotationMatrixColumns);
 
@@ -213,7 +213,7 @@
 		LNK_vsadd(columnPointer, columnCount, &mean, columnPointer, columnCount, rowCount);
 	}
 
-	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(matrix, result, rowCount * columnCount);
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		return YES;

@@ -23,7 +23,7 @@
 	const LNKSize hasOnesColumn = 1;
 	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
 	
-	return [[[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		
 		for (LNKSize row = 0; row < rowCount; row++) {
@@ -63,7 +63,7 @@ static inline LNKSize _columnsInPairwisePolynomialMatrixOfDegree(LNKSize maxDegr
 	const LNKSize hasOnesColumn = 1;
 	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
 	
-	return [[[LNKMatrix alloc] initWithExampleCount:rowCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		
 		// Start after the ones column.
