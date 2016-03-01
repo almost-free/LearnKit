@@ -71,7 +71,7 @@
 		
 		for (LNKSize step = 0; step < stepCount; step++) {
 			const LNKSize index = arc4random_uniform((uint32_t)matrix.exampleCount);
-			const LNKFloat *row = [matrix exampleAtIndex:index];
+			const LNKFloat *row = [matrix rowAtIndex:index];
 			const LNKFloat output = outputVector[index];
 			
 			// Gradient (if y_k (Theta . x) >= 1):
@@ -114,7 +114,7 @@
 
 	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
 		LNKFloat y = 0;
-		LNK_dotpr(_theta, UNIT_STRIDE, [matrix exampleAtIndex:exampleIndex], UNIT_STRIDE, &y, columnCount);
+		LNK_dotpr(_theta, UNIT_STRIDE, [matrix rowAtIndex:exampleIndex], UNIT_STRIDE, &y, columnCount);
 		//TODO: include the +b term
 		
 		cost += MAX(0, 1 - outputVector[exampleIndex] * y);

@@ -89,7 +89,7 @@
 	[exampleIndices enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 #pragma unused(stop)
 		
-		const LNKFloat *example = [matrix exampleAtIndex:index];
+		const LNKFloat *example = [matrix rowAtIndex:index];
 		
 		if (example[columnIndex] == value)
 			block(index);

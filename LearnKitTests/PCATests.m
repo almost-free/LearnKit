@@ -77,31 +77,31 @@
 	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[3],  0.1435538, DACCURACY);
 
 	// The first vector has flipped signs, but this doesn't matter. It's a perfectly-valid eigenvector.
-	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix exampleAtIndex:0][0],  0.5223716, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:0][1], -0.37231836, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:0][2],  0.7210168, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:0][3],  0.2619956, DACCURACY);
+	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:0][0],  0.5223716, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:0][1], -0.37231836, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:0][2],  0.7210168, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:0][3],  0.2619956, DACCURACY);
 
-	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix exampleAtIndex:1][0], -0.2633549, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:1][1], -0.92555649, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:1][2], -0.2420329, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:1][3], -0.1241348, DACCURACY);
+	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:1][0], -0.2633549, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:1][1], -0.92555649, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:1][2], -0.2420329, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:1][3], -0.1241348, DACCURACY);
 
-	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix exampleAtIndex:2][0],  0.5812540, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:2][1], -0.02109478, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:2][2], -0.1408923, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:2][3], -0.8011543, DACCURACY);
+	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:2][0],  0.5812540, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:2][1], -0.02109478, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:2][2], -0.1408923, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:2][3], -0.8011543, DACCURACY);
 
-	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix exampleAtIndex:3][0],  0.5656110, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:3][1], -0.06541577, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:3][2], -0.6338014, DACCURACY);
-	XCTAssertEqualWithAccuracy([pca.rotationMatrix exampleAtIndex:3][3],  0.5235463, DACCURACY);
+	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:3][0],  0.5656110, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:3][1], -0.06541577, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:3][2], -0.6338014, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotationMatrix rowAtIndex:3][3],  0.5235463, DACCURACY);
 
-	XCTAssertEqualWithAccuracy(-[pca.rotatedMatrix exampleAtIndex:0][0], -2.256980633, DACCURACY);
-	XCTAssertEqualWithAccuracy(-[pca.rotatedMatrix exampleAtIndex:1][0], -2.079459119, DACCURACY);
+	XCTAssertEqualWithAccuracy(-[pca.rotatedMatrix rowAtIndex:0][0], -2.256980633, DACCURACY);
+	XCTAssertEqualWithAccuracy(-[pca.rotatedMatrix rowAtIndex:1][0], -2.079459119, DACCURACY);
 
 	LNKMatrix *const newMatrix = [matrix matrixProjectedToDimension:2];
-	XCTAssertEqualWithAccuracy([newMatrix exampleAtIndex:0][0],  5.022448, DACCURACY);
+	XCTAssertEqualWithAccuracy([newMatrix rowAtIndex:0][0],  5.022448, DACCURACY);
 
 	[matrix release];
 }

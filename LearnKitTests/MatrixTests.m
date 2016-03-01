@@ -39,13 +39,13 @@
 	XCTAssertEqual(submatrix.exampleCount, 2UL);
 	XCTAssertEqual(submatrix.columnCount, 3UL);
 	
-	XCTAssertEqual([submatrix exampleAtIndex:0][0], 0);
-	XCTAssertEqual([submatrix exampleAtIndex:0][1], 0);
-	XCTAssertEqual([submatrix exampleAtIndex:0][2], 0);
+	XCTAssertEqual([submatrix rowAtIndex:0][0], 0);
+	XCTAssertEqual([submatrix rowAtIndex:0][1], 0);
+	XCTAssertEqual([submatrix rowAtIndex:0][2], 0);
 	
-	XCTAssertEqual([submatrix exampleAtIndex:1][0], 0);
-	XCTAssertEqual([submatrix exampleAtIndex:1][1], 1);
-	XCTAssertEqual([submatrix exampleAtIndex:1][2], 2);
+	XCTAssertEqual([submatrix rowAtIndex:1][0], 0);
+	XCTAssertEqual([submatrix rowAtIndex:1][1], 1);
+	XCTAssertEqual([submatrix rowAtIndex:1][2], 2);
 }
 
 - (void)testShufflingIndices {

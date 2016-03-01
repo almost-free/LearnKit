@@ -131,7 +131,7 @@
 
 				for (LNKSize example = 0; example < exampleCount; example++) {
 					if (outputVector[example] == outputValue) {
-						const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
+						const LNKFloat *exampleRow = [matrix rowAtIndex:example];
 
 						if (exampleRow[column] == valueUnboxed)
 							valuesVector[valueIndex]++;

@@ -125,8 +125,8 @@
 	
 	for (LNKSize exampleIndex = 0; exampleIndex < exampleCount; exampleIndex++) {
 		const LNKFloat *example = dataMatrix + _featureCount * exampleIndex;
-		const LNKFloat *output = [outputMatrix exampleAtIndex:exampleIndex];
-		const LNKFloat *indicator = [_indicatorMatrix exampleAtIndex:exampleIndex];
+		const LNKFloat *output = [outputMatrix rowAtIndex:exampleIndex];
+		const LNKFloat *indicator = [_indicatorMatrix rowAtIndex:exampleIndex];
 		
 		LNKFloat *dataGradientLocation = dataGradient + exampleIndex * _featureCount;
 		

@@ -16,7 +16,7 @@
 	NSMutableString *output = [[NSMutableString alloc] init];
 	
 	for (LNKSize exampleIndex = 0; exampleIndex < self.exampleCount; exampleIndex++) {
-		const LNKFloat *example = [self exampleAtIndex:exampleIndex];
+		const LNKFloat *example = [self rowAtIndex:exampleIndex];
 		
 		for (LNKSize column = 0; column < self.columnCount; column++) {
 			[output appendFormat:@"%g", example[column]];

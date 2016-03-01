@@ -102,7 +102,7 @@ LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix) {
 	LNKFloat *pValues = LNKFloatAlloc(cvExampleCount);
 	
 	for (LNKSize example = 0; example < cvExampleCount; example++) {
-		pValues[example] = [cvDetector _probabilityWithFeatureVector:[cvMatrix exampleAtIndex:example] length:cvColumnCount];
+		pValues[example] = [cvDetector _probabilityWithFeatureVector:[cvMatrix rowAtIndex:example] length:cvColumnCount];
 	}
 	
 	LNKFloat max, min;

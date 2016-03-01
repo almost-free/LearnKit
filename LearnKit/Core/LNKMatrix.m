@@ -242,7 +242,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return _outputVector;
 }
 
-- (const LNKFloat *)exampleAtIndex:(LNKSize)index {
+- (const LNKFloat *)rowAtIndex:(LNKSize)index {
 	NSParameterAssert(index < _exampleCount);
 	return _matrix + (index * _columnCount);
 }
@@ -360,7 +360,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithExampleCount:range.length columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		for (LNKSize example = range.location; example < NSMaxRange(range); example++) {
-			const LNKFloat *inputExample = [self exampleAtIndex:example];
+			const LNKFloat *inputExample = [self rowAtIndex:example];
 			LNKFloatCopy(matrix + (example - range.location) * columnCount, inputExample, columnCount);
 
 			outputVector[example - range.location] = _outputVector[example];
@@ -382,7 +382,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithExampleCount:exampleCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (LNKSize example = 0; example < exampleCount; example++) {
-			const LNKFloat *inputExample = [self exampleAtIndex:example];
+			const LNKFloat *inputExample = [self rowAtIndex:example];
 			LNKFloatCopy(matrix + example * columnCount, inputExample, columnCount);
 		}
 		

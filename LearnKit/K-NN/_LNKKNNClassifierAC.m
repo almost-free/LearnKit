@@ -94,7 +94,7 @@ typedef struct {
 	
 	// Find the k closest examples.
 	for (LNKSize example = 0; example < exampleCount; example++) {
-		const LNKFloat *exampleRow = [matrix exampleAtIndex:example];
+		const LNKFloat *exampleRow = [matrix rowAtIndex:example];
 		const LNKFloat distance = distanceFunction(LNKVectorMakeUnsafe(exampleRow, columnCount), LNKVectorMakeUnsafe(normalizedVector, exampleCount));
 		
 		if (example < k) {
