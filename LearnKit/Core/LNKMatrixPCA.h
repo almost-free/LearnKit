@@ -56,12 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// This convenience method uses a tolerance of 1e-9 and a maximum of 500 iterations.
 - (LNKPCAInformation *)analyzeApproximatePrincipalComponents:(LNKSize)principalComponents;
 
-/// This method reduces (normalizes and rotates) the data to its `dimension` principal components.
-/// The dimension must be at least 1 and less than the number of columns in the matrix.
-/// The matrix will automatically be normalized if it hasn't already been normalized.
-/// This method will return `nil` when SVD fails.
-- (nullable LNKMatrix *)matrixReducedToDimension:(LNKSize)dimension;
-
 /// This method projects a reduced matrix back to its original coordinate space.
 /// The dimension must be at least 1 and less than the number of columns in the matrix.
 - (LNKMatrix *)matrixProjectedToDimension:(LNKSize)dimension withPCAInformation:(LNKPCAInformation *)pca;

@@ -27,12 +27,11 @@
 															   columnCount:2
 														  addingOnesColumn:NO];
 
-	LNKMatrix *const reducedMatrix = [[matrix matrixReducedToDimension:1] retain];
-	XCTAssertEqualWithAccuracy(reducedMatrix.matrixBuffer[0],  1.481274, DACCURACY);
-	XCTAssertEqualWithAccuracy(reducedMatrix.matrixBuffer[1], -0.912912, DACCURACY);
-	XCTAssertEqualWithAccuracy(reducedMatrix.matrixBuffer[2],  1.212087, DACCURACY);
+	LNKPCAInformation *const pca = [matrix analyzePrincipalComponents];
+	XCTAssertEqualWithAccuracy([pca.rotatedMatrix rowAtIndex:0][0],  1.481274, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotatedMatrix rowAtIndex:1][0], -0.912912, DACCURACY);
+	XCTAssertEqualWithAccuracy([pca.rotatedMatrix rowAtIndex:2][0],  1.212087, DACCURACY);
 
-	[reducedMatrix release];
 	[matrix release];
 }
 

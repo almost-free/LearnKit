@@ -236,40 +236,6 @@
 	return [self analyzeApproximatePrincipalComponents:principalComponents toTolerance:1e-9 maximumIterations:500];
 }
 
-- (LNKMatrix *)matrixReducedToDimension:(LNKSize)dimension {
-	if (dimension < 1) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be >= 1" userInfo:nil];
-	}
-	
-	const LNKSize columnCount = self.columnCount;
-
-	if (dimension >= columnCount) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The dimension must be less than the column count" userInfo:nil];
-	}
-
-	const LNKSize rowCount = self.rowCount;
-
-	LNKPCAInformation *const pca = [[self analyzePrincipalComponents] retain];
-
-	if (pca == nil) {
-		return nil;
-	}
-
-	LNKFloat *const relevantMatrix = LNKFloatAlloc(dimension * rowCount);
-	LNK_mmov(pca.rotatedMatrix.matrixBuffer, relevantMatrix, dimension, rowCount, columnCount, dimension);
-
-	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:dimension addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-		LNKFloatCopy(matrix, relevantMatrix, rowCount * dimension);
-		LNKFloatCopy(outputVector, self.outputVector, rowCount);
-		return YES;
-	}];
-
-	[pca release];
-	free(relevantMatrix);
-
-	return [resultingMatrix autorelease];
-}
-
 - (LNKMatrix *)matrixProjectedToDimension:(LNKSize)dimension withPCAInformation:(LNKPCAInformation *)pca {
 	if (pca == nil) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"PCA information must be passed in" userInfo:nil];
