@@ -410,7 +410,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			LNKFastArrayFree(currentLine);
 		}
 
-		LNKSize m = LNKFastArrayElementCount(lines);
+		const LNKSize m = LNKFastArrayElementCount(lines);
 		for (LNKSize i = 0; i < m; i++) {
 			LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, i);
 			NSAssert(line != currentLine, @"Anticipating a double-free");
@@ -433,7 +433,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			startIndex = n;
 		}
 		
-		char c = rawString[n];
+		const char c = rawString[n];
 		
 		if (startIndex != NSNotFound && (c == delimiter || c == '\n' || c == '\r')) {
 			LNKSize length = n - startIndex;
@@ -447,22 +447,28 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			startIndex = NSNotFound;
 			
 			if (c == '\n' || c == '\r') {
-				if (fileColumnCount == LNKSizeMax) {
-					fileColumnCount = LNKFastArrayElementCount(currentLine);
-					
-					if (fileColumnCount < 2) {
-						NSLog(@"Error while loading matrix: the matrix must have at least two columns");
+				// Skips empty lines.
+				if (LNKFastArrayElementCount(currentLine) > 0) {
+					if (fileColumnCount == LNKSizeMax) {
+						fileColumnCount = LNKFastArrayElementCount(currentLine);
+						
+						if (fileColumnCount < 2) {
+							NSLog(@"Error while loading matrix: the matrix must have at least two columns");
+							cleanupLines();
+							return NO;
+						}
+					}
+					else if (fileColumnCount != LNKFastArrayElementCount(currentLine)) {
+						NSLog(@"Error while loading matrix: lines have varying numbers of columns");
 						cleanupLines();
 						return NO;
 					}
+
+					LNKFastArrayAddElement(lines, currentLine);
+				} else {
+					LNKFastArrayFree(currentLine);
 				}
-				else if (fileColumnCount != LNKFastArrayElementCount(currentLine)) {
-					NSLog(@"Error while loading matrix: lines have varying numbers of columns");
-					cleanupLines();
-					return NO;
-				}
-				
-				LNKFastArrayAddElement(lines, currentLine);
+
 				currentLine = NULL;
 			}
 		}
