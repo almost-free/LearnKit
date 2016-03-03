@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// The rotation matrix obtained from the eigenvectors of the covariance matrix.
 @property (nonatomic, retain, readonly) LNKMatrix *rotationMatrix;
 
-/// The standard deviations of the principal components (square roots of the eigenvalues of the covariance matrix).
-@property (nonatomic, readonly) LNKVector standardDeviations;
+/// The eigenvalues of the principal components.
+@property (nonatomic, readonly) LNKVector eigenvalues;
 
 /// The original matrix after being scaled, normalized, and rotated.
 @property (nonatomic, retain, readonly) LNKMatrix *rotatedMatrix;

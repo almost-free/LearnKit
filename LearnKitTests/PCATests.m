@@ -73,11 +73,11 @@
 	XCTAssertEqualWithAccuracy(pca.scales.data[2],  1.7644204, DACCURACY);
 	XCTAssertEqualWithAccuracy(pca.scales.data[3],  0.7631607, DACCURACY);
 
-	XCTAssertEqual(pca.standardDeviations.length, (LNKSize)4);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[0],  1.7061120, DACCURACY);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[1],  0.9598025, DACCURACY);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[2],  0.3838662, DACCURACY);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[3],  0.1435538, DACCURACY);
+	XCTAssertEqual(pca.eigenvalues.length, (LNKSize)4);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[0],  2.8914123, DACCURACY);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[1],  0.9212208, DACCURACY);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[2],  0.1473533, DACCURACY);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[3],  0.0206077, DACCURACY);
 
 	// The first vector has flipped signs, but this doesn't matter. It's a perfectly-valid eigenvector.
 	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:0][0],  0.5223716, DACCURACY);
@@ -126,11 +126,11 @@
 	XCTAssertEqualWithAccuracy(pca.scales.data[2],  1.7644204, DACCURACY);
 	XCTAssertEqualWithAccuracy(pca.scales.data[3],  0.7631607, DACCURACY);
 
-	XCTAssertEqual(pca.standardDeviations.length, (LNKSize)4);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[0],  0, DACCURACY);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[1],  0, DACCURACY);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[2],  0, DACCURACY);
-	XCTAssertEqualWithAccuracy(pca.standardDeviations.data[3],  0, DACCURACY);
+	XCTAssertEqual(pca.eigenvalues.length, (LNKSize)4);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[0],  0, DACCURACY);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[1],  0, DACCURACY);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[2],  0, DACCURACY);
+	XCTAssertEqualWithAccuracy(pca.eigenvalues.data[3],  0, DACCURACY);
 
 	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:0][0],  0.5223743, DACCURACY);
 	XCTAssertEqualWithAccuracy(-[pca.rotationMatrix rowAtIndex:1][0], -0.2633483, DACCURACY);

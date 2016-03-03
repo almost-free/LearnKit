@@ -12,14 +12,14 @@
 @implementation LNKPCAInformation
 
 // Ownership of LNKVectors is transferred.
-- (instancetype)initWithCenters:(LNKVector)centers scales:(LNKVector)scales rotationMatrix:(LNKMatrix *)rotationMatrix standardDeviations:(LNKVector)standardDeviations rotatedMatrix:(LNKMatrix *)rotatedMatrix {
+- (instancetype)initWithCenters:(LNKVector)centers scales:(LNKVector)scales rotationMatrix:(LNKMatrix *)rotationMatrix eigenvalues:(LNKVector)eigenvalues rotatedMatrix:(LNKMatrix *)rotatedMatrix {
 	if (!(self = [super init])) {
 		return nil;
 	}
 
 	_centers = centers;
 	_scales = scales;
-	_standardDeviations = standardDeviations;
+	_eigenvalues = eigenvalues;
 	_rotationMatrix = [rotationMatrix retain];
 	_rotatedMatrix = [rotatedMatrix retain];
 
@@ -31,7 +31,7 @@
 	[_rotatedMatrix release];
 	LNKVectorFree(_centers);
 	LNKVectorFree(_scales);
-	LNKVectorFree(_standardDeviations);
+	LNKVectorFree(_eigenvalues);
 	[super dealloc];
 }
 
@@ -100,11 +100,7 @@
 
 	const LNKVector centers = LNKVectorAllocAndCopy(workingMatrix.normalizationMeanVector, columnCount);
 	const LNKVector scales = LNKVectorAllocAndCopy(workingMatrix.normalizationStandardDeviationVector, columnCount);
-	LNKFloat *const standardDeviations = LNKFloatAlloc(columnCount);
-
-	for (LNKSize column = 0; column < columnCount; column++) {
-		standardDeviations[column] = LNK_sqrt(s[column]);
-	}
+	LNKFloat *const eigenvalues = LNKFloatAllocAndCopy(s, columnCount);
 
 	LNKMatrix *const rotationMatrix = [[LNKMatrix alloc] initWithRowCount:columnCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
@@ -117,7 +113,7 @@
 	free(s);
 	free(vt);
 
-	LNKPCAInformation *const information = [[LNKPCAInformation alloc] initWithCenters:centers scales:scales rotationMatrix:rotationMatrix standardDeviations:LNKVectorMakeUnsafe(standardDeviations, columnCount) rotatedMatrix:rotatedMatrix];
+	LNKPCAInformation *const information = [[LNKPCAInformation alloc] initWithCenters:centers scales:scales rotationMatrix:rotationMatrix eigenvalues:LNKVectorMakeUnsafe(eigenvalues, columnCount) rotatedMatrix:rotatedMatrix];
 	[rotationMatrix release];
 
 	return [information autorelease];
@@ -216,7 +212,7 @@
 
 	const LNKVector centers = LNKVectorAllocAndCopy(workingMatrix.normalizationMeanVector, columnCount);
 	const LNKVector scales = LNKVectorAllocAndCopy(workingMatrix.normalizationStandardDeviationVector, columnCount);
-	const LNKFloat *const standardDeviations = LNKFloatCalloc(columnCount);
+	const LNKFloat *const eigenvalues = LNKFloatCalloc(columnCount);
 
 	LNKMatrix *const rotationMatrix = [[LNKMatrix alloc] initWithRowCount:columnCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
@@ -225,7 +221,7 @@
 	}];
 	LNKMatrix *const rotatedMatrix = [workingMatrix multiplyByMatrix:rotationMatrix];
 
-	LNKPCAInformation *const pca = [[LNKPCAInformation alloc] initWithCenters:centers scales:scales rotationMatrix:rotationMatrix standardDeviations:LNKVectorMakeUnsafe(standardDeviations, columnCount) rotatedMatrix:rotatedMatrix];
+	LNKPCAInformation *const pca = [[LNKPCAInformation alloc] initWithCenters:centers scales:scales rotationMatrix:rotationMatrix eigenvalues:LNKVectorMakeUnsafe(eigenvalues, columnCount) rotatedMatrix:rotatedMatrix];
 	[rotationMatrix release];
 	[workingMatrix release];
 
