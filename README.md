@@ -16,6 +16,7 @@ Supported Algorithms
 - Naive Bayes
 - Neural Networks
 - Principal Component Analysis
+- Support Vector Machines
 
 Example
 -------
@@ -66,7 +67,6 @@ With the right parameters, classification accuracy rates of over 99% can be atta
 Future Tasks
 ------------
 
-- Support SVMs
 - Port to Metal and OpenCL
 
 License
