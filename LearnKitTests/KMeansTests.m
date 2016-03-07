@@ -21,8 +21,8 @@
 #define DACCURACY 0.01
 
 - (void)test1 {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex7data2_X" ofType:@"dat"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"ex7data2_X" withExtension:@"dat"];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:url matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 														rowCount:300
 														 columnCount:2
