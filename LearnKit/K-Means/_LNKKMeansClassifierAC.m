@@ -70,29 +70,38 @@
 }
 
 - (void)train {
-	LNKMatrix *matrix = self.matrix;
+	LNKMatrix *const matrix = self.matrix;
 	const LNKSize clusterCount = self.classes.count;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKSize rowCount = matrix.rowCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
 	const LNKSize iterationCount = self.iterationCount;
+	const BOOL checkingConvergence = iterationCount == LNKSizeMax;
 	LNKFloat *clusterCentroids = [self _clusterCentroids];
 	
 	LNKFloat *clusterCentroidsWorkspace = LNKFloatAlloc(clusterCount * columnCount);
 	LNKFloat *clusterCounts = LNKFloatAlloc(clusterCount);
 	LNKSize *examplesToClusters = malloc(rowCount * sizeof(LNKSize));
 	
-	if (!_isUsingCustomCentroids)
+	if (!_isUsingCustomCentroids) {
 		[self _setRandomClusters:clusterCentroids];
+	}
 	
 	for (LNKSize iteration = 0; iteration < iterationCount; iteration++) {
 		LNK_vclr(clusterCounts, UNIT_STRIDE, clusterCount);
 		LNK_vclr(clusterCentroidsWorkspace, UNIT_STRIDE, clusterCount * columnCount);
-		
+
+		BOOL unchangedAssignments = YES;
+
 		// Assign examples to clusters.
 		for (LNKSize index = 0; index < rowCount; index++) {
 			const LNKFloat *example = _ROW_IN_MATRIX_BUFFER(index);
 			const LNKSize cluster = [self _closestClusterToExample:example];
+
+			if (checkingConvergence && examplesToClusters[index] != cluster) {
+				unchangedAssignments = NO;
+			}
+
 			examplesToClusters[index] = cluster;
 			
 			LNKFloat *workspaceEntry = OFFSET_BY_CLUSTER(clusterCentroidsWorkspace);
@@ -103,6 +112,10 @@
 		// Update cluster centroids.
 		for (LNKSize cluster = 0; cluster < clusterCount; cluster++) {
 			LNK_vsdiv(OFFSET_BY_CLUSTER(clusterCentroidsWorkspace), UNIT_STRIDE, &clusterCounts[cluster], OFFSET_BY_CLUSTER(clusterCentroids), UNIT_STRIDE, columnCount);
+		}
+
+		if (checkingConvergence && unchangedAssignments) {
+			break;
 		}
 	}
 	

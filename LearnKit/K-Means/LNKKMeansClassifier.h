@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LNKKMeansClassifier : LNKClassifier
 
 /// The iteration count must be >= 1; the default is 100.
+/// A value of `LNKSizeMax` may be specified to run the algorithm until convergence.
 @property (nonatomic) LNKSize iterationCount;
 
 /// The returned vector must be freed with `LNKVectorFree`.
