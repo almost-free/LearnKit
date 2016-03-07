@@ -15,7 +15,7 @@
 	LNKFloat *_clusterCentroids;
 }
 
-#define DEFAULT_ITERATION_COUNT 100
+static const LNKSize kDefaultIterationCount = 100;
 
 + (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
@@ -48,7 +48,7 @@
 	
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
 	if (self) {
-		_iterationCount = DEFAULT_ITERATION_COUNT;
+		_iterationCount = kDefaultIterationCount;
 		_clusterCentroids = LNKFloatAlloc(classes.count * matrix.columnCount);
 	}
 	return self;
