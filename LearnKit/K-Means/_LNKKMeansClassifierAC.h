@@ -8,5 +8,4 @@
 #import "LNKKMeansClassifier.h"
 
 @interface _LNKKMeansClassifierAC : LNKKMeansClassifier
-
 @end

@@ -49,6 +49,7 @@ static const LNKSize kDefaultIterationCount = 100;
 	self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes];
 	if (self) {
 		_iterationCount = kDefaultIterationCount;
+		_maximumClusterDistance = LNKFloatMax;
 		_clusterCentroids = LNKFloatAlloc(classes.count * matrix.columnCount);
 	}
 	return self;

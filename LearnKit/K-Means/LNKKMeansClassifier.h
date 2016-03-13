@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// A value of `LNKSizeMax` may be specified to run the algorithm until convergence.
 @property (nonatomic) LNKSize iterationCount;
 
+/// The greatest tolerable distance between a data point and its cluster. Points at greater distances
+/// will be assigned to a 'junk' cluster during iteration.
+/// The default is `LNKFloatMax`, which effectively turns off the junk cluster.
+@property (nonatomic) LNKFloat maximumClusterDistance;
+
 /// The returned vector must be freed with `LNKVectorFree`.
 - (LNKVector)centroidForClusterAtIndex:(LNKSize)clusterIndex;
 
