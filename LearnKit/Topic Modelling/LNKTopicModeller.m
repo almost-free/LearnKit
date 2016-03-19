@@ -139,10 +139,10 @@ typedef struct {
 				Alog[topic] += localSum;
 			}
 
-			const LNKFloat subtractant = LNK_vlogsumexp(Alog, _topicCount);
+			const LNKFloat logSum = LNK_vlogsumexp(Alog, _topicCount);
 
-			LNKFloat s2 = -subtractant;
-			LNK_vsadd(Alog, UNIT_STRIDE, &s2, wlog, UNIT_STRIDE, _topicCount);
+			LNKFloat negativeLogSum = -logSum;
+			LNK_vsadd(Alog, UNIT_STRIDE, &negativeLogSum, wlog, UNIT_STRIDE, _topicCount);
 
 			LNK_vexp(wlog, wlog, &topicCountInt);
 			LNKFloatCopy(&W[docIndex * _topicCount], wlog, _topicCount);
