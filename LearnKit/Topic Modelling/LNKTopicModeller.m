@@ -142,7 +142,7 @@ typedef struct {
 			const LNKFloat subtractant = LNK_vlogsumexp(Alog, _topicCount);
 
 			LNKFloat s2 = -subtractant;
-			LNK_vsadd(Alog, 1, &s2, wlog, 1, _topicCount);
+			LNK_vsadd(Alog, UNIT_STRIDE, &s2, wlog, UNIT_STRIDE, _topicCount);
 
 			LNK_vexp(wlog, wlog, &topicCountInt);
 			LNKFloatCopy(&W[docIndex * _topicCount], wlog, _topicCount);
@@ -155,9 +155,9 @@ typedef struct {
 			for (LNKSize i = 0; i < documentCount; i++) {
 				weightSum += W[i * _topicCount + topic];
 
-				LNKFloat smm = 0;
-				LNK_vsum(&matrixBuffer[i * wordCount], 1, &smm, wordCount);
-				bottom += smm * W[i * _topicCount + topic];
+				LNKFloat rowSum = 0;
+				LNK_vsum(&matrixBuffer[i * wordCount], UNIT_STRIDE, &rowSum, wordCount);
+				bottom += rowSum * W[i * _topicCount + topic];
 			}
 
 			LNK_vclr(sums, UNIT_STRIDE, wordCount);
@@ -178,11 +178,11 @@ typedef struct {
 			LNKFloat *const pRow = &p[topic * wordCount];
 
 			LNKFloat additiveSmoothing = 1.0 / wordCount;
-			LNK_vsadd(pRow, 1, &additiveSmoothing, pRow, 1, wordCount);
+			LNK_vsadd(pRow, UNIT_STRIDE, &additiveSmoothing, pRow, UNIT_STRIDE, wordCount);
 
 			LNKFloat normalizer = 0;
-			LNK_vsum(pRow, 1, &normalizer, wordCount);
-			LNK_vsdiv(pRow, 1, &normalizer, pRow, 1, wordCount);
+			LNK_vsum(pRow, UNIT_STRIDE, &normalizer, wordCount);
+			LNK_vsdiv(pRow, UNIT_STRIDE, &normalizer, pRow, UNIT_STRIDE, wordCount);
 		}
 
 		previousLikelihood = currentLikelihood;
@@ -220,7 +220,7 @@ typedef struct {
 			return ((Word *)a)->frequency > ((Word *)b)->frequency ? -1 : 1;
 		});
 
-		for (LNKSize c = 0; c < 10; c++) {
+		for (LNKSize c = 0; c < MIN((LNKSize)10, wordCount); c++) {
 			NSString *const word = _vocabulary[words[c].index];
 			[topicSet addWord:word forTopicAtIndex:topic];
 		}
