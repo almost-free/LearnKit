@@ -297,6 +297,28 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	}] autorelease];
 }
 
+- (LNKMatrix *)covarianceMatrix {
+	if (!self.normalized) {
+		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Only covariance of normalized matrices is supported" userInfo:nil];
+	}
+
+	return [[[LNKMatrix alloc] initWithRowCount:_columnCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+
+		// S = 1/m X' X
+		LNKFloat *const transposeMatrix = LNKFloatAlloc(_columnCount * _rowCount);
+		LNK_mtrans(_matrix, transposeMatrix, _columnCount, _rowCount);
+
+		LNK_mmul(transposeMatrix, UNIT_STRIDE, _matrix, UNIT_STRIDE, matrix, UNIT_STRIDE, _columnCount, _columnCount, _rowCount);
+		free(transposeMatrix);
+
+		const LNKFloat m = (LNKFloat)_rowCount;
+		LNK_vsdiv(matrix, UNIT_STRIDE, &m, matrix, UNIT_STRIDE, _columnCount * _columnCount);
+
+		return YES;
+	}] autorelease];
+}
+
 // The result must be freed by the caller.
 - (LNKSize *)_shuffleIndices {
 	LNKSize *indices = malloc(sizeof(LNKSize) * _rowCount);

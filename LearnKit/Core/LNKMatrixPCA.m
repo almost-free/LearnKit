@@ -53,21 +53,8 @@
 
 	NSAssert(columnCount == workingMatrix.columnCount, @"The number of columns should not change");
 
-	const LNKSize rowCount = workingMatrix.rowCount;
-	const LNKFloat *matrixBuffer = workingMatrix.matrixBuffer;
-
-	LNKFloat *const sigmaMatrix = LNKFloatAlloc(columnCount * columnCount);
-
-	// S = 1/m X' X
-	// After normalization, this holds the covariance matrix.
-	LNKFloat *const transposeMatrix = LNKFloatAlloc(columnCount * rowCount);
-	LNK_mtrans(matrixBuffer, transposeMatrix, columnCount, rowCount);
-
-	LNK_mmul(transposeMatrix, UNIT_STRIDE, matrixBuffer, UNIT_STRIDE, sigmaMatrix, UNIT_STRIDE, columnCount, columnCount, rowCount);
-	free(transposeMatrix);
-
-	const LNKFloat m = (LNKFloat)rowCount;
-	LNK_vsdiv(sigmaMatrix, UNIT_STRIDE, &m, sigmaMatrix, UNIT_STRIDE, columnCount * columnCount);
+	LNKMatrix *const covarianceMatrix = [workingMatrix.covarianceMatrix retain];
+	const LNKFloat *const sigmaMatrix = covarianceMatrix.matrixBuffer;
 
 	__CLPK_integer columnCountCLPK = (__CLPK_integer)columnCount;
 	__CLPK_integer info = 0;
@@ -80,15 +67,15 @@
 	LNKFloat workOptimal = 0;
 
 	// The first pass computes work sizes.
-	dgesvd_("N", "A", &columnCountCLPK, &columnCountCLPK, sigmaMatrix, &columnCountCLPK, s, NULL, &columnCountCLPK, vt, &columnCountCLPK, &workOptimal, &workSize, &info);
+	dgesvd_("N", "A", &columnCountCLPK, &columnCountCLPK, (/* const */ __CLPK_doublereal *)sigmaMatrix, &columnCountCLPK, s, NULL, &columnCountCLPK, vt, &columnCountCLPK, &workOptimal, &workSize, &info);
 
 	workSize = (__CLPK_integer)workOptimal;
 	LNKFloat *const work = LNKFloatAlloc(workSize);
 
 	// The second pass to decomposes the covariance matrix into eigenvectors and eigenvalues.
-	const int result = dgesvd_("N", "A", &columnCountCLPK, &columnCountCLPK, sigmaMatrix, &columnCountCLPK, s, NULL, &columnCountCLPK, vt, &columnCountCLPK, work, &workSize, &info);
+	const int result = dgesvd_("N", "A", &columnCountCLPK, &columnCountCLPK, (/* const */ __CLPK_doublereal *)sigmaMatrix, &columnCountCLPK, s, NULL, &columnCountCLPK, vt, &columnCountCLPK, work, &workSize, &info);
 	free(work);
-	free(sigmaMatrix);
+	[covarianceMatrix release];
 
 	if (result != 0) {
 		NSLog(@"%s: Singular value decomposition could not be performed (%d)", __PRETTY_FUNCTION__, result);

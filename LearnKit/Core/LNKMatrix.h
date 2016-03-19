@@ -60,6 +60,8 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (LNKMatrix *)multiplyByMatrix:(LNKMatrix *)matrix;
 - (LNKMatrix *)transposedMatrix;
 
+- (LNKMatrix *)covarianceMatrix;
+
 /// Returns a copy of the current matrix with its rows reshuffled.
 - (LNKMatrix *)copyShuffledMatrix;
 
