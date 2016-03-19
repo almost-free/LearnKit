@@ -202,6 +202,7 @@ typedef struct {
 		free(W);
 	}
 
+	free(pi);
 	free(logWorkspace);
 	free(sums);
 	free(Alog);
