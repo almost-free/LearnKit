@@ -99,3 +99,5 @@ extern LNKFloat LNK_vsd(LNKVector vector, LNKSize stride, LNKFloat *workgroup, L
 
 /// Computes the determinant of the n * n matrix.
 extern LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n);
+
+extern LNKFloat LNK_vlogsumexp(const LNKFloat *vector, LNKSize n);

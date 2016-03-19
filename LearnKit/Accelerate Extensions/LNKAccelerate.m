@@ -143,3 +143,30 @@ LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n) {
 	
 	return determinant;
 }
+
+LNKFloat LNK_vlogsumexp(const LNKFloat *vector, LNKSize n) {
+	if (vector == NULL || n == 0) {
+		return 0;
+	}
+
+	if (n > INT_MAX) {
+		printf("Warnings: elements at indices greater than or equal to %ud will not be processed", INT_MAX);
+		n = INT_MAX;
+	}
+
+	LNKFloat maxExp = 0;
+	LNK_maxv(vector, 1, &maxExp, n);
+
+	LNKFloat *const difference = LNKFloatAlloc(n);
+	LNKFloat negativeMaxExp = -maxExp;
+	LNK_vsadd(vector, 1, &negativeMaxExp, difference, 1, n);
+
+	const int intLength = (int)n;
+	LNK_vexp(difference, difference, &intLength);
+
+	LNKFloat sum = 0;
+	LNK_vsum(difference, 1, &sum, n);
+	free(difference);
+
+	return LNKLog(sum) + maxExp;
+}
