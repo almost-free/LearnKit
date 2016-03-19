@@ -38,6 +38,16 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return nil;
 }
 
+- (instancetype)initIdentityWithColumnCount:(LNKSize)columnCount {
+	return [self initWithRowCount:columnCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+		for (LNKSize i = 0; i < columnCount; i++) {
+			matrix[i * columnCount + i] = 1;
+		}
+		return YES;
+	}];
+}
+
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url addingOnesColumn:(BOOL)addOnesColumn {
 	return [self initWithCSVFileAtURL:url delimiter:',' addingOnesColumn:addOnesColumn];
 }
@@ -317,6 +327,65 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 		return YES;
 	}] autorelease];
+}
+
+- (LNKMatrix *)invertedMatrix {
+	if (_columnCount != _rowCount) {
+		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Only square matrices can be inverted" userInfo:nil];
+		return nil;
+	}
+
+	return [[[LNKMatrix alloc] initWithRowCount:_columnCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+
+		LNKFloatCopy(matrix, _matrix, _columnCount * _columnCount);
+
+		__CLPK_integer error = 0;
+		__CLPK_integer *const pivot = malloc(_columnCount * sizeof(__CLPK_integer));
+		__CLPK_doublereal *const workspace = malloc(_columnCount * sizeof(__CLPK_doublereal));
+
+		// Factorization
+		__CLPK_integer N = (__CLPK_integer)_columnCount;
+		dgetrf_(&N, &N, matrix, &N, pivot, &error);
+
+		if (error != 0) {
+			free(pivot);
+			free(workspace);
+			return NO;
+		}
+
+		// Inversion
+		dgetri_(&N, matrix, &N, pivot, workspace, &N, &error);
+
+		free(pivot);
+		free(workspace);
+
+		return (error == 0);
+	}] autorelease];
+}
+
+- (BOOL)isEqual:(id)object {
+	if (![object isKindOfClass:[LNKMatrix class]]) {
+		return NO;
+	}
+
+	LNKMatrix *const otherMatrix = object;
+
+	if (_rowCount != otherMatrix.rowCount || _columnCount != otherMatrix.columnCount) {
+		return NO;
+	}
+
+	const LNKFloat *otherBuffer = otherMatrix.matrixBuffer;
+	const LNKSize items = _rowCount * _columnCount;
+	const LNKFloat threshold = 0.0001;
+
+	for (LNKSize i = 0; i < items; i++) {
+		if (fabs(_matrix[i] - otherBuffer[i]) > threshold) {
+			return NO;
+		}
+	}
+
+	return YES;
 }
 
 // The result must be freed by the caller.

@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 - (instancetype)init NS_UNAVAILABLE;
 
+- (instancetype)initIdentityWithColumnCount:(LNKSize)columnCount;
+
 /// Initializes a matrix by loading a CSV file. The file should not contain headings.
 /// Optionally, a ones column may be added to the beginning of the matrix. The last column will be mapped to the output vector.
 - (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url addingOnesColumn:(BOOL)addOnesColumn;
@@ -61,6 +63,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (LNKMatrix *)transposedMatrix;
 
 - (LNKMatrix *)covarianceMatrix;
+- (nullable LNKMatrix *)invertedMatrix;
 
 /// Returns a copy of the current matrix with its rows reshuffled.
 - (LNKMatrix *)copyShuffledMatrix;

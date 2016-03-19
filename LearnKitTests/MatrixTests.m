@@ -74,4 +74,27 @@
 	free(indices);
 }
 
+- (void)testInversion {
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithRowCount:2 columnCount:2 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+		matrix[0] = 0.5;
+		matrix[1] = 2;
+		matrix[2] = 3;
+		matrix[3] = 0.5;
+		return YES;
+	}];
+
+	LNKMatrix *const inverse = matrix.invertedMatrix;
+	LNKMatrix *const product = [inverse multiplyByMatrix:matrix];
+	XCTAssertEqualWithAccuracy(product.matrixBuffer[0],  1, 0.001);
+	XCTAssertEqualWithAccuracy(product.matrixBuffer[1],  0, 0.001);
+	XCTAssertEqualWithAccuracy(product.matrixBuffer[2],  0, 0.001);
+	XCTAssertEqualWithAccuracy(product.matrixBuffer[3],  1, 0.001);
+
+	LNKMatrix *const eye = [[LNKMatrix alloc] initIdentityWithColumnCount:2];
+	XCTAssertEqualObjects(product, eye);
+	[eye release];
+	[matrix release];
+}
+
 @end
