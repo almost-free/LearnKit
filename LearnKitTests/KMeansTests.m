@@ -11,6 +11,7 @@
 #import "LNKKMeansClassifier.h"
 #import "LNKKMeansClassifierPrivate.h"
 #import "LNKMatrix.h"
+#import "LNKMatrixImages.h"
 
 @interface KMeansTests : XCTestCase
 
@@ -106,6 +107,32 @@
 	LNKVectorFree(cluster1);
 	LNKVectorFree(cluster2);
 	LNKVectorFree(cluster3);
+
+	[classifier release];
+}
+
+- (void)testPrimaryColorDetection {
+	// Image courtesy of Michael Wifall
+	// https://flic.kr/p/eTff8o
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"Palace" withExtension:@"jpg"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithImageAtURL:url format:LNKImageFormatRGB];
+
+	LNKKMeansClassifier *const classifier = [[LNKKMeansClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
+	classifier.iterationCount = LNKSizeMax;
+	[matrix release];
+
+	[classifier train];
+
+	const LNKVector color1 = [classifier centroidForClusterAtIndex:0];
+	const LNKVector color2 = [classifier centroidForClusterAtIndex:1];
+
+	XCTAssertEqualWithAccuracy(color1.data[0], 0.15, DACCURACY);
+	XCTAssertEqualWithAccuracy(color1.data[1], 0.27, DACCURACY);
+	XCTAssertEqualWithAccuracy(color1.data[2], 0.444, DACCURACY);
+
+	XCTAssertEqualWithAccuracy(color2.data[0], 0.821, DACCURACY);
+	XCTAssertEqualWithAccuracy(color2.data[1], 0.739, DACCURACY);
+	XCTAssertEqualWithAccuracy(color2.data[2], 0.574, DACCURACY);
 
 	[classifier release];
 }

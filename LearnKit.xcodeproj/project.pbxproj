@@ -58,6 +58,9 @@
 		C95940881C6A594300EAFEA9 /* LNKCSVColumnRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */; };
 		C95963231C6A49DD00AF0EBA /* income.csv in Resources */ = {isa = PBXBuildFile; fileRef = C95963221C6A49DD00AF0EBA /* income.csv */; };
 		C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D950C19DFBCE300BE8768 /* KNNTests.m */; };
+		C96F53391C9E5C2F00AE1B72 /* Palace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C96F53381C9E5C2F00AE1B72 /* Palace.jpg */; };
+		C96F533C1C9E5D5E00AE1B72 /* LNKMatrixImages.m in Sources */ = {isa = PBXBuildFile; fileRef = C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */; };
+		C96F533D1C9E617B00AE1B72 /* LNKMatrixImages.m in Sources */ = {isa = PBXBuildFile; fileRef = C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */; };
 		C971B4EF19DA6ECB0066C78B /* StructureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C971B4EE19DA6ECB0066C78B /* StructureTests.m */; };
 		C975913819A04B44003D3A48 /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
 		C975914519A04B4F003D3A48 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9AC1F8C199AFD57006D7122 /* Accelerate.framework */; };
@@ -287,6 +290,9 @@
 		C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKCSVColumnRule.m; sourceTree = "<group>"; };
 		C95963221C6A49DD00AF0EBA /* income.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = income.csv; sourceTree = "<group>"; };
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
+		C96F53381C9E5C2F00AE1B72 /* Palace.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Palace.jpg; sourceTree = "<group>"; };
+		C96F533A1C9E5D5E00AE1B72 /* LNKMatrixImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixImages.h; sourceTree = "<group>"; };
+		C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixImages.m; sourceTree = "<group>"; };
 		C971B4EE19DA6ECB0066C78B /* StructureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StructureTests.m; path = LearnKitTests/StructureTests.m; sourceTree = SOURCE_ROOT; };
 		C975911F19A04AF9003D3A48 /* LearnKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LearnKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97D57A81C65183600B03E40 /* LNKGaussianProbabilityDistribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKGaussianProbabilityDistribution.h; sourceTree = "<group>"; };
@@ -775,6 +781,8 @@
 				C9CBD2C219E5D52900AE71D5 /* LNKMatrix.m */,
 				C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */,
 				C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */,
+				C96F533A1C9E5D5E00AE1B72 /* LNKMatrixImages.h */,
+				C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */,
 				C9CBD2C319E5D52900AE71D5 /* LNKMatrixPCA.h */,
 				C9CBD2C419E5D52900AE71D5 /* LNKMatrixPCA.m */,
 				C9CBD2C519E5D52900AE71D5 /* LNKMatrixPrivate.h */,
@@ -828,6 +836,7 @@
 				C9860BE31A0B4F04009FADAE /* Movies_Y.mat */,
 				C9D1A4A11C9DAA5B003736C1 /* nips-docword.txt */,
 				C9D1A4A21C9DAA5B003736C1 /* nips-vocab.txt */,
+				C96F53381C9E5C2F00AE1B72 /* Palace.jpg */,
 				C99F0E851C653872000F9242 /* Pima.csv */,
 				C915806A19E8B12F00879FD5 /* ServerStatistics.mat */,
 				C915807F19E8E4FB00879FD5 /* ServerStatisticsVal.mat */,
@@ -1045,6 +1054,7 @@
 				C9CBD31119E5D69000AE71D5 /* ex5_Xcv.dat in Resources */,
 				C9CBD30E19E5D69000AE71D5 /* ex3data1_X.dat in Resources */,
 				C90670551A6E113200ED09D8 /* t10k-images.idx3-ubyte in Resources */,
+				C96F53391C9E5C2F00AE1B72 /* Palace.jpg in Resources */,
 				C9CBD31219E5D69000AE71D5 /* ex5_y.dat in Resources */,
 				C915808619E8EC9600879FD5 /* AnomalyPerformance.mat in Resources */,
 				C90670581A6E113200ED09D8 /* train-labels.idx1-ubyte in Resources */,
@@ -1111,6 +1121,7 @@
 				C9CBD27119E5D46900AE71D5 /* _LNKLinRegPredictorAC.m in Sources */,
 				C94FE76919BA8A6600251EDF /* fmincg.m in Sources */,
 				C97FF0AB1A1D083100F6CEDA /* NSIndexSetAdditions.m in Sources */,
+				C96F533D1C9E617B00AE1B72 /* LNKMatrixImages.m in Sources */,
 				C9CBD2DD19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */,
 				C9CBD2ED19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
 				C9CBD26219E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
@@ -1185,6 +1196,7 @@
 				C906704F1A6E10F700ED09D8 /* NNMNISTTests.m in Sources */,
 				C9CBD28B19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,
 				C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */,
+				C96F533C1C9E5D5E00AE1B72 /* LNKMatrixImages.m in Sources */,
 				C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
 				C9CBD2E519E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9D1A49A1C9DA9D3003736C1 /* TopicModellerTests.m in Sources */,
