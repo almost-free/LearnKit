@@ -43,7 +43,7 @@ static const LNKFloat tolerance = 0.4;
 										   matrixValueType:LNKValueTypeDouble
 										 outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 									 outputVectorValueType:LNKValueTypeUInt8
-											  exampleCount:exampleCount
+											  rowCount:exampleCount
 											   columnCount:columnCount
 										  addingOnesColumn:YES];
 	
@@ -56,17 +56,14 @@ static const LNKFloat tolerance = 0.4;
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.iterationCount = 400;
-	
-	_classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:_matrix
-											  implementationType:LNKImplementationTypeAccelerate
-										   optimizationAlgorithm:algorithm
-														 classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
-	_classifier.hiddenLayerCount = 1;
-	_classifier.hiddenLayerUnitCount = 25;
+
+	NSArray<LNKNeuralNetLayer *> *hiddenLayers = @[ [[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:25] ];
+	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetSigmoidLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	_classifier = [[LNKNeuralNetClassifier alloc] initWithMatrix:_matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm hiddenLayers:hiddenLayers outputLayer:outputLayer];
 	
 	[_classifier train];
 	
-	[self.canvasView loadFeatureVector:[_matrix exampleAtIndex:2000]];
+	[self.canvasView loadFeatureVector:[_matrix rowAtIndex:2000]];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
