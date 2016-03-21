@@ -5,6 +5,7 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+#import "Config.h"
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, LNKImplementationType) {

@@ -105,6 +105,7 @@
 		C9A27CCF1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h in Headers */ = {isa = PBXBuildFile; fileRef = C9A27CCD1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h */; };
 		C9A27CD01C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A27CCE1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m */; };
 		C9A27CD11C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A27CCE1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m */; };
+		C9A7C26E1C9F93A8008A1E51 /* Config.h in Headers */ = {isa = PBXBuildFile; fileRef = C9A7C26D1C9F93A8008A1E51 /* Config.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9AC0DD119A04C950061DEFB /* AccelerateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */; };
 		C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */; };
 		C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */; };
@@ -325,6 +326,7 @@
 		C9A27CC91C64718900D7C2F7 /* LNKClassProbabilityDistribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKClassProbabilityDistribution.m; sourceTree = "<group>"; };
 		C9A27CCD1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDiscreteProbabilityDistribution.h; sourceTree = "<group>"; };
 		C9A27CCE1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDiscreteProbabilityDistribution.m; sourceTree = "<group>"; };
+		C9A7C26D1C9F93A8008A1E51 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = LearnKit/Config.h; sourceTree = SOURCE_ROOT; };
 		C9AC0DCD19A04C950061DEFB /* AccelerateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccelerateTests.m; path = LearnKitTests/AccelerateTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinearRegressionTests.m; path = LearnKitTests/LinearRegressionTests.m; sourceTree = SOURCE_ROOT; };
 		C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogisticRegressionTests.m; path = LearnKitTests/LogisticRegressionTests.m; sourceTree = SOURCE_ROOT; };
@@ -580,6 +582,7 @@
 			isa = PBXGroup;
 			children = (
 				C94F195019A6F0FF00BD967C /* Info.plist */,
+				C9A7C26D1C9F93A8008A1E51 /* Config.h */,
 				C94F195119A6F0FF00BD967C /* LearnKit.h */,
 				C9AC0DE019A04CC00061DEFB /* Prefix.pch */,
 				C9CBD24119E5D3F500AE71D5 /* Accelerate Extensions */,
@@ -880,6 +883,7 @@
 				C94F195319A6F0FF00BD967C /* LearnKit.h in Headers */,
 				C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */,
 				C9A27CCF1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h in Headers */,
+				C9A7C26E1C9F93A8008A1E51 /* Config.h in Headers */,
 				C9CBD2D519E5D52900AE71D5 /* LNKClassifier.h in Headers */,
 				C9860BF11A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.h in Headers */,
 				C99501791A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h in Headers */,

@@ -8,9 +8,7 @@
 #ifndef LinearRegression_Prefix_pch
 #define LinearRegression_Prefix_pch
 
-// CONFIG
-#define USE_DOUBLE_PRECISION 1
-// End of CONFIG
+#import "Config.h"
 
 #if USE_DOUBLE_PRECISION
 #define LBFGS_FLOAT 64
