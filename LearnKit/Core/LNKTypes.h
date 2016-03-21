@@ -5,6 +5,8 @@
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 typedef NS_ENUM(NSUInteger, LNKImplementationType) {
 	LNKImplementationTypeAccelerate,
 	
