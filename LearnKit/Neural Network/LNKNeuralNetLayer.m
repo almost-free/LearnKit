@@ -88,3 +88,28 @@
 }
 
 @end
+
+
+@implementation LNKNeuralNetTanhLayer
+
+- (LNKActivationFunction)activationFunction {
+	return ^(LNKFloat *vector, LNKSize length) {
+		const int lengthInt = (int)length;
+		LNK_vtanh(vector, vector, &lengthInt);
+	};
+}
+
+// 1 - tanh^2(x)
+- (LNKActivationGradientFunction)activationGradientFunction {
+	return ^(const LNKFloat *vector, LNKFloat *outVector, LNKSize length) {
+		const int lengthInt = (int)length;
+		LNK_vtanh(outVector, vector, &lengthInt);
+		const LNKFloat power = 2;
+		LNK_vpows(outVector, &power, outVector, &lengthInt);
+		LNK_vneg(outVector, UNIT_STRIDE, outVector, UNIT_STRIDE, lengthInt);
+		const LNKFloat one = 1;
+		LNK_vsadd(outVector, UNIT_STRIDE, &one, outVector, UNIT_STRIDE, lengthInt);
+	};
+}
+
+@end

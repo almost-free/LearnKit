@@ -35,12 +35,14 @@ typedef void(^LNKActivationGradientFunction)(const LNKFloat *vector, LNKFloat *o
 
 
 @interface LNKNeuralNetSigmoidLayer : LNKNeuralNetLayer
-
 @end
 
 
 @interface LNKNeuralNetReLULayer : LNKNeuralNetLayer
+@end
 
+
+@interface LNKNeuralNetTanhLayer : LNKNeuralNetLayer
 @end
 
 NS_ASSUME_NONNULL_END

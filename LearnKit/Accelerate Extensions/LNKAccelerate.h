@@ -32,6 +32,8 @@
 #define LNK_maxv		vDSP_maxvD
 #define LNK_vlog		vvlog
 #define LNK_vexp		vvexp
+#define LNK_vtanh		vvtanh
+#define LNK_vpows		vvpows
 
 #define LNK_sqrt		sqrt
 #define LNK_pow			pow
@@ -66,6 +68,8 @@
 #define LNK_maxv		vDSP_maxv
 #define LNK_vlog		vvlogf
 #define LNK_vexp		vvexpf
+#define LNK_vtanh		vvtanhf
+#define LNK_vpows		vvpowsf
 
 #define LNK_sqrt		sqrtf
 #define LNK_pow			powf
