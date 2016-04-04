@@ -1312,6 +1312,11 @@
 					"-Wextra",
 				);
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+					"-Wabsolute-value",
+				);
 			};
 			name = Debug;
 		};
@@ -1351,6 +1356,11 @@
 					"-Wextra",
 				);
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wextra",
+					"-Wall",
+					"-Wabsolute-value",
+				);
 			};
 			name = Release;
 		};
