@@ -126,13 +126,25 @@
 	const LNKVector color1 = [classifier centroidForClusterAtIndex:0];
 	const LNKVector color2 = [classifier centroidForClusterAtIndex:1];
 
-	XCTAssertEqualWithAccuracy(color1.data[0], 0.15, DACCURACY);
-	XCTAssertEqualWithAccuracy(color1.data[1], 0.27, DACCURACY);
-	XCTAssertEqualWithAccuracy(color1.data[2], 0.444, DACCURACY);
+	void(^testFirstColor)(LNKVector) = ^(LNKVector v) {
+		XCTAssertEqualWithAccuracy(v.data[0], 0.15, DACCURACY);
+		XCTAssertEqualWithAccuracy(v.data[1], 0.27, DACCURACY);
+		XCTAssertEqualWithAccuracy(v.data[2], 0.444, DACCURACY);
+	};
 
-	XCTAssertEqualWithAccuracy(color2.data[0], 0.821, DACCURACY);
-	XCTAssertEqualWithAccuracy(color2.data[1], 0.739, DACCURACY);
-	XCTAssertEqualWithAccuracy(color2.data[2], 0.574, DACCURACY);
+	void(^testSecondColor)(LNKVector) = ^(LNKVector v) {
+		XCTAssertEqualWithAccuracy(v.data[0], 0.821, DACCURACY);
+		XCTAssertEqualWithAccuracy(v.data[1], 0.739, DACCURACY);
+		XCTAssertEqualWithAccuracy(v.data[2], 0.574, DACCURACY);
+	};
+
+	if (color1.data[0] < color2.data[0]) {
+		testFirstColor(color1);
+		testSecondColor(color2);
+	} else {
+		testFirstColor(color2);
+		testSecondColor(color1);
+	}
 
 	[classifier release];
 }
