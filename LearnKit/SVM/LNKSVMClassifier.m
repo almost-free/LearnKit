@@ -37,6 +37,10 @@
 		[NSException raise:NSInvalidArgumentException format:@"Two output classes must be specified"];
 	}
 
+	if (matrix.hasBiasColumn) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by SVM classifiers." userInfo:nil];
+	}
+
 	LNKMatrix *const workingMatrix = [matrix matrixByAddingBiasColumn];
 	
 	if (!(self = [super initWithMatrix:workingMatrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes])) {

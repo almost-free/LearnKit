@@ -33,6 +33,10 @@
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
+	if (matrix.hasBiasColumn) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by LogReg classifiers." userInfo:nil];
+	}
+
 	LNKMatrix *const workingMatrix = [matrix matrixByAddingBiasColumn];
 
 	self = [super initWithMatrix:workingMatrix optimizationAlgorithm:algorithm];
