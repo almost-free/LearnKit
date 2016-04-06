@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// For neural network classifiers, the only supported algorithms are CG and stochastic gradient descent.
 /// Predicted values are of type LNKClass.
+/// A bias column is added to the matrix automatically.
 @interface LNKNeuralNetClassifier : LNKClassifier
 
 // Each neural network has an input layer whose size is equal to the matrix's feature count,

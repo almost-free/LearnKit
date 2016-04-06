@@ -42,21 +42,27 @@ typedef struct {
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm hiddenLayers:(NSArray<LNKNeuralNetLayer *> *)hiddenLayers outputLayer:(LNKNeuralNetLayer *)outputLayer {
-	if (!matrix.hasBiasColumn)
-		[NSException raise:NSInvalidArgumentException format:@"The matrix must have a bias column"];
+	if (matrix.hasBiasColumn) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by NN classifiers." userInfo:nil];
+	}
 	
-	if (!hiddenLayers.count)
+	if (!hiddenLayers.count) {
 		[NSException raise:NSInvalidArgumentException format:@"At least one hidden layer must be specified"];
+	}
 	
-	if (!outputLayer.isOutputLayer)
+	if (!outputLayer.isOutputLayer) {
 		[NSException raise:NSInvalidArgumentException format:@"An output layer must be specified"];
+	}
+
+	LNKMatrix *const workingMatrix = matrix.matrixByAddingBiasColumn;
 	
-	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:outputLayer.classes]))
+	if (!(self = [super initWithMatrix:workingMatrix implementationType:implementation optimizationAlgorithm:algorithm classes:outputLayer.classes])) {
 		return nil;
+	}
 	
 	NSMutableArray<LNKNeuralNetLayer *> *allLayers = [[NSMutableArray alloc] init];
 	
-	LNKNeuralNetLayer *inputLayer = [[LNKNeuralNetLayer alloc] initWithUnitCount:matrix.columnCount];
+	LNKNeuralNetLayer *inputLayer = [[LNKNeuralNetLayer alloc] initWithUnitCount:workingMatrix.columnCount];
 	[allLayers addObject:inputLayer];
 	[inputLayer release];
 	

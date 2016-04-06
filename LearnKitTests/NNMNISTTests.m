@@ -57,7 +57,7 @@
 - (void)test1Training {
 	LNKMatrix *trainingMatrix = [[LNKMatrix alloc] initWithRowCount:TRAIN_EXAMPLES
 														columnCount:FEATURES
-												   addingOnesColumn:YES
+												   addingOnesColumn:NO
 													 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 														 [self _copyMNISTDataWithBasename:@"train" toMatrixBuffer:matrix outputVector:outputVector examples:TRAIN_EXAMPLES];
 														 return YES;
@@ -82,13 +82,13 @@
 	[classifier train];
 	
 	LNKMatrix *testMatrix = [[LNKMatrix alloc] initWithRowCount:TEST_EXAMPLES
-														columnCount:FEATURES
-												   addingOnesColumn:YES
-													 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
-														 [self _copyMNISTDataWithBasename:@"t10k" toMatrixBuffer:matrix outputVector:outputVector examples:TEST_EXAMPLES];
-														 return YES;
-													 }];
-	
+													columnCount:FEATURES
+											   addingOnesColumn:NO
+												 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+													 [self _copyMNISTDataWithBasename:@"t10k" toMatrixBuffer:matrix outputVector:outputVector examples:TEST_EXAMPLES];
+													 return YES;
+												 }];
+
 	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:testMatrix], 0.97, @"Poor accuracy");
 	[testMatrix release];
 	[classifier release];
