@@ -10,7 +10,7 @@
 @implementation LNKClass
 
 + (instancetype)classWithUnsignedInteger:(NSUInteger)value {
-	return [[[self alloc] initWithUnsignedInteger:value] autorelease];
+	return [[[LNKClass alloc] initWithUnsignedInteger:value] autorelease];
 }
 
 - (instancetype)initWithUnsignedInteger:(NSUInteger)value {
