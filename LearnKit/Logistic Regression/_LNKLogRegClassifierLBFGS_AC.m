@@ -46,6 +46,8 @@
 	LNKFloat result = 0;
 	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featuresWithBias, UNIT_STRIDE, &result, self.matrix.columnCount);
 	LNK_vsigmoid(&result, 1);
+
+	free(featuresWithBias);
 	
 	return [NSNumber numberWithLNKFloat:result];
 }
