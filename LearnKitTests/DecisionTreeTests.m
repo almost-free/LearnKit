@@ -21,7 +21,7 @@
 	NSBundle *bundle = [NSBundle bundleForClass:self.class];
 	NSURL *matrixURL = [bundle URLForResource:@"WillWait" withExtension:@"csv"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:matrixURL addingOnesColumn:NO];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:matrixURL];
 	
 	LNKDecisionTreeClassifier *classifier = [[LNKDecisionTreeClassifier alloc] initWithMatrix:matrix
 																		   implementationType:LNKImplementationTypeAccelerate

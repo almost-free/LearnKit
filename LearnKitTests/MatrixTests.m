@@ -50,7 +50,7 @@
 
 - (void)testShufflingIndices {
 	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:NO];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
 
 	const LNKSize rowCount = matrix.rowCount;
 	XCTAssertEqual(rowCount, (LNKSize)768);
