@@ -391,16 +391,20 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 - (LNKMatrix *)matrixByAddingBiasColumn {
 	const LNKSize rowCount = self.rowCount;
 	const LNKSize columnCount = self.columnCount;
-	const LNKSize columnCountWithBias = columnCount + 1;
+	const LNKSize biasOffset = 1;
+	const LNKSize columnCountWithBias = columnCount + biasOffset;
 	const LNKFloat *const matrixBuffer = self.matrixBuffer;
 
 	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		for (LNKSize m = 0; m < rowCount; m++) {
-			LNKFloatCopy(matrix + m * columnCountWithBias + 1 /* bias */, matrixBuffer + m * columnCount, columnCount);
+			LNKFloatCopy(matrix + m * columnCountWithBias + biasOffset, matrixBuffer + m * columnCount, columnCount);
 		}
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		return YES;
 	}];
+	matrix->_normalized = _normalized;
+	LNKFloatCopy(matrix->_columnToMu + biasOffset, _columnToMu, columnCount);
+	LNKFloatCopy(matrix->_columnToSD + biasOffset, _columnToSD, columnCount);
 	return [matrix autorelease];
 }
 
