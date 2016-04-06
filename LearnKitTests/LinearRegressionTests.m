@@ -10,6 +10,7 @@
 
 #import "LNKAccelerate.h"
 #import "LNKAccelerateGradient.h"
+#import "LNKCSVColumnRule.h"
 #import "LNKLinRegPredictor.h"
 #import "LNKLinRegPredictorPrivate.h"
 #import "LNKMatrix.h"
@@ -341,6 +342,39 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	[trainingSet__ release];
 	[cvSet_ release];
 	[cvSet__ release];
+}
+
+- (void)testAIC {
+	NSURL *const mtcarsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"mtcars" withExtension:@"txt"];
+
+	// Only keep mpg and drat
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:mtcarsURL delimiter:',' addingOnesColumn:YES columnPreprocessingRules:@{
+		@0: [LNKCSVColumnRule deleteRule],
+		@1: [LNKCSVColumnRule outputRule],
+		@2: [LNKCSVColumnRule deleteRule],
+		@3: [LNKCSVColumnRule deleteRule],
+		@4: [LNKCSVColumnRule deleteRule],
+		@6: [LNKCSVColumnRule deleteRule],
+		@7: [LNKCSVColumnRule deleteRule],
+		@8: [LNKCSVColumnRule deleteRule],
+		@9: [LNKCSVColumnRule deleteRule],
+		@10: [LNKCSVColumnRule deleteRule],
+		@11: [LNKCSVColumnRule deleteRule]
+	}];
+
+	id<LNKOptimizationAlgorithm> algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
+	LNKLinRegPredictor *const predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	[algorithm release];
+	[matrix release];
+
+	[predictor train];
+
+	LNKFloat *const thetaVector = [predictor _thetaVector];
+	XCTAssertEqualWithAccuracy(thetaVector[0], -7.525, 0.1);
+	XCTAssertEqualWithAccuracy(thetaVector[1],  7.678, 0.1);
+
+#warning TODO: test AIC
+	[predictor release];
 }
 
 @end
