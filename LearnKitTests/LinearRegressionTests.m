@@ -31,7 +31,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (LNKLinRegPredictor *)_ex1PredictorGD {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
 																						   iterationCount:1500];
 	
@@ -45,7 +45,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (LNKLinRegPredictor *)_ex1PredictorNE {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
 	
 	LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
@@ -86,7 +86,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)test5Normalization {
 	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"ex1data2" withExtension:@"txt"];
 	
-	LNKMatrix *const unnormalizedMatrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url addingOnesColumn:YES];
+	LNKMatrix *const unnormalizedMatrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKMatrix *const matrix = unnormalizedMatrix.normalizedMatrix;
 	[unnormalizedMatrix release];
 
@@ -111,7 +111,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)_testExample1Data2WithAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data2" ofType:@"txt"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
@@ -144,7 +144,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	[self measureBlock:^{
 		NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"CASP" ofType:@"csv"];
 		
-		LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] addingOnesColumn:YES];
+		LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
 		LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
 		
 		LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
@@ -283,18 +283,18 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSString *yPath = [bundle pathForResource:@"ex5_y" ofType:@"dat"];
 	NSString *xcvPath = [bundle pathForResource:@"ex5_Xcv" ofType:@"dat"];
 	NSString *ycvPath = [bundle pathForResource:@"ex5_ycv" ofType:@"dat"];
-	
+
 	const LNKSize rowCount = 12;
-	
+
 	LNKMatrix *trainingSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-															  rowCount:rowCount columnCount:1 addingOnesColumn:YES];
+																  rowCount:rowCount columnCount:1 addingOnesColumn:YES];
 	LNKMatrix *trainingSet__ = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *trainingSet = trainingSet__.normalizedMatrix;
 	
 	LNKMatrix *cvSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-														rowCount:21 columnCount:1 addingOnesColumn:YES];
+															rowCount:21 columnCount:1 addingOnesColumn:YES];
 	LNKMatrix *cvSet__ = [[cvSet_ polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *cvSet = [cvSet__ normalizedMatrixWithMeanVector:trainingSet.normalizationMeanVector standardDeviationVector:trainingSet.normalizationStandardDeviationVector];
 	
@@ -349,7 +349,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSURL *const mtcarsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"mtcars" withExtension:@"txt"];
 
 	// Only keep mpg and drat
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:mtcarsURL delimiter:',' addingOnesColumn:YES ignoringHeader:YES columnPreprocessingRules:@{
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:mtcarsURL delimiter:',' ignoringHeader:YES columnPreprocessingRules:@{
 		@0: [LNKCSVColumnRule deleteRule],
 		@1: [LNKCSVColumnRule outputRule],
 		@2: [LNKCSVColumnRule deleteRule],
