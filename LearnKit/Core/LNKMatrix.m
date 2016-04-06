@@ -86,7 +86,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 - (instancetype)initWithBinaryMatrixAtURL:(NSURL *)matrixURL matrixValueType:(LNKValueType)matrixValueType
 						outputVectorAtURL:(NSURL *)outputVectorURL outputVectorValueType:(LNKValueType)outputVectorValueType
-							 rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn {
+							 rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount {
 	NSParameterAssert(matrixURL);
 	NSParameterAssert(rowCount);
 	NSParameterAssert(columnCount);
@@ -99,8 +99,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	const LNKSize expectedMatrixSize = rowCount * columnCount * matrixValueSize;
 	
 	_rowCount = rowCount;
-	_columnCount = columnCount + (addOnesColumn ? 1 : 0);
-	_hasBiasColumn = addOnesColumn;
+	_columnCount = columnCount;
+	_hasBiasColumn = NO;
 	
 	const LNKSize columnCountWithoutOnes = columnCount;
 	
@@ -119,7 +119,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	for (LNKSize m = 0; m < _rowCount; m++) {
 		for (LNKSize n = 0; n < columnCountWithoutOnes; n++) {
 			const char *matrixValue = &matrixValues[(n * _rowCount + m) * matrixValueSize];
-			const LNKSize index = m * _columnCount + n + (addOnesColumn ? 1 : 0);
+			const LNKSize index = m * _columnCount + n;
 			
 			switch (matrixValueType) {
 				case LNKValueTypeDouble:

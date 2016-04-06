@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// If there is no output vector, pass `nil` for the output vector URL and `LNKValueTypeNone` for the output vector value type.
 - (nullable instancetype)initWithBinaryMatrixAtURL:(NSURL *)matrixURL matrixValueType:(LNKValueType)matrixValueType
 								 outputVectorAtURL:(nullable NSURL *)outputVectorURL outputVectorValueType:(LNKValueType)outputVectorValueType
-										  rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn;
+										  rowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount;
 
 /// Initializes a matrix by filling the given buffers.
 /// The column count should not include the ones column.
