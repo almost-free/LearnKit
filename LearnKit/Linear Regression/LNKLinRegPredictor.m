@@ -41,10 +41,16 @@
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm];
+	if (matrix.hasBiasColumn) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by LinReg classifiers." userInfo:nil];
+	}
+
+	LNKMatrix *const workingMatrix = matrix.matrixByAddingBiasColumn;
+
+	self = [super initWithMatrix:workingMatrix optimizationAlgorithm:algorithm];
 	if (self) {
 		// The Theta vector is initially zero.
-		_thetaVector = LNKFloatCalloc(matrix.columnCount);
+		_thetaVector = LNKFloatCalloc(workingMatrix.columnCount);
 	}
 	return self;
 }
