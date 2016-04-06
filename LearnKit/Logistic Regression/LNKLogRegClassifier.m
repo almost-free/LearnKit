@@ -33,10 +33,12 @@
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	self = [super initWithMatrix:matrix optimizationAlgorithm:algorithm];
+	LNKMatrix *const workingMatrix = [matrix matrixByAddingBiasColumn];
+
+	self = [super initWithMatrix:workingMatrix optimizationAlgorithm:algorithm];
 	if (self) {
 		// The Theta vector is initially zero.
-		_thetaVector = LNKFloatCalloc(matrix.columnCount);
+		_thetaVector = LNKFloatCalloc(workingMatrix.columnCount);
 	}
 	return self;
 }
