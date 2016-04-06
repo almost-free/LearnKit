@@ -39,6 +39,8 @@ static CFDataRef __nullable CreateRGBAImageDataWithURL(NSURL *url, size_t *outWi
 	CGImageRelease(image);
 
 	const CGImageRef newImage = CGBitmapContextCreateImage(context);
+	CGContextRelease(context);
+
 	const CGDataProviderRef provider = CGImageGetDataProvider(newImage);
 	const CFDataRef data = CGDataProviderCopyData(provider);
 	CGImageRelease(newImage);
