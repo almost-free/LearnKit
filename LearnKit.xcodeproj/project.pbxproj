@@ -60,6 +60,9 @@
 		C95963231C6A49DD00AF0EBA /* income.csv in Resources */ = {isa = PBXBuildFile; fileRef = C95963221C6A49DD00AF0EBA /* income.csv */; };
 		C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D950C19DFBCE300BE8768 /* KNNTests.m */; };
 		C96DA8B91CB554610004E650 /* mtcars.txt in Resources */ = {isa = PBXBuildFile; fileRef = C96DA8B71CB551CD0004E650 /* mtcars.txt */; };
+		C96DA8BC1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = C96DA8BA1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C96DA8BD1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.m in Sources */ = {isa = PBXBuildFile; fileRef = C96DA8BB1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.m */; };
+		C96DA8BE1CB569960004E650 /* LNKLinRegPredictor+Analysis.m in Sources */ = {isa = PBXBuildFile; fileRef = C96DA8BB1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.m */; };
 		C96F53391C9E5C2F00AE1B72 /* Palace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C96F53381C9E5C2F00AE1B72 /* Palace.jpg */; };
 		C96F533C1C9E5D5E00AE1B72 /* LNKMatrixImages.m in Sources */ = {isa = PBXBuildFile; fileRef = C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */; };
 		C96F533D1C9E617B00AE1B72 /* LNKMatrixImages.m in Sources */ = {isa = PBXBuildFile; fileRef = C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */; };
@@ -294,6 +297,8 @@
 		C95963221C6A49DD00AF0EBA /* income.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = income.csv; sourceTree = "<group>"; };
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
 		C96DA8B71CB551CD0004E650 /* mtcars.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mtcars.txt; sourceTree = "<group>"; };
+		C96DA8BA1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LNKLinRegPredictor+Analysis.h"; sourceTree = "<group>"; };
+		C96DA8BB1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LNKLinRegPredictor+Analysis.m"; sourceTree = "<group>"; };
 		C96F53381C9E5C2F00AE1B72 /* Palace.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Palace.jpg; sourceTree = "<group>"; };
 		C96F533A1C9E5D5E00AE1B72 /* LNKMatrixImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixImages.h; sourceTree = "<group>"; };
 		C96F533B1C9E5D5E00AE1B72 /* LNKMatrixImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixImages.m; sourceTree = "<group>"; };
@@ -703,6 +708,8 @@
 				C9CBD26C19E5D46900AE71D5 /* _LNKLinRegPredictorNE_AC.m */,
 				C9CBD26D19E5D46900AE71D5 /* LNKLinRegPredictor.h */,
 				C9CBD26E19E5D46900AE71D5 /* LNKLinRegPredictor.m */,
+				C96DA8BA1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.h */,
+				C96DA8BB1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.m */,
 				C9CBD26F19E5D46900AE71D5 /* LNKLinRegPredictorPrivate.h */,
 			);
 			name = "Linear Regression";
@@ -896,6 +903,7 @@
 				C9CBD27C19E5D46900AE71D5 /* LNKLinRegPredictor.h in Headers */,
 				C9CBD2B619E5D4FD00AE71D5 /* LNKLogRegClassifier.h in Headers */,
 				C99C8B121A1D80A6000F0136 /* NSCountedSetAdditions.h in Headers */,
+				C96DA8BC1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.h in Headers */,
 				C97FF0B31A1D233300F6CEDA /* LNKDecisionTree.h in Headers */,
 				C9CBD2D919E5D52900AE71D5 /* LNKMatrix.h in Headers */,
 				C9EC9A591A1ADCE0005D7863 /* LNKMatrixExporting.h in Headers */,
@@ -1097,6 +1105,7 @@
 				C9CBD2E419E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9CBD2BB19E5D4FD00AE71D5 /* LNKOneVsAllLogRegClassifier.m in Sources */,
 				C9EC9A5A1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */,
+				C96DA8BD1CB5623E0004E650 /* LNKLinRegPredictor+Analysis.m in Sources */,
 				C975913819A04B44003D3A48 /* lbfgs.m in Sources */,
 				C97D57AB1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */,
 				C9860BF21A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m in Sources */,
@@ -1144,6 +1153,7 @@
 			files = (
 				C95940881C6A594300EAFEA9 /* LNKCSVColumnRule.m in Sources */,
 				C9369BA91C5ECDD5009EF659 /* LNKConfusionMatrix.m in Sources */,
+				C96DA8BE1CB569960004E650 /* LNKLinRegPredictor+Analysis.m in Sources */,
 				C9CBD26319E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
 				C9CBD2E819E5D52900AE71D5 /* LNKMemoryBufferManager.m in Sources */,
 				C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */,

@@ -12,6 +12,7 @@
 #import "LNKAccelerateGradient.h"
 #import "LNKCSVColumnRule.h"
 #import "LNKLinRegPredictor.h"
+#import "LNKLinRegPredictor+Analysis.h"
 #import "LNKLinRegPredictorPrivate.h"
 #import "LNKMatrix.h"
 #import "LNKMatrixTestExtras.h"
@@ -373,7 +374,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[0], -7.525, 0.1);
 	XCTAssertEqualWithAccuracy(thetaVector[1],  7.678, 0.1);
 
-#warning TODO: test AIC
+	XCTAssertEqualWithAccuracy([predictor computeAIC], 190.7999, 0.1);
+
 	[predictor release];
 }
 
