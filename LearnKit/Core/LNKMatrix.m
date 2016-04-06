@@ -53,10 +53,10 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn {
-	return [self initWithCSVFileAtURL:url delimiter:delimiter addingOnesColumn:addOnesColumn columnPreprocessingRules:@{}];
+	return [self initWithCSVFileAtURL:url delimiter:delimiter addingOnesColumn:addOnesColumn ignoringHeader:NO columnPreprocessingRules:@{}];
 }
 
-- (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
+- (instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn ignoringHeader:(BOOL)ignoreHeader columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
 	if (preprocessingRules == nil) {
 		[NSException raise:NSInvalidArgumentException format:@"The dictionary of preprocessing rules must not be nil"];
 	}
@@ -74,7 +74,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		return nil;
 	}
 	
-	if (![self _parseMatrixCSVString:stringContents delimiter:delimiter addingOnesColumn:addOnesColumn columnPreprocessingRules:preprocessingRules]) {
+	if (![self _parseMatrixCSVString:stringContents delimiter:delimiter addingOnesColumn:addOnesColumn ignoringHeader:ignoreHeader columnPreprocessingRules:preprocessingRules]) {
 		[stringContents release];
 		return nil;
 	}
@@ -495,7 +495,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return outputColumnIndex;
 }
 
-- (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
+- (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn ignoringHeader:(BOOL)ignoreHeader columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
 	LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate();
 	const char *rawString = stringContents.UTF8String;
@@ -604,15 +604,20 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		}
 	}];
 
-	_rowCount = LNKFastArrayElementCount(lines);
+	const LNKSize lineCount = LNKFastArrayElementCount(lines);
+	const LNKSize startRow = (ignoreHeader ? 1 : 0);
+	
+	_rowCount = ignoreHeader ? lineCount - 1 : lineCount;
 	
 	// The matrix's column count does not include the output vector, but should include the optional ones column.
 	_columnCount = fileColumnCount - 1 + (addOnesColumn ? 1 : 0) - deletedColumns;
 	_hasBiasColumn = addOnesColumn;
 	
 	[self _allocateBuffers];
+
+	LNKSize localRow = 0;
 	
-	for (LNKSize m = 0; m < _rowCount; m++) {
+	for (LNKSize m = startRow; m < lineCount; m++) {
 		// The last column contains the output vector.
 		LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, m);
 		const LNKSize ruleOutputColumnIndex = [self _outputColumnIndexForColumnPreprocessingRules:preprocessingRules];
@@ -624,13 +629,13 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 			LNKCSVColumnRuleTypeConversionHandler handler = outputRule.object;
 			NSAssert(handler != nil, @"Conversions should always have a handler");
 
-			_outputVector[m] = handler([NSString stringWithUTF8String:outputString]);
+			_outputVector[localRow] = handler([NSString stringWithUTF8String:outputString]);
 		} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
 			NSLog(@"Error while loading the matrix: the output column cannot be deleted");
 			cleanupLines();
 			return NO;
 		} else {
-			_outputVector[m] = LNK_strtoflt(outputString);
+			_outputVector[localRow] = LNK_strtoflt(outputString);
 		}
 
 		LNKSize localColumn = 0;
@@ -649,15 +654,17 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 				LNKCSVColumnRuleTypeConversionHandler handler = outputRule.object;
 				NSAssert(handler != nil, @"Conversions should always have a handler");
 
-				_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + localColumn] = handler([NSString stringWithUTF8String:columnString]);
+				_matrix[OFFSET_ROW(localRow) + (addOnesColumn ? 1 : 0) + localColumn] = handler([NSString stringWithUTF8String:columnString]);
 				localColumn += 1;
 			} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
 				// Skips to the next column without storing anything.
 			} else {
-				_matrix[OFFSET_ROW(m) + (addOnesColumn ? 1 : 0) + localColumn] = LNK_strtoflt(columnString);
+				_matrix[OFFSET_ROW(localRow) + (addOnesColumn ? 1 : 0) + localColumn] = LNK_strtoflt(columnString);
 				localColumn += 1;
 			}
 		}
+
+		localRow++;
 	}
 
 	cleanupLines();

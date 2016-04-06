@@ -348,7 +348,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSURL *const mtcarsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"mtcars" withExtension:@"txt"];
 
 	// Only keep mpg and drat
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:mtcarsURL delimiter:',' addingOnesColumn:YES columnPreprocessingRules:@{
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:mtcarsURL delimiter:',' addingOnesColumn:YES ignoringHeader:YES columnPreprocessingRules:@{
 		@0: [LNKCSVColumnRule deleteRule],
 		@1: [LNKCSVColumnRule outputRule],
 		@2: [LNKCSVColumnRule deleteRule],

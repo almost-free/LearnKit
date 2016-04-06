@@ -37,7 +37,7 @@
 
 - (nullable LNKMatrix *)irisMatrix {
 	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"Iris" withExtension:@"dat"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url delimiter:',' addingOnesColumn:NO columnPreprocessingRules:@{
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url delimiter:',' addingOnesColumn:NO ignoringHeader:NO columnPreprocessingRules:@{
 		@4: [LNKCSVColumnRule conversionRuleWithBlock:^LNKFloat(NSString *stringValue) {
 			if ([stringValue hasSuffix:@"setosa"]) {
 				return 0;

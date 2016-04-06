@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn;
 
 /// Columns may be deleted or transformed (e.g. mapping strings representing categorical data to numerical entries) by passing a dictionary of preprocessing rules, indexed by the column index.
-- (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules;
+- (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn ignoringHeader:(BOOL)ignoreHeader columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules;
 
 /// Initializes a matrix by loading a binary matrix of values and a corresponding output vector.
 /// Values are parsed in column order. The column count should not include the ones column.
