@@ -23,6 +23,10 @@
 	return [[[self alloc] _initWithType:LNKCSVColumnRuleTypeConversion object:[[block copy] autorelease]] autorelease];
 }
 
++ (instancetype)outputRule {
+	return [[[self alloc] _initWithType:LNKCSVColumnRuleTypeOutput] autorelease];
+}
+
 - (instancetype)_initWithType:(LNKCSVColumnRuleType)type {
 	return [self _initWithType:type object:nil];
 }

@@ -9,7 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, LNKCSVColumnRuleType) {
 	LNKCSVColumnRuleTypeDelete,
-	LNKCSVColumnRuleTypeConversion
+	LNKCSVColumnRuleTypeConversion,
+	LNKCSVColumnRuleTypeOutput
 };
 
 typedef LNKFloat(^LNKCSVColumnRuleTypeConversionHandler)(NSString *);
@@ -21,6 +22,7 @@ typedef LNKFloat(^LNKCSVColumnRuleTypeConversionHandler)(NSString *);
 
 + (instancetype)deleteRule;
 + (instancetype)conversionRuleWithBlock:(LNKCSVColumnRuleTypeConversionHandler)block;
++ (instancetype)outputRule;
 
 @property (nonatomic, readonly) LNKCSVColumnRuleType type;
 @property (nonatomic, copy, readonly) id object;

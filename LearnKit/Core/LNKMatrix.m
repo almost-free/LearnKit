@@ -482,6 +482,19 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return [submatrix autorelease];
 }
 
+- (LNKSize)_outputColumnIndexForColumnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)rules {
+	__block LNKSize outputColumnIndex = LNKSizeMax;
+
+	[rules enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, LNKCSVColumnRule *obj, BOOL *stop) {
+		if (obj.type == LNKCSVColumnRuleTypeOutput) {
+			outputColumnIndex = key.LNKSizeValue;
+			*stop = YES;
+		}
+	}];
+
+	return outputColumnIndex;
+}
+
 - (BOOL)_parseMatrixCSVString:(NSString *)stringContents delimiter:(unichar)delimiter addingOnesColumn:(BOOL)addOnesColumn columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules {
 	LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate();
@@ -602,7 +615,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	for (LNKSize m = 0; m < _rowCount; m++) {
 		// The last column contains the output vector.
 		LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, m);
-		const LNKSize outputColumnIndex = fileColumnCount - 1;
+		const LNKSize ruleOutputColumnIndex = [self _outputColumnIndexForColumnPreprocessingRules:preprocessingRules];
+		const LNKSize outputColumnIndex = ruleOutputColumnIndex == LNKSizeMax ? fileColumnCount - 1 : ruleOutputColumnIndex;
 		char *outputString = LNKFastArrayElementAtIndex(line, outputColumnIndex);
 
 		LNKCSVColumnRule *outputRule = preprocessingRules[@(outputColumnIndex)];
@@ -622,7 +636,12 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNKSize localColumn = 0;
 
 		// Ignore the last column since it's actually our output vector.
-		for (LNKSize n = 0; n < outputColumnIndex; n++) {
+		for (LNKSize n = 0; n < fileColumnCount; n++) {
+			if (n == outputColumnIndex) {
+				// Skip the output column, but continue because it's not necessarily the last one!
+				continue;
+			}
+
 			char *columnString = LNKFastArrayElementAtIndex(line, n);
 
 			LNKCSVColumnRule *outputRule = preprocessingRules[@(n)];
