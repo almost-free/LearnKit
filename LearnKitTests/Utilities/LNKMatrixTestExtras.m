@@ -12,27 +12,21 @@
 @implementation LNKMatrix (TestExtras)
 
 - (LNKMatrix *)polynomialMatrixOfDegree:(LNKSize)maxDegree {
-	NSParameterAssert(maxDegree);
-	NSParameterAssert(self.columnCount == 2);
+	NSParameterAssert(maxDegree > 0);
+	NSParameterAssert(self.columnCount == 1);
 	
-	const LNKFloat *currentBuffer = self.matrixBuffer;
-	const LNKSize currentColumnCount = self.columnCount;
-	
+	const LNKFloat *const currentBuffer = self.matrixBuffer;
 	const LNKSize rowCount = self.rowCount;
-	const LNKSize columnCountWithoutOnes = maxDegree;
-	const LNKSize hasOnesColumn = 1;
-	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
+	const LNKSize columnCount = maxDegree;
 	
-	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		
 		for (LNKSize row = 0; row < rowCount; row++) {
-			// Start after the ones column.
-			LNKSize lastIndex = hasOnesColumn;
+			const LNKFloat currentValue = currentBuffer[row];
 			
 			for (LNKSize degree = 1; degree <= maxDegree; degree++) {
-				const LNKFloat currentValue = currentBuffer[row * currentColumnCount + hasOnesColumn];
-				matrix[row * columnCount + lastIndex++] = LNK_pow(currentValue, degree);
+				matrix[row * columnCount + (degree - 1)] = LNK_pow(currentValue, degree);
 			}
 		}
 		
