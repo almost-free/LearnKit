@@ -788,4 +788,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	LNKPrintMatrix("Matrix", _matrix, _rowCount, _columnCount);
 }
 
+- (void)printOutputVector {
+	LNKPrintVector("Output Vector", _outputVector, _rowCount);
+}
+
 @end

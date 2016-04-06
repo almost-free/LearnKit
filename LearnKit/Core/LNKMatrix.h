@@ -95,6 +95,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 
 /// For debugging.
 - (void)printMatrix;
+- (void)printOutputVector;
 
 @end
 
