@@ -18,26 +18,28 @@
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
-	
-	NSAssert(featureVector.length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
+
+	const LNKSize biasOffset = 1;
+
+	NSAssert(featureVector.length + biasOffset == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't compute the dot product.
+
+	LNKFloat *featuresWithBias = LNKFloatAlloc(featureVector.length + biasOffset);
+	featuresWithBias[0] = 1;
+	LNKFloatCopy(featuresWithBias + biasOffset, featureVector.data, featureVector.length);
 	
 	LNKMatrix *matrix = self.matrix;
 	LNKFloat *thetaVector = [self _thetaVector];
 	const LNKSize columnCount = matrix.columnCount;
-	LNKFloat *featureVectorNormalizedIfNeeded = (LNKFloat *)featureVector.data;
 	
 	if (matrix.normalized) {
-		// We need to copy the input vector since -normalizeVector: works in-place.
-		featureVectorNormalizedIfNeeded = LNKFloatAllocAndCopy(featureVector.data, columnCount);
-		[matrix normalizeVector:featureVectorNormalizedIfNeeded];
+		[matrix normalizeVector:featuresWithBias];
 	}
 	
-	LNKFloat result;
-	LNK_dotpr(thetaVector, UNIT_STRIDE, featureVectorNormalizedIfNeeded, UNIT_STRIDE, &result, columnCount);
+	LNKFloat result = 0;
+	LNK_dotpr(thetaVector, UNIT_STRIDE, featuresWithBias, UNIT_STRIDE, &result, columnCount + biasOffset);
 	
-	if (featureVectorNormalizedIfNeeded != featureVector.data)
-		free(featureVectorNormalizedIfNeeded);
+	free(featuresWithBias);
 	
 	return [NSNumber numberWithLNKFloat:result];
 }
