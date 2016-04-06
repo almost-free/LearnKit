@@ -33,13 +33,17 @@
 }
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
-	if (classes.count != 2)
+	if (classes.count != 2) {
 		[NSException raise:NSInvalidArgumentException format:@"Two output classes must be specified"];
+	}
+
+	LNKMatrix *const workingMatrix = [matrix matrixByAddingBiasColumn];
 	
-	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes]))
+	if (!(self = [super initWithMatrix:workingMatrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes])) {
 		return nil;
+	}
 	
-	_theta = LNKFloatCalloc(matrix.columnCount);
+	_theta = LNKFloatCalloc(workingMatrix.columnCount);
 	
 	return self;
 }
@@ -132,12 +136,20 @@
 		[NSException raise:NSInvalidArgumentException format:@"The feature vector must not be NULL"];
 	
 	const LNKSize columnCount = self.matrix.columnCount;
-	
-	if (columnCount != featureVector.length)
+	const LNKSize biasOffset = 1;
+
+	if (columnCount != featureVector.length + biasOffset) {
 		[NSException raise:NSInvalidArgumentException format:@"The length of the feature vector must match the number of columns in the training matrix"];
+	}
+
+	LNKFloat *featuresWithBias = LNKFloatAlloc(featureVector.length + biasOffset);
+	featuresWithBias[0] = 1;
+	LNKFloatCopy(featuresWithBias + biasOffset, featureVector.data, featureVector.length);
 	
 	LNKFloat result;
-	LNK_dotpr(featureVector.data, UNIT_STRIDE, _theta, UNIT_STRIDE, &result, columnCount);
+	LNK_dotpr(featuresWithBias, UNIT_STRIDE, _theta, UNIT_STRIDE, &result, columnCount + biasOffset);
+
+	free(featuresWithBias);
 	
 	return @(result);
 }
