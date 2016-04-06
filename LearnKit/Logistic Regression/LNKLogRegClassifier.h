@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// For logistic regression classifiers, the only supported algorithm is L-BFGS.
 /// Two classes are defined by default, and predicted values are of type NSNumber / LNKFloat.
-/// A bias column is added to the matrix.
+/// A bias column is added to the matrix automatically.
 @interface LNKLogRegClassifier : LNKClassifier
 @end
 
