@@ -168,7 +168,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-														rowCount:12 columnCount:1 addingOnesColumn:NO];
+															rowCount:12 columnCount:1];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = 1;
@@ -228,11 +228,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-															 rowCount:rowCount columnCount:1 addingOnesColumn:NO];
+																 rowCount:rowCount columnCount:1];
 	
 	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 												  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-													   rowCount:21 columnCount:1 addingOnesColumn:NO];
+														   rowCount:21 columnCount:1];
 	
 	LNKFloat trainError[rowCount];
 	LNKFloat cvError[rowCount];
@@ -290,13 +290,13 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 	LNKMatrix *trainingSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 															  outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-																	   rowCount:rowCount columnCount:1 addingOnesColumn:NO];
+																	   rowCount:rowCount columnCount:1];
 	LNKMatrix *trainingSetPolynomial = [[trainingSetSingle polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *trainingSetNormalized = trainingSetPolynomial.normalizedMatrix;
 	
 	LNKMatrix *cvSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-																 rowCount:21 columnCount:1 addingOnesColumn:NO];
+																 rowCount:21 columnCount:1];
 	LNKMatrix *cvSetPolynomial = [[cvSetSingle polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *cvSetNormalized = [cvSetPolynomial normalizedMatrixWithMeanVector:trainingSetNormalized.normalizationMeanVector standardDeviationVector:trainingSetNormalized.normalizationStandardDeviationVector];
 	

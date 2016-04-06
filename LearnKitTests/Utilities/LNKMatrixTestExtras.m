@@ -51,23 +51,19 @@ static inline LNKSize _columnsInPairwisePolynomialMatrixOfDegree(LNKSize maxDegr
 	
 	const LNKFloat *currentBuffer = self.matrixBuffer;
 	const LNKSize currentColumnCount = self.columnCount;
-	
 	const LNKSize rowCount = self.rowCount;
-	const LNKSize columnCountWithoutOnes = _columnsInPairwisePolynomialMatrixOfDegree(maxDegree);
-	const LNKSize hasOnesColumn = 1;
-	const LNKSize columnCount = columnCountWithoutOnes + hasOnesColumn;
+	const LNKSize columnCount = _columnsInPairwisePolynomialMatrixOfDegree(maxDegree);
 	
-	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCountWithoutOnes addingOnesColumn:YES prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
-		
-		// Start after the ones column.
-		LNKSize lastIndex = hasOnesColumn;
+
+		LNKSize lastIndex = 0;
 		
 		for (LNKSize degree = 1; degree <= maxDegree; degree++) {
 			for (LNKSize stepDegree = 0; stepDegree <= degree; stepDegree++) {
 				for (LNKSize row = 0; row < rowCount; row++) {
-					const LNKFloat currentValue = currentBuffer[row * currentColumnCount + hasOnesColumn];
-					const LNKFloat currentNextValue = currentBuffer[row * currentColumnCount + hasOnesColumn + 1];
+					const LNKFloat currentValue = currentBuffer[row * currentColumnCount];
+					const LNKFloat currentNextValue = currentBuffer[row * currentColumnCount + 1];
 					matrix[row * columnCount + lastIndex] = LNK_pow(currentValue, degree - stepDegree) * LNK_pow(currentNextValue, stepDegree);
 				}
 				

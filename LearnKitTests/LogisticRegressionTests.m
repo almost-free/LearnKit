@@ -53,7 +53,7 @@
 	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex2data2" withExtension:@"txt"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKMatrix *polynomialMatrix = [matrix pairwisePolynomialMatrixOfDegree:6];
-	XCTAssertEqual(polynomialMatrix.columnCount, 28UL, @"We should have 28 columns");
+	XCTAssertEqual(polynomialMatrix.columnCount, 27UL, @"We should have 27 columns");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = lambda;
@@ -86,7 +86,7 @@
 													 matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
 											   outputVectorValueType:LNKValueTypeUInt8
-															rowCount:5000 columnCount:400 addingOnesColumn:NO];
+															rowCount:5000 columnCount:400];
 
 	XCTAssertEqual(matrix.columnCount, 400ULL, @"The column count is incorrect");
 

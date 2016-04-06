@@ -37,13 +37,11 @@
 	
 	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
 															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																 rowCount:movieCount columnCount:userCount
-															 addingOnesColumn:NO];
+																	 rowCount:movieCount columnCount:userCount];
 	
 	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															  rowCount:movieCount columnCount:userCount
-														  addingOnesColumn:NO];
+																  rowCount:movieCount columnCount:userCount];
 	
 	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:[outputMatrix submatrixWithRowCount:reducedMovieCount columnCount:reducedUserCount]
 																							   indicatorMatrix:[indicatorMatrix submatrixWithRowCount:reducedMovieCount columnCount:reducedUserCount]
@@ -55,15 +53,13 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathX] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														rowCount:movieCount columnCount:rowCount
-													addingOnesColumn:NO];
+															rowCount:movieCount columnCount:rowCount];
 	[predictor loadDataMatrix:[matrix submatrixWithRowCount:reducedMovieCount columnCount:reducedRowCount]];
 	[matrix release];
 	
 	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															 rowCount:userCount columnCount:rowCount
-														 addingOnesColumn:NO];
+																 rowCount:userCount columnCount:rowCount];
 	[predictor loadThetaMatrix:[thetaMatrix submatrixWithRowCount:reducedUserCount columnCount:reducedRowCount]];
 	[thetaMatrix release];
 	
@@ -103,13 +99,11 @@
 	
 	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
 															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-																 rowCount:movieCount columnCount:userCount
-															 addingOnesColumn:NO];
+																	 rowCount:movieCount columnCount:userCount];
 	
 	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-															  rowCount:movieCount columnCount:userCount
-														  addingOnesColumn:NO];
+																  rowCount:movieCount columnCount:userCount];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	algorithm.lambda = 10;

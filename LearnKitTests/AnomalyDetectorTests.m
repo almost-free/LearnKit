@@ -23,9 +23,8 @@
 	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ServerStatistics" ofType:@"mat"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														rowCount:307
-														 columnCount:2
-													addingOnesColumn:NO];
+															rowCount:307
+														 columnCount:2];
 	LNKAnomalyDetector *detector = [[LNKAnomalyDetector alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil];
 	detector.threshold = 8.99e-05;
 	
@@ -46,15 +45,13 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														rowCount:307
-														 columnCount:2
-													addingOnesColumn:NO];
+															rowCount:307
+														 columnCount:2];
 	
 	LNKMatrix *cvMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathVal] matrixValueType:LNKValueTypeDouble
 													 outputVectorAtURL:[NSURL fileURLWithPath:pathValY] outputVectorValueType:LNKValueTypeDouble
-														  rowCount:307
-														   columnCount:2
-													  addingOnesColumn:NO];
+															  rowCount:307
+														   columnCount:2];
 	
 	LNKFloat threshold = LNKFindAnomalyThreshold(matrix, cvMatrix);
 	XCTAssertEqualWithAccuracy(threshold, 8.99e-05, 0.01, @"Incorrect threshold");
@@ -70,15 +67,13 @@
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:path] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														rowCount:1000
-														 columnCount:11
-													addingOnesColumn:NO];
+															rowCount:1000
+														 columnCount:11];
 	
 	LNKMatrix *cvMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathVal] matrixValueType:LNKValueTypeDouble
 													 outputVectorAtURL:[NSURL fileURLWithPath:pathValY] outputVectorValueType:LNKValueTypeDouble
-														  rowCount:100
-														   columnCount:11
-													  addingOnesColumn:NO];
+															  rowCount:100
+														   columnCount:11];
 	
 	LNKFloat threshold = LNKFindAnomalyThreshold(matrix, cvMatrix);
 	XCTAssertEqualWithAccuracy(threshold, 1.38e-18, 0.01, @"Incorrect threshold");

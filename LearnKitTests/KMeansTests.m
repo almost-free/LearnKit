@@ -25,9 +25,8 @@
 	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"ex7data2_X" withExtension:@"dat"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:url matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
-														rowCount:300
-														 columnCount:2
-													addingOnesColumn:NO];
+															rowCount:300
+														 columnCount:2];
 	LNKKMeansClassifier *classifier = [[LNKKMeansClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:3]];
 	classifier.iterationCount = 10;
 	
@@ -71,8 +70,7 @@
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:url matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 															rowCount:300
-														 columnCount:2
-													addingOnesColumn:NO];
+														 columnCount:2];
 	LNKKMeansClassifier *const classifier = [[LNKKMeansClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:3]];
 	classifier.iterationCount = LNKSizeMax;
 
