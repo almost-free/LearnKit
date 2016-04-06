@@ -79,8 +79,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 - (void)test4Prediction {
 	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
 	[predictor train];
-	LNKFloat input[] = { 1, 3.5 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(input, 2)] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
+	LNKFloat input[] = { 3.5 };
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(input, 1)] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
 }
 
 - (void)test5Normalization {
@@ -103,8 +103,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[1], 100087.116006, DACCURACY, @"The Theta vector is incorrect");
 	XCTAssertEqualWithAccuracy(thetaVector[2],   3673.548451, DACCURACY, @"The Theta vector is incorrect");
 	
-	LNKFloat house[] = { 1, 1650, 3 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(house, 3)] LNKFloatValue], 289314.618925, DACCURACY, @"The prediction was inaccurate");
+	LNKFloat house[] = { 1650, 3 };
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(house, 2)] LNKFloatValue], 289314.618925, DACCURACY, @"The prediction was inaccurate");
 	[predictor release];
 }
 
@@ -123,8 +123,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[1],   139.210674, DACCURACY, @"The Theta vector is incorrect");
 	XCTAssertEqualWithAccuracy(thetaVector[2], -8738.019112, DACCURACY, @"The Theta vector is incorrect");
 	
-	LNKFloat house[] = { 1, 1650, 3 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(house, 3)] LNKFloatValue], 293081.464335, DACCURACY, @"The prediction was inaccurate");
+	LNKFloat house[] = { 1650, 3 };
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(house, 2)] LNKFloatValue], 293081.464335, DACCURACY, @"The prediction was inaccurate");
 	[predictor release];
 }
 
@@ -155,8 +155,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		
 		[predictor train];
 		
-		LNKFloat x[] = { 1, 12, 6000, 1600, 0.25, 74, 892000, 90, 3000, 80 };
-		XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(x, 10)] LNKFloatValue], 37.9766, DACCURACY, @"The prediction was inaccurate");
+		LNKFloat x[] = { 12, 6000, 1600, 0.25, 74, 892000, 90, 3000, 80 };
+		XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(x, 9)] LNKFloatValue], 37.9766, DACCURACY, @"The prediction was inaccurate");
 		[predictor release];
 	}];
 }
@@ -168,7 +168,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-														rowCount:12 columnCount:1 addingOnesColumn:YES];
+														rowCount:12 columnCount:1 addingOnesColumn:NO];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = 1;
@@ -176,20 +176,22 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	[matrix release];
 	[algorithm release];
-	
+
 	const LNKFloat thetaVector[2] = { 1, 1 };
 	[predictor _setThetaVector:thetaVector];
+
+	LNKMatrix *const workingMatrix = predictor.matrix;
 	
 	XCTAssertEqualWithAccuracy([predictor _evaluateCostFunction], 303.9932, DACCURACY, @"The initial cost should be ~303.9932");
 	
 	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
 	const LNKFloat lambda = algorithm.lambda;
 	
-	const LNKSize rowCount = matrix.rowCount;
-	const LNKSize columnCount = matrix.columnCount;
+	const LNKSize rowCount = workingMatrix.rowCount;
+	const LNKSize columnCount = workingMatrix.columnCount;
 	
-	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
-	const LNKFloat *outputVector = matrix.outputVector;
+	const LNKFloat *matrixBuffer = workingMatrix.matrixBuffer;
+	const LNKFloat *outputVector = workingMatrix.outputVector;
 	
 	LNKFloat *workgroupEC = LNKFloatAlloc(rowCount);
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
@@ -208,7 +210,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	free(transposeMatrix);
 	
 	[predictor train];
-	
+
 	XCTAssertEqualWithAccuracy([predictor _thetaVector][0], 13.08790, DACCURACY, @"Incorrect theta");
 	XCTAssertEqualWithAccuracy([predictor _thetaVector][1],  0.36778, DACCURACY, @"Incorrect theta");
 	
@@ -226,11 +228,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-															 rowCount:rowCount columnCount:1 addingOnesColumn:YES];
+															 rowCount:rowCount columnCount:1 addingOnesColumn:NO];
 	
 	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
 												  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-													   rowCount:21 columnCount:1 addingOnesColumn:YES];
+													   rowCount:21 columnCount:1 addingOnesColumn:NO];
 	
 	LNKFloat trainError[rowCount];
 	LNKFloat cvError[rowCount];
@@ -286,17 +288,17 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 	const LNKSize rowCount = 12;
 
-	LNKMatrix *trainingSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-														 outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
-																  rowCount:rowCount columnCount:1 addingOnesColumn:YES];
-	LNKMatrix *trainingSet__ = [[trainingSet_ polynomialMatrixOfDegree:8] retain];
-	LNKMatrix *trainingSet = trainingSet__.normalizedMatrix;
+	LNKMatrix *trainingSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
+															  outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+																	   rowCount:rowCount columnCount:1 addingOnesColumn:NO];
+	LNKMatrix *trainingSetPolynomial = [[trainingSetSingle polynomialMatrixOfDegree:8] retain];
+	LNKMatrix *trainingSetNormalized = trainingSetPolynomial.normalizedMatrix;
 	
-	LNKMatrix *cvSet_ = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
-												   outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
-															rowCount:21 columnCount:1 addingOnesColumn:YES];
-	LNKMatrix *cvSet__ = [[cvSet_ polynomialMatrixOfDegree:8] retain];
-	LNKMatrix *cvSet = [cvSet__ normalizedMatrixWithMeanVector:trainingSet.normalizationMeanVector standardDeviationVector:trainingSet.normalizationStandardDeviationVector];
+	LNKMatrix *cvSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
+														outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
+																 rowCount:21 columnCount:1 addingOnesColumn:NO];
+	LNKMatrix *cvSetPolynomial = [[cvSetSingle polynomialMatrixOfDegree:8] retain];
+	LNKMatrix *cvSetNormalized = [cvSetPolynomial normalizedMatrixWithMeanVector:trainingSetNormalized.normalizationMeanVector standardDeviationVector:trainingSetNormalized.normalizationStandardDeviationVector];
 	
 	LNKFloat trainError[rowCount];
 	LNKFloat cvError[rowCount];
@@ -304,12 +306,12 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKOptimizationAlgorithmLBFGS *cvAlgorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	
 	for (LNKSize i = 1; i <= rowCount; i++) {
-		[trainingSet clipRowCountTo:i];
+		[trainingSetNormalized clipRowCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.lambda = 0;
 		
-		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
@@ -317,7 +319,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
-		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
+		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:cvSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
 		[cvPredictor _setThetaVector:[trainPredictor _thetaVector]];
 		cvError[i-1] = [cvPredictor _evaluateCostFunction];
 		
@@ -339,10 +341,10 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy( cvError[7],   7.9725, DACCURACY);
 	XCTAssertEqualWithAccuracy(cvError[11],  21,      2);
 	
-	[trainingSet_ release];
-	[trainingSet__ release];
-	[cvSet_ release];
-	[cvSet__ release];
+	[trainingSetSingle release];
+	[trainingSetPolynomial release];
+	[cvSetSingle release];
+	[cvSetPolynomial release];
 }
 
 - (void)testAIC {
