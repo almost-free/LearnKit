@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain, readonly) LNKClasses *classes;
 
 /// The classifier should be trained prior to calling these methods.
-- (LNKFloat)computeClassificationAccuracyOnTrainingMatrix;
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix;
 
 - (LNKConfusionMatrix *)computeConfusionMatrixOnMatrix:(LNKMatrix *)matrix;

@@ -30,7 +30,7 @@
 			}
 		}];
 		
-		_LNKLogRegClassifierLBFGS_AC *classifier = [[_LNKLogRegClassifierLBFGS_AC alloc] initWithMatrix:matrixCopy implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:self.algorithm];
+		LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:matrixCopy implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:self.algorithm];
 		[matrixCopy release];
 		[classifier train];
 		
@@ -42,6 +42,10 @@
 - (void)_predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
+
+	if (featureVector.length != self.matrix.columnCount) {
+		[NSException raise:NSGenericException format:@"The length of the feature vector must be equal to the number of columns in the matrix"]; // otherwise, we can't do matrix multiplication
+	}
 	
 	for (LNKClass *class in _classesToClassifiers) {
 		LNKLogRegClassifier *classifier = [_classesToClassifiers objectForKey:class];

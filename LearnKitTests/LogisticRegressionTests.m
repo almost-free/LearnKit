@@ -29,8 +29,7 @@
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
-	
-	[matrix release];
+
 	[algorithm release];
 	
 	[classifier train];
@@ -45,8 +44,9 @@
 	LNKFloat inputVector[2] = {45,85};
 	XCTAssertEqualWithAccuracy([[classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 2)] LNKFloatValue], 0.776, DACCURACY, @"Incorrect prediction");
 	
-	XCTAssertEqualWithAccuracy([classifier computeClassificationAccuracyOnTrainingMatrix], 0.89, DACCURACY, @"Incorrect classification rate");
+	XCTAssertEqualWithAccuracy([classifier computeClassificationAccuracyOnMatrix:matrix], 0.89, DACCURACY, @"Incorrect classification rate");
 	[classifier release];
+	[matrix release];
 }
 
 - (void)_testRegularizationWithLambda:(LNKFloat)lambda cost:(LNKFloat)cost {
@@ -99,7 +99,7 @@
 	[algorithm release];
 	[matrix release];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.95, @"Poor success rate");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:matrix], 0.95, @"Poor success rate");
 	[classifier release];
 }
 

@@ -45,12 +45,9 @@
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
-	
-	if (featureVector.length != self.matrix.columnCount)
-		[NSException raise:NSGenericException format:@"The length of the feature vector must be equal to the number of columns in the matrix"]; // otherwise, we can't do matrix multiplication
-	
+
 	[self _predictValueForFeatureVector:featureVector];
-	
+
 	LNKFloat bestProbability = -1;
 	LNKClass *bestClass = nil;
 	
@@ -66,14 +63,10 @@
 	return bestClass;
 }
 
-- (LNKFloat)computeClassificationAccuracyOnTrainingMatrix {
-	return [self computeClassificationAccuracyOnMatrix:self.matrix];
-}
-
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
 	if (!matrix)
 		[NSException raise:NSInvalidArgumentException format:@"The matrix must not be nil"];
-	
+
 	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *matrixBuffer = matrix.matrixBuffer;

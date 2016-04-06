@@ -340,10 +340,22 @@
 - (void)_predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
-	
-	LNKFloat *outputLayer;
-	[self _feedForwardFeatureVector:featureVector activations:NULL outputVector:&outputLayer];
-	
+
+	if (featureVector.length + 1 != self.matrix.columnCount) {
+		[NSException raise:NSGenericException format:@"The length of the feature vector must be equal to the number of columns in the matrix"]; // otherwise, we can't do matrix multiplication
+	}
+
+	const LNKSize biasOffset = 1;
+	LNKFloat *featuresWithBias = LNKFloatAlloc(featureVector.length + biasOffset);
+	featuresWithBias[0] = 1;
+	LNKFloatCopy(featuresWithBias + biasOffset, featureVector.data, featureVector.length);
+
+	LNKFloat *outputLayer = NULL;
+	[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featuresWithBias, featureVector.length + biasOffset) activations:NULL outputVector:&outputLayer];
+	free(featuresWithBias);
+
+	NSAssert(outputLayer != NULL, @"We should get an output vector back.");
+
 	LNKSize index = 0;
 	for (LNKClass *class in self.classes) {
 		[self _didPredictProbability:outputLayer[index++] forClass:class];

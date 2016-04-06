@@ -24,7 +24,7 @@
 
 #define DACCURACY 0.01
 
-- (LNKNeuralNetClassifier *)_preLearnedClassifierWithRegularization:(BOOL)regularize {
+- (LNKNeuralNetClassifier *)_preLearnedClassifierWithRegularization:(BOOL)regularize matrix:(LNKMatrix **)outMatrix {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *matrixPath = [bundle pathForResource:@"ex3data1_X" ofType:@"dat"];
 	NSString *outputVectorPath = [bundle pathForResource:@"ex3data1_y" ofType:@"dat"];
@@ -50,7 +50,11 @@
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
 																			outputLayer:outputLayer];
-	
+
+	if (outMatrix) {
+		*outMatrix = [[matrix retain] autorelease];
+	}
+
 	[matrix release];
 	[algorithm release];
 	[outputLayer release];
@@ -67,21 +71,24 @@
 }
 
 - (void)test1FeedForwardPrediction {
-	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:NO];
+	LNKMatrix *matrix = nil;
+	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:NO matrix:&matrix];
 	[self measureBlock:^{
-		XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.97, @"Unexpectedly low classification rate");
+		XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:matrix], 0.97, @"Unexpectedly low classification rate");
 	}];
 }
 
 - (void)test2CostFunction {
-	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:NO];
+	LNKMatrix *matrix = nil;
+	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:NO matrix:&matrix];
 	[self measureBlock:^{
 		XCTAssertEqualWithAccuracy(0.287629, [classifier _evaluateCostFunction], DACCURACY, @"Incorrect cost");
 	}];
 }
 
 - (void)test3CostFunctionRegularized {
-	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:YES];
+	LNKMatrix *matrix = nil;
+	LNKClassifier *classifier = [self _preLearnedClassifierWithRegularization:YES matrix:&matrix];
 	[self measureBlock:^{
 		XCTAssertEqualWithAccuracy(0.383770, [classifier _evaluateCostFunction], DACCURACY, @"Incorrect cost");
 	}];
@@ -109,20 +116,20 @@
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
 																			outputLayer:outputLayer];
-	
-	[matrix release];
+
 	[algorithm release];
 	[outputLayer release];
 	
 	[classifier train];
 	
-	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnTrainingMatrix], 0.95, @"Poor accuracy");
+	XCTAssertGreaterThanOrEqual([classifier computeClassificationAccuracyOnMatrix:matrix], 0.95, @"Poor accuracy");
+	[matrix release];
 	[classifier release];
 }
 
 - (void)test5ConfusionMatrix {
-	LNKClassifier *const classifier = [self _preLearnedClassifierWithRegularization:NO];
-	LNKMatrix *const matrix = classifier.matrix;
+	LNKMatrix *matrix = nil;
+	LNKClassifier *const classifier = [self _preLearnedClassifierWithRegularization:NO matrix:&matrix];
 	LNKConfusionMatrix *const confusionMatrix = [classifier computeConfusionMatrixOnMatrix:matrix];
 	LNKClass *const eight = [LNKClass classWithUnsignedInteger:8];
 	const LNKSize examples = matrix.rowCount / 10;

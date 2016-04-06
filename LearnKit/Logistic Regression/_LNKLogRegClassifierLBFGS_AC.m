@@ -118,15 +118,18 @@
 }
 
 - (LNKFloat)computeClassificationAccuracyOnMatrix:(LNKMatrix *)matrix {
+	LNKMatrix *const matrixWithOnes = [matrix.matrixByAddingBiasColumn retain];
+
 	LNKFloat *thetaVector = [self _thetaVector];
 	
-	const LNKSize rowCount = matrix.rowCount;
-	const LNKSize columnCount = matrix.columnCount;
-	const LNKFloat *matrixBuffer = matrix.matrixBuffer;
-	const LNKFloat *outputVector = matrix.outputVector;
+	const LNKSize rowCount = matrixWithOnes.rowCount;
+	const LNKSize columnCount = matrixWithOnes.columnCount;
+	const LNKFloat *matrixBuffer = matrixWithOnes.matrixBuffer;
+	const LNKFloat *outputVector = matrixWithOnes.outputVector;
 	
 	LNKFloat *workgroup = LNKFloatAlloc(rowCount);
 	LNK_mmul(matrixBuffer, UNIT_STRIDE, thetaVector, UNIT_STRIDE, workgroup, UNIT_STRIDE, rowCount, 1, columnCount);
+	[matrixWithOnes release];
 	
 	LNKSize hits = 0;
 	
