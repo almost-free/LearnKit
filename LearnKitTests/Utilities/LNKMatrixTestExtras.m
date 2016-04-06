@@ -19,7 +19,7 @@
 	const LNKSize rowCount = self.rowCount;
 	const LNKSize columnCount = maxDegree;
 	
-	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 		
 		for (LNKSize row = 0; row < rowCount; row++) {
@@ -54,7 +54,7 @@ static inline LNKSize _columnsInPairwisePolynomialMatrixOfDegree(LNKSize maxDegr
 	const LNKSize rowCount = self.rowCount;
 	const LNKSize columnCount = _columnsInPairwisePolynomialMatrixOfDegree(maxDegree);
 	
-	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, self.outputVector, rowCount);
 
 		LNKSize lastIndex = 0;

@@ -39,7 +39,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 - (instancetype)initIdentityWithColumnCount:(LNKSize)columnCount {
-	return [self initWithRowCount:columnCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [self initWithRowCount:columnCount columnCount:columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (LNKSize i = 0; i < columnCount; i++) {
 			matrix[i * columnCount + i] = 1;
@@ -176,6 +176,10 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return self;
 }
 
+- (instancetype)initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount prepareBuffers:(BOOL (^)(LNKFloat *, LNKFloat *))preparationBlock {
+	return [self initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:preparationBlock];
+}
+
 - (instancetype)initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn prepareBuffers:(BOOL (^)(LNKFloat *, LNKFloat *))preparationBlock {
 	NSParameterAssert(rowCount);
 	NSParameterAssert(columnCount);
@@ -200,7 +204,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 }
 
 // This initializer does not make a copy of the matrix data. Rather, it establishes a weak reference.
-- (instancetype)_initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount addingOnesColumn:(BOOL)addOnesColumn matrix:(LNKFloat *)matrix prepareOutputBuffer:(BOOL (^)(LNKFloat *))preparationBlock {
+- (instancetype)_initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount matrix:(LNKFloat *)matrix prepareOutputBuffer:(BOOL (^)(LNKFloat *))preparationBlock {
 	NSParameterAssert(rowCount);
 	NSParameterAssert(columnCount);
 	NSParameterAssert(preparationBlock);
@@ -209,8 +213,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		return nil;
 	
 	_rowCount = rowCount;
-	_columnCount = columnCount + (addOnesColumn ? 1 : 0);
-	_hasBiasColumn = addOnesColumn;
+	_columnCount = columnCount;
+	_hasBiasColumn = NO;
 	
 	[self _allocateBuffersIncludingMatrix:NO];
 	_matrix = matrix;
@@ -226,9 +230,8 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 
 - (id)copyWithZone:(NSZone *)zone {
 #pragma unused(zone)
-	
-	// Even if we already have a ones column, we set addingOnesColumn to NO because we don't want one to be added again.
-	LNKMatrix *matrix = [[LNKMatrix alloc] _initWithRowCount:_rowCount columnCount:_columnCount addingOnesColumn:NO matrix:_matrix prepareOutputBuffer:^BOOL(LNKFloat *outputVector) {
+
+	LNKMatrix *const matrix = [[LNKMatrix alloc] _initWithRowCount:_rowCount columnCount:_columnCount matrix:_matrix prepareOutputBuffer:^BOOL(LNKFloat *outputVector) {
 		LNKFloatCopy(outputVector, _outputVector, _rowCount);
 		return YES;
 	}];
@@ -289,7 +292,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	LNKFloat *const result = LNKFloatAlloc(rowCount * matrixColumnCount);
 	LNK_mmul(_matrix, UNIT_STRIDE, matrix.matrixBuffer, UNIT_STRIDE, result, UNIT_STRIDE, rowCount, matrixColumnCount, columnCount);
 
-	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:matrixColumnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:rowCount columnCount:matrixColumnCount prepareBuffers:^BOOL(LNKFloat *localMatrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		LNKFloatCopy(localMatrix, result, rowCount * matrixColumnCount);
 		return YES;
@@ -300,7 +303,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	const LNKSize columnCount = self.columnCount;
 	const LNKSize rowCount = self.rowCount;
 
-	return [[[LNKMatrix alloc] initWithRowCount:columnCount columnCount:rowCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:columnCount columnCount:rowCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		LNK_mtrans(_matrix, matrix, columnCount, rowCount);
 		return YES;
@@ -312,7 +315,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Only covariance of normalized matrices is supported" userInfo:nil];
 	}
 
-	return [[[LNKMatrix alloc] initWithRowCount:_columnCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:_columnCount columnCount:_columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 
 		// S = 1/m X' X
@@ -335,7 +338,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		return nil;
 	}
 
-	return [[[LNKMatrix alloc] initWithRowCount:_columnCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[[LNKMatrix alloc] initWithRowCount:_columnCount columnCount:_columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 
 		LNKFloatCopy(matrix, _matrix, _columnCount * _columnCount);
@@ -437,7 +440,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	if (rowCount > _rowCount)
 		[NSException raise:NSInvalidArgumentException format:@"The number of examples in the submatrix cannot be greater than the number of examples in the current matrix"];
 	
-	return [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	return [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:_columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKSize *const indices = [self _shuffleIndices];
 		
 		for (LNKSize index = 0; index < rowCount; index++) {
@@ -468,7 +471,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 - (LNKMatrix *)submatrixWithRowRange:(NSRange)range {
 	const LNKSize columnCount = self.columnCount;
 
-	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithRowCount:range.length columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const submatrix = [[LNKMatrix alloc] initWithRowCount:range.length columnCount:columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		for (LNKSize example = range.location; example < NSMaxRange(range); example++) {
 			const LNKFloat *inputExample = [self rowAtIndex:example];
 			LNKFloatCopy(matrix + (example - range.location) * columnCount, inputExample, columnCount);
@@ -489,7 +492,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	if (columnCount >= _columnCount)
 		[NSException raise:NSInvalidArgumentException format:@"The number of columns in the submatrix must be less than the number of columns in the current matrix"];
 	
-	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *submatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (LNKSize row = 0; row < rowCount; row++) {
 			const LNKFloat *inputExample = [self rowAtIndex:row];
@@ -774,7 +777,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	NSParameterAssert(meanVector);
 	NSParameterAssert(sdVector);
 
-	LNKMatrix *const normalizedMatrix = [[LNKMatrix alloc] initWithRowCount:_rowCount columnCount:_columnCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const normalizedMatrix = [[LNKMatrix alloc] initWithRowCount:_rowCount columnCount:_columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 		LNKFloatCopy(matrix, _matrix, _columnCount * _rowCount);
 		LNKFloatCopy(outputVector, _outputVector, _rowCount);
 		return YES;

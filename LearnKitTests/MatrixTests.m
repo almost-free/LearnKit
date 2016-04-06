@@ -22,7 +22,7 @@
 	const LNKSize rowCount = 4;
 	const LNKSize columnCount = 4;
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithRowCount:4 columnCount:4 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithRowCount:4 columnCount:4 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (LNKSize row = 0; row < rowCount; row++) {
 			for (LNKSize column = 0; column < columnCount; column++) {
@@ -75,7 +75,7 @@
 }
 
 - (void)testInversion {
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithRowCount:2 columnCount:2 addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithRowCount:2 columnCount:2 prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		matrix[0] = 0.5;
 		matrix[1] = 2;

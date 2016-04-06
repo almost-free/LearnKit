@@ -74,7 +74,7 @@ static CFDataRef __nullable CreateRGBAImageDataWithURL(NSURL *url, size_t *outWi
 		break;
 	}
 
-	self = [self initWithRowCount:pixelCount columnCount:components addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
+	self = [self initWithRowCount:pixelCount columnCount:components prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		for (size_t i = 0; i < pixelCount; i++) {
 			switch (format) {

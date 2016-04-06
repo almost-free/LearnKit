@@ -36,7 +36,7 @@
 	NSError *error = nil;
 	NSString *const document = [[NSString alloc] initWithContentsOfURL:docURL encoding:NSUTF8StringEncoding error:&error];
 
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithRowCount:documentCount columnCount:wordCount addingOnesColumn:NO prepareBuffers:^BOOL(LNKFloat *matrixBuffer, LNKFloat *outputVector) {
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithRowCount:documentCount columnCount:wordCount prepareBuffers:^BOOL(LNKFloat *matrixBuffer, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		[document enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
 #pragma unused(stop)

@@ -40,7 +40,6 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// Initializes a matrix by filling the given buffers.
 /// The column count should not include the ones column.
 - (instancetype)initWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount
-				addingOnesColumn:(BOOL)addOnesColumn
 				  prepareBuffers:(BOOL (^)(LNKFloat *matrix, LNKFloat *outputVector))preparationBlock;
 
 @property (nonatomic, readonly) LNKSize rowCount;
