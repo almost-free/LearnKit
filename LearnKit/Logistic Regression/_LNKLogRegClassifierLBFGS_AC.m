@@ -39,7 +39,6 @@
 
 	LNKFloat *featuresWithBias = LNKFloatAlloc(featureVector.length + biasOffset);
 	featuresWithBias[0] = 1;
-
 	LNKFloatCopy(featuresWithBias + biasOffset, featureVector.data, featureVector.length);
 
 	// sigmoid(theta . input)
