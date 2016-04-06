@@ -31,13 +31,20 @@
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
 	NSParameterAssert(featureVector.length);
+
+	const LNKSize biasOffset = 1;
 	
-	NSAssert(featureVector.length == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
+	NSAssert(featureVector.length + biasOffset == self.matrix.columnCount, @"The length of the feature vector must be equal to the number of columns in the matrix");
 	// Otherwise, we can't compute the dot product.
-	
+
+	LNKFloat *featuresWithBias = LNKFloatAlloc(featureVector.length + biasOffset);
+	featuresWithBias[0] = 1;
+
+	LNKFloatCopy(featuresWithBias + biasOffset, featureVector.data, featureVector.length);
+
 	// sigmoid(theta . input)
-	LNKFloat result;
-	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featureVector.data, UNIT_STRIDE, &result, self.matrix.columnCount);
+	LNKFloat result = 0;
+	LNK_dotpr([self _thetaVector], UNIT_STRIDE, featuresWithBias, UNIT_STRIDE, &result, self.matrix.columnCount);
 	LNK_vsigmoid(&result, 1);
 	
 	return [NSNumber numberWithLNKFloat:result];
