@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The only supported optimization algorithm is stochastic gradient descent.
 /// An SVM may perform better if the input matrix (and feature vectors) are normalized.
 /// The output classes must currently be -1 and 1.
+/// A bias column is added to the matrix automatically.
 @interface LNKSVMClassifier : LNKClassifier
 @end
 
