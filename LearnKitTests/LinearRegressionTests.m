@@ -347,7 +347,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	[cvSetPolynomial release];
 }
 
-- (void)testAIC {
+- (void)testAICAndBIC {
 	NSURL *const mtcarsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"mtcars" withExtension:@"txt"];
 
 	// Only keep mpg and drat
@@ -377,6 +377,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[1],  7.678, 0.1);
 
 	XCTAssertEqualWithAccuracy([predictor computeAIC], 190.7999, 0.1);
+	XCTAssertEqualWithAccuracy([predictor computeBIC], 195.1971, 0.1);
 
 	[predictor release];
 }

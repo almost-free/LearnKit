@@ -42,4 +42,20 @@
 	return term1 + term2;
 }
 
+- (LNKFloat)computeBIC
+{
+	LNKMatrix *const matrix = self.matrix;
+	const LNKSize rowCount = matrix.rowCount;
+
+	LNKVector residuals = [self computeResiduals];
+	LNKFloat residualSum = 0;
+	LNK_dotpr(residuals.data, UNIT_STRIDE, residuals.data, UNIT_STRIDE, &residualSum, rowCount);
+	LNKVectorFree(residuals);
+
+	const LNKFloat term1 = rowCount * (LNKLog(2 * M_PI) + 1 + LNKLog(residualSum / rowCount));
+	const LNKSize k = matrix.columnCount + 1;
+	const LNKFloat term2 = (LNKFloat)k * LNKLog(rowCount);
+	return term1 + term2;
+}
+
 @end

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The returned vector must be freed with `LNKVectorFree`.
 - (LNKVector)computeResiduals;
 - (LNKFloat)computeAIC;
+- (LNKFloat)computeBIC;
 
 @end
 
