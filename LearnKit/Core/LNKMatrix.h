@@ -7,8 +7,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LNKCSVColumnRule;
-
 typedef NS_ENUM(NSUInteger, LNKValueType) {
 	LNKValueTypeDouble,
 	LNKValueTypeUInt8,
@@ -21,14 +19,6 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (instancetype)init NS_UNAVAILABLE;
 
 - (instancetype)initIdentityWithColumnCount:(LNKSize)columnCount;
-
-/// Initializes a matrix by loading a CSV file. The file should not contain headings.
-/// Optionally, a ones column may be added to the beginning of the matrix. The last column will be mapped to the output vector.
-- (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url;
-- (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter;
-
-/// Columns may be deleted or transformed (e.g. mapping strings representing categorical data to numerical entries) by passing a dictionary of preprocessing rules, indexed by the column index.
-- (nullable instancetype)initWithCSVFileAtURL:(NSURL *)url delimiter:(unichar)delimiter ignoringHeader:(BOOL)ignoreHeader columnPreprocessingRules:(NSDictionary<NSNumber *, LNKCSVColumnRule *> *)preprocessingRules;
 
 /// Initializes a matrix by loading a binary matrix of values and a corresponding output vector.
 /// Values are parsed in column order. The column count should not include the ones column.

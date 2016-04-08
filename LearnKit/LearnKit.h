@@ -17,6 +17,7 @@
 #import <LearnKit/LNKLinRegPredictor+Analysis.h>
 #import <LearnKit/LNKLogRegClassifier.h>
 #import <LearnKit/LNKMatrix.h>
+#import <LearnKit/LNKMatrixCSV.h>
 #import <LearnKit/LNKMatrixExporting.h>
 #import <LearnKit/LNKMatrixImages.h>
 #import <LearnKit/LNKMatrixPCA.h>
