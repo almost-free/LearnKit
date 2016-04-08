@@ -8,6 +8,7 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 
+#import "LNKCSVColumnRule.h"
 #import "LNKMatrix.h"
 #import "LNKMatrixPrivate.h"
 
@@ -94,6 +95,27 @@
 	LNKMatrix *const eye = [[LNKMatrix alloc] initIdentityWithColumnCount:2];
 	XCTAssertEqualObjects(product, eye);
 	[eye release];
+	[matrix release];
+}
+
+- (void)testLoadingCSVWithCommas {
+	NSURL *const mtcarsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"mtcars_comma" withExtension:@"txt"];
+
+	// Only keep mpg and drat
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:mtcarsURL delimiter:',' ignoringHeader:YES columnPreprocessingRules:@{
+		@0: [LNKCSVColumnRule deleteRule],
+		@1: [LNKCSVColumnRule outputRule],
+		@2: [LNKCSVColumnRule deleteRule],
+		@3: [LNKCSVColumnRule deleteRule],
+		@4: [LNKCSVColumnRule deleteRule],
+		@6: [LNKCSVColumnRule deleteRule],
+		@7: [LNKCSVColumnRule deleteRule],
+		@8: [LNKCSVColumnRule deleteRule],
+		@9: [LNKCSVColumnRule deleteRule],
+		@10: [LNKCSVColumnRule deleteRule],
+		@11: [LNKCSVColumnRule deleteRule]
+	}];
+	XCTAssertNotNil(matrix);
 	[matrix release];
 }
 

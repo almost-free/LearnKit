@@ -114,6 +114,7 @@
 		C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCE19A04C950061DEFB /* LinearRegressionTests.m */; };
 		C9AC0DD519A04C950061DEFB /* LogisticRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AC0DCF19A04C950061DEFB /* LogisticRegressionTests.m */; };
 		C9AE9EF419AC2D2100A47178 /* NNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AE9EF319AC2D2100A47178 /* NNTests.m */; };
+		C9BA84BC1CB75013000C041B /* mtcars_comma.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9BA84BA1CB75003000C041B /* mtcars_comma.txt */; };
 		C9CBD24619E5D3F500AE71D5 /* LNKAccelerate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */; };
 		C9CBD24719E5D3F500AE71D5 /* LNKAccelerate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */; };
 		C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */; };
@@ -342,6 +343,7 @@
 		C9AC1F8C199AFD57006D7122 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C9AC1F94199AFDCC006D7122 /* LearnKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9AE9EF319AC2D2100A47178 /* NNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = NNTests.m; path = LearnKitTests/NNTests.m; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		C9BA84BA1CB75003000C041B /* mtcars_comma.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mtcars_comma.txt; sourceTree = "<group>"; };
 		C9CBD24219E5D3F500AE71D5 /* LNKAccelerate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAccelerate.h; sourceTree = "<group>"; };
 		C9CBD24319E5D3F500AE71D5 /* LNKAccelerate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKAccelerate.m; sourceTree = "<group>"; };
 		C9CBD24419E5D3F500AE71D5 /* LNKAccelerateGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKAccelerateGradient.h; sourceTree = "<group>"; };
@@ -848,6 +850,7 @@
 				C9860BE21A0B4F04009FADAE /* Movies_X.mat */,
 				C9860BE31A0B4F04009FADAE /* Movies_Y.mat */,
 				C96DA8B71CB551CD0004E650 /* mtcars.txt */,
+				C9BA84BA1CB75003000C041B /* mtcars_comma.txt */,
 				C9D1A4A11C9DAA5B003736C1 /* nips-docword.txt */,
 				C9D1A4A21C9DAA5B003736C1 /* nips-vocab.txt */,
 				C96F53381C9E5C2F00AE1B72 /* Palace.jpg */,
@@ -1041,6 +1044,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BA84BC1CB75013000C041B /* mtcars_comma.txt in Resources */,
 				C96DA8B91CB554610004E650 /* mtcars.txt in Resources */,
 				C99F0E861C653872000F9242 /* Pima.csv in Resources */,
 				C9CBD30A19E5D69000AE71D5 /* ex2data1.csv in Resources */,
