@@ -30,16 +30,16 @@
 	const LNKSize reducedRowCount = 3;
 	
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *pathX = [bundle pathForResource:@"Movies_X" ofType:@"mat"];
-	NSString *pathY = [bundle pathForResource:@"Movies_Y" ofType:@"mat"];
-	NSString *pathR = [bundle pathForResource:@"Movies_R" ofType:@"mat"];
-	NSString *pathTheta = [bundle pathForResource:@"Movies_Theta" ofType:@"mat"];
+	NSURL *urlX = [bundle URLForResource:@"Movies_X" withExtension:@"mat"];
+	NSURL *urlY = [bundle URLForResource:@"Movies_Y" withExtension:@"mat"];
+	NSURL *urlR = [bundle URLForResource:@"Movies_R" withExtension:@"mat"];
+	NSURL *urlTheta = [bundle URLForResource:@"Movies_Theta" withExtension:@"mat"];
 	
-	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:urlR matrixValueType:LNKValueTypeDouble
 															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 																	 rowCount:movieCount columnCount:userCount];
 	
-	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:urlY matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 																  rowCount:movieCount columnCount:userCount];
 	
@@ -51,13 +51,13 @@
 	[indicatorMatrix release];
 	[outputMatrix release];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathX] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:urlX matrixValueType:LNKValueTypeDouble
 												   outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 															rowCount:movieCount columnCount:rowCount];
 	[predictor loadDataMatrix:[matrix submatrixWithRowCount:reducedMovieCount columnCount:reducedRowCount]];
 	[matrix release];
 	
-	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathTheta] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *thetaMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:urlTheta matrixValueType:LNKValueTypeDouble
 														outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 																 rowCount:userCount columnCount:rowCount];
 	[predictor loadThetaMatrix:[thetaMatrix submatrixWithRowCount:reducedUserCount columnCount:reducedRowCount]];
@@ -94,14 +94,14 @@
 	const LNKSize featureCount = 10;
 	
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *pathY = [bundle pathForResource:@"Movies_Y" ofType:@"mat"];
-	NSString *pathR = [bundle pathForResource:@"Movies_R" ofType:@"mat"];
+	NSURL *urlY = [bundle URLForResource:@"Movies_Y" withExtension:@"mat"];
+	NSURL *urlR = [bundle URLForResource:@"Movies_R" withExtension:@"mat"];
 	
-	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathR] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *indicatorMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:urlR matrixValueType:LNKValueTypeDouble
 															outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 																	 rowCount:movieCount columnCount:userCount];
 	
-	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:pathY] matrixValueType:LNKValueTypeDouble
+	LNKMatrix *outputMatrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:urlY matrixValueType:LNKValueTypeDouble
 														 outputVectorAtURL:nil outputVectorValueType:LNKValueTypeNone
 																  rowCount:movieCount columnCount:userCount];
 	

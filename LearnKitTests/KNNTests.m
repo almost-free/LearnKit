@@ -18,8 +18,8 @@
 @implementation KNNTests
 
 - (void)test1 {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex2data1" ofType:@"csv"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex2data1" withExtension:@"csv"];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	
 	LNKKNNClassifier *classifier = [[LNKKNNClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:nil classes:[LNKClasses withCount:2]];
 	[matrix release];

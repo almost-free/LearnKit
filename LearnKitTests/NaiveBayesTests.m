@@ -29,8 +29,8 @@
 
 - (void)testNaiveBayes {
 	// Columns of Flu.csv: chills, runny nose, headache, fever, flu? (output)
-	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Flu" ofType:@"csv"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"Flu" withExtension:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKClasses *const classes = [LNKClasses withCount:2];
 
 	LNKDiscreteProbabilityDistribution *const discreteDistribution = [[LNKDiscreteProbabilityDistribution alloc] initWithClasses:classes featureCount:matrix.columnCount];
@@ -53,8 +53,8 @@
 
 - (LNKNaiveBayesClassifier *)_classifierForFluChills {
 	// Columns of FluChills.csv: chills (always 1), runny nose, headache, fever, flu? (output)
-	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"FluChills" ofType:@"csv"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"FluChills" withExtension:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKClasses *const classes = [LNKClasses withCount:2];
 
 	LNKDiscreteProbabilityDistribution *const discreteDistribution = [[LNKDiscreteProbabilityDistribution alloc] initWithClasses:classes featureCount:matrix.columnCount];
@@ -102,8 +102,8 @@
 }
 
 - (void)testGaussianNaiveBayes {
-	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Pima" ofType:@"csv"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"Pima" withExtension:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKMatrix *trainingMatrix = nil;
 	LNKMatrix *testMatrix = nil;
 	[matrix splitIntoTrainingMatrix:&trainingMatrix testMatrix:&testMatrix trainingBias:0.8];

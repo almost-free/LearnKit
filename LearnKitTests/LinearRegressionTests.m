@@ -30,8 +30,8 @@
 extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize rowCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction);
 
 - (LNKLinRegPredictor *)_ex1PredictorGD {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex1data1" withExtension:@"txt"];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
 																						   iterationCount:1500];
 	
@@ -44,8 +44,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 }
 
 - (LNKLinRegPredictor *)_ex1PredictorNE {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data1" ofType:@"txt"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex1data1" withExtension:@"txt"];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	
 	LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
@@ -109,9 +109,9 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 }
 
 - (void)_testExample1Data2WithAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex1data2" ofType:@"txt"];
+	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex1data2" withExtension:@"txt"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
@@ -142,9 +142,9 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (void)test8Performance {
 	[self measureBlock:^{
-		NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"CASP" ofType:@"csv"];
+		NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"CASP" withExtension:@"csv"];
 		
-		LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+		LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 		LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
 		
 		LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
@@ -163,11 +163,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (void)test9Regularization {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *xPath = [bundle pathForResource:@"ex5_X" ofType:@"dat"];
-	NSString *yPath = [bundle pathForResource:@"ex5_y" ofType:@"dat"];
+	NSURL *xURL = [bundle URLForResource:@"ex5_X" withExtension:@"dat"];
+	NSURL *yURL = [bundle URLForResource:@"ex5_y" withExtension:@"dat"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-												   outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:xURL matrixValueType:LNKValueTypeDouble
+												   outputVectorAtURL:yURL outputVectorValueType:LNKValueTypeDouble
 															rowCount:12 columnCount:1];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
@@ -219,19 +219,19 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (void)test10LearningCurves {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *xPath = [bundle pathForResource:@"ex5_X" ofType:@"dat"];
-	NSString *yPath = [bundle pathForResource:@"ex5_y" ofType:@"dat"];
-	NSString *xcvPath = [bundle pathForResource:@"ex5_Xcv" ofType:@"dat"];
-	NSString *ycvPath = [bundle pathForResource:@"ex5_ycv" ofType:@"dat"];
+	NSURL *xURL = [bundle URLForResource:@"ex5_X" withExtension:@"dat"];
+	NSURL *yURL = [bundle URLForResource:@"ex5_y" withExtension:@"dat"];
+	NSURL *xcvURL = [bundle URLForResource:@"ex5_Xcv" withExtension:@"dat"];
+	NSURL *ycvURL = [bundle URLForResource:@"ex5_ycv" withExtension:@"dat"];
 	
 	const LNKSize rowCount = 12;
 	
-	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-														outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+	LNKMatrix *trainingSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:xURL matrixValueType:LNKValueTypeDouble
+														outputVectorAtURL:yURL outputVectorValueType:LNKValueTypeDouble
 																 rowCount:rowCount columnCount:1];
 	
-	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
-												  outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
+	LNKMatrix *cvSet = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:xcvURL matrixValueType:LNKValueTypeDouble
+												  outputVectorAtURL:ycvURL outputVectorValueType:LNKValueTypeDouble
 														   rowCount:21 columnCount:1];
 	
 	LNKFloat trainError[rowCount];
@@ -281,21 +281,21 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 - (void)test11LearningCurvesPolynomial {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *xPath = [bundle pathForResource:@"ex5_X" ofType:@"dat"];
-	NSString *yPath = [bundle pathForResource:@"ex5_y" ofType:@"dat"];
-	NSString *xcvPath = [bundle pathForResource:@"ex5_Xcv" ofType:@"dat"];
-	NSString *ycvPath = [bundle pathForResource:@"ex5_ycv" ofType:@"dat"];
+	NSURL *xURL = [bundle URLForResource:@"ex5_X" withExtension:@"dat"];
+	NSURL *yURL = [bundle URLForResource:@"ex5_y" withExtension:@"dat"];
+	NSURL *xcvURL = [bundle URLForResource:@"ex5_Xcv" withExtension:@"dat"];
+	NSURL *ycvURL = [bundle URLForResource:@"ex5_ycv" withExtension:@"dat"];
 
 	const LNKSize rowCount = 12;
 
-	LNKMatrix *trainingSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xPath] matrixValueType:LNKValueTypeDouble
-															  outputVectorAtURL:[NSURL fileURLWithPath:yPath] outputVectorValueType:LNKValueTypeDouble
+	LNKMatrix *trainingSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:xURL matrixValueType:LNKValueTypeDouble
+															  outputVectorAtURL:yURL outputVectorValueType:LNKValueTypeDouble
 																	   rowCount:rowCount columnCount:1];
 	LNKMatrix *trainingSetPolynomial = [[trainingSetSingle polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *trainingSetNormalized = trainingSetPolynomial.normalizedMatrix;
 	
-	LNKMatrix *cvSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:xcvPath] matrixValueType:LNKValueTypeDouble
-														outputVectorAtURL:[NSURL fileURLWithPath:ycvPath] outputVectorValueType:LNKValueTypeDouble
+	LNKMatrix *cvSetSingle = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:xcvURL matrixValueType:LNKValueTypeDouble
+														outputVectorAtURL:ycvURL outputVectorValueType:LNKValueTypeDouble
 																 rowCount:21 columnCount:1];
 	LNKMatrix *cvSetPolynomial = [[cvSetSingle polynomialMatrixOfDegree:8] retain];
 	LNKMatrix *cvSetNormalized = [cvSetPolynomial normalizedMatrixWithMeanVector:trainingSetNormalized.normalizationMeanVector standardDeviationVector:trainingSetNormalized.normalizationStandardDeviationVector];

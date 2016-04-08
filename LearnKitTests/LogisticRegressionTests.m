@@ -24,8 +24,8 @@
 #define DACCURACY 0.01
 
 - (void)test1 {
-	NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex2data1" ofType:@"csv"];
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex2data1" withExtension:@"csv"];
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
@@ -79,12 +79,12 @@
 }
 
 - (void)test3OneVsAll {
-	NSString *matrixPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex3data1_X" ofType:@"dat"];
-	NSString *outputVectorPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"ex3data1_y" ofType:@"dat"];
+	NSURL *matrixURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex3data1_X" withExtension:@"dat"];
+	NSURL *outputVectorURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex3data1_y" withExtension:@"dat"];
 
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:matrixURL
 													 matrixValueType:LNKValueTypeDouble
-												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
+												   outputVectorAtURL:outputVectorURL
 											   outputVectorValueType:LNKValueTypeUInt8
 															rowCount:5000 columnCount:400];
 

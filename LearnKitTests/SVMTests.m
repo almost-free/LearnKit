@@ -19,8 +19,8 @@
 @implementation SVMTests
 
 - (void)test1 {
-	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"Cancer" ofType:@"csv"];
-	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path]];
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"Cancer" withExtension:@"csv"];
+	LNKMatrix *const matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	XCTAssertNotNil(matrix);
 
 	LNKMatrix *const subsetMatrix = [matrix submatrixWithRowRange:NSMakeRange(0, 583)];
@@ -54,8 +54,8 @@
 }
 
 - (void)testIncome {
-	NSString *const path = [[NSBundle bundleForClass:self.class] pathForResource:@"income" ofType:@"csv"];
-	LNKMatrix *const unnormalizedMatrix = [[LNKMatrix alloc] initWithCSVFileAtURL:[NSURL fileURLWithPath:path] delimiter:',' ignoringHeader:NO columnPreprocessingRules:@{
+	NSURL *const url = [[NSBundle bundleForClass:self.class] URLForResource:@"income" withExtension:@"csv"];
+	LNKMatrix *const unnormalizedMatrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url delimiter:',' ignoringHeader:NO columnPreprocessingRules:@{
 		@1: [LNKCSVColumnRule deleteRule],
 		@3: [LNKCSVColumnRule deleteRule],
 		@5: [LNKCSVColumnRule deleteRule],

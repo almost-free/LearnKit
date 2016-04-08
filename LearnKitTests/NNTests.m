@@ -26,14 +26,14 @@
 
 - (LNKNeuralNetClassifier *)_preLearnedClassifierWithRegularization:(BOOL)regularize matrix:(LNKMatrix **)outMatrix {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *matrixPath = [bundle pathForResource:@"ex3data1_X" ofType:@"dat"];
-	NSString *outputVectorPath = [bundle pathForResource:@"ex3data1_y" ofType:@"dat"];
-	NSString *theta1Path = [bundle pathForResource:@"ex3data1_theta1" ofType:@"dat"];
-	NSString *theta2Path = [bundle pathForResource:@"ex3data1_theta2" ofType:@"dat"];
+	NSURL *matrixURL = [bundle URLForResource:@"ex3data1_X" withExtension:@"dat"];
+	NSURL *outputVectorURL = [bundle URLForResource:@"ex3data1_y" withExtension:@"dat"];
+	NSURL *theta1URL = [bundle URLForResource:@"ex3data1_theta1" withExtension:@"dat"];
+	NSURL *theta2URL = [bundle URLForResource:@"ex3data1_theta2" withExtension:@"dat"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:matrixURL
 													 matrixValueType:LNKValueTypeDouble
-												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
+												   outputVectorAtURL:outputVectorURL
 											   outputVectorValueType:LNKValueTypeUInt8
 															rowCount:5000 columnCount:400];
 	
@@ -59,8 +59,8 @@
 	[algorithm release];
 	[outputLayer release];
 	
-	NSData *thetaVectorData1 = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:theta1Path], 401 * 25 * sizeof(double));
-	NSData *thetaVectorData2 = LNKLoadBinaryMatrixFromFileAtURL([NSURL fileURLWithPath:theta2Path],  26 * 10 * sizeof(double));
+	NSData *thetaVectorData1 = LNKLoadBinaryMatrixFromFileAtURL(theta1URL, 401 * 25 * sizeof(double));
+	NSData *thetaVectorData2 = LNKLoadBinaryMatrixFromFileAtURL(theta2URL,  26 * 10 * sizeof(double));
 	
 	const LNKFloat *thetaVector1 = (const LNKFloat *)thetaVectorData1.bytes;
 	const LNKFloat *thetaVector2 = (const LNKFloat *)thetaVectorData2.bytes;
@@ -96,12 +96,12 @@
 
 - (void)test4Training {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *matrixPath = [bundle pathForResource:@"ex3data1_X" ofType:@"dat"];
-	NSString *outputVectorPath = [bundle pathForResource:@"ex3data1_y" ofType:@"dat"];
+	NSURL *matrixURL = [bundle URLForResource:@"ex3data1_X" withExtension:@"dat"];
+	NSURL *outputVectorURL = [bundle URLForResource:@"ex3data1_y" withExtension:@"dat"];
 	
-	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:[NSURL fileURLWithPath:matrixPath]
+	LNKMatrix *matrix = [[LNKMatrix alloc] initWithBinaryMatrixAtURL:matrixURL
 													 matrixValueType:LNKValueTypeDouble
-												   outputVectorAtURL:[NSURL fileURLWithPath:outputVectorPath]
+												   outputVectorAtURL:outputVectorURL
 											   outputVectorValueType:LNKValueTypeUInt8
 															rowCount:5000 columnCount:400];
 	
