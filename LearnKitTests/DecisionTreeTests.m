@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "LNKDecisionTreeClassifier.h"
-#import "LNKMatrix.h"
+#import "LNKMatrixCSV.h"
 
 @interface DecisionTreeTests : XCTestCase
 

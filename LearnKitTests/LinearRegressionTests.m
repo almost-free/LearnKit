@@ -14,7 +14,7 @@
 #import "LNKLinRegPredictor.h"
 #import "LNKLinRegPredictor+Analysis.h"
 #import "LNKLinRegPredictorPrivate.h"
-#import "LNKMatrix.h"
+#import "LNKMatrixCSV.h"
 #import "LNKMatrixTestExtras.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"

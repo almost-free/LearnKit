@@ -10,7 +10,7 @@
 
 #import "LNKDiscreteProbabilityDistribution.h"
 #import "LNKGaussianProbabilityDistribution.h"
-#import "LNKMatrix.h"
+#import "LNKMatrixCSV.h"
 #import "LNKNaiveBayesClassifier.h"
 
 @interface NaiveBayesTests : XCTestCase

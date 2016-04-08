@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "LNKKNNClassifier.h"
-#import "LNKMatrix.h"
+#import "LNKMatrixCSV.h"
 
 @interface KNNTests : XCTestCase
 

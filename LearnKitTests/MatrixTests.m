@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "LNKCSVColumnRule.h"
-#import "LNKMatrix.h"
+#import "LNKMatrixCSV.h"
 #import "LNKMatrixPrivate.h"
 
 @interface MatrixTests : XCTestCase

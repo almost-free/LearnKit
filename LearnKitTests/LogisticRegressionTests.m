@@ -10,6 +10,7 @@
 
 #import "LNKLogRegClassifier.h"
 #import "LNKLogRegClassifierPrivate.h"
+#import "LNKMatrixCSV.h"
 #import "LNKMatrixTestExtras.h"
 #import "LNKOneVsAllLogRegClassifier.h"
 #import "LNKOptimizationAlgorithm.h"
