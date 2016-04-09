@@ -58,4 +58,36 @@
 	return term1 + term2;
 }
 
+- (LNKMatrix *)hatMatrix
+{
+	LNKMatrix *const matrix = self.matrix;
+	const LNKSize rowCount = matrix.rowCount;
+	const LNKSize columnCount = matrix.columnCount;
+	const LNKFloat *const matrixBuffer = matrix.matrixBuffer;
+
+	LNKFloat *const transpose = LNKFloatAlloc(rowCount * columnCount);
+	LNK_mtrans(matrixBuffer, transpose, columnCount, rowCount);
+
+	LNKFloat *const square = LNKFloatAlloc(columnCount * columnCount);
+	LNK_mmul(transpose, UNIT_STRIDE, matrixBuffer, UNIT_STRIDE, square, UNIT_STRIDE, columnCount, columnCount, rowCount);
+
+	LNK_minvert(square, columnCount);
+
+	LNKFloat *const workspace = LNKFloatAlloc(rowCount * columnCount);
+	LNK_mmul(square, UNIT_STRIDE, transpose, UNIT_STRIDE, workspace, UNIT_STRIDE, columnCount, rowCount, columnCount);
+
+
+	LNKMatrix *const hatMatrix = [[LNKMatrix alloc] initWithRowCount:self.matrix.rowCount columnCount:self.matrix.columnCount prepareBuffers:^BOOL(LNKFloat *matrixData, LNKFloat *outputVector) {
+#pragma unused(outputVector)
+		LNK_mmul(matrixBuffer, UNIT_STRIDE, workspace, UNIT_STRIDE, matrixData, UNIT_STRIDE, rowCount, rowCount, columnCount);
+		return YES;
+	}];
+
+	free(transpose);
+	free(square);
+	free(workspace);
+
+	return [hatMatrix autorelease];
+}
+
 @end
