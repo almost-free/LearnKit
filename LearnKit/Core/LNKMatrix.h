@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 - (const LNKFloat *)outputVector NS_RETURNS_INNER_POINTER;
 
 - (const LNKFloat *)rowAtIndex:(LNKSize)index NS_RETURNS_INNER_POINTER;
+- (LNKFloat)valueAtRow:(LNKSize)row column:(LNKSize)column;
 
 /// The result must be freed by the caller.
 - (LNKVector)copyOfColumnAtIndex:(LNKSize)columnIndex;

@@ -383,6 +383,10 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy([hatMatrix rowAtIndex:0][0], 0.04163941, 0.1);
 	XCTAssertEqualWithAccuracy([hatMatrix rowAtIndex:2][2], 0.03849760, 0.1);
 
+	LNKVector srVector = [predictor computeStandardizedResiduals];
+	XCTAssertEqualWithAccuracy(srVector.data[0], -0.32349777, 0.1);
+	LNKVectorFree(srVector);
+
 	[predictor release];
 }
 

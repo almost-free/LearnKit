@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The returned vector must be freed with `LNKVectorFree`.
 - (LNKVector)computeResiduals;
+- (LNKVector)computeStandardizedResiduals;
+
 - (LNKFloat)computeAIC;
 - (LNKFloat)computeBIC;
 

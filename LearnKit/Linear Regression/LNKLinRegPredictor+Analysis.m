@@ -21,9 +21,32 @@
 
 	LNKFloat *predictions = LNKFloatAlloc(rowCount);
 	LNK_mmul(matrix.matrixBuffer, UNIT_STRIDE, [self _thetaVector], UNIT_STRIDE, predictions, UNIT_STRIDE, rowCount, 1, columnCount);
-	LNK_vsub(matrix.outputVector, UNIT_STRIDE, predictions, UNIT_STRIDE, predictions, UNIT_STRIDE, rowCount);
+	LNK_vsub(predictions, UNIT_STRIDE, matrix.outputVector, UNIT_STRIDE, predictions, UNIT_STRIDE, rowCount);
 
 	return LNKVectorMakeUnsafe(predictions, rowCount);
+}
+
+- (LNKVector)computeStandardizedResiduals
+{
+	LNKMatrix *hatMatrix = [self.hatMatrix retain];
+	LNKVector residuals = [self computeResiduals];
+	LNKFloat dot = 0;
+	LNK_dotpr(residuals.data, UNIT_STRIDE, residuals.data, UNIT_STRIDE, &dot, residuals.length);
+
+	const LNKSize rowCount = residuals.length;
+	const LNKFloat normalizer = dot / rowCount;
+
+	LNKFloat *standardizedResiduals = LNKFloatAlloc(rowCount);
+
+	for (LNKSize row = 0; row < rowCount; row++) {
+		const LNKFloat variance = normalizer * (1 - [hatMatrix valueAtRow:row column:row]);
+		standardizedResiduals[row] = residuals.data[row] / LNK_sqrt(variance);
+	}
+
+	[hatMatrix release];
+	LNKVectorFree(residuals);
+
+	return LNKVectorMakeUnsafe(standardizedResiduals, rowCount);
 }
 
 - (LNKFloat)computeAIC
@@ -77,7 +100,7 @@
 	LNK_mmul(square, UNIT_STRIDE, transpose, UNIT_STRIDE, workspace, UNIT_STRIDE, columnCount, rowCount, columnCount);
 
 
-	LNKMatrix *const hatMatrix = [[LNKMatrix alloc] initWithRowCount:self.matrix.rowCount columnCount:self.matrix.columnCount prepareBuffers:^BOOL(LNKFloat *matrixData, LNKFloat *outputVector) {
+	LNKMatrix *const hatMatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:rowCount prepareBuffers:^BOOL(LNKFloat *matrixData, LNKFloat *outputVector) {
 #pragma unused(outputVector)
 		LNK_mmul(matrixBuffer, UNIT_STRIDE, workspace, UNIT_STRIDE, matrixData, UNIT_STRIDE, rowCount, rowCount, columnCount);
 		return YES;

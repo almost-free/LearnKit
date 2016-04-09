@@ -221,6 +221,18 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	return _matrix + (index * _columnCount);
 }
 
+- (LNKFloat)valueAtRow:(LNKSize)row column:(LNKSize)column {
+	if (row >= _rowCount) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The row index is out of bounds" userInfo:nil];
+	}
+
+	if (column >= _columnCount) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The column index is out of bounds" userInfo:nil];
+	}
+
+	return _matrix[row * _columnCount + column];
+}
+
 - (void)clipRowCountTo:(LNKSize)rowCount {
 	NSParameterAssert(rowCount);
 	_rowCount = rowCount;
