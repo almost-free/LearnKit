@@ -9,7 +9,7 @@
 
 #import "LNKAccelerate.h"
 #import "LNKCSVColumnRule.h"
-#import "LNKFastArray.h"
+#import "LNKFastObjects.h"
 
 @implementation LNKMatrix (CSV)
 
@@ -43,13 +43,13 @@
 	LNKFastArrayRef lines = [self _parseRawLinesAndElementsForString:stringContents delimiter:delimiter];
 	[stringContents release];
 
-	if (LNKFastArrayElementCount(lines) == 0) {
+	if (LNKFastArrayObjectCount(lines) == 0) {
 		NSLog(@"Error while loading matrix: the matrix does not contain any examples");
 		return NO;
 	}
 
-	LNKFastArrayRef firstLine = LNKFastArrayElementAtIndex(lines, 0);
-	const LNKSize firstLineColumns = LNKFastArrayElementCount(firstLine);
+	LNKFastArrayRef firstLine = (LNKFastArrayRef)LNKFastArrayObjectAtIndex(lines, 0);
+	const LNKSize firstLineColumns = LNKFastArrayObjectCount(firstLine);
 	__block LNKSize deletedColumns = 0;
 
 	[preprocessingRules enumerateKeysAndObjectsUsingBlock:^(NSNumber *column, LNKCSVColumnRule *rule, BOOL *stop) {
@@ -59,7 +59,7 @@
 		}
 	}];
 
-	const LNKSize lineCount = LNKFastArrayElementCount(lines);
+	const LNKSize lineCount = LNKFastArrayObjectCount(lines);
 	const LNKSize startRow = (ignoreHeader ? 1 : 0);
 
 	const LNKSize rowCount = ignoreHeader ? lineCount - 1 : lineCount;
@@ -72,22 +72,22 @@
 
 		for (LNKSize m = startRow; m < lineCount; m++) {
 			// The last column contains the output vector.
-			LNKFastArrayRef line = LNKFastArrayElementAtIndex(lines, m);
+			LNKFastArrayRef line = (LNKFastArrayRef)LNKFastArrayObjectAtIndex(lines, m);
 			const LNKSize ruleOutputColumnIndex = [self _outputColumnIndexForColumnPreprocessingRules:preprocessingRules];
 			const LNKSize outputColumnIndex = ruleOutputColumnIndex == LNKSizeMax ? firstLineColumns - 1 : ruleOutputColumnIndex;
-			char *outputString = LNKFastArrayElementAtIndex(line, outputColumnIndex);
+			LNKFastStringRef outputString = (LNKFastStringRef)LNKFastArrayObjectAtIndex(line, outputColumnIndex);
 
 			LNKCSVColumnRule *outputRule = preprocessingRules[@(outputColumnIndex)];
 			if (outputRule && outputRule.type == LNKCSVColumnRuleTypeConversion) {
 				LNKCSVColumnRuleTypeConversionHandler handler = outputRule.object;
 				NSAssert(handler != nil, @"Conversions should always have a handler");
 
-				outputVector[localRow] = handler([NSString stringWithUTF8String:outputString]);
+				outputVector[localRow] = handler([NSString stringWithUTF8String:LNKFastStringGetUTF8String(outputString)]);
 			} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
 				NSLog(@"Error while loading the matrix: the output column cannot be deleted");
 				return NO;
 			} else {
-				outputVector[localRow] = LNK_strtoflt(outputString);
+				outputVector[localRow] = LNK_strtoflt(LNKFastStringGetUTF8String(outputString));
 			}
 
 			LNKSize localColumn = 0;
@@ -99,19 +99,19 @@
 					continue;
 				}
 
-				char *columnString = LNKFastArrayElementAtIndex(line, n);
+				LNKFastStringRef columnString = (LNKFastStringRef)LNKFastArrayObjectAtIndex(line, n);
 
 				LNKCSVColumnRule *outputRule = preprocessingRules[@(n)];
 				if (outputRule && outputRule.type == LNKCSVColumnRuleTypeConversion) {
 					LNKCSVColumnRuleTypeConversionHandler handler = outputRule.object;
 					NSAssert(handler != nil, @"Conversions should always have a handler");
 
-					matrix[localRow * columnCount + localColumn] = handler([NSString stringWithUTF8String:columnString]);
+					matrix[localRow * columnCount + localColumn] = handler([NSString stringWithUTF8String:LNKFastStringGetUTF8String(columnString)]);
 					localColumn += 1;
 				} else if (outputRule && outputRule.type == LNKCSVColumnRuleTypeDelete) {
 					// Skips to the next column without storing anything.
 				} else {
-					matrix[localRow * columnCount + localColumn] = LNK_strtoflt(columnString);
+					matrix[localRow * columnCount + localColumn] = LNK_strtoflt(LNKFastStringGetUTF8String(columnString));
 					localColumn += 1;
 				}
 			}
@@ -121,6 +121,8 @@
 
 		return YES;
 	}];
+
+	LNKFastArrayRelease(lines);
 
 	return self;
 }
@@ -138,7 +140,7 @@
 	return outputColumnIndex;
 }
 
-// The result must be freed by the caller.
+// The result must be memory-managed by the caller.
 - (LNKFastArrayRef)_parseLine:(NSString *)line delimiter:(unichar)delimiter {
 	LNKFastArrayRef currentLine = LNKFastArrayCreate();
 	const NSUInteger stringLength = line.length;
@@ -156,9 +158,9 @@
 			LNKSize length = n - startIndex;
 
 			if (length > 0) {
-				char *buffer = calloc(length + 1 /* NULL terminator */, sizeof(char));
-				memcpy(buffer, rawString + startIndex, length);
-				LNKFastArrayAddElement(currentLine, buffer);
+				LNKFastStringRef string = LNKFastStringCreateWithUTF8String(rawString + startIndex, length);
+				LNKFastArrayAddFastObject(currentLine, (LNKFastObjectRef)string);
+				LNKFastObjectRelease((LNKFastObjectRef)string);
 			}
 
 			startIndex = NSNotFound;
@@ -169,15 +171,15 @@
 		}
 	}
 
-	if (LNKFastArrayElementCount(currentLine) == 0) {
-		LNKFastArrayFree(currentLine);
+	if (LNKFastArrayObjectCount(currentLine) == 0) {
+		LNKFastArrayRelease(currentLine);
 		return NULL;
 	}
 
 	return currentLine;
 }
 
-// The result must be freed by the caller.
+// The result must be memory-managed by the caller.
 - (LNKFastArrayRef)_parseRawLinesAndElementsForString:(NSString *)string delimiter:(unichar)delimiter {
 	__block LNKSize fileColumnCount = LNKSizeMax;
 	LNKFastArrayRef lines = LNKFastArrayCreate();
@@ -191,7 +193,7 @@
 		}
 
 		if (fileColumnCount == LNKSizeMax) {
-			fileColumnCount = LNKFastArrayElementCount(currentLine);
+			fileColumnCount = LNKFastArrayObjectCount(currentLine);
 
 			if (fileColumnCount < 2) {
 				NSLog(@"Error while loading matrix: the matrix must have at least two columns");
@@ -200,24 +202,25 @@
 				return;
 			}
 		}
-		else if (fileColumnCount != LNKFastArrayElementCount(currentLine)) {
+		else if (fileColumnCount != LNKFastArrayObjectCount(currentLine)) {
 			NSLog(@"Error while loading matrix: lines have varying numbers of columns");
 			failed = YES;
 			*stop = YES;
 			return;
 		}
 
-		LNKFastArrayAddElement(lines, currentLine);
+		LNKFastArrayAddFastObject(lines, (LNKFastObjectRef)currentLine);
+		LNKFastArrayRelease(currentLine);
 	}];
 
 	if (failed) {
-		LNKFastArrayFree(lines);
+		LNKFastArrayRelease(lines);
 		return NULL;
 	}
 
 	if (fileColumnCount == LNKSizeMax) {
 		NSLog(@"Error while loading matrix: the matrix does not contain any columns");
-		LNKFastArrayFree(lines);
+		LNKFastArrayRelease(lines);
 		return NULL;
 	}
 
