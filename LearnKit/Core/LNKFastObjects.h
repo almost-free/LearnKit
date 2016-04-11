@@ -13,23 +13,23 @@ typedef LNKFastObject *LNKFastObjectRef;
 typedef LNKFastArray *LNKFastArrayRef;
 typedef LNKFastString *LNKFastStringRef;
 
-extern void LNKFastObjectRetain(LNKFastObjectRef object);
-extern void LNKFastObjectRelease(LNKFastObjectRef object);
+void LNKFastObjectRetain(LNKFastObjectRef object);
+void LNKFastObjectRelease(LNKFastObjectRef object);
 
 /// The returned object is reference-counted.
-extern LNKFastArrayRef LNKFastArrayCreate();
+LNKFastArrayRef LNKFastArrayCreate();
 
 /// Adds a fast object to the array (and increments its retain count).
-extern void LNKFastArrayAddFastObject(LNKFastArrayRef array, LNKFastObjectRef object);
+void LNKFastArrayAddFastObject(LNKFastArrayRef array, LNKFastObjectRef object);
 
 /// Returns the fast object at the given index.
-extern LNKFastObjectRef LNKFastArrayObjectAtIndex(LNKFastArrayRef array, LNKSize index);
+LNKFastObjectRef LNKFastArrayObjectAtIndex(LNKFastArrayRef array, LNKSize index);
 
-extern LNKSize LNKFastArrayObjectCount(LNKFastArrayRef array);
+LNKSize LNKFastArrayObjectCount(LNKFastArrayRef array);
 
-extern void LNKFastArrayRelease(LNKFastArrayRef);
+void LNKFastArrayRelease(LNKFastArrayRef);
 
 /// The returned object is reference-counted.
-extern LNKFastStringRef LNKFastStringCreateWithUTF8String(const char *, LNKSize);
+LNKFastStringRef LNKFastStringCreateWithUTF8String(const char *, LNKSize);
 
-extern const char *LNKFastStringGetUTF8String(LNKFastStringRef);
+const char *LNKFastStringGetUTF8String(LNKFastStringRef);

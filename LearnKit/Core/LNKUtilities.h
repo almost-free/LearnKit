@@ -7,10 +7,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern void LNKPrintVector(const char *name, LNKFloat *vector, LNKSize n);
-extern void LNKPrintMatrix(const char *name, LNKFloat *matrix, LNKSize m, LNKSize n);
+void LNKPrintVector(const char *name, LNKFloat *vector, LNKSize n);
+void LNKPrintMatrix(const char *name, LNKFloat *matrix, LNKSize m, LNKSize n);
 
 /// The matrix data is loaded in column-major order.
-extern NSData *__nullable LNKLoadBinaryMatrixFromFileAtURL(NSURL *url, LNKSize expectedLength);
+NSData *__nullable LNKLoadBinaryMatrixFromFileAtURL(NSURL *url, LNKSize expectedLength);
 
 NS_ASSUME_NONNULL_END

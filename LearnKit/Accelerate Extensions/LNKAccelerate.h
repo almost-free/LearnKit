@@ -85,23 +85,23 @@
 
 /* In-place operations */
 
-extern void LNK_mtrans(const LNKFloat *source, LNKFloat *dest, vDSP_Length N, vDSP_Length M);
+void LNK_mtrans(const LNKFloat *source, LNKFloat *dest, vDSP_Length N, vDSP_Length M);
 
 /// Inverts a matrix of dimensions n * n.
-extern void LNK_minvert(LNKFloat *matrix, LNKSize n);
+void LNK_minvert(LNKFloat *matrix, LNKSize n);
 
 /// Applies the sigmoid function to every element of the vector.
-extern void LNK_vsigmoid(LNKFloat *vector, LNKSize n);
+void LNK_vsigmoid(LNKFloat *vector, LNKSize n);
 
 /* Out-of-place operations */
 
 /// Applies the gradient of the sigmoid function to every element of the sigmoid vector.
-extern void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n);
+void LNK_vsigmoidgrad(const LNKFloat *vector, LNKFloat *outVector, LNKSize n);
 
 /// Computes the standard deviation of the elements in the vector.
-extern LNKFloat LNK_vsd(LNKVector vector, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample);
+LNKFloat LNK_vsd(LNKVector vector, LNKSize stride, LNKFloat *workgroup, LNKFloat mean, BOOL inSample);
 
 /// Computes the determinant of the n * n matrix.
-extern LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n);
+LNKFloat LNK_mdet(const LNKFloat *matrix, LNKSize n);
 
-extern LNKFloat LNK_vlogsumexp(const LNKFloat *vector, LNKSize n);
+LNKFloat LNK_vlogsumexp(const LNKFloat *vector, LNKSize n);

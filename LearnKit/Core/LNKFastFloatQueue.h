@@ -11,14 +11,14 @@ typedef LNKFastFloatQueue *LNKFastFloatQueueRef;
 
 /// The returned object must be freed with `LNKFastFloatQueueFree`.
 /// Only `capacity` number of items can be stored in the queue.
-extern LNKFastFloatQueueRef LNKFastFloatQueueCreate(LNKSize capacity);
+LNKFastFloatQueueRef LNKFastFloatQueueCreate(LNKSize capacity);
 
 /// The same queue must not be freed more than once.
-extern void LNKFastFloatQueueFree(LNKFastFloatQueueRef queue);
+void LNKFastFloatQueueFree(LNKFastFloatQueueRef queue);
 
-extern void LNKFastFloatQueueEnqueue(LNKFastFloatQueueRef queue, LNKFloat value);
-extern LNKFloat LNKFastFloatQueueDequeue(LNKFastFloatQueueRef queue);
+void LNKFastFloatQueueEnqueue(LNKFastFloatQueueRef queue, LNKFloat value);
+LNKFloat LNKFastFloatQueueDequeue(LNKFastFloatQueueRef queue);
 
-extern LNKSize LNKFastFloatQueueSize(LNKFastFloatQueueRef queue);
+LNKSize LNKFastFloatQueueSize(LNKFastFloatQueueRef queue);
 
-extern BOOL LNKFastFloatAreValuesApproximatelyClose(LNKFastFloatQueueRef queue, LNKFloat threshold);
+BOOL LNKFastFloatAreValuesApproximatelyClose(LNKFastFloatQueueRef queue, LNKFloat threshold);

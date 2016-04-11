@@ -24,6 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Given an unlabeled data matrix and labeled cross-validation matrix, we try to find a sensible anomaly threshold.
 /// Note that the two matrices must have the same number of columns.
-extern LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix);
+LNKFloat LNKFindAnomalyThreshold(LNKMatrix *matrix, LNKMatrix *cvMatrix);
 
 NS_ASSUME_NONNULL_END

@@ -8,10 +8,10 @@
 typedef struct _LNKMemoryBufferManager LNKMemoryBufferManager;
 typedef LNKMemoryBufferManager *LNKMemoryBufferManagerRef;
 
-extern LNKMemoryBufferManagerRef LNKMemoryBufferManagerCreate();
-extern void LNKMemoryBufferManagerFree(LNKMemoryBufferManagerRef manager);
+LNKMemoryBufferManagerRef LNKMemoryBufferManagerCreate();
+void LNKMemoryBufferManagerFree(LNKMemoryBufferManagerRef manager);
 
-extern LNKFloat *LNKMemoryBufferManagerAllocBlock(LNKMemoryBufferManagerRef manager, LNKSize size);
-extern void LNKMemoryBufferManagerFreeBlock(LNKMemoryBufferManagerRef manager, LNKFloat *buffer, LNKSize size);
+LNKFloat *LNKMemoryBufferManagerAllocBlock(LNKMemoryBufferManagerRef manager, LNKSize size);
+void LNKMemoryBufferManagerFreeBlock(LNKMemoryBufferManagerRef manager, LNKFloat *buffer, LNKSize size);
 
-extern LNKMemoryBufferManagerRef LNKGetCurrentMemoryBufferManager();
+LNKMemoryBufferManagerRef LNKGetCurrentMemoryBufferManager();
