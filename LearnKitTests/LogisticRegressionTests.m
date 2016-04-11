@@ -8,11 +8,11 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "LNKLogRegClassifier.h"
-#import "LNKLogRegClassifierPrivate.h"
+#import "LNKLogisticRegressionClassifier.h"
+#import "LNKLogisticRegressionClassifierPrivate.h"
 #import "LNKMatrixCSV.h"
 #import "LNKMatrixTestExtras.h"
-#import "LNKOneVsAllLogRegClassifier.h"
+#import "LNKOneVsAllLogisticRegressionClassifier.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
@@ -28,7 +28,7 @@
 	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex2data1" withExtension:@"csv"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	LNKLogisticRegressionClassifier *classifier = [[LNKLogisticRegressionClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
 
 	[algorithm release];
@@ -59,7 +59,7 @@
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = lambda;
 	
-	LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	LNKLogisticRegressionClassifier *classifier = [[LNKLogisticRegressionClassifier alloc] initWithMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
 	
 	[matrix release];
@@ -94,7 +94,7 @@
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = 0.1;
 
-	LNKOneVsAllLogRegClassifier *classifier = [[LNKOneVsAllLogRegClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	LNKOneVsAllLogisticRegressionClassifier *classifier = [[LNKOneVsAllLogisticRegressionClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	[classifier train];
 
 	[algorithm release];

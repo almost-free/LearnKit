@@ -1,16 +1,16 @@
 //
-//  LNKOneVsAllLogRegClassifier.m
+//  LNKOneVsAllLogisticRegressionClassifier.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKOneVsAllLogRegClassifier.h"
+#import "LNKOneVsAllLogisticRegressionClassifier.h"
 
-#import "_LNKOneVsAllLogRegClassifierLBFGS_AC.h"
+#import "_LNKOneVsAllLogisticRegressionClassifierLBFGS_AC.h"
 #import "LNKOptimizationAlgorithm.h"
 
-@implementation LNKOneVsAllLogRegClassifier
+@implementation LNKOneVsAllLogisticRegressionClassifier
 
 + (NSArray<NSNumber *> *)supportedImplementationTypes {
 	return @[ @(LNKImplementationTypeAccelerate) ];
@@ -24,7 +24,7 @@
 #pragma unused(implementationType)
 #pragma unused(algorithm)
 	
-	return [_LNKOneVsAllLogRegClassifierLBFGS_AC class];
+	return [_LNKOneVsAllLogisticRegressionClassifierLBFGS_AC class];
 }
 
 @end

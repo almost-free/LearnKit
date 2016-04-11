@@ -1,18 +1,18 @@
 //
-//  _LNKLogRegClassifierLBFGS_AC.m
+//  _LNKLogisticRegressionClassifierLBFGS_AC.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "_LNKLogRegClassifierLBFGS_AC.h"
+#import "_LNKLogisticRegressionClassifierLBFGS_AC.h"
 
 #import "LNKAccelerate.h"
 #import "LNKAccelerateGradient.h"
-#import "LNKLogRegClassifierPrivate.h"
+#import "LNKLogisticRegressionClassifierPrivate.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation _LNKLogRegClassifierLBFGS_AC
+@implementation _LNKLogisticRegressionClassifierLBFGS_AC
 
 - (void)train {
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unsupported algorithm class");

@@ -1,18 +1,18 @@
 //
-//  LNKLogRegClassifier.m
+//  LNKLogisticRegressionClassifier.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKLogRegClassifier.h"
+#import "LNKLogisticRegressionClassifier.h"
 
-#import "_LNKLogRegClassifierLBFGS_AC.h"
+#import "_LNKLogisticRegressionClassifierLBFGS_AC.h"
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation LNKLogRegClassifier {
+@implementation LNKLogisticRegressionClassifier {
 	LNKFloat *_thetaVector;
 }
 
@@ -28,13 +28,13 @@
 #pragma unused(implementationType)
 #pragma unused(algorithm)
 	
-	return [_LNKLogRegClassifierLBFGS_AC class];
+	return [_LNKLogisticRegressionClassifierLBFGS_AC class];
 }
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	if (matrix.hasBiasColumn) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by LogReg classifiers." userInfo:nil];
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by LogisticRegression classifiers." userInfo:nil];
 	}
 
 	LNKMatrix *const workingMatrix = [matrix matrixByAddingBiasColumn];

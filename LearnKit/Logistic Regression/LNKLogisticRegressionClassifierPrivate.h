@@ -1,13 +1,13 @@
 //
-//  LNKLogRegClassifierPrivate.h
+//  LNKLogisticRegressionClassifierPrivate.h
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKLogRegClassifier.h"
+#import "LNKLogisticRegressionClassifier.h"
 
-@interface LNKLogRegClassifier (Private)
+@interface LNKLogisticRegressionClassifier (Private)
 
 - (LNKFloat *)_thetaVector NS_RETURNS_INNER_POINTER;
 - (void)_setThetaVector:(const LNKFloat *)thetaVector;

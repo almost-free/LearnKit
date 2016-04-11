@@ -15,7 +15,7 @@
 #import <LearnKit/LNKKNNClassifier.h>
 #import <LearnKit/LNKLinearRegressionPredictor.h>
 #import <LearnKit/LNKLinearRegressionPredictor+Analysis.h>
-#import <LearnKit/LNKLogRegClassifier.h>
+#import <LearnKit/LNKLogisticRegressionClassifier.h>
 #import <LearnKit/LNKMatrix.h>
 #import <LearnKit/LNKMatrixCSV.h>
 #import <LearnKit/LNKMatrixExporting.h>
@@ -24,7 +24,7 @@
 #import <LearnKit/LNKMatrixUI.h>
 #import <LearnKit/LNKNaiveBayesClassifier.h>
 #import <LearnKit/LNKNeuralNetClassifier.h>
-#import <LearnKit/LNKOneVsAllLogRegClassifier.h>
+#import <LearnKit/LNKOneVsAllLogisticRegressionClassifier.h>
 #import <LearnKit/LNKOptimizationAlgorithm.h>
 #import <LearnKit/LNKPredictor.h>
 #import <LearnKit/LNKSVMClassifier.h>

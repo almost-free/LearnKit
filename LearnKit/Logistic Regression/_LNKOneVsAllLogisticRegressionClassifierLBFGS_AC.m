@@ -1,18 +1,18 @@
 //
-//  _LNKOneVsAllLogRegClassifierLBFGS_AC.m
+//  _LNKOneVsAllLogisticRegressionClassifierLBFGS_AC.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "_LNKOneVsAllLogRegClassifierLBFGS_AC.h"
+#import "_LNKOneVsAllLogisticRegressionClassifierLBFGS_AC.h"
 
-#import "_LNKLogRegClassifierLBFGS_AC.h"
+#import "_LNKLogisticRegressionClassifierLBFGS_AC.h"
 #import "LNKClassifierPrivate.h"
 #import "LNKMatrix.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation _LNKOneVsAllLogRegClassifierLBFGS_AC {
+@implementation _LNKOneVsAllLogisticRegressionClassifierLBFGS_AC {
 	NSMapTable *_classesToClassifiers;
 }
 
@@ -30,7 +30,7 @@
 			}
 		}];
 		
-		LNKLogRegClassifier *classifier = [[LNKLogRegClassifier alloc] initWithMatrix:matrixCopy implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:self.algorithm];
+		LNKLogisticRegressionClassifier *classifier = [[LNKLogisticRegressionClassifier alloc] initWithMatrix:matrixCopy implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:self.algorithm];
 		[matrixCopy release];
 		[classifier train];
 		
@@ -48,7 +48,7 @@
 	}
 	
 	for (LNKClass *class in _classesToClassifiers) {
-		LNKLogRegClassifier *classifier = [_classesToClassifiers objectForKey:class];
+		LNKLogisticRegressionClassifier *classifier = [_classesToClassifiers objectForKey:class];
 		LNKFloat probability = [[classifier predictValueForFeatureVector:featureVector] LNKFloatValue];
 		
 		[self _didPredictProbability:probability forClass:class];

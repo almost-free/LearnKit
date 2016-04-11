@@ -1,5 +1,5 @@
 //
-//  LNKOneVsAllLogRegClassifier.h
+//  LNKOneVsAllLogisticRegressionClassifier.h
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
@@ -9,6 +9,6 @@
 
 /// For logistic regression classifiers, the only supported algorithm is L-BFGS.
 /// Predicted values are of type LNKClass.
-@interface LNKOneVsAllLogRegClassifier : LNKClassifier
+@interface LNKOneVsAllLogisticRegressionClassifier : LNKClassifier
 
 @end
