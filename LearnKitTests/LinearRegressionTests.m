@@ -14,6 +14,7 @@
 #import "LNKLinearRegressionPredictor.h"
 #import "LNKLinearRegressionPredictor+Analysis.h"
 #import "LNKLinearRegressionPredictorPrivate.h"
+#import "LNKOnlineLinearRegression.h"
 #import "LNKMatrixCSV.h"
 #import "LNKMatrixTestExtras.h"
 #import "LNKOptimizationAlgorithm.h"
@@ -388,6 +389,17 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKVectorFree(srVector);
 
 	[predictor release];
+}
+
+- (void)testOnlineRegression {
+	LNKOnlineLinearRegression *const regression = [[LNKOnlineLinearRegression alloc] init];
+	[regression addExampleWithX:2 y:4];
+	[regression addExampleWithX:4 y:8];
+	[regression regress];
+	XCTAssertEqualWithAccuracy(regression.slope, 2, 0.0001);
+	XCTAssertEqualWithAccuracy(regression.intercept, 0, 0.0001);
+	XCTAssertEqualWithAccuracy([regression predictYForX:3], 6, 0.0001);
+	[regression release];
 }
 
 @end

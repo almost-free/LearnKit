@@ -90,6 +90,9 @@
 		C9860BF31A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m in Sources */ = {isa = PBXBuildFile; fileRef = C9860BF01A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m */; };
 		C9860BF61A0B5059009FADAE /* LNKCollaborativeFilteringPredictorPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C9860BF41A0B5059009FADAE /* LNKCollaborativeFilteringPredictorPrivate.h */; };
 		C9860BFA1A0B50E7009FADAE /* CollaborativeFilteringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9860BF91A0B50E7009FADAE /* CollaborativeFilteringTests.m */; };
+		C986E6F01CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h in Headers */ = {isa = PBXBuildFile; fileRef = C986E6EE1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h */; };
+		C986E6F11CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = C986E6EF1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m */; };
+		C986E6F21CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = C986E6EF1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m */; };
 		C99219861A6C817600D9CACA /* LNKNeuralNetLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = C99219841A6C817600D9CACA /* LNKNeuralNetLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99219871A6C817600D9CACA /* LNKNeuralNetLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C99219851A6C817600D9CACA /* LNKNeuralNetLayer.m */; };
 		C99219881A6C817600D9CACA /* LNKNeuralNetLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C99219851A6C817600D9CACA /* LNKNeuralNetLayer.m */; };
@@ -324,6 +327,8 @@
 		C9860BF01A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKCollaborativeFilteringPredictor.m; sourceTree = "<group>"; };
 		C9860BF41A0B5059009FADAE /* LNKCollaborativeFilteringPredictorPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKCollaborativeFilteringPredictorPrivate.h; sourceTree = "<group>"; };
 		C9860BF91A0B50E7009FADAE /* CollaborativeFilteringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollaborativeFilteringTests.m; path = LearnKitTests/CollaborativeFilteringTests.m; sourceTree = SOURCE_ROOT; };
+		C986E6EE1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKOnlineLinearRegression.h; sourceTree = "<group>"; };
+		C986E6EF1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKOnlineLinearRegression.m; sourceTree = "<group>"; };
 		C99219841A6C817600D9CACA /* LNKNeuralNetLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKNeuralNetLayer.h; sourceTree = "<group>"; };
 		C99219851A6C817600D9CACA /* LNKNeuralNetLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKNeuralNetLayer.m; sourceTree = "<group>"; };
 		C99219891A6C883D00D9CACA /* LNKClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKClasses.h; sourceTree = "<group>"; };
@@ -718,6 +723,8 @@
 				C96DA8BA1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h */,
 				C96DA8BB1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.m */,
 				C9CBD26F19E5D46900AE71D5 /* LNKLinearRegressionPredictorPrivate.h */,
+				C986E6EE1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h */,
+				C986E6EF1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m */,
 			);
 			name = "Linear Regression";
 			path = "LearnKit/Linear Regression";
@@ -955,6 +962,7 @@
 				C93B97E01C9F89F1000E629F /* LNKMatrixImages.h in Headers */,
 				C992198B1A6C883D00D9CACA /* LNKClasses.h in Headers */,
 				C9CBD2EF19E5D52900AE71D5 /* LNKPredictorPrivate.h in Headers */,
+				C986E6F01CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h in Headers */,
 				C9CBD2E619E5D52900AE71D5 /* LNKMemoryBufferManager.h in Headers */,
 				C9CBD28619E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h in Headers */,
 				C9CBD2DF19E5D52900AE71D5 /* LNKMatrixPrivate.h in Headers */,
@@ -1124,6 +1132,7 @@
 				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
 				C9A27CD01C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m in Sources */,
 				C915807B19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */,
+				C986E6F11CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */,
 				C9CBD2F419E5D52900AE71D5 /* LNKUtilities.m in Sources */,
 				C9CBD2B419E5D4FD00AE71D5 /* _LNKOneVsAllLogRegClassifierLBFGS_AC.m in Sources */,
 				C9CBD27419E5D46900AE71D5 /* _LNKLinearRegressionPredictorGD_AC.m in Sources */,
@@ -1234,6 +1243,7 @@
 				C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
 				C9CBD2E519E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9D1A49A1C9DA9D3003736C1 /* TopicModellerTests.m in Sources */,
+				C986E6F21CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
