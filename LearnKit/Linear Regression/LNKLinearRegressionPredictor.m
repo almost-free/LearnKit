@@ -1,20 +1,20 @@
 //
-//  LNKLinRegPredictor.m
+//  LNKLinearRegressionPredictor.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "LNKLinRegPredictor.h"
+#import "LNKLinearRegressionPredictor.h"
 
-#import "_LNKLinRegPredictorGD_AC.h"
-#import "_LNKLinRegPredictorNE_AC.h"
-#import "_LNKLinRegPredictorLBFGS_AC.h"
+#import "_LNKLinearRegressionPredictorGD_AC.h"
+#import "_LNKLinearRegressionPredictorNE_AC.h"
+#import "_LNKLinearRegressionPredictorLBFGS_AC.h"
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation LNKLinRegPredictor {
+@implementation LNKLinearRegressionPredictor {
 	LNKFloat *_thetaVector;
 }
 
@@ -30,19 +30,19 @@
 #pragma unused(implementationType)
 	
 	if (algorithm == [LNKOptimizationAlgorithmGradientDescent class]) {
-		return [_LNKLinRegPredictorGD_AC class];
+		return [_LNKLinearRegressionPredictorGD_AC class];
 	}
 	else if (algorithm == [LNKOptimizationAlgorithmNormalEquations class]) {
-		return [_LNKLinRegPredictorNE_AC class];
+		return [_LNKLinearRegressionPredictorNE_AC class];
 	}
 	
-	return [_LNKLinRegPredictorLBFGS_AC class];
+	return [_LNKLinearRegressionPredictorLBFGS_AC class];
 }
 
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm {
 	if (matrix.hasBiasColumn) {
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by LinReg classifiers." userInfo:nil];
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Bias columns are added to matrices automatically by LinearRegression classifiers." userInfo:nil];
 	}
 
 	LNKMatrix *const workingMatrix = matrix.matrixByAddingBiasColumn;

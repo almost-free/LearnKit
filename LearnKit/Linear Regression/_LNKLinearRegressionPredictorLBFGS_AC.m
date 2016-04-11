@@ -1,18 +1,18 @@
 //
-//  _LNKLinRegPredictorLBFGS_AC.m
+//  _LNKLinearRegressionPredictorLBFGS_AC.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "_LNKLinRegPredictorLBFGS_AC.h"
+#import "_LNKLinearRegressionPredictorLBFGS_AC.h"
 
 #import "LNKAccelerateGradient.h"
-#import "LNKLinRegPredictorPrivate.h"
+#import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation _LNKLinRegPredictorLBFGS_AC
+@implementation _LNKLinearRegressionPredictorLBFGS_AC
 
 - (void)train {
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unexpected algorithm");

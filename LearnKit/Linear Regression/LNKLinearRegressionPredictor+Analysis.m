@@ -1,17 +1,17 @@
 //
-//  LNKLinRegPredictor+Analysis.m
+//  LNKLinearRegressionPredictor+Analysis.m
 //  LearnKit
 //
 //  Copyright © 2016 Matt Rajca. All rights reserved.
 //
 
-#import "LNKLinRegPredictor+Analysis.h"
+#import "LNKLinearRegressionPredictor+Analysis.h"
 
 #import "LNKAccelerate.h"
-#import "LNKLinRegPredictorPrivate.h"
+#import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKMatrix.h"
 
-@implementation LNKLinRegPredictor (Analysis)
+@implementation LNKLinearRegressionPredictor (Analysis)
 
 - (LNKVector)computeResiduals
 {

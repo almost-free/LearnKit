@@ -1,19 +1,19 @@
 //
-//  _LNKLinRegPredictorNE_AC.m
+//  _LNKLinearRegressionPredictorNE_AC.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "_LNKLinRegPredictorNE_AC.h"
+#import "_LNKLinearRegressionPredictorNE_AC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKLinRegPredictorPrivate.h"
+#import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKMatrix.h"
 #import "LNKPredictorPrivate.h"
 #import "LNKUtilities.h"
 
-@implementation _LNKLinRegPredictorNE_AC
+@implementation _LNKLinearRegressionPredictorNE_AC
 
 - (void)train {
 	LNKMatrix *matrix = self.matrix;

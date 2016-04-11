@@ -11,9 +11,9 @@
 #import "LNKAccelerate.h"
 #import "LNKAccelerateGradient.h"
 #import "LNKCSVColumnRule.h"
-#import "LNKLinRegPredictor.h"
-#import "LNKLinRegPredictor+Analysis.h"
-#import "LNKLinRegPredictorPrivate.h"
+#import "LNKLinearRegressionPredictor.h"
+#import "LNKLinearRegressionPredictor+Analysis.h"
+#import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKMatrixCSV.h"
 #import "LNKMatrixTestExtras.h"
 #import "LNKOptimizationAlgorithm.h"
@@ -29,13 +29,13 @@
 
 extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *transposeMatrix, const LNKFloat *thetaVector, const LNKFloat *outputVector, LNKFloat *workgroupEC, LNKFloat *workgroupCC, LNKFloat *workgroupCC2, LNKSize rowCount, LNKSize columnCount, BOOL enableRegularization, LNKFloat lambda, LNKHFunction hFunction);
 
-- (LNKLinRegPredictor *)_ex1PredictorGD {
+- (LNKLinearRegressionPredictor *)_ex1PredictorGD {
 	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex1data1" withExtension:@"txt"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
 																						   iterationCount:1500];
 	
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+	LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
 	[matrix release];
@@ -43,12 +43,12 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	return [predictor autorelease];
 }
 
-- (LNKLinRegPredictor *)_ex1PredictorNE {
+- (LNKLinearRegressionPredictor *)_ex1PredictorNE {
 	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex1data1" withExtension:@"txt"];
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 	
 	LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+	LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
 	[algorithm release];
@@ -58,7 +58,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 }
 
 - (void)test1Loading {
-	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
+	LNKLinearRegressionPredictor *predictor = [self _ex1PredictorGD];
 	XCTAssertNotNil(predictor, @"We should have a predictor");
 	XCTAssertEqual(predictor.matrix.rowCount, 97UL, @"There should be 97 examples");
 	XCTAssertEqual(predictor.matrix.columnCount, 2UL, @"There should be 2 columns: one feature column and the predicted value column");
@@ -69,7 +69,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 }
 
 - (void)test3GradientDescent {
-	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
+	LNKLinearRegressionPredictor *predictor = [self _ex1PredictorGD];
 	[predictor train];
 	LNKFloat *thetaVector = [predictor _thetaVector];
 	XCTAssertEqualWithAccuracy(thetaVector[0], -3.630291, DACCURACY, @"The Theta vector is incorrect");
@@ -77,7 +77,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 }
 
 - (void)test4Prediction {
-	LNKLinRegPredictor *predictor = [self _ex1PredictorGD];
+	LNKLinearRegressionPredictor *predictor = [self _ex1PredictorGD];
 	[predictor train];
 	LNKFloat input[] = { 3.5 };
 	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(input, 1)] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
@@ -93,7 +93,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	id <LNKOptimizationAlgorithm> algorithm = [LNKOptimizationAlgorithmGradientDescent algorithmWithAlpha:[LNKFixedAlpha withValue:0.01]
 																						   iterationCount:400];
 	
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+	LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
 	[predictor train];
@@ -112,7 +112,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	NSURL *url = [[NSBundle bundleForClass:[self class]] URLForResource:@"ex1data2" withExtension:@"txt"];
 	
 	LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+	LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix
 															implementationType:LNKImplementationTypeAccelerate
 														 optimizationAlgorithm:algorithm];
 	[matrix release];
@@ -147,7 +147,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		LNKMatrix *matrix = [[LNKMatrix alloc] initWithCSVFileAtURL:url];
 		LNKOptimizationAlgorithmNormalEquations *algorithm = [[LNKOptimizationAlgorithmNormalEquations alloc] init];
 		
-		LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix
+		LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix
 																implementationType:LNKImplementationTypeAccelerate
 															 optimizationAlgorithm:algorithm];
 		[matrix release];
@@ -173,7 +173,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 	algorithm.lambda = 1;
 	
-	LNKLinRegPredictor *predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	[matrix release];
 	[algorithm release];
 
@@ -245,7 +245,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.lambda = 0;
 		
-		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+		LNKLinearRegressionPredictor *trainPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
@@ -253,7 +253,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
-		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
+		LNKLinearRegressionPredictor *cvPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
 		[cvPredictor _setThetaVector:[trainPredictor _thetaVector]];
 		cvError[i-1] = [cvPredictor _evaluateCostFunction];
 		
@@ -311,7 +311,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
 		algorithm.lambda = 0;
 		
-		LNKLinRegPredictor *trainPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:trainingSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+		LNKLinearRegressionPredictor *trainPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:trainingSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
@@ -319,7 +319,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
-		LNKLinRegPredictor *cvPredictor = [[LNKLinRegPredictor alloc] initWithMatrix:cvSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
+		LNKLinearRegressionPredictor *cvPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:cvSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
 		[cvPredictor _setThetaVector:[trainPredictor _thetaVector]];
 		cvError[i-1] = [cvPredictor _evaluateCostFunction];
 		
@@ -366,7 +366,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	}];
 
 	id<LNKOptimizationAlgorithm> algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	LNKLinRegPredictor *const predictor = [[LNKLinRegPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	LNKLinearRegressionPredictor *const predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 	[algorithm release];
 	[matrix release];
 

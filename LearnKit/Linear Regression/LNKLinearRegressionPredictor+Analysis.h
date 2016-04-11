@@ -1,15 +1,15 @@
 //
-//  LNKLinRegPredictor+Analysis.h
+//  LNKLinearRegressionPredictor+Analysis.h
 //  LearnKit
 //
 //  Copyright © 2016 Matt Rajca. All rights reserved.
 //
 
-#import "LNKLinRegPredictor.h"
+#import "LNKLinearRegressionPredictor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LNKLinRegPredictor (Analysis)
+@interface LNKLinearRegressionPredictor (Analysis)
 
 /// The returned vector must be freed with `LNKVectorFree`.
 - (LNKVector)computeResiduals;

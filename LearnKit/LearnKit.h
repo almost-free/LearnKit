@@ -13,8 +13,8 @@
 #import <LearnKit/LNKDecisionTreeClassifier.h>
 #import <LearnKit/LNKKMeansClassifier.h>
 #import <LearnKit/LNKKNNClassifier.h>
-#import <LearnKit/LNKLinRegPredictor.h>
-#import <LearnKit/LNKLinRegPredictor+Analysis.h>
+#import <LearnKit/LNKLinearRegressionPredictor.h>
+#import <LearnKit/LNKLinearRegressionPredictor+Analysis.h>
 #import <LearnKit/LNKLogRegClassifier.h>
 #import <LearnKit/LNKMatrix.h>
 #import <LearnKit/LNKMatrixCSV.h>

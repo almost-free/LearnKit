@@ -1,5 +1,5 @@
 //
-//  LNKLinRegPredictor.h
+//  LNKLinearRegressionPredictor.h
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Regularization is only supported for gradient descent and L-BFGS algorithms.
 /// Predicted values are of type NSNumber / LNKFloat.
 /// A bias column is added to the matrix automatically.
-@interface LNKLinRegPredictor : LNKPredictor
+@interface LNKLinearRegressionPredictor : LNKPredictor
 @end
 
 NS_ASSUME_NONNULL_END

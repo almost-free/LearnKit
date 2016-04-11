@@ -1,18 +1,18 @@
 //
-//  _LNKLinRegPredictorGD_AC.m
+//  _LNKLinearRegressionPredictorGD_AC.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "_LNKLinRegPredictorGD_AC.h"
+#import "_LNKLinearRegressionPredictorGD_AC.h"
 
 #import "LNKAccelerateGradient.h"
-#import "LNKLinRegPredictorPrivate.h"
+#import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation _LNKLinRegPredictorGD_AC
+@implementation _LNKLinearRegressionPredictorGD_AC
 
 - (void)train {
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmGradientDescent class]], @"Unexpected algorithm");

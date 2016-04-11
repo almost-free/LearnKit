@@ -1,19 +1,19 @@
 //
-//  _LNKLinRegPredictorAC.m
+//  _LNKLinearRegressionPredictorAC.m
 //  LearnKit
 //
 //  Copyright (c) 2014 Matt Rajca. All rights reserved.
 //
 
-#import "_LNKLinRegPredictorAC.h"
+#import "_LNKLinearRegressionPredictorAC.h"
 
 #import "LNKAccelerate.h"
-#import "LNKLinRegPredictorPrivate.h"
+#import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
 
-@implementation _LNKLinRegPredictorAC
+@implementation _LNKLinearRegressionPredictorAC
 
 - (id)predictValueForFeatureVector:(LNKVector)featureVector {
 	NSParameterAssert(featureVector.data);
