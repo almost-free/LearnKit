@@ -81,7 +81,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	LNKLinearRegressionPredictor *predictor = [self _ex1PredictorGD];
 	[predictor train];
 	LNKFloat input[] = { 3.5 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(input, 1)] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorCreateUnsafe(input, 1)] LNKFloatValue] * 10000, 4519.767868, DACCURACY, @"The prediction is incorrect");
 }
 
 - (void)test5Normalization {
@@ -105,7 +105,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[2],   3673.548451, DACCURACY, @"The Theta vector is incorrect");
 	
 	LNKFloat house[] = { 1650, 3 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(house, 2)] LNKFloatValue], 289314.618925, DACCURACY, @"The prediction was inaccurate");
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorCreateUnsafe(house, 2)] LNKFloatValue], 289314.618925, DACCURACY, @"The prediction was inaccurate");
 	[predictor release];
 }
 
@@ -125,7 +125,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	XCTAssertEqualWithAccuracy(thetaVector[2], -8738.019112, DACCURACY, @"The Theta vector is incorrect");
 	
 	LNKFloat house[] = { 1650, 3 };
-	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(house, 2)] LNKFloatValue], 293081.464335, DACCURACY, @"The prediction was inaccurate");
+	XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorCreateUnsafe(house, 2)] LNKFloatValue], 293081.464335, DACCURACY, @"The prediction was inaccurate");
 	[predictor release];
 }
 
@@ -157,7 +157,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		[predictor train];
 		
 		LNKFloat x[] = { 12, 6000, 1600, 0.25, 74, 892000, 90, 3000, 80 };
-		XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorMakeUnsafe(x, 9)] LNKFloatValue], 37.9766, DACCURACY, @"The prediction was inaccurate");
+		XCTAssertEqualWithAccuracy([[predictor predictValueForFeatureVector:LNKVectorCreateUnsafe(x, 9)] LNKFloatValue], 37.9766, DACCURACY, @"The prediction was inaccurate");
 		[predictor release];
 	}];
 }
@@ -386,7 +386,7 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 
 	LNKVector srVector = [predictor computeStandardizedResiduals];
 	XCTAssertEqualWithAccuracy(srVector.data[0], -0.32349777, 0.1);
-	LNKVectorFree(srVector);
+	LNKVectorRelease(srVector);
 
 	[predictor release];
 }

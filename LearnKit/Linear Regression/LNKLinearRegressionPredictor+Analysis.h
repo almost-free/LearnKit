@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LNKLinearRegressionPredictor (Analysis)
 
-/// The returned vector must be freed with `LNKVectorFree`.
+/// The returned vector is +1 reference counted.
 - (LNKVector)computeResiduals;
 - (LNKVector)computeStandardizedResiduals;
 

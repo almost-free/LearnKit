@@ -44,7 +44,7 @@
 	[classifier train];
 
 	const LNKFloat inputVector[] = {1,0,1,0};
-	LNKClass *outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4)];
+	LNKClass *outputClass = [classifier predictValueForFeatureVector:LNKVectorCreateUnsafe(inputVector, 4)];
 
 	XCTAssertEqual(outputClass.unsignedIntegerValue, 0ULL, @"We should not have the flu");
 
@@ -77,7 +77,7 @@
 
 	const LNKFloat inputVector[] = {0,0,1,0};
 	LNKFloat probability = 0;
-	LNKClass *const outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4) probability:&probability];
+	LNKClass *const outputClass = [classifier predictValueForFeatureVector:LNKVectorCreateUnsafe(inputVector, 4) probability:&probability];
 
 	XCTAssertEqual(probability, 0, @"There were no prior example of flus without chills");
 	XCTAssertNil(outputClass, @"No information");
@@ -94,7 +94,7 @@
 
 	const LNKFloat inputVector[] = {0,0,1,0};
 	LNKFloat probability = 0;
-	LNKClass *const outputClass = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 4) probability:&probability];
+	LNKClass *const outputClass = [classifier predictValueForFeatureVector:LNKVectorCreateUnsafe(inputVector, 4) probability:&probability];
 
 	XCTAssertGreaterThan(probability, 0);
 	XCTAssertNotNil(outputClass);

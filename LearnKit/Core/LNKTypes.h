@@ -47,14 +47,39 @@ typedef struct {
 #define LNKRangeMake(location, length) ((LNKRange) { location, length })
 
 typedef struct {
+	LNKSize retainCount;
 	const LNKFloat *__nonnull data;
 	const LNKSize length;
 } LNKVector;
 
-#define LNKVectorAlloc(length) ((LNKVector) { LNKFloatAlloc(length), (length) })
-#define LNKVectorAllocAndCopy(data, length) ((LNKVector) { LNKFloatAllocAndCopy(data, length), (length) })
-#define LNKVectorMakeUnsafe(data, length) ((LNKVector) { (data), (length) })
-#define LNKVectorFree(vector) free((void *)(vector).data)
+NS_INLINE LNKVector LNKVectorCreate(LNKSize length)
+{
+	return (LNKVector) { 1, LNKFloatAlloc(length), length };
+}
+
+NS_INLINE LNKVector LNKVectorCreateAndCopy(const LNKFloat *__nonnull data, LNKSize length)
+{
+	return (LNKVector) { 1, LNKFloatAllocAndCopy(data, length), length };
+}
+
+NS_INLINE LNKVector LNKVectorCreateUnsafe(const LNKFloat *__nonnull data, LNKSize length)
+{
+	return (LNKVector) { 1, data, length };
+}
+
+NS_INLINE void LNKVectorRetain(LNKVector vector)
+{
+	vector.retainCount += 1;
+}
+
+NS_INLINE void LNKVectorRelease(LNKVector vector)
+{
+	vector.retainCount -= 1;
+
+	if (vector.retainCount == 0) {
+		free((void *)vector.data);
+	}
+}
 
 @interface NSNumber (LNKTypes)
 

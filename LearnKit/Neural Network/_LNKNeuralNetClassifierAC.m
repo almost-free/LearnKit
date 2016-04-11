@@ -60,7 +60,7 @@
 		const LNKFloat *featureVector = _ROW_IN_MATRIX_BUFFER(m);
 		
 		// First predict the output, then use backpropagation to find weight gradients.
-		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:activations outputVector:NULL];
+		[self _feedForwardFeatureVector:LNKVectorCreateUnsafe(featureVector, columnCount) activations:activations outputVector:NULL];
 		
 		// Calculate the error for the output layer (the last array of activations).
 		LNKFloat *outputError = LNKFloatAllocAndCopy(activations[layerCount-1], classesCount);
@@ -251,7 +251,7 @@
 	LNKFloat *thetaUnrolled = LNKFloatAlloc(totalUnitCount);
 	[self _copyUnrolledThetaVectorIntoVector:thetaUnrolled];
 	
-	[self.algorithm runWithParameterVector:LNKVectorMakeUnsafe(thetaUnrolled, totalUnitCount) rowCount:self.matrix.rowCount delegate:self];
+	[self.algorithm runWithParameterVector:LNKVectorCreateUnsafe(thetaUnrolled, totalUnitCount) rowCount:self.matrix.rowCount delegate:self];
 	
 	free(thetaUnrolled);
 }
@@ -351,7 +351,7 @@
 	LNKFloatCopy(featuresWithBias + biasOffset, featureVector.data, featureVector.length);
 
 	LNKFloat *outputLayer = NULL;
-	[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featuresWithBias, featureVector.length + biasOffset) activations:NULL outputVector:&outputLayer];
+	[self _feedForwardFeatureVector:LNKVectorCreateUnsafe(featuresWithBias, featureVector.length + biasOffset) activations:NULL outputVector:&outputLayer];
 	free(featuresWithBias);
 
 	NSAssert(outputLayer != NULL, @"We should get an output vector back.");
@@ -388,7 +388,7 @@
 	for (LNKSize m = range.location; m < range.location + range.length; m++) {
 		const LNKFloat *featureVector = _ROW_IN_MATRIX_BUFFER(m);
 		LNKFloat *outputLayer;
-		[self _feedForwardFeatureVector:LNKVectorMakeUnsafe(featureVector, columnCount) activations:NULL outputVector:&outputLayer];
+		[self _feedForwardFeatureVector:LNKVectorCreateUnsafe(featureVector, columnCount) activations:NULL outputVector:&outputLayer];
 		
 		// Optimize for true positives and negatives for all classes.
 		// -y log(h) - (1 - y) log(1 - h)

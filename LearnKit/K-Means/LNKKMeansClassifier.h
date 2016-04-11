@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The default is `LNKFloatMax`, which effectively turns off the junk cluster.
 @property (nonatomic) LNKFloat maximumClusterDistance;
 
-/// The returned vector must be freed with `LNKVectorFree`.
+/// The returned vector is +1 reference counted.
 - (LNKVector)centroidForClusterAtIndex:(LNKSize)clusterIndex;
 
 @end

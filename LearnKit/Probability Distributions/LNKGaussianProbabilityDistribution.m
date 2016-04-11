@@ -81,7 +81,7 @@ typedef struct {
 			parameters->mean = mean;
 			parameters->sd = sd;
 
-			LNKVectorFree(vector);
+			LNKVectorRelease(vector);
 		}
 	}
 }

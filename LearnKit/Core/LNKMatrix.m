@@ -245,7 +245,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		values[index] = _matrix[index * _columnCount + columnIndex];
 	}
 
-	return LNKVectorMakeUnsafe(values, _rowCount);
+	return LNKVectorCreateUnsafe(values, _rowCount);
 }
 
 - (LNKMatrix *)multiplyByMatrix:(LNKMatrix *)matrix {
@@ -541,7 +541,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 		LNK_vmean(columnPointer, _columnCount, &mean, _rowCount);
 		
 		columnToMu[n] = mean;
-		columnToSD[n] = LNK_vsd(LNKVectorMakeUnsafe(columnPointer, _rowCount), _columnCount, workgroup, mean, YES);
+		columnToSD[n] = LNK_vsd(LNKVectorCreateUnsafe(columnPointer, _rowCount), _columnCount, workgroup, mean, YES);
 	}
 
 	free(workgroup);

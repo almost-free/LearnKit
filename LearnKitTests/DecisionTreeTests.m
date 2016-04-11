@@ -48,7 +48,7 @@
 	
 	const LNKSize newExampleLength = 10;
 	LNKFloat newExample[newExampleLength] = { 0, 0, 0, 1, 1, 2, 1, 0, 3, 0 };
-	LNKClass *class = [classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(newExample, newExampleLength)];
+	LNKClass *class = [classifier predictValueForFeatureVector:LNKVectorCreateUnsafe(newExample, newExampleLength)];
 	XCTAssertEqual(class.unsignedIntegerValue, 1UL);
 	
 	[classifier release];

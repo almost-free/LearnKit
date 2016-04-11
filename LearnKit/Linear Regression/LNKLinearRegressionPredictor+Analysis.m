@@ -23,7 +23,7 @@
 	LNK_mmul(matrix.matrixBuffer, UNIT_STRIDE, [self _thetaVector], UNIT_STRIDE, predictions, UNIT_STRIDE, rowCount, 1, columnCount);
 	LNK_vsub(predictions, UNIT_STRIDE, matrix.outputVector, UNIT_STRIDE, predictions, UNIT_STRIDE, rowCount);
 
-	return LNKVectorMakeUnsafe(predictions, rowCount);
+	return LNKVectorCreateUnsafe(predictions, rowCount);
 }
 
 - (LNKVector)computeStandardizedResiduals
@@ -44,9 +44,9 @@
 	}
 
 	[hatMatrix release];
-	LNKVectorFree(residuals);
+	LNKVectorRelease(residuals);
 
-	return LNKVectorMakeUnsafe(standardizedResiduals, rowCount);
+	return LNKVectorCreateUnsafe(standardizedResiduals, rowCount);
 }
 
 - (LNKFloat)computeAIC
@@ -57,7 +57,7 @@
 	LNKVector residuals = [self computeResiduals];
 	LNKFloat residualSum = 0;
 	LNK_dotpr(residuals.data, UNIT_STRIDE, residuals.data, UNIT_STRIDE, &residualSum, rowCount);
-	LNKVectorFree(residuals);
+	LNKVectorRelease(residuals);
 
 	const LNKFloat term1 = rowCount * (LNKLog(2 * M_PI) + 1 + LNKLog(residualSum / rowCount));
 	const LNKSize k = matrix.columnCount + 1;
@@ -73,7 +73,7 @@
 	LNKVector residuals = [self computeResiduals];
 	LNKFloat residualSum = 0;
 	LNK_dotpr(residuals.data, UNIT_STRIDE, residuals.data, UNIT_STRIDE, &residualSum, rowCount);
-	LNKVectorFree(residuals);
+	LNKVectorRelease(residuals);
 
 	const LNKFloat term1 = rowCount * (LNKLog(2 * M_PI) + 1 + LNKLog(residualSum / rowCount));
 	const LNKSize k = matrix.columnCount + 1;

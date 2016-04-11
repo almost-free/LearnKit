@@ -58,9 +58,9 @@
 	XCTAssertEqualWithAccuracy(cluster3.data[0], 6.0337, DACCURACY);
 	XCTAssertEqualWithAccuracy(cluster3.data[1], 3.0005, DACCURACY);
 	
-	LNKVectorFree(cluster1);
-	LNKVectorFree(cluster2);
-	LNKVectorFree(cluster3);
+	LNKVectorRelease(cluster1);
+	LNKVectorRelease(cluster2);
+	LNKVectorRelease(cluster3);
 	
 	[classifier release];
 }
@@ -102,9 +102,9 @@
 	XCTAssertEqualWithAccuracy(cluster3.data[0], 6.0337, DACCURACY);
 	XCTAssertEqualWithAccuracy(cluster3.data[1], 3.0005, DACCURACY);
 
-	LNKVectorFree(cluster1);
-	LNKVectorFree(cluster2);
-	LNKVectorFree(cluster3);
+	LNKVectorRelease(cluster1);
+	LNKVectorRelease(cluster2);
+	LNKVectorRelease(cluster3);
 
 	[classifier release];
 }

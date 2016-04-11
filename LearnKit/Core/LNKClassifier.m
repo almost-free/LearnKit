@@ -75,7 +75,7 @@
 	LNKSize hits = 0;
 	
 	for (LNKSize m = 0; m < rowCount; m++) {
-		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe(_ROW_IN_MATRIX_BUFFER(m), columnCount)];
+		id predictedValue = [self predictValueForFeatureVector:LNKVectorCreateUnsafe(_ROW_IN_MATRIX_BUFFER(m), columnCount)];
 		
 		if ([predictedValue isEqual:[LNKClass classWithUnsignedInteger:outputVector[m]]])
 			hits++;
@@ -97,7 +97,7 @@
 	LNKConfusionMatrix *const confusionMatrix = [[LNKConfusionMatrix alloc] init];
 
 	for (LNKSize m = 0; m < rowCount; m++) {
-		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe(_ROW_IN_MATRIX_BUFFER(m), columnCount)];
+		id predictedValue = [self predictValueForFeatureVector:LNKVectorCreateUnsafe(_ROW_IN_MATRIX_BUFFER(m), columnCount)];
 
 		if (![predictedValue isKindOfClass:[LNKClass class]]) {
 			continue;

@@ -36,7 +36,7 @@
 		_mu[column] = -mean;
 		
 		// `sigma2` is actually a (diagonal) covariance matrix.
-		const LNKVector inVector = LNKVectorMakeUnsafe(columnPointer, rowCount);
+		const LNKVector inVector = LNKVectorCreateUnsafe(columnPointer, rowCount);
 		_sigma2[column * columnCount + column] = LNK_pow(LNK_vsd(inVector, columnCount, workgroup, mean, NO), 2);
 	}
 	

@@ -43,7 +43,7 @@
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.203498, DACCURACY, @"Incorrect cost");
 	
 	LNKFloat inputVector[2] = {45,85};
-	XCTAssertEqualWithAccuracy([[classifier predictValueForFeatureVector:LNKVectorMakeUnsafe(inputVector, 2)] LNKFloatValue], 0.776, DACCURACY, @"Incorrect prediction");
+	XCTAssertEqualWithAccuracy([[classifier predictValueForFeatureVector:LNKVectorCreateUnsafe(inputVector, 2)] LNKFloatValue], 0.776, DACCURACY, @"Incorrect prediction");
 	
 	XCTAssertEqualWithAccuracy([classifier computeClassificationAccuracyOnMatrix:matrix], 0.89, DACCURACY, @"Incorrect classification rate");
 	[classifier release];

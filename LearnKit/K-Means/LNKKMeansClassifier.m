@@ -87,7 +87,7 @@ static const LNKSize kDefaultIterationCount = 100;
 		[NSException raise:NSGenericException format:@"The cluster index is out-of-bounds"];
 	
 	const LNKSize columnCount = self.matrix.columnCount;
-	return LNKVectorAllocAndCopy(_clusterCentroids + clusterIndex * columnCount, columnCount);
+	return LNKVectorCreateAndCopy(_clusterCentroids + clusterIndex * columnCount, columnCount);
 }
 
 @end

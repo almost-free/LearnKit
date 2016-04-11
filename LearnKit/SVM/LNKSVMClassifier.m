@@ -166,7 +166,7 @@
 	LNKSize hits = 0;
 	
 	for (LNKSize m = 0; m < rowCount; m++) {
-		id predictedValue = [self predictValueForFeatureVector:LNKVectorMakeUnsafe([matrix rowAtIndex:m], columnCount)];
+		id predictedValue = [self predictValueForFeatureVector:LNKVectorCreateUnsafe([matrix rowAtIndex:m], columnCount)];
 		NSAssert([predictedValue isKindOfClass:[NSNumber class]], @"Unexpected value");
 		
 		const LNKFloat value = [predictedValue LNKFloatValue];
