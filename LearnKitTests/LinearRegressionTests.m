@@ -19,6 +19,7 @@
 #import "LNKMatrixTestExtras.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @interface LinearRegressionTests : XCTestCase
 
@@ -172,9 +173,9 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 															rowCount:12 columnCount:1];
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.lambda = 1;
 	
 	LNKLinearRegressionPredictor *predictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+	predictor.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:1];
 	[matrix release];
 	[algorithm release];
 
@@ -185,8 +186,8 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 	
 	XCTAssertEqualWithAccuracy([predictor _evaluateCostFunction], 303.9932, DACCURACY, @"The initial cost should be ~303.9932");
 	
-	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
-	const LNKFloat lambda = algorithm.lambda;
+	const BOOL regularizationEnabled = predictor.regularizationConfiguration != nil;
+	const LNKFloat lambda = predictor.regularizationConfiguration.lambda;
 	
 	const LNKSize rowCount = workingMatrix.rowCount;
 	const LNKSize columnCount = workingMatrix.columnCount;
@@ -244,14 +245,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		[trainingSet clipRowCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-		algorithm.lambda = 0;
 		
 		LNKLinearRegressionPredictor *trainPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:trainingSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
-		algorithm.lambda = 0;
-		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
 		LNKLinearRegressionPredictor *cvPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:cvSet implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];
@@ -310,14 +308,11 @@ extern void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloa
 		[trainingSetNormalized clipRowCountTo:i];
 		
 		LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-		algorithm.lambda = 0;
 		
 		LNKLinearRegressionPredictor *trainPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:trainingSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
 		[trainPredictor train];
 		
 		// When predicting, we don't want to regularize.
-		algorithm.lambda = 0;
-		
 		trainError[i-1] = [trainPredictor _evaluateCostFunction];
 		
 		LNKLinearRegressionPredictor *cvPredictor = [[LNKLinearRegressionPredictor alloc] initWithMatrix:cvSetNormalized implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:cvAlgorithm];

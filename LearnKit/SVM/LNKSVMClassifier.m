@@ -12,6 +12,7 @@
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @implementation LNKSVMClassifier {
 	LNKFloat *_theta;
@@ -61,10 +62,7 @@
 	const LNKSize stepCount = algorithm.stepCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *outputVector = matrix.outputVector;
-	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
-	
-	// This simplifies some math.
-	const LNKFloat lambda = regularizationEnabled ? algorithm.lambda : 0;
+	const LNKFloat lambda = _regularizationConfiguration.lambda;
 	
 	LNKFloat *workgroupCC = LNKFloatAlloc(columnCount);
 	LNKFloat *workgroupCC2 = LNKFloatAlloc(columnCount);
@@ -114,9 +112,7 @@
 	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;
 	const LNKFloat *const outputVector = matrix.outputVector;
-	LNKOptimizationAlgorithmStochasticGradientDescent *const algorithm = self.algorithm;
-	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
-	const LNKFloat lambda = regularizationEnabled ? algorithm.lambda : 0;
+	const LNKFloat lambda = _regularizationConfiguration.lambda;
 
 	LNKFloat cost = 0;
 
@@ -180,6 +176,7 @@
 
 - (void)dealloc {
 	free(_theta);
+	[_regularizationConfiguration release];
 	
 	[super dealloc];
 }

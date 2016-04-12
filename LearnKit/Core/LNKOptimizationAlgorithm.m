@@ -67,39 +67,6 @@
 
 @end
 
-@implementation LNKOptimizationAlgorithmRegularizable
-
-- (instancetype)init {
-	NSAssertNotReachable(@"LNKOptimizationAlgorithmRegularizable is an abstract class. Please use one of its subclasses.", nil);
-	return nil;
-}
-
-- (instancetype)_init {
-	return [super init];
-}
-
-- (void)setLambda:(LNKFloat)lambda {
-	if (lambda < 0)
-		[NSException raise:NSInvalidArgumentException format:@"A negative lambda value is not allowed"];
-	
-	[self willChangeValueForKey:@"lambda"];
-	_lambda = lambda;
-	[self didChangeValueForKey:@"lambda"];
-}
-
-- (BOOL)regularizationEnabled {
-	return _lambda > 0;
-}
-
-- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
-#pragma unused(vector)
-#pragma unused(rowCount)
-#pragma unused(delegate)
-	[NSException raise:NSInternalInconsistencyException format:@"This method must be overriden by subclasses"];
-}
-
-@end
-
 @implementation LNKOptimizationAlgorithmGradientDescent
 
 + (instancetype)algorithmWithAlpha:(id <LNKAlpha>)alpha iterationCount:(LNKSize)iterationCount {
@@ -120,13 +87,20 @@
 	if (!alpha)
 		[NSException raise:NSInvalidArgumentException format:@"The alpha parameter must be specified"];
 	
-	self = [super _init];
+	self = [super init];
 	if (self) {
 		_alpha = [alpha retain];
 		_iterationCount = iterationCount;
 		_convergenceThreshold = convergenceThreshold;
 	}
 	return self;
+}
+
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+#pragma unused(vector)
+#pragma unused(rowCount)
+#pragma unused(delegate)
+	[NSException raise:NSInternalInconsistencyException format:@"This method must be overriden by subclasses"];
 }
 
 - (void)dealloc {
@@ -179,8 +153,11 @@
 
 @implementation LNKOptimizationAlgorithmLBFGS
 
-- (instancetype)init {
-	return [super _init];
+- (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
+#pragma unused(vector)
+#pragma unused(rowCount)
+#pragma unused(delegate)
+	[NSException raise:NSInternalInconsistencyException format:@"This method must be overriden by subclasses"];
 }
 
 @end
@@ -191,7 +168,7 @@
 }
 
 - (instancetype)init {
-	self = [super _init];
+	self = [super init];
 	if (self) {
 		_iterationCount = 100;
 	}

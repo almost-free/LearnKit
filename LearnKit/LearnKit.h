@@ -25,7 +25,9 @@
 #import <LearnKit/LNKNaiveBayesClassifier.h>
 #import <LearnKit/LNKNeuralNetClassifier.h>
 #import <LearnKit/LNKOneVsAllLogisticRegressionClassifier.h>
+#import <LearnKit/LNKOnlineLinearRegression.h>
 #import <LearnKit/LNKOptimizationAlgorithm.h>
 #import <LearnKit/LNKPredictor.h>
+#import <LearnKit/LNKRegularizationConfiguration.h>
 #import <LearnKit/LNKSVMClassifier.h>
 #import <LearnKit/LNKUtilities.h>

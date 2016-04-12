@@ -50,23 +50,12 @@ typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 
 @end
 
-/// Abstract
-@interface LNKOptimizationAlgorithmRegularizable : NSObject <LNKOptimizationAlgorithm>
-
-/// The regularization parameter `lambda` must be greater than or equal to 0.
-@property (nonatomic) LNKFloat lambda;
-
-/// A lambda value of 0 indicates regularization is disabled.
-@property (nonatomic, readonly) BOOL regularizationEnabled;
-
-@end
-
 
 @interface LNKOptimizationAlgorithmNormalEquations : NSObject <LNKOptimizationAlgorithm>
 @end
 
 
-@interface LNKOptimizationAlgorithmGradientDescent : LNKOptimizationAlgorithmRegularizable <LNKOptimizationAlgorithm>
+@interface LNKOptimizationAlgorithmGradientDescent : NSObject <LNKOptimizationAlgorithm>
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -94,11 +83,11 @@ typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 @end
 
 
-@interface LNKOptimizationAlgorithmLBFGS : LNKOptimizationAlgorithmRegularizable <LNKOptimizationAlgorithm>
+@interface LNKOptimizationAlgorithmLBFGS : NSObject <LNKOptimizationAlgorithm>
 @end
 
 
-@interface LNKOptimizationAlgorithmCG : LNKOptimizationAlgorithmRegularizable <LNKOptimizationAlgorithm>
+@interface LNKOptimizationAlgorithmCG : NSObject <LNKOptimizationAlgorithm>
 
 /// Defaults to 100.
 @property (nonatomic) NSUInteger iterationCount;

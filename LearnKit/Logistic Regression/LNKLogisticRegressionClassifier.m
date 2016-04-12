@@ -11,6 +11,7 @@
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @implementation LNKLogisticRegressionClassifier {
 	LNKFloat *_thetaVector;
@@ -49,6 +50,7 @@
 
 - (void)dealloc {
 	free(_thetaVector);
+	[_regularizationConfiguration release];
 	[super dealloc];
 }
 

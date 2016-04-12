@@ -9,6 +9,7 @@
 
 #import "_LNKOneVsAllLogisticRegressionClassifierLBFGS_AC.h"
 #import "LNKOptimizationAlgorithm.h"
+#import "LNKRegularizationConfiguration.h"
 
 @implementation LNKOneVsAllLogisticRegressionClassifier
 
@@ -25,6 +26,11 @@
 #pragma unused(algorithm)
 	
 	return [_LNKOneVsAllLogisticRegressionClassifierLBFGS_AC class];
+}
+
+- (void)dealloc {
+	[_regularizationConfiguration release];
+	[super dealloc];
 }
 
 @end

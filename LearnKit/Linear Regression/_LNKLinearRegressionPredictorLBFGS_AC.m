@@ -11,18 +11,16 @@
 #import "LNKLinearRegressionPredictorPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @implementation _LNKLinearRegressionPredictorLBFGS_AC
 
 - (void)train {
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unexpected algorithm");
-	
-	LNKOptimizationAlgorithmLBFGS *algorithm = self.algorithm;
-	LNKMatrix *matrix = self.matrix;
-	LNKFloat *thetaVector = [self _thetaVector];
+	LNKMatrix *const matrix = self.matrix;
+	LNKFloat *const thetaVector = [self _thetaVector];
 	const LNKSize columnCount = matrix.columnCount;
 	
-	LNK_learntheta_lbfgs(matrix, thetaVector, algorithm.regularizationEnabled, algorithm.lambda, NULL, ^LNKFloat(const LNKFloat *theta) {
+	LNK_learntheta_lbfgs(matrix, thetaVector, self.regularizationConfiguration != nil, self.regularizationConfiguration.lambda, NULL, ^LNKFloat(const LNKFloat *theta) {
 		LNKFloatCopy(thetaVector, theta, columnCount);
 		return [self _evaluateCostFunction];
 	});

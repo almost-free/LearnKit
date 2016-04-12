@@ -9,6 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LNKRegularizationConfiguration;
+
 /// A collaborative filtering predictor for recommendation engines.
 /// Supported optimization algorithms:
 ///  - Conjugate Gradient/Accelerate
@@ -19,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// The matrix passed in must be the output matrix, with dimensions `rowCount` * `userCount`.
 /// The indicator matrix must also be provided, with dimensions `rowCount` * `userCount`.
 - (instancetype)initWithMatrix:(LNKMatrix *)outputMatrix indicatorMatrix:(LNKMatrix *)indicatorMatrix implementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm featureCount:(NSUInteger)featureCount;
+
+@property (nonatomic, retain, nullable) LNKRegularizationConfiguration *regularizationConfiguration;
 
 /// Load in pre-trained data and theta matrices.
 /// The data matrix must be of dimensions `rowCount` * `featureCount`.

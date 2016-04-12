@@ -240,6 +240,8 @@
 		C9D1A4A01C9DAA13003736C1 /* LNKTopicModeller.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D1A49D1C9DA9F0003736C1 /* LNKTopicModeller.m */; };
 		C9D1A4A31C9DAA5B003736C1 /* nips-docword.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9D1A4A11C9DAA5B003736C1 /* nips-docword.txt */; };
 		C9D1A4A41C9DAA5B003736C1 /* nips-vocab.txt in Resources */ = {isa = PBXBuildFile; fileRef = C9D1A4A21C9DAA5B003736C1 /* nips-vocab.txt */; };
+		C9D2E8291CBC9EA50013055D /* LNKRegularizationConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D2E8271CBC9EA50013055D /* LNKRegularizationConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9D2E82A1CBC9EA50013055D /* LNKRegularizationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D2E8281CBC9EA50013055D /* LNKRegularizationConfiguration.m */; };
 		C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC903E19D6253900774B29 /* KMeansTests.m */; };
 		C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
 		C9EC9A591A1ADCE0005D7863 /* LNKMatrixExporting.h in Headers */ = {isa = PBXBuildFile; fileRef = C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -442,6 +444,8 @@
 		C9D1A49D1C9DA9F0003736C1 /* LNKTopicModeller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKTopicModeller.m; sourceTree = "<group>"; };
 		C9D1A4A11C9DAA5B003736C1 /* nips-docword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nips-docword.txt"; sourceTree = "<group>"; };
 		C9D1A4A21C9DAA5B003736C1 /* nips-vocab.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nips-vocab.txt"; sourceTree = "<group>"; };
+		C9D2E8271CBC9EA50013055D /* LNKRegularizationConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKRegularizationConfiguration.h; sourceTree = "<group>"; };
+		C9D2E8281CBC9EA50013055D /* LNKRegularizationConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKRegularizationConfiguration.m; sourceTree = "<group>"; };
 		C9DC903E19D6253900774B29 /* KMeansTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMeansTests.m; path = LearnKitTests/KMeansTests.m; sourceTree = SOURCE_ROOT; };
 		C9DCD6D319A03DF200AF3AEC /* arithmetic_ansi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arithmetic_ansi.h; path = liblbfgs/lib/arithmetic_ansi.h; sourceTree = SOURCE_ROOT; };
 		C9DCD6D419A03DF200AF3AEC /* lbfgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lbfgs.m; path = liblbfgs/lib/lbfgs.m; sourceTree = SOURCE_ROOT; };
@@ -822,6 +826,8 @@
 				C9CBD2CE19E5D52900AE71D5 /* LNKPredictor.h */,
 				C9CBD2CF19E5D52900AE71D5 /* LNKPredictor.m */,
 				C9CBD2D019E5D52900AE71D5 /* LNKPredictorPrivate.h */,
+				C9D2E8271CBC9EA50013055D /* LNKRegularizationConfiguration.h */,
+				C9D2E8281CBC9EA50013055D /* LNKRegularizationConfiguration.m */,
 				C9CBD2D119E5D52900AE71D5 /* LNKTypes.h */,
 				C9CBD2D219E5D52900AE71D5 /* LNKTypes.m */,
 				C9CBD2D319E5D52900AE71D5 /* LNKUtilities.h */,
@@ -926,6 +932,7 @@
 				C9EC9A591A1ADCE0005D7863 /* LNKMatrixExporting.h in Headers */,
 				C94D42571C64FE36007D537D /* LNKClassProbabilityDistributionPrivate.h in Headers */,
 				C9CBD2DC19E5D52900AE71D5 /* LNKMatrixPCA.h in Headers */,
+				C9D2E8291CBC9EA50013055D /* LNKRegularizationConfiguration.h in Headers */,
 				C9CBD2A319E5D4D400AE71D5 /* LNKMatrixUI.h in Headers */,
 				C9CBD28919E5D48D00AE71D5 /* LNKNaiveBayesClassifier.h in Headers */,
 				C9CBD29619E5D4AD00AE71D5 /* LNKNeuralNetClassifier.h in Headers */,
@@ -1120,6 +1127,7 @@
 				C93BFDED1A354798000E5325 /* LNKSVMClassifier.m in Sources */,
 				C92E849A1CBC40CB00F8E335 /* _LNKLogisticRegressionClassifierLBFGS_AC.m in Sources */,
 				C9CBD28719E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.m in Sources */,
+				C9D2E82A1CBC9EA50013055D /* LNKRegularizationConfiguration.m in Sources */,
 				C915807619E8B1C000879FD5 /* LNKAnomalyDetector.m in Sources */,
 				C992198C1A6C883D00D9CACA /* LNKClasses.m in Sources */,
 				C9CBD28A19E5D48D00AE71D5 /* LNKNaiveBayesClassifier.m in Sources */,

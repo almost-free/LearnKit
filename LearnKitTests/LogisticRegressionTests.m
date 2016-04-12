@@ -15,6 +15,7 @@
 #import "LNKOneVsAllLogisticRegressionClassifier.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @interface LogisticRegressionTests : XCTestCase
 
@@ -57,9 +58,11 @@
 	XCTAssertEqual(polynomialMatrix.columnCount, 27UL, @"We should have 27 columns");
 	
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.lambda = lambda;
 	
 	LNKLogisticRegressionClassifier *classifier = [[LNKLogisticRegressionClassifier alloc] initWithMatrix:polynomialMatrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm];
+
+	classifier.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:lambda];
+
 	XCTAssertEqualWithAccuracy([classifier _evaluateCostFunction], 0.693147, DACCURACY, @"Incorrect cost");
 	
 	[matrix release];
@@ -92,9 +95,9 @@
 	XCTAssertEqual(matrix.columnCount, 400ULL, @"The column count is incorrect");
 
 	LNKOptimizationAlgorithmLBFGS *algorithm = [[LNKOptimizationAlgorithmLBFGS alloc] init];
-	algorithm.lambda = 0.1;
 
 	LNKOneVsAllLogisticRegressionClassifier *classifier = [[LNKOneVsAllLogisticRegressionClassifier alloc] initWithMatrix:matrix implementationType:LNKImplementationTypeAccelerate optimizationAlgorithm:algorithm classes:[LNKClasses withRange:NSMakeRange(1, 10)]];
+	classifier.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:0.1];
 	[classifier train];
 
 	[algorithm release];

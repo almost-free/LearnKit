@@ -12,6 +12,7 @@
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @interface LNKCollaborativeFilteringPredictor () < LNKOptimizationAlgorithmDelegate >
 
@@ -80,9 +81,8 @@
 	LNKFloat regularizationTerm = 0;
 	
 	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
-	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
 	
-	if (algorithm.regularizationEnabled) {
+	if (_regularizationConfiguration != nil) {
 		// Re-use the theta transpose matrix to compute the theta square.
 		LNK_vmul(thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, thetaTranspose, UNIT_STRIDE, userCount * _featureCount);
 		
@@ -95,7 +95,7 @@
 		free(dataSquare);
 		
 		// ... + lambda / 2 * (sum(Theta^2) + sum(X^2))
-		regularizationTerm = algorithm.lambda / 2 * (thetaSum + dataSum);
+		regularizationTerm = _regularizationConfiguration.lambda / 2 * (thetaSum + dataSum);
 	}
 	
 	free(thetaTranspose);
@@ -116,10 +116,8 @@
 	LNKFloat *dataGradient = unrolledGradient;
 	LNKFloat *thetaGradient = unrolledGradient + rowCount * _featureCount;
 	
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
-	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
-	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
-	const LNKFloat lambda = algorithm.lambda;
+	const BOOL regularizationEnabled = _regularizationConfiguration != nil;
+	const LNKFloat lambda = _regularizationConfiguration.lambda;
 	
 	LNKFloat *workspace = LNKFloatAlloc(_featureCount);
 	
@@ -276,6 +274,7 @@
 	free(_unrolledGradient);
 	
 	[_indicatorMatrix release];
+	[_regularizationConfiguration release];
 	
 	[super dealloc];
 }

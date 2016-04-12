@@ -15,6 +15,7 @@
 #import "LNKNeuralNetClassifierPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @interface _LNKNeuralNetClassifierAC () <LNKOptimizationAlgorithmDelegate>
 
@@ -182,13 +183,11 @@
 	const LNKFloat m = (LNKFloat)range.length;
 	LNKSize gradientOffset = 0;
 	
-	LNKOptimizationAlgorithmRegularizable *algorithm = self.algorithm;
-	
 	for (LNKSize i = 0; i < thetaVectorCount; i++) {
 		LNK_vsdiv(globalDeltas[i], UNIT_STRIDE, &m, globalDeltas[i], UNIT_STRIDE, unitsInThetaVector[i]);
 		
 		// (Optional) regularization.
-		if (algorithm.regularizationEnabled) {
+		if (self.regularizationConfiguration != nil) {
 			// Delta += lambda / m * Theta
 			LNKSize rows, columns;
 			const LNKFloat *thetaVector = [self _thetaVectorForLayerAtIndex:i rows:&rows columns:&columns];
@@ -199,7 +198,7 @@
 			// Ignore weights corresponding to bias units (first column).
 			LNK_vclr(thetaVectorCopy, columns, rows);
 
-			const LNKFloat factor = algorithm.lambda / m;
+			const LNKFloat factor = self.regularizationConfiguration.lambda / m;
 			LNK_vsmul(thetaVectorCopy, UNIT_STRIDE, &factor, thetaVectorCopy, UNIT_STRIDE, rows * columns);
 
 			LNK_vadd(thetaVectorCopy, UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, rows * columns);
@@ -445,10 +444,7 @@
 	// Finally take into account the 1/m factor.
 	J /= rowCount;
 	
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmCG class]], @"Unexpected algorithm");
-	LNKOptimizationAlgorithmCG *algorithm = self.algorithm;
-	
-	if (algorithm.regularizationEnabled) {
+	if (self.regularizationConfiguration != nil) {
 		const LNKSize thetaVectorCount = [self _thetaVectorCount];
 		LNKFloat regularizationCost = 0;
 		
@@ -465,7 +461,7 @@
 			regularizationCost += result;
 		}
 		
-		J += regularizationCost * algorithm.lambda / (2 * rowCount);
+		J += regularizationCost * self.regularizationConfiguration.lambda / (2 * rowCount);
 	}
 	
 	return J;

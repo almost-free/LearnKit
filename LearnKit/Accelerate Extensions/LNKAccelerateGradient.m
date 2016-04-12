@@ -57,14 +57,12 @@ void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *tran
 	LNK_vsmul(workgroupCC, UNIT_STRIDE, &factor, workgroupCC, UNIT_STRIDE, columnCount);
 }
 
-void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimizationAlgorithmGradientDescent *algorithm, LNKCostFunction costFunction) {
+void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimizationAlgorithmGradientDescent *algorithm, BOOL regularizationEnabled, LNKFloat lambda, LNKCostFunction costFunction) {
 	NSCAssert(matrix, @"The matrix must not be NULL");
 	NSCAssert(thetaVector, @"The theta vector must not be NULL");
 	NSCAssert(algorithm, @"The algorithm must not be nil");
 	
 	const LNKSize iterationCount = algorithm.iterationCount;
-	const BOOL regularizationEnabled = algorithm.regularizationEnabled;
-	const LNKFloat lambda = algorithm.lambda;
 	
 	const LNKSize rowCount = matrix.rowCount;
 	const LNKSize columnCount = matrix.columnCount;

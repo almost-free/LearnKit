@@ -12,6 +12,7 @@
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 #import "LNKUtilities.h"
 
 @interface CollaborativeFilteringTests : XCTestCase
@@ -20,7 +21,7 @@
 
 @implementation CollaborativeFilteringTests
 
-- (void)_runCoFiWithAlgorithm:(LNKOptimizationAlgorithmCG *)algorithm test:(void(^)(LNKFloat, const LNKFloat *))testBlock {
+- (void)_runCoFiWithAlgorithm:(LNKOptimizationAlgorithmCG *)algorithm lambda:(LNKFloat)lambda test:(void(^)(LNKFloat, const LNKFloat *))testBlock {
 	const LNKSize movieCount = 1682;
 	const LNKSize userCount = 943;
 	const LNKSize rowCount = 10;
@@ -48,6 +49,9 @@
 																							implementationType:LNKImplementationTypeAccelerate
 																						 optimizationAlgorithm:algorithm
 																								  featureCount:reducedRowCount];
+	if (lambda > 0) {
+		predictor.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:lambda];
+	}
 	[indicatorMatrix release];
 	[outputMatrix release];
 	
@@ -73,14 +77,12 @@
 - (void)testCostFunction {
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
-	[self _runCoFiWithAlgorithm:algorithm test:^(LNKFloat cost, const LNKFloat *gradient) {
+	[self _runCoFiWithAlgorithm:algorithm lambda:0 test:^(LNKFloat cost, const LNKFloat *gradient) {
 		XCTAssertEqualWithAccuracy(cost, 22.22, 0.1);
 		XCTAssertEqualWithAccuracy(gradient[0], -2.52899, 0.01);
 	}];
 	
-	algorithm.lambda = 1.5;
-	
-	[self _runCoFiWithAlgorithm:algorithm test:^(LNKFloat cost, const LNKFloat *gradient) {
+	[self _runCoFiWithAlgorithm:algorithm lambda:1.5 test:^(LNKFloat cost, const LNKFloat *gradient) {
 		XCTAssertEqualWithAccuracy(cost, 31.44, 0.1);
 		XCTAssertEqualWithAccuracy(gradient[0], -0.95596, 0.01);
 	}];
@@ -106,7 +108,6 @@
 																  rowCount:movieCount columnCount:userCount];
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
-	algorithm.lambda = 10;
 	algorithm.iterationCount = 100;
 	
 	LNKCollaborativeFilteringPredictor *predictor = [[LNKCollaborativeFilteringPredictor alloc] initWithMatrix:outputMatrix
@@ -114,6 +115,7 @@
 																							implementationType:LNKImplementationTypeAccelerate
 																						 optimizationAlgorithm:algorithm
 																								  featureCount:featureCount];
+	predictor.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:10];
 	[indicatorMatrix release];
 	[outputMatrix release];
 	[algorithm release];

@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LNKRegularizationConfiguration;
+
 /// For neural network classifiers, the only supported algorithms are CG and stochastic gradient descent.
 /// Predicted values are of type LNKClass.
 /// A bias column is added to the matrix automatically.
@@ -30,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 			implementationType:(LNKImplementationType)implementation
 		 optimizationAlgorithm:(nullable id<LNKOptimizationAlgorithm>)algorithm
 					   classes:(LNKClasses *)classes NS_UNAVAILABLE;
+
+@property (nonatomic, nullable, retain) LNKRegularizationConfiguration *regularizationConfiguration;
 
 @property (nonatomic, readonly) LNKSize layerCount;
 @property (nonatomic, readonly) LNKSize hiddenLayerCount;

@@ -12,6 +12,7 @@
 #import "LNKMatrixCSV.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKSVMClassifier.h"
+#import "LNKRegularizationConfiguration.h"
 
 @interface SVMTests : XCTestCase
 @end
@@ -38,13 +39,13 @@
 	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
 		return 1.0/(0.01 * iteration + 50);
 	}] iterationCount:epochs];
-	sgd.lambda = 0.01;
 	sgd.stepCount = 100;
 
 	LNKSVMClassifier *const classifier = [[LNKSVMClassifier alloc] initWithMatrix:trainingMatrix
 															   implementationType:LNKImplementationTypeAccelerate
 															optimizationAlgorithm:sgd
 																		  classes:[LNKClasses withCount:2]];
+	classifier.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:0.01];
 	[classifier train];
 
 	const LNKFloat accuracy = [classifier computeClassificationAccuracyOnMatrix:testMatrix];
@@ -88,13 +89,13 @@
 	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
 		return 1.0/(0.01 * iteration + 50);
 	}] iterationCount:epochs];
-	sgd.lambda = 0.001;
 	sgd.stepCount = 300;
 
 	LNKSVMClassifier *const classifier = [[LNKSVMClassifier alloc] initWithMatrix:trainingMatrix
 															   implementationType:LNKImplementationTypeAccelerate
 															optimizationAlgorithm:sgd
 																		  classes:[LNKClasses withCount:2]];
+	classifier.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:0.001];
 	[classifier train];
 
 	const LNKFloat accuracy = [classifier computeClassificationAccuracyOnMatrix:testMatrix];

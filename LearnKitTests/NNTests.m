@@ -14,6 +14,7 @@
 #import "LNKNeuralNetClassifierPrivate.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 #import "LNKUtilities.h"
 
 @interface NNTests : XCTestCase
@@ -39,9 +40,6 @@
 	
 	LNKOptimizationAlgorithmCG *algorithm = [[LNKOptimizationAlgorithmCG alloc] init];
 	
-	if (regularize)
-		algorithm.lambda = 1;
-	
 	NSArray<LNKNeuralNetLayer *> *hiddenLayers = @[ [[[LNKNeuralNetSigmoidLayer alloc] initWithUnitCount:25] autorelease] ];
 	LNKNeuralNetLayer *outputLayer = [[LNKNeuralNetSigmoidLayer alloc] initWithClasses:[LNKClasses withRange:NSMakeRange(1, 10)]];
 	
@@ -50,6 +48,10 @@
 																  optimizationAlgorithm:algorithm
 																		   hiddenLayers:hiddenLayers
 																			outputLayer:outputLayer];
+
+	if (regularize) {
+		classifier.regularizationConfiguration = [LNKRegularizationConfiguration withLambda:1];
+	}
 
 	if (outMatrix) {
 		*outMatrix = [[matrix retain] autorelease];

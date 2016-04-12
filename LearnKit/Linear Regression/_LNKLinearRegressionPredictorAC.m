@@ -12,6 +12,7 @@
 #import "LNKMatrix.h"
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @implementation _LNKLinearRegressionPredictorAC
 
@@ -61,17 +62,13 @@
 	free(workgroup);
 	
 	sum *= factor;
-	
-	if ([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmRegularizable class]]) {
-		LNKOptimizationAlgorithmRegularizable *algorithm = self.algorithm;
 		
-		if (algorithm.regularizationEnabled) {
-			// Regularization: += 0.5 * lambda / m * sum(Theta^2)
-			const LNKSize skipBiasUnit = 1;
-			LNKFloat thetaSum;
-			LNK_dotpr(thetaVector + skipBiasUnit, UNIT_STRIDE, thetaVector + skipBiasUnit, UNIT_STRIDE, &thetaSum, columnCount - skipBiasUnit);
-			sum += 0.5 * algorithm.lambda / rowCount * thetaSum;
-		}
+	if (self.regularizationConfiguration != nil) {
+		// Regularization: += 0.5 * lambda / m * sum(Theta^2)
+		const LNKSize skipBiasUnit = 1;
+		LNKFloat thetaSum;
+		LNK_dotpr(thetaVector + skipBiasUnit, UNIT_STRIDE, thetaVector + skipBiasUnit, UNIT_STRIDE, &thetaSum, columnCount - skipBiasUnit);
+		sum += 0.5 * self.regularizationConfiguration.lambda / rowCount * thetaSum;
 	}
 	
 	return sum;

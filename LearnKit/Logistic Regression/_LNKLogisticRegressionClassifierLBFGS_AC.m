@@ -11,16 +11,15 @@
 #import "LNKAccelerateGradient.h"
 #import "LNKLogisticRegressionClassifierPrivate.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 @implementation _LNKLogisticRegressionClassifierLBFGS_AC
 
 - (void)train {
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unsupported algorithm class");
-	LNKOptimizationAlgorithmLBFGS *algorithm = self.algorithm;
 	const LNKSize columnCount = self.matrix.columnCount;
 	LNKFloat *thetaVector = [self _thetaVector];
 	
-	LNK_learntheta_lbfgs(self.matrix, thetaVector, algorithm.regularizationEnabled, algorithm.lambda, ^(LNKFloat *h, LNKSize m) {
+	LNK_learntheta_lbfgs(self.matrix, thetaVector, self.regularizationConfiguration != nil, self.regularizationConfiguration.lambda, ^(LNKFloat *h, LNKSize m) {
 		LNK_vsigmoid(h, m);
 	}, ^(const LNKFloat *theta) {
 		LNKFloatCopy(thetaVector, theta, columnCount);
@@ -95,12 +94,9 @@
 	
 	LNKFloat cost = (sum1 - sum2) / rowCount;
 	
-	NSAssert([self.algorithm isKindOfClass:[LNKOptimizationAlgorithmLBFGS class]], @"Unsupported algorithm class");
-	LNKOptimizationAlgorithmLBFGS *algorithm = self.algorithm;
-	
-	if (algorithm.regularizationEnabled) {
+	if (self.regularizationConfiguration != nil) {
 		// 1/2 lambda / m * sum(pow(theta, 2))
-		const LNKFloat regularizationFactor = algorithm.lambda * 0.5 / rowCount;
+		const LNKFloat regularizationFactor = self.regularizationConfiguration.lambda * 0.5 / rowCount;
 		
 		// Don't regularize the first parameter.
 		const LNKFloat previousFirstValue = thetaVector[0];
