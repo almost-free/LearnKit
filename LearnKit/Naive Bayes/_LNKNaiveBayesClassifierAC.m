@@ -44,7 +44,7 @@
 			const LNKFloat featureValue = featureVector.data[column];
 			const LNKFloat probabilityLog = [probabilityDistribution probabilityLogForClassAtIndex:classIndex featureAtIndex:column value:featureValue];
 
-			if (fabs(probabilityLog) < FLT_MIN) {
+			if (LNK_fabs(probabilityLog) < FLT_MIN) {
 				expectation = LNKFloatMin;
 				break;
 			}

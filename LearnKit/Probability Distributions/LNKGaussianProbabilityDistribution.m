@@ -61,7 +61,7 @@ typedef struct {
 		LNKSize hits = 0;
 
 		for (LNKSize row = 0; row < rowCount; row++) {
-			if (fabs(outputVector[row] - (LNKFloat)outputValue) < FLT_MIN) {
+			if (LNK_fabs(outputVector[row] - (LNKFloat)outputValue) < FLT_MIN) {
 				hits++;
 			}
 		}

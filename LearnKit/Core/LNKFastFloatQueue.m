@@ -7,6 +7,8 @@
 
 #import "LNKFastFloatQueue.h"
 
+#import "LNKAccelerate.h"
+
 struct _LNKFastFloatQueueBucket {
 	LNKFloat value;
 	struct _LNKFastFloatQueueBucket *next;
@@ -95,7 +97,7 @@ BOOL LNKFastFloatAreValuesApproximatelyClose(LNKFastFloatQueueRef queue, LNKFloa
 	struct _LNKFastFloatQueueBucket *currentBucket = queue->head;
 	
 	while (currentBucket && currentBucket->next) {
-		if (fabs(currentBucket->next->value - currentBucket->value) > threshold)
+		if (LNK_fabs(currentBucket->next->value - currentBucket->value) > threshold)
 			return NO;
 		
 		currentBucket = currentBucket->next;

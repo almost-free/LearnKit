@@ -356,7 +356,7 @@ static LNKSize _sizeOfLNKValueType(LNKValueType type) {
 	const LNKFloat threshold = 0.0001;
 
 	for (LNKSize i = 0; i < items; i++) {
-		if (fabs(_matrix[i] - otherBuffer[i]) > threshold) {
+		if (LNK_fabs(_matrix[i] - otherBuffer[i]) > threshold) {
 			return NO;
 		}
 	}

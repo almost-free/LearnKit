@@ -124,7 +124,7 @@ typedef struct {
 	LNKFloat *const Alog = LNKFloatAlloc(_topicCount);
 	LNKFloat *const wlog = LNKFloatAlloc(_topicCount);
 
-	while (iteration < 2 || fabs(previousLikelihood - currentLikelihood) > 1000) {
+	while (iteration < 2 || LNK_fabs(previousLikelihood - currentLikelihood) > 1000) {
 		LNKFloat *const W = LNKFloatCalloc(documentCount * _topicCount);
 
 		// Compute W

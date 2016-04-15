@@ -38,6 +38,7 @@
 #define LNK_sqrt		sqrt
 #define LNK_pow			pow
 #define LNK_exp			exp
+#define LNK_fabs		fabs
 #define LNKLog			log
 #define LNKLog2			log2
 #define LNK_strtoflt(str)	strtod((str), NULL)
@@ -74,6 +75,7 @@
 #define LNK_sqrt		sqrtf
 #define LNK_pow			powf
 #define LNK_exp			expf
+#define LNK_fabs		fabsf
 #define LNKLog			logf
 #define LNKLog2			log2f
 #define LNK_strtoflt(str,len)	strtof((str), NULL)
