@@ -24,6 +24,7 @@
 #import <LearnKit/LNKMatrixImages.h>
 #import <LearnKit/LNKMatrixPCA.h>
 #import <LearnKit/LNKMatrixUI.h>
+#import <LearnKit/LNKMatrix+LinearRegressionAdditions.h>
 #import <LearnKit/LNKNaiveBayesClassifier.h>
 #import <LearnKit/LNKNeuralNetClassifier.h>
 #import <LearnKit/LNKOneVsAllLogisticRegressionClassifier.h>

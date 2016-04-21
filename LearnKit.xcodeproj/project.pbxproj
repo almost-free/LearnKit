@@ -75,6 +75,9 @@
 		C95B382F1CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */; };
 		C95B38301CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */; };
 		C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D950C19DFBCE300BE8768 /* KNNTests.m */; };
+		C96B68CE1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C96B68CC1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C96B68CF1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B68CD1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m */; };
+		C96B68D01CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B68CD1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m */; };
 		C96DA8B91CB554610004E650 /* mtcars.txt in Resources */ = {isa = PBXBuildFile; fileRef = C96DA8B71CB551CD0004E650 /* mtcars.txt */; };
 		C96DA8BC1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = C96DA8BA1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C96DA8BD1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.m in Sources */ = {isa = PBXBuildFile; fileRef = C96DA8BB1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.m */; };
@@ -326,6 +329,8 @@
 		C95B382C1CC288CD007DB990 /* LNKHillClimbingSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKHillClimbingSearch.h; sourceTree = "<group>"; };
 		C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKHillClimbingSearch.m; sourceTree = "<group>"; };
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
+		C96B68CC1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LNKMatrix+LinearRegressionAdditions.h"; sourceTree = "<group>"; };
+		C96B68CD1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LNKMatrix+LinearRegressionAdditions.m"; sourceTree = "<group>"; };
 		C96DA8B71CB551CD0004E650 /* mtcars.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mtcars.txt; sourceTree = "<group>"; };
 		C96DA8BA1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LNKLinearRegressionPredictor+Analysis.h"; sourceTree = "<group>"; };
 		C96DA8BB1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LNKLinearRegressionPredictor+Analysis.m"; sourceTree = "<group>"; };
@@ -762,6 +767,8 @@
 				C96DA8BA1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h */,
 				C96DA8BB1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.m */,
 				C9CBD26F19E5D46900AE71D5 /* LNKLinearRegressionPredictorPrivate.h */,
+				C96B68CC1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.h */,
+				C96B68CD1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m */,
 				C986E6EE1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h */,
 				C986E6EF1CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m */,
 			);
@@ -992,6 +999,7 @@
 				C9A21A661CC1907200C81746 /* LNKOptimizationAlgorithm.h in Headers */,
 				C905AD8C1A1E6907004812DD /* Numbers.h in Headers */,
 				C95940861C6A4EE800EAFEA9 /* LNKCSVColumnRule.h in Headers */,
+				C96B68CE1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.h in Headers */,
 				C9CBD27019E5D46900AE71D5 /* _LNKLinearRegressionPredictorAC.h in Headers */,
 				C9CBD29919E5D4AD00AE71D5 /* LNKNeuralNetClassifierPrivate.h in Headers */,
 				C9A21A6B1CC190B500C81746 /* LNKGoldenSectionSearch.h in Headers */,
@@ -1192,6 +1200,7 @@
 				C9D1A49F1C9DA9F0003736C1 /* LNKTopicModeller.m in Sources */,
 				C9CBD2E119E5D52900AE71D5 /* LNKFastObjects.m in Sources */,
 				C9A27CCB1C64718900D7C2F7 /* LNKClassProbabilityDistribution.m in Sources */,
+				C96B68CF1CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m in Sources */,
 				C9A21A6C1CC190B500C81746 /* LNKGoldenSectionSearch.m in Sources */,
 				C9369BA71C5EC647009EF659 /* LNKConfusionMatrix.m in Sources */,
 				C99219871A6C817600D9CACA /* LNKNeuralNetLayer.m in Sources */,
@@ -1292,6 +1301,7 @@
 				C96F533C1C9E5D5E00AE1B72 /* LNKMatrixImages.m in Sources */,
 				C9CBD24819E5D3F500AE71D5 /* LNKAccelerate.m in Sources */,
 				C9CBD2E519E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
+				C96B68D01CC948BB00D0291A /* LNKMatrix+LinearRegressionAdditions.m in Sources */,
 				C9D1A49A1C9DA9D3003736C1 /* TopicModellerTests.m in Sources */,
 				C986E6F21CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */,
 				C95B38301CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */,
