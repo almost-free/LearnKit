@@ -71,6 +71,9 @@
 		C95940871C6A4EE800EAFEA9 /* LNKCSVColumnRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */; };
 		C95940881C6A594300EAFEA9 /* LNKCSVColumnRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */; };
 		C95963231C6A49DD00AF0EBA /* income.csv in Resources */ = {isa = PBXBuildFile; fileRef = C95963221C6A49DD00AF0EBA /* income.csv */; };
+		C95B382E1CC288CD007DB990 /* LNKHillClimbingSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = C95B382C1CC288CD007DB990 /* LNKHillClimbingSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C95B382F1CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */; };
+		C95B38301CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */; };
 		C95D950D19DFBCE300BE8768 /* KNNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C95D950C19DFBCE300BE8768 /* KNNTests.m */; };
 		C96DA8B91CB554610004E650 /* mtcars.txt in Resources */ = {isa = PBXBuildFile; fileRef = C96DA8B71CB551CD0004E650 /* mtcars.txt */; };
 		C96DA8BC1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = C96DA8BA1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -320,6 +323,8 @@
 		C95940841C6A4EE800EAFEA9 /* LNKCSVColumnRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKCSVColumnRule.h; sourceTree = "<group>"; };
 		C95940851C6A4EE800EAFEA9 /* LNKCSVColumnRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKCSVColumnRule.m; sourceTree = "<group>"; };
 		C95963221C6A49DD00AF0EBA /* income.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = income.csv; sourceTree = "<group>"; };
+		C95B382C1CC288CD007DB990 /* LNKHillClimbingSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKHillClimbingSearch.h; sourceTree = "<group>"; };
+		C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKHillClimbingSearch.m; sourceTree = "<group>"; };
 		C95D950C19DFBCE300BE8768 /* KNNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KNNTests.m; path = LearnKitTests/KNNTests.m; sourceTree = SOURCE_ROOT; };
 		C96DA8B71CB551CD0004E650 /* mtcars.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mtcars.txt; sourceTree = "<group>"; };
 		C96DA8BA1CB5623E0004E650 /* LNKLinearRegressionPredictor+Analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LNKLinearRegressionPredictor+Analysis.h"; sourceTree = "<group>"; };
@@ -582,6 +587,8 @@
 			children = (
 				C9A21A691CC190B500C81746 /* LNKGoldenSectionSearch.h */,
 				C9A21A6A1CC190B500C81746 /* LNKGoldenSectionSearch.m */,
+				C95B382C1CC288CD007DB990 /* LNKHillClimbingSearch.h */,
+				C95B382D1CC288CD007DB990 /* LNKHillClimbingSearch.m */,
 				C9DF8C8A1CC30DE0006B5554 /* LNKOptimization.h */,
 				C9DF8C8B1CC30DE0006B5554 /* LNKOptimization.m */,
 				C9A21A641CC1907200C81746 /* LNKOptimizationAlgorithm.h */,
@@ -997,6 +1004,7 @@
 				C9CBD2EF19E5D52900AE71D5 /* LNKPredictorPrivate.h in Headers */,
 				C92E849C1CBC40CB00F8E335 /* _LNKOneVsAllLogisticRegressionClassifierLBFGS_AC.h in Headers */,
 				C986E6F01CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h in Headers */,
+				C95B382E1CC288CD007DB990 /* LNKHillClimbingSearch.h in Headers */,
 				C9CBD2E619E5D52900AE71D5 /* LNKMemoryBufferManager.h in Headers */,
 				C9CBD28619E5D48D00AE71D5 /* _LNKNaiveBayesClassifierAC.h in Headers */,
 				C92E84991CBC40CB00F8E335 /* _LNKLogisticRegressionClassifierLBFGS_AC.h in Headers */,
@@ -1203,6 +1211,7 @@
 				C96F533D1C9E617B00AE1B72 /* LNKMatrixImages.m in Sources */,
 				C9CBD2DD19E5D52900AE71D5 /* LNKMatrixPCA.m in Sources */,
 				C9CBD2ED19E5D52900AE71D5 /* LNKPredictor.m in Sources */,
+				C95B382F1CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */,
 				C9CBD26219E5D44400AE71D5 /* LNKKNNClassifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1285,6 +1294,7 @@
 				C9CBD2E519E5D52900AE71D5 /* LNKFastFloatQueue.m in Sources */,
 				C9D1A49A1C9DA9D3003736C1 /* TopicModellerTests.m in Sources */,
 				C986E6F21CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */,
+				C95B38301CC288CD007DB990 /* LNKHillClimbingSearch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

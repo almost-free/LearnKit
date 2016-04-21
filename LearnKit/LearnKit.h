@@ -12,6 +12,7 @@
 #import <LearnKit/LNKCollaborativeFilteringPredictor.h>
 #import <LearnKit/LNKDecisionTreeClassifier.h>
 #import <LearnKit/LNKGoldenSectionSearch.h>
+#import <LearnKit/LNKHillClimbingSearch.h>
 #import <LearnKit/LNKKMeansClassifier.h>
 #import <LearnKit/LNKKNNClassifier.h>
 #import <LearnKit/LNKLinearRegressionPredictor.h>
