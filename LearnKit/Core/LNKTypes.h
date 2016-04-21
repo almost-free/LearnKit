@@ -67,6 +67,11 @@ NS_INLINE LNKVector LNKVectorCreateUnsafe(const LNKFloat *__nonnull data, LNKSiz
 	return (LNKVector) { 1, data, length };
 }
 
+NS_INLINE LNKVector LNKVectorWrapUnsafe(const LNKFloat *__nonnull data, LNKSize length)
+{
+	return (LNKVector) { 0, data, length };
+}
+
 NS_INLINE void LNKVectorRetain(LNKVector vector)
 {
 	vector.retainCount += 1;

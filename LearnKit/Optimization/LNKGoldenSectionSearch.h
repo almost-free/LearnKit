@@ -5,19 +5,9 @@
 //  Copyright © 2016 Matt Rajca. All rights reserved.
 //
 
+#import "LNKOptimization.h"
+
 NS_ASSUME_NONNULL_BEGIN
-
-typedef struct {
-	LNKFloat start;
-	LNKFloat end;
-} LNKSearchInterval;
-
-NS_INLINE LNKSearchInterval LNKSearchIntervalMake(LNKFloat start, LNKFloat end)
-{
-	return (LNKSearchInterval) { start, end };
-}
-
-typedef LNKFloat(^LNKUnivariateFunction)(LNKFloat);
 
 /// To run `LNKGoldenSectionSearch` synchronously, call `start`.
 ///

@@ -248,6 +248,9 @@
 		C9D2E82A1CBC9EA50013055D /* LNKRegularizationConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D2E8281CBC9EA50013055D /* LNKRegularizationConfiguration.m */; };
 		C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC903E19D6253900774B29 /* KMeansTests.m */; };
 		C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DCD6D419A03DF200AF3AEC /* lbfgs.m */; };
+		C9DF8C8C1CC30DE0006B5554 /* LNKOptimization.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DF8C8A1CC30DE0006B5554 /* LNKOptimization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9DF8C8D1CC30DE0006B5554 /* LNKOptimization.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DF8C8B1CC30DE0006B5554 /* LNKOptimization.m */; };
+		C9DF8C8E1CC30DE0006B5554 /* LNKOptimization.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DF8C8B1CC30DE0006B5554 /* LNKOptimization.m */; };
 		C9EC9A591A1ADCE0005D7863 /* LNKMatrixExporting.h in Headers */ = {isa = PBXBuildFile; fileRef = C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9EC9A5A1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */; };
 		C9EC9A5B1A1ADCE0005D7863 /* LNKMatrixExporting.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */; };
@@ -457,6 +460,8 @@
 		C9DCD6D319A03DF200AF3AEC /* arithmetic_ansi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arithmetic_ansi.h; path = liblbfgs/lib/arithmetic_ansi.h; sourceTree = SOURCE_ROOT; };
 		C9DCD6D419A03DF200AF3AEC /* lbfgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lbfgs.m; path = liblbfgs/lib/lbfgs.m; sourceTree = SOURCE_ROOT; };
 		C9DCD6D719A03E1700AF3AEC /* lbfgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lbfgs.h; path = liblbfgs/include/lbfgs.h; sourceTree = SOURCE_ROOT; };
+		C9DF8C8A1CC30DE0006B5554 /* LNKOptimization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKOptimization.h; sourceTree = "<group>"; };
+		C9DF8C8B1CC30DE0006B5554 /* LNKOptimization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKOptimization.m; sourceTree = "<group>"; };
 		C9EC9A571A1ADCE0005D7863 /* LNKMatrixExporting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKMatrixExporting.h; sourceTree = "<group>"; };
 		C9EC9A581A1ADCE0005D7863 /* LNKMatrixExporting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKMatrixExporting.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -577,6 +582,8 @@
 			children = (
 				C9A21A691CC190B500C81746 /* LNKGoldenSectionSearch.h */,
 				C9A21A6A1CC190B500C81746 /* LNKGoldenSectionSearch.m */,
+				C9DF8C8A1CC30DE0006B5554 /* LNKOptimization.h */,
+				C9DF8C8B1CC30DE0006B5554 /* LNKOptimization.m */,
 				C9A21A641CC1907200C81746 /* LNKOptimizationAlgorithm.h */,
 				C9A21A651CC1907200C81746 /* LNKOptimizationAlgorithm.m */,
 			);
@@ -936,6 +943,7 @@
 				C915807519E8B1C000879FD5 /* LNKAnomalyDetector.h in Headers */,
 				C9A27CCF1C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.h in Headers */,
 				C9A7C26E1C9F93A8008A1E51 /* Config.h in Headers */,
+				C9DF8C8C1CC30DE0006B5554 /* LNKOptimization.h in Headers */,
 				C9CBD2D519E5D52900AE71D5 /* LNKClassifier.h in Headers */,
 				C9860BF11A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.h in Headers */,
 				C99501791A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h in Headers */,
@@ -1159,6 +1167,7 @@
 				C97D57AB1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */,
 				C9860BF21A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m in Sources */,
 				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
+				C9DF8C8D1CC30DE0006B5554 /* LNKOptimization.m in Sources */,
 				C9A27CD01C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m in Sources */,
 				C915807B19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */,
 				C986E6F11CBC1DE4001C6C14 /* LNKOnlineLinearRegression.m in Sources */,
@@ -1216,6 +1225,7 @@
 				C9CBD27E19E5D46900AE71D5 /* LNKLinearRegressionPredictor.m in Sources */,
 				C9CBD27B19E5D46900AE71D5 /* _LNKLinearRegressionPredictorNE_AC.m in Sources */,
 				C9DCD6D619A03DF200AF3AEC /* lbfgs.m in Sources */,
+				C9DF8C8E1CC30DE0006B5554 /* LNKOptimization.m in Sources */,
 				C9AC0DD319A04C950061DEFB /* LinearRegressionTests.m in Sources */,
 				C958905C1A6DA90E0081EED1 /* LNKMatrixTestExtras.m in Sources */,
 				C97FF0AE1A1D111300F6CEDA /* DecisionTreeTests.m in Sources */,

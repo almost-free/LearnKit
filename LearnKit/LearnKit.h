@@ -27,6 +27,7 @@
 #import <LearnKit/LNKNeuralNetClassifier.h>
 #import <LearnKit/LNKOneVsAllLogisticRegressionClassifier.h>
 #import <LearnKit/LNKOnlineLinearRegression.h>
+#import <LearnKit/LNKOptimization.h>
 #import <LearnKit/LNKOptimizationAlgorithm.h>
 #import <LearnKit/LNKPredictor.h>
 #import <LearnKit/LNKRegularizationConfiguration.h>
