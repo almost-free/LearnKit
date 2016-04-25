@@ -9,6 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// A hill climbing search implementation that tries to maximize the given function by optimizing the initial set of parameters.
 @interface LNKHillClimbingSearch : NSOperation
 
 - (instancetype)init NS_UNAVAILABLE;
