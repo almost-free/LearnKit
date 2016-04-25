@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-- (instancetype)initWithFunction:(LNKMultivariateFunction)function parameterCount:(LNKSize)parameterCount;
+- (instancetype)initWithFunction:(LNKMultivariateFunction)function parameters:(LNKVector)parameters stepSizes:(LNKVector)stepSizes minParameter:(LNKVector)minParameters maxParameters:(LNKVector)maxParameters;
 
 @property (readonly) LNKFloat optimalY;
 

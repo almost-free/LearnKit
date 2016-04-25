@@ -22,14 +22,26 @@
 	LNKFloat *_parameterMaxs;
 }
 
-- (instancetype)initWithFunction:(LNKMultivariateFunction)function parameterCount:(LNKSize)parameterCount
+- (instancetype)initWithFunction:(LNKMultivariateFunction)function parameters:(LNKVector)parameters stepSizes:(LNKVector)stepSizes minParameter:(LNKVector)minParameters maxParameters:(LNKVector)maxParameters
 {
 	if (function == nil) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The function must not be nil" userInfo:nil];
 	}
 
-	if (parameterCount == 0) {
+	if (parameters.length == 0) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"At least one parameter must be specified" userInfo:nil];
+	}
+
+	if (parameters.length != stepSizes.length) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The number of parameters should be equal to number of step sizes" userInfo:nil];
+	}
+
+	if (parameters.length != minParameters.length) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The number of parameters should be equal to number of min values" userInfo:nil];
+	}
+
+	if (parameters.length != maxParameters.length) {
+		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"The number of parameters should be equal to number of max values" userInfo:nil];
 	}
 
 	if (!(self = [super init])) {
@@ -37,11 +49,11 @@
 	}
 
 	_function = [function copy];
-	_parameterCount = parameterCount;
-	_parameters = LNKFloatAlloc(_parameterCount);
-	_stepSize = LNKFloatAlloc(_parameterCount);
-	_parameterMins = LNKFloatAlloc(_parameterCount);
-	_parameterMaxs = LNKFloatAlloc(_parameterCount);
+	_parameterCount = parameters.length;
+	_parameters = LNKFloatAllocAndCopy(parameters.data, _parameterCount);
+	_stepSize = LNKFloatAllocAndCopy(stepSizes.data, _parameterCount);
+	_parameterMins = LNKFloatAllocAndCopy(minParameters.data, _parameterCount);
+	_parameterMaxs = LNKFloatAllocAndCopy(maxParameters.data, _parameterCount);
 
 	return self;
 }
