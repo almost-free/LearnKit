@@ -116,14 +116,10 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 	};
 	
 	id <LNKAlpha> alphaBox = algorithm.alpha;
-	const BOOL alphaIsDecaying = [alphaBox isKindOfClass:[LNKDecayingAlpha class]];
-	LNKFloat alpha = alphaIsDecaying ? 0 : [(LNKFixedAlpha *)alphaBox value];
 	
 	if (iterationCount != NSNotFound) {
 		for (LNKSize iteration = 0; iteration < iterationCount; iteration++) {
-			if (alphaIsDecaying)
-				alpha = [(LNKDecayingAlpha *)alphaBox function](iteration);
-			
+			const LNKFloat alpha = [alphaBox valueWithEpoch:iteration];
 			gradientIteration(alpha);
 		}
 	}
@@ -137,10 +133,9 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 		LNKSize iteration = 0;
 		
 		while (YES) {
-			if (alphaIsDecaying)
-				alpha = [(LNKDecayingAlpha *)alphaBox function](iteration++);
-			
+			const LNKFloat alpha = [alphaBox valueWithEpoch:iteration];
 			gradientIteration(alpha);
+			
 			const LNKFloat cost = costFunction(thetaVector);
 			
 			if (LNKFastFloatQueueSize(costQueue) < queueSize)

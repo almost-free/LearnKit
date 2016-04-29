@@ -8,11 +8,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol LNKAlpha <NSObject>
+- (LNKFloat)valueWithEpoch:(LNKSize)epoch;
 @end
 
 @interface LNKFixedAlpha : NSObject <LNKAlpha>
 
 - (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
 + (instancetype)withValue:(LNKFloat)value;
 
@@ -20,15 +22,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-typedef LNKFloat(^LNKDecayingAlphaFunction)(LNKSize iteration);
 
+/// Implements 1/(a + b*e), where e is the epoch.
 @interface LNKDecayingAlpha : NSObject <LNKAlpha>
 
 - (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
-+ (instancetype)withFunction:(LNKDecayingAlphaFunction)function;
++ (instancetype)withA:(LNKFloat)a b:(LNKFloat)b;
 
-@property (nonatomic, readonly) LNKDecayingAlphaFunction function;
+@property (nonatomic, readonly) LNKFloat a;
+@property (nonatomic, readonly) LNKFloat b;
 
 @end
 

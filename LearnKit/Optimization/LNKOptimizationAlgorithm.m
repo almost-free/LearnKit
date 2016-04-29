@@ -28,29 +28,34 @@
 	return self;
 }
 
+- (LNKFloat)valueWithEpoch:(LNKSize)epoch
+{
+#pragma unused(epoch)
+	return _value;
+}
+
 @end
 
 @implementation LNKDecayingAlpha
 
-+ (instancetype)withFunction:(LNKDecayingAlphaFunction)function {
-	return [[[self alloc] initWithFunction:function] autorelease];
++ (instancetype)withA:(LNKFloat)a b:(LNKFloat)b {
+	return [[[self alloc] initWithA:a b:b] autorelease];
 }
 
-- (instancetype)initWithFunction:(LNKDecayingAlphaFunction)function {
-	if (!function)
-		[NSException raise:NSInvalidArgumentException format:@"The function must not be nil"];
-	
-	if (!(self = [super init]))
+- (instancetype)initWithA:(LNKFloat)a b:(LNKFloat)b {
+	if (!(self = [super init])) {
 		return nil;
+	}
 	
-	_function = [function copy];
+	_a = a;
+	_b = b;
 	
 	return self;
 }
 
-- (void)dealloc {
-	[_function release];
-	[super dealloc];
+- (LNKFloat)valueWithEpoch:(LNKSize)epoch
+{
+	return (LNKFloat)1 / (_a + epoch * _b);
 }
 
 @end
