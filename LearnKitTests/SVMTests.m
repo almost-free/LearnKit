@@ -36,9 +36,7 @@
 	XCTAssertNotNil(testMatrix);
 
 	const LNKSize epochs = 50;
-	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
-		return 1.0/(0.01 * iteration + 50);
-	}] iterationCount:epochs];
+	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withA:50 b:0.01] iterationCount:epochs];
 	sgd.stepCount = 100;
 
 	LNKSVMClassifier *const classifier = [[LNKSVMClassifier alloc] initWithMatrix:trainingMatrix
@@ -86,9 +84,7 @@
 	XCTAssertNotNil(testMatrix);
 
 	const LNKSize epochs = 50;
-	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withFunction:^LNKFloat(LNKSize iteration) {
-		return 1.0/(0.01 * iteration + 50);
-	}] iterationCount:epochs];
+	LNKOptimizationAlgorithmStochasticGradientDescent *sgd = [LNKOptimizationAlgorithmStochasticGradientDescent algorithmWithAlpha:[LNKDecayingAlpha withA:50 b:0.01] iterationCount:epochs];
 	sgd.stepCount = 300;
 
 	LNKSVMClassifier *const classifier = [[LNKSVMClassifier alloc] initWithMatrix:trainingMatrix
