@@ -173,7 +173,7 @@ typedef struct {
 	
 	for (LNKSize row = 0; row < rows; row++) {
 		for (LNKSize column = 0; column < columns; column++) {
-			thetaVector[row * columns + column] = (((LNKFloat) arc4random_uniform(UINT32_MAX) / UINT32_MAX) - 0.5) * 2 * epsilon;
+			thetaVector[row * columns + column] = (((LNKFloat) arc4random_uniform(100000) / 100000) - 0.5) * 2 * epsilon;
 		}
 	}
 }
