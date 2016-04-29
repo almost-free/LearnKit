@@ -118,13 +118,11 @@
 @implementation LNKOptimizationAlgorithmStochasticGradientDescent
 
 - (void)runWithParameterVector:(LNKVector)vector rowCount:(LNKSize)rowCount delegate:(id<LNKOptimizationAlgorithmDelegate>)delegate {
-	NSAssert([self.alpha isKindOfClass:[LNKFixedAlpha class]], @"Only fixed alpha values are suppored by this method");
 	NSParameterAssert(vector.data);
 	NSParameterAssert(vector.length);
 	NSParameterAssert(delegate);
 	NSParameterAssert(rowCount);
-	
-	const LNKFloat alpha = [(LNKFixedAlpha *)self.alpha value];
+
 	const LNKSize iterationCount = self.iterationCount;
 	const LNKSize batchCount = self.stepCount == NSNotFound ? rowCount : self.stepCount;
 	const LNKSize batchSize = rowCount / batchCount;
@@ -135,6 +133,8 @@
 	LNKFloat *gradient = LNKFloatAlloc(vector.length);
 	
 	for (LNKSize iteration = 0; iteration < iterationCount; iteration++) {
+		const LNKFloat alpha = [self.alpha valueWithEpoch:iteration];
+
 		[delegate optimizationAlgorithmWillBeginIteration];
 		
 		for (NSUInteger batch = 0; batch < batchCount; batch++) {
