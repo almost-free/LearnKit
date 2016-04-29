@@ -81,6 +81,31 @@
 	return term1 + term2;
 }
 
+- (LNKFloat)computeR2
+{
+	LNKMatrix *const matrix = self.matrix;
+	const LNKFloat *outputVector = matrix.outputVector;
+	const LNKSize rowCount = matrix.rowCount;
+
+	LNKVector residuals = [self computeResiduals];
+	LNKFloat ssRes = 0;
+	LNK_dotpr(residuals.data, UNIT_STRIDE, residuals.data, UNIT_STRIDE, &ssRes, residuals.length);
+	LNKVectorRelease(residuals);
+
+	LNKFloat ssTot = 0;
+
+	LNKFloat mean = 0;
+	LNK_vmean(outputVector, UNIT_STRIDE, &mean, rowCount);
+
+	const LNKFloat minusMean = -mean;
+	LNKFloat *const meanAveragedOutput = LNKFloatAlloc(rowCount);
+	LNK_vsadd(outputVector, UNIT_STRIDE, &minusMean, meanAveragedOutput, UNIT_STRIDE, rowCount);
+	LNK_dotpr(meanAveragedOutput, UNIT_STRIDE, meanAveragedOutput, UNIT_STRIDE, &ssTot, rowCount);
+	free(meanAveragedOutput);
+
+	return 1 - ssRes / ssTot;
+}
+
 - (LNKMatrix *)hatMatrix
 {
 	LNKMatrix *const matrix = self.matrix;

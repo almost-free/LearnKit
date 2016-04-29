@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (LNKFloat)computeAIC;
 - (LNKFloat)computeBIC;
 
+- (LNKFloat)computeR2;
+
 @property (nonatomic, readonly) LNKMatrix *hatMatrix;
 
 @end
