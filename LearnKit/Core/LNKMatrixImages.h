@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, LNKImageFormat) {
 @interface LNKMatrix (Images)
 
 - (nullable instancetype)initWithImageAtURL:(NSURL *)url format:(LNKImageFormat)format;
+- (nullable instancetype)initWithImage:(CGImageRef)image format:(LNKImageFormat)format;
 
 @end
 

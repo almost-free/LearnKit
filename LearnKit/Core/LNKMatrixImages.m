@@ -15,20 +15,8 @@
 
 static const size_t kProcessingBPR = 4;
 
-static CFDataRef __nullable CreateRGBAImageDataWithURL(NSURL *url, size_t *outWidth, size_t *outHeight) CF_RETURNS_RETAINED {
-	const CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)url, NULL);
-
-	if (source == NULL) {
-		return NULL;
-	}
-
-	const CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
-	CFRelease(source);
-
-	if (image == NULL) {
-		return NULL;
-	}
-
+static CFDataRef __nullable CreateRGBAImageDataWithImage(CGImageRef image, size_t *outWidth, size_t *outHeight) CF_RETURNS_RETAINED
+{
 	const size_t w = CGImageGetWidth(image);
 	const size_t h = CGImageGetHeight(image);
 	const size_t bpp = 8;
@@ -36,7 +24,6 @@ static CFDataRef __nullable CreateRGBAImageDataWithURL(NSURL *url, size_t *outWi
 	const CGContextRef context = CGBitmapContextCreate(NULL, w, h, bpp, kProcessingBPR * w, colorSpace, kCGImageAlphaPremultipliedLast);
 	CGColorSpaceRelease(colorSpace);
 	CGContextDrawImage(context, CGRectMake(0, 0, (CGFloat)w, (CGFloat)h), image);
-	CGImageRelease(image);
 
 	const CGImageRef newImage = CGBitmapContextCreateImage(context);
 	CGContextRelease(context);
@@ -55,9 +42,31 @@ static CFDataRef __nullable CreateRGBAImageDataWithURL(NSURL *url, size_t *outWi
 	return data;
 }
 
-- (nullable instancetype)initWithImageAtURL:(NSURL *)url format:(LNKImageFormat)format {
+- (nullable instancetype)initWithImageAtURL:(NSURL *)url format:(LNKImageFormat)format
+{
+	const CGImageSourceRef source = CGImageSourceCreateWithURL((__bridge CFURLRef)url, NULL);
+
+	if (source == NULL) {
+		return nil;
+	}
+
+	const CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+	CFRelease(source);
+
+	if (image == NULL) {
+		return nil;
+	}
+
+	self = [self initWithImage:image format:format];
+	CGImageRelease(image);
+
+	return self;
+}
+
+- (nullable instancetype)initWithImage:(CGImageRef)image format:(LNKImageFormat)format
+{
 	size_t w, h;
-	const CFDataRef __nullable data = CreateRGBAImageDataWithURL(url, &w, &h);
+	const CFDataRef __nullable data = CreateRGBAImageDataWithImage(image, &w, &h);
 
 	if (data == NULL) {
 		return nil;
