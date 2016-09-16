@@ -19,12 +19,14 @@ Copyright (C) 2001 and 2002 by Carl Edward Rasmussen. Date 2002-02-13
 - Ported to C
 
 */
-#include<math.h>
-#include<stdio.h>
-#include<float.h>
 
-#define COST_FUNC_DATATYPE double
+#include "LNKAccelerate.h"
+
+#if USE_DOUBLE_PRECISION
 #define COST_FUNC_DATATYPE_MIN (DBL_MIN*100)
+#else
+#define COST_FUNC_DATATYPE_MIN (FLT_MIN*100)
+#endif
 
 #define RHO 0.01f
 #define SIG 0.5f
@@ -38,4 +40,4 @@ Copyright (C) 2001 and 2002 by Carl Edward Rasmussen. Date 2002-02-13
 // 3. nDim is the dimension of xVector
 // 4. maxCostCalls is the maximum number of times the cost function may be called
 // return value:  1 -> Num of Cost function calls exceeded max specified in the argument. 2-> line search failed
-int fmincg(void (*costFunc)(COST_FUNC_DATATYPE* inputVector, COST_FUNC_DATATYPE* cost, COST_FUNC_DATATYPE* gradVector), COST_FUNC_DATATYPE* xVector, int nDim, int maxCostFuncCalls);
+int fmincg(void (*costFunc)(LNKFloat *inputVector, LNKFloat *cost, LNKFloat *gradVector), LNKFloat *xVector, int nDim, int maxCostFuncCalls);
