@@ -90,12 +90,12 @@
 			}
 			else {
 				LNK_vsmul(_theta, UNIT_STRIDE, &lambda, workgroupCC, UNIT_STRIDE, columnCount);
-				LNK_vsmul(row, UNIT_STRIDE, &output, workgroupCC2, UNIT_STRIDE, columnCount);
-				LNK_vsub(workgroupCC2, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount);
+				const LNKFloat negOutput = -output;
+				LNK_vsma(row, UNIT_STRIDE, &negOutput, workgroupCC, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount);
 			}
-			
-			LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
-			LNK_vsub(workgroupCC, UNIT_STRIDE, _theta, UNIT_STRIDE, _theta, UNIT_STRIDE, columnCount);
+
+			const LNKFloat negAlpha = -alpha;
+			LNK_vsma(workgroupCC, UNIT_STRIDE, &negAlpha, _theta, UNIT_STRIDE, _theta, UNIT_STRIDE, columnCount);
 		}
 	}
 	

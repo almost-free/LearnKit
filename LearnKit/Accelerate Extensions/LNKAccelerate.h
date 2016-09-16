@@ -24,6 +24,7 @@
 #define LNK_mmov		vDSP_mmovD
 #define LNK_vmul		vDSP_vmulD
 #define LNK_vsmul		vDSP_vsmulD
+#define LNK_vsmsa		vDSP_vsmsaD
 #define LNK_vneg		vDSP_vnegD
 #define LNK_vsma		vDSP_vsmaD
 #define LNK_svdiv		vDSP_svdivD
@@ -64,6 +65,7 @@
 #define LNK_vsmul		vDSP_vsmul
 #define LNK_vneg		vDSP_vneg
 #define LNK_vsma		vDSP_vsma
+#define LNK_vsmsa		vDSP_vsmsa
 #define LNK_svdiv		vDSP_svdiv
 #define LNK_vsum		vDSP_sve
 #define LNK_vsq			vDSP_vsq

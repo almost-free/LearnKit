@@ -199,9 +199,7 @@
 			LNK_vclr(thetaVectorCopy, columns, rows);
 
 			const LNKFloat factor = self.regularizationConfiguration.lambda / m;
-			LNK_vsmul(thetaVectorCopy, UNIT_STRIDE, &factor, thetaVectorCopy, UNIT_STRIDE, rows * columns);
-
-			LNK_vadd(thetaVectorCopy, UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, rows * columns);
+			LNK_vsma(thetaVectorCopy, UNIT_STRIDE, &factor, globalDeltas[i], UNIT_STRIDE, globalDeltas[i], UNIT_STRIDE, rows * columns);
 			LNKMemoryBufferManagerFreeBlock(memoryManager, thetaVectorCopy, rows * columns);
 		}
 		

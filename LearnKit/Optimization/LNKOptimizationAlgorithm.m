@@ -143,10 +143,9 @@
 			[delegate optimizationAlgorithmWillBeginWithInputVector:weights];
 			[delegate computeGradientForOptimizationAlgorithm:gradient inRange:range];
 			
-			// Multiply by alpha.
-			LNK_vsmul(gradient, UNIT_STRIDE, &alpha, gradient, UNIT_STRIDE, vector.length);
-			
-			LNK_vsub(gradient, UNIT_STRIDE, weights, UNIT_STRIDE, weights, UNIT_STRIDE, vector.length);
+			// Multiply by negative alpha to avoid vsub.
+			const LNKFloat negAlpha = -alpha;
+			LNK_vsma(gradient, UNIT_STRIDE, &negAlpha, weights, UNIT_STRIDE, weights, UNIT_STRIDE, vector.length);
 		}
 	}
 	

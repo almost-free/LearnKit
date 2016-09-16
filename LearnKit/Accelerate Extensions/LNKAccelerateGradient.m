@@ -46,11 +46,11 @@ void _LNKComputeBatchGradient(const LNKFloat *matrixBuffer, const LNKFloat *tran
 	if (enableRegularization) {
 		// cost += lambda * theta
 		LNKFloatCopy(workgroupCC2, thetaVector, columnCount);
-		LNK_vsmul(workgroupCC2, UNIT_STRIDE, &lambda, workgroupCC2, UNIT_STRIDE, columnCount);
-		
+
 		// Don't regularize the first parameter.
 		workgroupCC2[0] = 0;
-		LNK_vadd(workgroupCC, UNIT_STRIDE, workgroupCC2, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount);
+
+		LNK_vsma(workgroupCC2, UNIT_STRIDE, &lambda, workgroupCC, UNIT_STRIDE, workgroupCC, UNIT_STRIDE, columnCount);
 	}
 	
 	const LNKFloat factor = 1.0 / rowCount;
@@ -98,8 +98,8 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 				LNK_vsmul(row, UNIT_STRIDE, &delta, workgroupCC, UNIT_STRIDE, columnCount);
 				
 				// thetaVector = thetaVector - alpha * gradient
-				LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
-				LNK_vsub(workgroupCC, UNIT_STRIDE, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
+				const LNKFloat negAlpha = -alpha;
+				LNK_vsma(workgroupCC, UNIT_STRIDE, &negAlpha, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
 			}
 
 			[randomMatrix release];
@@ -110,8 +110,8 @@ void LNK_learntheta_gd(LNKMatrix *matrix, LNKFloat *thetaVector, LNKOptimization
 			_LNKComputeBatchGradient(matrixBuffer, transposeMatrix, thetaVector, outputVector, workgroupEC, workgroupCC, workgroupCC2, rowCount, columnCount, regularizationEnabled, lambda, NULL);
 			
 			// thetaVector = thetaVector - alpha * gradient
-			LNK_vsmul(workgroupCC, UNIT_STRIDE, &alpha, workgroupCC, UNIT_STRIDE, columnCount);
-			LNK_vsub(workgroupCC, UNIT_STRIDE, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
+			const LNKFloat negAlpha = -alpha;
+			LNK_vsma(workgroupCC, UNIT_STRIDE, &negAlpha, thetaVector, UNIT_STRIDE, thetaVector, UNIT_STRIDE, columnCount);
 		}
 	};
 	

@@ -119,8 +119,6 @@
 	const BOOL regularizationEnabled = _regularizationConfiguration != nil;
 	const LNKFloat lambda = _regularizationConfiguration.lambda;
 	
-	LNKFloat *workspace = LNKFloatAlloc(_featureCount);
-	
 	for (LNKSize exampleIndex = 0; exampleIndex < rowCount; exampleIndex++) {
 		const LNKFloat *example = dataMatrix + _featureCount * exampleIndex;
 		const LNKFloat *output = [outputMatrix rowAtIndex:exampleIndex];
@@ -139,40 +137,28 @@
 				const LNKFloat inner = result - output[userIndex];
 				
 				// X_gradient += inner * Theta(user,:)
-				LNKFloatCopy(workspace, user, _featureCount);
-				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, _featureCount);
-				
-				LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, _featureCount);
+				LNK_vsma(user, UNIT_STRIDE, &inner, dataGradientLocation, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, _featureCount);
 				
 				// Theta_gradient += inner * X(example,:)
-				LNKFloatCopy(workspace, example, _featureCount);
-				LNK_vsmul(workspace, UNIT_STRIDE, &inner, workspace, UNIT_STRIDE, _featureCount);
-				
-				LNKFloat *thetaGradientLocation = thetaGradient + userIndex * _featureCount;
-				LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, _featureCount);
+				LNKFloat *const thetaGradientLocation = thetaGradient + userIndex * _featureCount;
+				LNK_vsma(example, UNIT_STRIDE, &inner, thetaGradientLocation, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, _featureCount);
 			}
 		}
 		
 		if (regularizationEnabled) {
 			// X_gradient(example,:) += lambda * X(example,:)
-			LNKFloatCopy(workspace, example, _featureCount);
-			LNK_vsmul(workspace, UNIT_STRIDE, &lambda, workspace, UNIT_STRIDE, _featureCount);
-			LNK_vadd(dataGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, _featureCount);
+			LNK_vsma(example, UNIT_STRIDE, &lambda, dataGradientLocation, UNIT_STRIDE, dataGradientLocation, UNIT_STRIDE, _featureCount);
 		}
 	}
 	
 	if (regularizationEnabled) {
 		for (LNKSize userIndex = 0; userIndex < userCount; userIndex++) {
-			LNKFloat *thetaGradientLocation = thetaGradient + userIndex * _featureCount;
+			LNKFloat *const thetaGradientLocation = thetaGradient + userIndex * _featureCount;
 			
 			// Theta_gradient(user,:) += lambda * Theta(user,:)
-			LNKFloatCopy(workspace, thetaMatrix + userIndex * _featureCount, _featureCount);
-			LNK_vsmul(workspace, UNIT_STRIDE, &lambda, workspace, UNIT_STRIDE, _featureCount);
-			LNK_vadd(thetaGradientLocation, UNIT_STRIDE, workspace, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, _featureCount);
+			LNK_vsma(thetaMatrix + userIndex * _featureCount, UNIT_STRIDE, &lambda, thetaGradientLocation, UNIT_STRIDE, thetaGradientLocation, UNIT_STRIDE, _featureCount);
 		}
 	}
-	
-	free(workspace);
 	
 	return unrolledGradient;
 }

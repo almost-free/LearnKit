@@ -163,9 +163,8 @@ typedef struct {
 			LNK_vclr(sums, UNIT_STRIDE, wordCount);
 
 			for (LNKSize i = 0; i < documentCount; i++) {
-				LNKFloat weight = W[i * _topicCount + topic];
-				LNK_vsmul(&matrixBuffer[i * wordCount], UNIT_STRIDE, &weight, logWorkspace, UNIT_STRIDE, wordCount);
-				LNK_vadd(logWorkspace, UNIT_STRIDE, sums, UNIT_STRIDE, sums, UNIT_STRIDE, wordCount);
+				const LNKFloat weight = W[i * _topicCount + topic];
+				LNK_vsma(&matrixBuffer[i * wordCount], UNIT_STRIDE, &weight, sums, UNIT_STRIDE, sums, UNIT_STRIDE, wordCount);
 			}
 
 			LNK_vsdiv(sums, UNIT_STRIDE, &bottom, &p[topic * wordCount], UNIT_STRIDE, wordCount);

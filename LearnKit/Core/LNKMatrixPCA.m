@@ -269,8 +269,8 @@
 		const LNKFloat mean = centers[column];
 		const LNKFloat sd = scales[column];
 
-		LNK_vsmul(columnPointer, columnCount, &sd, columnPointer, columnCount, rowCount);
-		LNK_vsadd(columnPointer, columnCount, &mean, columnPointer, columnCount, rowCount);
+		// column * sd + mean
+		LNK_vsmsa(columnPointer, columnCount, &sd, &mean, columnPointer, columnCount, rowCount);
 	}
 
 	LNKMatrix *const resultingMatrix = [[LNKMatrix alloc] initWithRowCount:rowCount columnCount:columnCount prepareBuffers:^BOOL(LNKFloat *matrix, LNKFloat *outputVector) {
