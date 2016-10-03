@@ -121,6 +121,7 @@
 		C99501791A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C99501771A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C995017A1A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */; };
 		C995017B1A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */; };
+		C99A82761DA2A126000A990A /* Hiring.csv in Resources */ = {isa = PBXBuildFile; fileRef = C99A82751DA2A126000A990A /* Hiring.csv */; };
 		C99C8B121A1D80A6000F0136 /* NSCountedSetAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C99C8B101A1D80A6000F0136 /* NSCountedSetAdditions.h */; };
 		C99C8B131A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */; };
 		C99C8B141A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */; };
@@ -363,6 +364,7 @@
 		C992198A1A6C883D00D9CACA /* LNKClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKClasses.m; sourceTree = "<group>"; };
 		C99501771A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDecisionTreeClassifier.h; sourceTree = "<group>"; };
 		C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDecisionTreeClassifier.m; sourceTree = "<group>"; };
+		C99A82751DA2A126000A990A /* Hiring.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hiring.csv; sourceTree = "<group>"; };
 		C99C8B101A1D80A6000F0136 /* NSCountedSetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCountedSetAdditions.h; sourceTree = "<group>"; };
 		C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCountedSetAdditions.m; sourceTree = "<group>"; };
 		C99F0E851C653872000F9242 /* Pima.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pima.csv; sourceTree = "<group>"; };
@@ -902,6 +904,7 @@
 				C9CBD30519E5D69000AE71D5 /* ex7data2_X.dat */,
 				C9CBD30619E5D69000AE71D5 /* Flu.csv */,
 				C904FC1B1B7AE26200276F73 /* FluChills.csv */,
+				C99A82751DA2A126000A990A /* Hiring.csv */,
 				C95963221C6A49DD00AF0EBA /* income.csv */,
 				C9266FF31C84C3A3002F917E /* Iris.dat */,
 				C92E45191A15396400B6E33F /* MovieIDs.txt */,
@@ -1133,6 +1136,7 @@
 				C9CBD30719E5D69000AE71D5 /* CASP.csv in Resources */,
 				C9CBD31619E5D69000AE71D5 /* Flu.csv in Resources */,
 				C9860BE61A0B4F04009FADAE /* Movies_X.mat in Resources */,
+				C99A82761DA2A126000A990A /* Hiring.csv in Resources */,
 				C9D1A4A41C9DAA5B003736C1 /* nips-vocab.txt in Resources */,
 				C93BFDF21A354982000E5325 /* Cancer.csv in Resources */,
 				C9CBD30819E5D69000AE71D5 /* ex1data1.txt in Resources */,
