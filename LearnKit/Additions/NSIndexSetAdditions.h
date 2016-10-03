@@ -13,6 +13,9 @@ typedef void(^NSIndexSetSimpleEnumerator)(NSUInteger);
 
 @interface NSIndexSet (Additions)
 
++ (NSIndexSet *)withCount:(NSUInteger)count;
+
+- (NSIndexSet *)indexSetByRandomlySamplingTo:(NSUInteger)size;
 - (NSIndexSet *)indexSetByRemovingIndex:(NSUInteger)index;
 
 - (void)enumerateAllIndicesUsingBlock:(NSIndexSetSimpleEnumerator)block;
