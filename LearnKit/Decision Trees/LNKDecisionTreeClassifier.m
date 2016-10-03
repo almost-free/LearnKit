@@ -17,7 +17,7 @@
 	NSIndexSet *_exampleIndices;
 	NSIndexSet *_columnIndices;
 	LNKDecisionTreeNode *_learnedTree;
-	NSMutableDictionary *_columnsToPossibleValues;
+	NSMutableDictionary<NSNumber *, NSNumber *> *_columnsToPossibleValues;
 }
 
 + (NSArray<Class> *)supportedAlgorithms {
@@ -33,6 +33,15 @@
 #pragma unused(algorithm)
 	
 	return [self class];
+}
+
+- (void)_setColumnsToPossibleValues:(NSDictionary<NSNumber *, NSNumber *> *)values {
+	if (_columnsToPossibleValues != nil) {
+		[_columnsToPossibleValues release];
+		_columnsToPossibleValues = nil;
+	}
+
+	_columnsToPossibleValues = [values copy];
 }
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
@@ -279,7 +288,7 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet<LNKClass *> *classFrequ
 }
 
 - (LNKClass *)_predictValueForFeatureVector:(LNKVector)featureVector tree:(LNKDecisionTreeNode *)tree {
-	NSParameterAssert(tree);
+	NSParameterAssert(tree != nil);
 	
 	if ([tree isKindOfClass:[LNKDecisionTreeClassificationNode class]])
 		return ((LNKDecisionTreeClassificationNode *)tree).classification;
