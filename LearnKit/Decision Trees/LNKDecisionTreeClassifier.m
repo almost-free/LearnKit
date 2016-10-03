@@ -14,6 +14,8 @@
 #import "NSIndexSetAdditions.h"
 
 @implementation LNKDecisionTreeClassifier {
+	NSIndexSet *_exampleIndices;
+	NSIndexSet *_columnIndices;
 	LNKDecisionTreeNode *_learnedTree;
 	NSMutableDictionary *_columnsToPossibleValues;
 }
@@ -34,11 +36,19 @@
 }
 
 - (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes {
+	NSIndexSet *allColumns = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.columnCount)];
+	NSIndexSet *allExamples = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.rowCount)];
+	return [self initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes examplesIndices:allExamples columnIndices:allColumns];
+}
+
+- (instancetype)initWithMatrix:(LNKMatrix *)matrix implementationType:(LNKImplementationType)implementation optimizationAlgorithm:(id<LNKOptimizationAlgorithm>)algorithm classes:(LNKClasses *)classes examplesIndices:(NSIndexSet *)exampleIndices columnIndices:(NSIndexSet *)columnIndices {
 	if (!(self = [super initWithMatrix:matrix implementationType:implementation optimizationAlgorithm:algorithm classes:classes]))
 		return nil;
-	
+
 	_columnsToPossibleValues = [[NSMutableDictionary alloc] init];
-	
+	_exampleIndices = [exampleIndices copy];
+	_columnIndices = [columnIndices copy];
+
 	return self;
 }
 
@@ -260,11 +270,12 @@ static LNKFloat _calculateEntropyForClasses(NSCountedSet<LNKClass *> *classFrequ
 }
 
 - (void)train {
-	LNKMatrix *matrix = self.matrix;
-	NSIndexSet *allColumns = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.columnCount)];
-	NSIndexSet *allExamples = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, matrix.rowCount)];
-	
-	_learnedTree = [[self _learnTreeWithExampleIndices:allExamples columnIndices:allColumns] retain];
+	if (_learnedTree != nil) {
+		[_learnedTree release];
+		_learnedTree = nil;
+	}
+
+	_learnedTree = [[self _learnTreeWithExampleIndices:_exampleIndices columnIndices:_columnIndices] retain];
 }
 
 - (LNKClass *)_predictValueForFeatureVector:(LNKVector)featureVector tree:(LNKDecisionTreeNode *)tree {
