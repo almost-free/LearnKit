@@ -121,6 +121,10 @@
 		C99501791A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C99501771A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C995017A1A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */; };
 		C995017B1A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */; };
+		C995D7D61DA2A9870004FA08 /* LNKRandomForestClassifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C995D7D41DA2A9870004FA08 /* LNKRandomForestClassifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C995D7D71DA2A9870004FA08 /* LNKRandomForestClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C995D7D51DA2A9870004FA08 /* LNKRandomForestClassifier.m */; };
+		C995D7D81DA2B24A0004FA08 /* LNKRandomForestClassifier.m in Sources */ = {isa = PBXBuildFile; fileRef = C995D7D51DA2A9870004FA08 /* LNKRandomForestClassifier.m */; };
+		C995D7DB1DA2B53B0004FA08 /* LNKDecisionTreeClassifier+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C995D7D91DA2B53B0004FA08 /* LNKDecisionTreeClassifier+Private.h */; };
 		C99A82761DA2A126000A990A /* Hiring.csv in Resources */ = {isa = PBXBuildFile; fileRef = C99A82751DA2A126000A990A /* Hiring.csv */; };
 		C99C8B121A1D80A6000F0136 /* NSCountedSetAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C99C8B101A1D80A6000F0136 /* NSCountedSetAdditions.h */; };
 		C99C8B131A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */; };
@@ -364,6 +368,9 @@
 		C992198A1A6C883D00D9CACA /* LNKClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKClasses.m; sourceTree = "<group>"; };
 		C99501771A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKDecisionTreeClassifier.h; sourceTree = "<group>"; };
 		C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKDecisionTreeClassifier.m; sourceTree = "<group>"; };
+		C995D7D41DA2A9870004FA08 /* LNKRandomForestClassifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNKRandomForestClassifier.h; sourceTree = "<group>"; };
+		C995D7D51DA2A9870004FA08 /* LNKRandomForestClassifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNKRandomForestClassifier.m; sourceTree = "<group>"; };
+		C995D7D91DA2B53B0004FA08 /* LNKDecisionTreeClassifier+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LNKDecisionTreeClassifier+Private.h"; sourceTree = "<group>"; };
 		C99A82751DA2A126000A990A /* Hiring.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hiring.csv; sourceTree = "<group>"; };
 		C99C8B101A1D80A6000F0136 /* NSCountedSetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCountedSetAdditions.h; sourceTree = "<group>"; };
 		C99C8B111A1D80A6000F0136 /* NSCountedSetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCountedSetAdditions.m; sourceTree = "<group>"; };
@@ -584,9 +591,20 @@
 				C97FF0B21A1D233300F6CEDA /* LNKDecisionTree.m */,
 				C99501771A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.h */,
 				C99501781A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m */,
+				C995D7D91DA2B53B0004FA08 /* LNKDecisionTreeClassifier+Private.h */,
 			);
 			name = "Decision Trees";
 			path = "LearnKit/Decision Trees";
+			sourceTree = SOURCE_ROOT;
+		};
+		C995D7D31DA2A96D0004FA08 /* Random Forests */ = {
+			isa = PBXGroup;
+			children = (
+				C995D7D41DA2A9870004FA08 /* LNKRandomForestClassifier.h */,
+				C995D7D51DA2A9870004FA08 /* LNKRandomForestClassifier.m */,
+			);
+			name = "Random Forests";
+			path = "LearnKit/Random Forests";
 			sourceTree = SOURCE_ROOT;
 		};
 		C9A21A631CC1907200C81746 /* Optimization */ = {
@@ -662,6 +680,7 @@
 				C9CBD28D19E5D4AD00AE71D5 /* Neural Network */,
 				C9A21A631CC1907200C81746 /* Optimization */,
 				C9A27CC71C64718900D7C2F7 /* Probability Distributions */,
+				C995D7D31DA2A96D0004FA08 /* Random Forests */,
 				C93BFDE91A35477B000E5325 /* SVM */,
 				C9D1A49B1C9DA9F0003736C1 /* Topic Modelling */,
 				C9CBD2A019E5D4D400AE71D5 /* UI */,
@@ -1010,9 +1029,11 @@
 				C9CBD25819E5D41D00AE71D5 /* LNKKMeansClassifierPrivate.h in Headers */,
 				C90CFAF21C94AF8B00133837 /* LNKNeuralNetClassifier+Debugging.h in Headers */,
 				C93B97E01C9F89F1000E629F /* LNKMatrixImages.h in Headers */,
+				C995D7DB1DA2B53B0004FA08 /* LNKDecisionTreeClassifier+Private.h in Headers */,
 				C992198B1A6C883D00D9CACA /* LNKClasses.h in Headers */,
 				C92E849F1CBC40CB00F8E335 /* LNKLogisticRegressionClassifier.h in Headers */,
 				C9CBD2EF19E5D52900AE71D5 /* LNKPredictorPrivate.h in Headers */,
+				C995D7D61DA2A9870004FA08 /* LNKRandomForestClassifier.h in Headers */,
 				C92E849C1CBC40CB00F8E335 /* _LNKOneVsAllLogisticRegressionClassifierLBFGS_AC.h in Headers */,
 				C986E6F01CBC1DE4001C6C14 /* LNKOnlineLinearRegression.h in Headers */,
 				C95B382E1CC288CD007DB990 /* LNKHillClimbingSearch.h in Headers */,
@@ -1187,6 +1208,7 @@
 				C97D57AB1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */,
 				C9860BF21A0B4F86009FADAE /* LNKCollaborativeFilteringPredictor.m in Sources */,
 				C9CBD2DA19E5D52900AE71D5 /* LNKMatrix.m in Sources */,
+				C995D7D71DA2A9870004FA08 /* LNKRandomForestClassifier.m in Sources */,
 				C9DF8C8D1CC30DE0006B5554 /* LNKOptimization.m in Sources */,
 				C9A27CD01C64737300D7C2F7 /* LNKDiscreteProbabilityDistribution.m in Sources */,
 				C915807B19E8B26200879FD5 /* _LNKAnomalyDetectorAC.m in Sources */,
@@ -1268,6 +1290,7 @@
 				C9DC903F19D6253900774B29 /* KMeansTests.m in Sources */,
 				C99C8B141A1D80A6000F0136 /* NSCountedSetAdditions.m in Sources */,
 				C995017B1A1C6ACD005E0C9E /* LNKDecisionTreeClassifier.m in Sources */,
+				C995D7D81DA2B24A0004FA08 /* LNKRandomForestClassifier.m in Sources */,
 				C92E84A51CBC40CB00F8E335 /* LNKOneVsAllLogisticRegressionClassifier.m in Sources */,
 				C9CBD2F519E5D52900AE71D5 /* LNKUtilities.m in Sources */,
 				C97D57AC1C65183600B03E40 /* LNKGaussianProbabilityDistribution.m in Sources */,
