@@ -63,7 +63,7 @@ typedef NS_ENUM(NSUInteger, LNKValueType) {
 /// Returns a copy of the current matrix with `rowCount` of its rows reshuffled.
 - (LNKMatrix *)copyShuffledSubmatrixWithRowCount:(LNKSize)rowCount;
 
-- (void)splitIntoTrainingMatrix:(LNKMatrix *__nonnull *__nonnull)trainingMatrix testMatrix:(LNKMatrix *__nonnull *__nonnull)testMatrix trainingBias:(LNKFloat)trainingBias;
+- (void)splitIntoTrainingMatrix:(LNKMatrix *__nullable *__nonnull)trainingMatrix testMatrix:(LNKMatrix *__nullable *__nonnull)testMatrix trainingBias:(LNKFloat)trainingBias;
 
 - (LNKMatrix *)submatrixWithRowRange:(NSRange)range;
 - (LNKMatrix *)submatrixWithRowCount:(LNKSize)rowCount columnCount:(LNKSize)columnCount;
