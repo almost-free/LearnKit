@@ -17,7 +17,7 @@ void LNKFastObjectRetain(LNKFastObjectRef object);
 void LNKFastObjectRelease(LNKFastObjectRef object);
 
 /// The returned object is reference-counted.
-LNKFastArrayRef LNKFastArrayCreate();
+LNKFastArrayRef LNKFastArrayCreate(void);
 
 /// Adds a fast object to the array (and increments its retain count).
 void LNKFastArrayAddFastObject(LNKFastArrayRef array, LNKFastObjectRef object);

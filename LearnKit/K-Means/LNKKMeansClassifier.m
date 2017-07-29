@@ -22,7 +22,7 @@ static const LNKSize kDefaultIterationCount = 100;
 }
 
 + (NSArray<Class> *)supportedAlgorithms {
-	return nil;
+	return @[];
 }
 
 + (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {

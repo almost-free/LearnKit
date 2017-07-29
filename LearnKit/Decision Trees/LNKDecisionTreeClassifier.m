@@ -21,7 +21,7 @@
 }
 
 + (NSArray<Class> *)supportedAlgorithms {
-	return nil;
+	return @[];
 }
 
 + (NSArray<NSNumber *> *)supportedImplementationTypes {

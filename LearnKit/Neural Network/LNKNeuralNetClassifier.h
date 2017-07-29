@@ -44,8 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (LNKNeuralNetLayer *)layerAtIndex:(LNKSize)index;
 - (LNKNeuralNetLayer *)hiddenLayerAtIndex:(LNKSize)index;
 
-#warning TODO: assert correct values
-#warning TODO: better way of specifying classes
+// TODO: assert correct values
+// TODO: better way of specifying classes
 
 @end
 

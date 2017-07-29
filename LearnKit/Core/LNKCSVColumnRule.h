@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, LNKCSVColumnRuleType) {
 	LNKCSVColumnRuleTypeOutput
 };
 
-typedef LNKFloat(^LNKCSVColumnRuleTypeConversionHandler)(NSString *);
+typedef LNKFloat(^LNKCSVColumnRuleTypeConversionHandler)(NSString *_Nullable);
 
 @interface LNKCSVColumnRule : NSObject
 

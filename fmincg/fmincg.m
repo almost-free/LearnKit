@@ -23,7 +23,7 @@ Copyright (C) 2001 and 2002 by Carl Edward Rasmussen. Date 2002-02-13
 
 int fmincg(void (*costFunc)(LNKFloat *inputVector, LNKFloat *cost, LNKFloat *gradVector), LNKFloat *xVector, int nDim, int maxCostCalls)
 {
-	int i,success = 0,costFuncCount=0,lineSearchFuncCount=0;
+	int success = 0,costFuncCount=0,lineSearchFuncCount=0;
 	LNKFloat ls_failed,f1,d1,z1,f0,f2,d2,f3,d3,z3,limit,z2,A,B,C;
 	LNKFloat df1[nDim],s[nDim],x0[nDim],df0[nDim],df2[nDim],df2neg[nDim],tmp[nDim];
 	LNKFloat *x = xVector;

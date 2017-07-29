@@ -13,6 +13,7 @@
 #import "LNKOptimizationAlgorithm.h"
 #import "LNKNeuralNetClassifierPrivate.h"
 #import "LNKPredictorPrivate.h"
+#import "LNKRegularizationConfiguration.h"
 
 typedef struct {
 	LNKFloat *thetaVector;
@@ -213,6 +214,8 @@ typedef struct {
 }
 
 - (void)dealloc {
+	[_regularizationConfiguration release];
+
 	const LNKSize thetaVectorCount = [self _thetaVectorCount];
 	
 	[_layers release];

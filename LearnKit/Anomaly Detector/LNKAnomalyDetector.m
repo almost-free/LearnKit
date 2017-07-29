@@ -30,7 +30,7 @@
 }
 
 + (NSArray<Class> *)supportedAlgorithms {
-	return nil;
+	return @[];
 }
 
 + (Class)_classForImplementationType:(LNKImplementationType)implementationType optimizationAlgorithm:(Class)algorithm {

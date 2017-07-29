@@ -28,6 +28,14 @@
 @end
 
 @implementation LBFGSContext
+
+- (void)dealloc
+{
+	[_hFunction release];
+	[_costFunction release];
+	[super dealloc];
+}
+
 @end
 
 

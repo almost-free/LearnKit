@@ -45,7 +45,7 @@
 
 	if (LNKFastArrayObjectCount(lines) == 0) {
 		NSLog(@"Error while loading matrix: the matrix does not contain any examples");
-		return NO;
+		return nil;
 	}
 
 	LNKFastArrayRef firstLine = (LNKFastArrayRef)LNKFastArrayObjectAtIndex(lines, 0);

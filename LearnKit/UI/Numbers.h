@@ -128,7 +128,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 - (void) exportTo:(NSURL *)to as:(NumbersExportFormat)as withProperties:(NSDictionary *)withProperties;  // Export a document to another file
 
 @end
@@ -155,7 +154,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 
 @end
 
@@ -183,7 +181,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 
 @end
 
@@ -245,7 +242,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 
 @end
 
@@ -264,7 +260,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 
 @end
 
@@ -407,7 +402,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 - (void) clear;  // Clear the contents of a specified range of cells. Only content is removed; formatting and style are preserved.
 - (void) merge;  // Merge a specified range of cells.
 - (void) unmerge;  // Unmerge all merged cells in a specified range.
@@ -501,7 +495,6 @@ typedef enum NumbersExportFormat NumbersExportFormat;
 - (void) delete;  // Delete an object.
 - (void) duplicateTo:(SBObject *)to withProperties:(NSDictionary *)withProperties;  // Copy an object.
 - (void) moveTo:(SBObject *)to;  // Move an object to a new location.
-- (void) delete;  // Delete an object.
 
 @end
 
