@@ -1,0 +1,16 @@
+PODS:
+  - LearnKit (1.6.0)
+
+DEPENDENCIES:
+  - LearnKit (from `../../`)
+
+EXTERNAL SOURCES:
+  LearnKit:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  LearnKit: ba6a6e2647a5e5713c84f218b9b6263b525ae860
+
+PODFILE CHECKSUM: f7b869ac74331f23342d539731c4c2e7699293cb
+
+COCOAPODS: 1.6.0

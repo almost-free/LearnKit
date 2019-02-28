@@ -685,8 +685,7 @@
 				C9D1A49B1C9DA9F0003736C1 /* Topic Modelling */,
 				C9CBD2A019E5D4D400AE71D5 /* UI */,
 			);
-			name = LearnKit;
-			path = LinearRegression;
+			path = LearnKit;
 			sourceTree = "<group>";
 		};
 		C9AC1F8E199AFD61006D7122 /* Frameworks */ = {
@@ -724,7 +723,7 @@
 				C9AC1F96199AFDCC006D7122 /* Supporting Files */,
 			);
 			name = "LearnKit Tests";
-			path = LinearRegressionTests;
+			path = LearnKitTests;
 			sourceTree = "<group>";
 		};
 		C9AC1F96199AFDCC006D7122 /* Supporting Files */ = {
@@ -963,8 +962,7 @@
 				C9DCD6D719A03E1700AF3AEC /* lbfgs.h */,
 				C9DCD6D419A03DF200AF3AEC /* lbfgs.m */,
 			);
-			name = liblbfgs;
-			path = LinearRegression;
+			path = liblbfgs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

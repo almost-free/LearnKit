@@ -7,56 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8FBC02906268935FF1B81C1A /* Pods_DigitClassifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA993FAA5072F3743CE1D918 /* Pods_DigitClassifier.framework */; };
 		C96641A41A381DB600A6EC74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C96641A31A381DB600A6EC74 /* AppDelegate.m */; };
 		C96641A61A381DB600A6EC74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C96641A51A381DB600A6EC74 /* main.m */; };
 		C96641A81A381DB600A6EC74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C96641A71A381DB600A6EC74 /* Images.xcassets */; };
 		C96641AB1A381DB600A6EC74 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C96641A91A381DB600A6EC74 /* MainMenu.xib */; };
 		C96641C21A381E4A00A6EC74 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = C96641C11A381E4A00A6EC74 /* CanvasView.m */; };
-		C96641CF1A38235100A6EC74 /* LearnKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96641C91A38231C00A6EC74 /* LearnKit.framework */; };
-		C96641D11A38236D00A6EC74 /* LearnKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = C96641C91A38231C00A6EC74 /* LearnKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C966420B1A38BE6A00A6EC74 /* Examples.dat in Resources */ = {isa = PBXBuildFile; fileRef = C96642091A38BE6A00A6EC74 /* Examples.dat */; };
 		C966420C1A38BE6A00A6EC74 /* Labels.dat in Resources */ = {isa = PBXBuildFile; fileRef = C966420A1A38BE6A00A6EC74 /* Labels.dat */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C96641C81A38231C00A6EC74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C96641C31A38231B00A6EC74 /* LearnKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C975911F19A04AF9003D3A48;
-			remoteInfo = LearnKit;
-		};
-		C96641CA1A38231C00A6EC74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C96641C31A38231B00A6EC74 /* LearnKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C9AC1F94199AFDCC006D7122;
-			remoteInfo = LearnKitTests;
-		};
-		C96641CC1A38232200A6EC74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C96641C31A38231B00A6EC74 /* LearnKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C975911E19A04AF9003D3A48;
-			remoteInfo = LearnKit;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		C96641D01A38235F00A6EC74 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C96641D11A38236D00A6EC74 /* LearnKit.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		7D5CA0CA061008A161CC3E1D /* Pods-DigitClassifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DigitClassifier.release.xcconfig"; path = "Target Support Files/Pods-DigitClassifier/Pods-DigitClassifier.release.xcconfig"; sourceTree = "<group>"; };
+		C1DD39B95FD206E772121A41 /* Pods-DigitClassifier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DigitClassifier.debug.xcconfig"; path = "Target Support Files/Pods-DigitClassifier/Pods-DigitClassifier.debug.xcconfig"; sourceTree = "<group>"; };
 		C966419D1A381DB600A6EC74 /* DigitClassifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitClassifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C96641A11A381DB600A6EC74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C96641A21A381DB600A6EC74 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,9 +29,9 @@
 		C96641AA1A381DB600A6EC74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C96641C01A381E4A00A6EC74 /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
 		C96641C11A381E4A00A6EC74 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
-		C96641C31A38231B00A6EC74 /* LearnKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LearnKit.xcodeproj; path = ../../LearnKit.xcodeproj; sourceTree = "<group>"; };
 		C96642091A38BE6A00A6EC74 /* Examples.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Examples.dat; sourceTree = "<group>"; };
 		C966420A1A38BE6A00A6EC74 /* Labels.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Labels.dat; sourceTree = "<group>"; };
+		FA993FAA5072F3743CE1D918 /* Pods_DigitClassifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DigitClassifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,20 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C96641CF1A38235100A6EC74 /* LearnKit.framework in Frameworks */,
+				8FBC02906268935FF1B81C1A /* Pods_DigitClassifier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		759CD21C0341242D19C36213 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA993FAA5072F3743CE1D918 /* Pods_DigitClassifier.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C96641941A381DB600A6EC74 = {
 			isa = PBXGroup;
 			children = (
-				C96641C31A38231B00A6EC74 /* LearnKit.xcodeproj */,
 				C96641D21A38241400A6EC74 /* Data */,
 				C966419F1A381DB600A6EC74 /* DigitClassifier */,
 				C966419E1A381DB600A6EC74 /* Products */,
+				D84505F3CB57BA2ADDA7339B /* Pods */,
+				759CD21C0341242D19C36213 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,15 +96,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C96641C41A38231B00A6EC74 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C96641C91A38231C00A6EC74 /* LearnKit.framework */,
-				C96641CB1A38231C00A6EC74 /* LearnKitTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C96641D21A38241400A6EC74 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +106,15 @@
 			path = DigitClassifier/Data;
 			sourceTree = "<group>";
 		};
+		D84505F3CB57BA2ADDA7339B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C1DD39B95FD206E772121A41 /* Pods-DigitClassifier.debug.xcconfig */,
+				7D5CA0CA061008A161CC3E1D /* Pods-DigitClassifier.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -150,15 +122,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C96641BA1A381DB600A6EC74 /* Build configuration list for PBXNativeTarget "DigitClassifier" */;
 			buildPhases = (
+				899AD4BD09A05CE96F23C087 /* [CP] Check Pods Manifest.lock */,
 				C96641991A381DB600A6EC74 /* Sources */,
 				C966419A1A381DB600A6EC74 /* Frameworks */,
 				C966419B1A381DB600A6EC74 /* Resources */,
-				C96641D01A38235F00A6EC74 /* Copy Frameworks */,
+				552295EAFBE6F2D9C3008B2F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C96641CD1A38232200A6EC74 /* PBXTargetDependency */,
 			);
 			name = DigitClassifier;
 			productName = DigitClassifier;
@@ -171,7 +143,7 @@
 		C96641951A381DB600A6EC74 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Matt Rajca";
 				TargetAttributes = {
 					C966419C1A381DB600A6EC74 = {
@@ -190,35 +162,12 @@
 			mainGroup = C96641941A381DB600A6EC74;
 			productRefGroup = C966419E1A381DB600A6EC74 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C96641C41A38231B00A6EC74 /* Products */;
-					ProjectRef = C96641C31A38231B00A6EC74 /* LearnKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C966419C1A381DB600A6EC74 /* DigitClassifier */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C96641C91A38231C00A6EC74 /* LearnKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LearnKit.framework;
-			remoteRef = C96641C81A38231C00A6EC74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C96641CB1A38231C00A6EC74 /* LearnKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = LearnKitTests.xctest;
-			remoteRef = C96641CA1A38231C00A6EC74 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C966419B1A381DB600A6EC74 /* Resources */ = {
@@ -234,6 +183,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		552295EAFBE6F2D9C3008B2F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DigitClassifier/Pods-DigitClassifier-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LearnKit/LearnKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LearnKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DigitClassifier/Pods-DigitClassifier-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		899AD4BD09A05CE96F23C087 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DigitClassifier-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C96641991A381DB600A6EC74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -246,14 +242,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C96641CD1A38232200A6EC74 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LearnKit;
-			targetProxy = C96641CC1A38232200A6EC74 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C96641A91A381DB600A6EC74 /* MainMenu.xib */ = {
@@ -275,20 +263,32 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -317,13 +317,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -332,6 +342,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -346,22 +357,26 @@
 		};
 		C96641BB1A381DB600A6EC74 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1DD39B95FD206E772121A41 /* Pods-DigitClassifier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = DigitClassifier/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MattRajca.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		C96641BC1A381DB600A6EC74 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D5CA0CA061008A161CC3E1D /* Pods-DigitClassifier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = DigitClassifier/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.MattRajca.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

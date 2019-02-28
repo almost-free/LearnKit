@@ -1,0 +1,33 @@
+{
+  "name": "LearnKit",
+  "version": "1.6.0",
+  "summary": "(DEPRECATED) Wrapper around LearnKit.",
+  "description": "(DEPRECATED) Wrapper around [LearnKit](https://github.com/mattrajca/LearnKit) to easy its integration in Swift CocoaPods.",
+  "homepage": "https://github.com/almost-free/LearnKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Jon Willis + ": "indisoluble_dev@me.com"
+  },
+  "source": {
+    "git": "https://github.com/almost-free/LearnKit.git",
+    "tag": "1.6.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": [
+    "LearnKit/*.{h,m}",
+    "LearnKit/**/*.{h,m}",
+    "LearnKit/fmincg/*.{h,m}",
+    "LearnKit/liblbfgs/include/*.h",
+    "LearnKit/liblbfgs/lib/*.{h,m}"
+  ],
+  "exclude_files": [
+    "LearnKit/Core/LNKMatrixImages.{h,m}",
+    "LearnKit/Neural Network/LNKNeuralNetClassifier+Debugging.m",
+    "LearnKit/UI/*.{h,m}"
+  ]
+}
