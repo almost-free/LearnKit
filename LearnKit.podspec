@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '8.0'
 
-  #s.prefix_header_file = 'HRLAlgorithms/Submodules/LearnKit/LearnKit/Prefix.pch'
+  s.prefix_header_file = 'LearnKit/Prefix.pch'
 
   s.source_files = 'LearnKit/*.{h,m}',
                    'LearnKit/**/*.{h,m}',
