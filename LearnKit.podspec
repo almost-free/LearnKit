@@ -28,5 +28,6 @@ Pod::Spec.new do |s|
                     'LearnKit/UI/*.{h,m}'
 
   #s.requires_arc = 'HRLAlgorithms/Classes/**/*.m'
+   s.requires_arc = false
 
 end
